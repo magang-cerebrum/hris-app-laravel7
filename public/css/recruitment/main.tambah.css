@@ -1,0 +1,42 @@
+#bg-overlay1 {
+    background-image: url('../../img/background/bg-img.jpg');
+}
+.cls-content {
+    padding-top: 5vh;
+}
+.cls-content .cls-content-sm {
+    text-align: left;
+}
+.mar-ver h1.h3 {
+    text-align: center;
+}
+label.col-md-3{
+    font-weight: bold;
+}
+@media (min-width: 768px){
+.cls-content .cls-content-sm {
+    width: 600px;
+}}
+.cls-content .cls-content-sm {
+    width: 80%;
+}
+@media (min-width: 350px){
+    textarea.form-control {
+        height: 100px;
+    }
+}
+@media (min-width: 992px){
+    .col-md-3 {
+        width: 20%;
+    }
+    .col-md-9 {
+        width: 80%;
+    }
+    textarea.form-control {
+        height: 50px;
+    }
+}
+.pad-ver {
+    padding-top: 0;
+    padding-bottom: 0;
+}

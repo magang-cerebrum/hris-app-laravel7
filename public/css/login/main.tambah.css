@@ -1,0 +1,10 @@
+#bg-overlay1 {
+    background-image: url('../../img/background/bg-img.jpg');
+    /* background-color: blue; */
+}
+.cls-content {
+    padding-top: 23vh;
+}
+.cls-content .cls-content-sm {
+    text-align: center;
+}

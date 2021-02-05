@@ -1,0 +1,60 @@
+Navigation Dashboard
+.brand-text {
+    font-size: 10px;
+}
+/* Footer Dashboard */
+.pad-lft {
+    text-align: right;
+    padding-right: 20px;
+}
+.navbar-content {
+    background: linear-gradient(90deg, #4F0505 12.29%, #FF0404 100%);
+}
+.navbar-header::before {
+    background-color: #4F0606;
+}
+.nano-content {
+    background: linear-gradient(189.53deg, #4F0606 17.52%, #F70404 97.65%);
+    color: #fff;
+}
+.mainnav-profile .profile-wrap, #mainnav .mainnav-profile .list-group, #mainnav-menu>.active {
+    background-color: transparent;
+}
+.mainnav-profile .mnp-name, .mainnav-profile .mnp-desc, #mainnav .list-header, #mainnav .mainnav-profile .list-group-item {
+    color: #fff;
+}
+.dropdown-menu > .disabled > a,
+.dropdown-menu > .disabled > a:hover {
+    color: black;
+    background-color: pink;
+}
+#mainnav-menu li a:hover {
+    background-color: #25476a;
+    color: #fff;
+    margin: 0 5px;
+    padding-right: 13px;
+    border-radius: 3px;
+}
+#mainnav .mainnav-profile .list-group-item:hover {
+    background-color: #25476a;
+    color: #fff;
+    margin: 0 5px;
+    padding-right: 13px;
+    border-radius: 3px;
+}
+#mainnav-menu .active:not(.active-sub)>a {
+    background-color: #1861ac;
+    color: #fff;
+    margin: 0 5px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 3px;
+}
+
+/* Content */
+#page-head {
+    background: linear-gradient(90deg, #4F0505 12.29%, #FF0404 100%);
+}
+#content-container:before {
+    background-color: transparent;
+}

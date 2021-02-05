@@ -31,143 +31,144 @@
                     <div class="mar-ver pad-btm">
                         <h1 class="h3">Rekruitasi PT. Cerebrum Edukanesia</h1>
                     </div>
-                    <form class="panel-body form-horizontal form-padding" action="{{ url('check')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-        
-                        <!--Text Input-->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="demo-text-input">Nama Lengkap</label>
-                            <div class="col-md-9">
-                                <input type="text" id="nama-input" class="form-control" placeholder="Nama Lengkap" name="name">
-                            </div>
+                    @if (count($data) == 0)
+                        <div style="text-align: center">
+                            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 200px">
+                            <h1 class="h3">Rekruitasi Kerja Belum Tersedia</h1>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="demo-text-input">Tempat Lahir</label>
-                            <div class="col-md-9">
-                                <input type="text" id="tempat-input" class="form-control" placeholder="Nama Lengkap" name="born_in">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="demo-text-input">Tanggal Lahir</label>
-                            <div class="col-md-9">
-                                <input id="tanggal-input" type="text" class="form-control" placeholder="Tanggal Lahir" name="dob">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="demo-text-input">Domisili</label>
-                            <div class="col-md-9">
-                                <input id="domisili-input" type="text" class="form-control" placeholder="Tanggal Lahir" name="live_at">
-                            </div>
-                        </div>
-
-                        <!--Text Input-->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="demo-text-input">No Telfon WhatsApp</label>
-                            <div class="col-md-9">
-                                <input type="text" id="telfon-input" class="form-control" placeholder="No Telfon" name="phone_number">
-                            </div>
-                        </div>
-        
-                        <!--Email Input-->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="demo-email-input">Email</label>
-                            <div class="col-md-9">
-                                <input type="email" id="email-input" class="form-control" placeholder="Enter your email" name="email">
-                            </div>
-                        </div>
-
-                        <div class="form-group pad-ver">
-                            <label class="col-md-3 control-label">Jenis Kelamin</label>
-                            <div class="col-md-9">
-                                <div class="radio">
-        
-                                    <!-- Inline radio buttons -->
-                                    <input id="gender" class="magic-radio" type="radio" name="gender" value="Laki - laki" checked>
-                                    <label for="gender">Laki - laki</label>
-        
-                                    <input id="gender-2" class="magic-radio" type="radio" name="gender" value="Perempuan">
-                                    <label for="gender-2">Perempuan</label>    
-        
+                        @else
+                        <form class="panel-body form-horizontal form-padding" action="{{ url('check')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+            
+                            <!--Text Input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-text-input">Nama Lengkap</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="nama-input" class="form-control" placeholder="Nama Lengkap" name="name">
                                 </div>
                             </div>
-                        </div>
-        
-                        <div class="form-group pad-ver">
-                            <label class="col-md-3 control-label">Pendidikan Terakhir</label>
-                            <div class="col-md-9">
-                                <div class="radio">
-        
-                                    <!-- Inline radio buttons -->
-                                    <input id="education" class="magic-radio" type="radio" name="last_education" value="SMA/SMK Sederajat" checked>
-                                    <label for="education">SMA/SMK Sederajat</label>
-        
-                                    <input id="education-2" class="magic-radio" type="radio" name="last_education" value="D3">
-                                    <label for="education-2">D3</label>
-        
-                                    <input id="education-3" class="magic-radio" type="radio" name="last_education" value="Sarjana">
-                                    <label for="education-3">Sarjana</label>
-
-                                    <input id="education-4" class="magic-radio" type="radio" name="last_education" value="Magister">
-                                    <label for="education-4">Magister</label>
-        
+    
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-text-input">Tempat Lahir</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="tempat-input" class="form-control" placeholder="Nama Lengkap" name="born_in">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group pad-ver">
-                            <label class="col-md-3 control-label">Posisi</label>
-                            <div class="col-md-9">
-                                <div class="radio">
-        
-                                    <!-- Inline radio buttons -->
-                                    <input id="position" class="magic-radio" type="radio" name="position" value="IT" checked>
-                                    <label for="position">IT</label>
-        
-                                    <input id="position-2" class="magic-radio" type="radio" name="position" value="QC">
-                                    <label for="position-2">QC</label>
-        
-                                    <input id="position-3" class="magic-radio" type="radio" name="position" value="Sales">
-                                    <label for="position-3">Sales</label>
-
-                                    <input id="position-4" class="magic-radio" type="radio" name="position" value="Akademik">
-                                    <label for="position-4">Akademik</label>
-        
+    
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-text-input">Tanggal Lahir</label>
+                                <div class="col-md-9">
+                                    <input id="tanggal-input" type="text" class="form-control" placeholder="Tanggal Lahir" name="dob">
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Input CV</label>
-                            <div class="col-md-9">
-                                <span class="pull-left btn btn-primary btn-file">
-                                Browse... <input type="file" name="file_cv">
-                                </span>
+    
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-text-input">Domisili</label>
+                                <div class="col-md-9">
+                                    <input id="domisili-input" type="text" class="form-control" placeholder="Tanggal Lahir" name="live_at">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Input Portopolio</label>
-                            <div class="col-md-9">
-                                <span class="pull-left btn btn-primary btn-file">
-                                Browse... <input type="file" name="file_portofolio">
-                                </span>
+    
+                            <!--Text Input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-text-input">No Telfon WhatsApp</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="telfon-input" class="form-control" placeholder="No Telfon" name="phone_number">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group ">
-                            <div class="row">
-                                <div class="col-md-2"></div>
-                                    <div class="col-md-8">
-                                        <input type="submit" class="btn btn-primary btn-lg btn-block">  
+            
+                            <!--Email Input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-email-input">Email</label>
+                                <div class="col-md-9">
+                                    <input type="email" id="email-input" class="form-control" placeholder="Enter your email" name="email">
+                                </div>
+                            </div>
+    
+                            <div class="form-group pad-ver">
+                                <label class="col-md-3 control-label">Jenis Kelamin</label>
+                                <div class="col-md-9">
+                                    <div class="radio">
+            
+                                        <!-- Inline radio buttons -->
+                                        <input id="gender" class="magic-radio" type="radio" name="gender" value="Laki - laki">
+                                        <label for="gender">Laki - laki</label>
+            
+                                        <input id="gender-2" class="magic-radio" type="radio" name="gender" value="Perempuan">
+                                        <label for="gender-2">Perempuan</label>    
+            
                                     </div>
-                                <div class="col-md-2"></div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+            
+                            <div class="form-group pad-ver">
+                                <label class="col-md-3 control-label">Pendidikan Terakhir</label>
+                                <div class="col-md-9">
+                                    <div class="radio">
+            
+                                        <!-- Inline radio buttons -->
+                                        <input id="education" class="magic-radio" type="radio" name="last_education" value="SMA/SMK Sederajat">
+                                        <label for="education">SMA/SMK Sederajat</label>
+            
+                                        <input id="education-2" class="magic-radio" type="radio" name="last_education" value="D3">
+                                        <label for="education-2">D3</label>
+            
+                                        <input id="education-3" class="magic-radio" type="radio" name="last_education" value="Sarjana">
+                                        <label for="education-3">Sarjana</label>
+    
+                                        <input id="education-4" class="magic-radio" type="radio" name="last_education" value="Magister">
+                                        <label for="education-4">Magister</label>
+            
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="form-group pad-ver">
+                                <label class="col-md-3 control-label">Posisi</label>
+                                <div class="col-md-9">
+                                    <div class="radio">
+            
+                                        <!-- Inline radio buttons -->
+                                        @foreach ($data as $item)
+                                            {{-- $id = "position-" .$loop->iteration; --}}
+                                            <input id="position-{{$loop->iteration}}" class="magic-radio" type="radio" name="position" value="{{$item->name}}">
+                                            <label for="position-{{$loop->iteration}}">{{$item->name}}</label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Input CV</label>
+                                <div class="col-md-9">
+                                    <span class="pull-left btn btn-primary btn-file">
+                                    Browse... <input type="file" name="file_cv">
+                                    </span>
+                                </div>
+                            </div>
+    
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Input Portopolio</label>
+                                <div class="col-md-9">
+                                    <span class="pull-left btn btn-primary btn-file">
+                                    Browse... <input type="file" name="file_portofolio">
+                                    </span>
+                                </div>
+                            </div>
+    
+                            <div class="form-group ">
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <input type="submit" class="btn btn-primary btn-lg btn-block">  
+                                        </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 </div>
+            </div>
         </div>
     </div>
 

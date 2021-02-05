@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\MasterRecruitment;
+use App\MasterJobRecruitment;
+use Asset\cv_upload;
+use Asset\portofolio_upload;
 
 class MasterRecruitmentController extends Controller
 {
@@ -57,12 +60,12 @@ class MasterRecruitmentController extends Controller
 
         $cv = $request->file('file_cv');
         $cv_name = "cv_" . $request->name . "_" . date('Y-m-d H-i-s') . "." . $cv->getClientOriginalExtension();
-        $tujuan_upload = public_path(cv_upload);
+        $tujuan_upload = 'cv_upload';
         $cv->move($tujuan_upload, $cv_name);
 
         $portofolio = $request->file('file_portofolio');
         $portofolio_name = "portofolio_" . $request->name . "_" . date('Y-m-d H-i-s') . "." . $cv->getClientOriginalExtension();
-        $tujuan_upload = public_path(portofolio_upload);
+        $tujuan_upload = 'portofolio_upload';
         $portofolio->move($tujuan_upload, $portofolio_name);
 
 
@@ -81,7 +84,8 @@ class MasterRecruitmentController extends Controller
 
         
         
-        return redirect('/success');
+        // return redirect('/success');
+        return view('recruitment.recruitmentSucces');
     }
 
     /**

@@ -1,16 +1,18 @@
 @extends('layouts/templateAdmin')
 @section('title','Masterdata Divisi')
+@section('content-title','Data Divisi')
+@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-
 <div class="panel">
     <div class="panel-heading">
-        <h3 class="panel-title">List Divisi</h3>
+        <h3 class="panel-title text-center text-bold">Data Divisi</h3>
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 @if (session('status'))
-                <div class="alert alert-info">
+                <div class="alert alert-info alert-dismissable">
+                    <button class="close" data-dismiss="alert"><i class="pci-cross pci-circle"></i></button>
                     {{session('status')}}
                 </div>
                 @endif
@@ -23,7 +25,7 @@
                         </a>
                     </div>
                     <div class="col-sm-7"></div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 hidden">
                         <div class="form-group float-right">
                             <input type="text" name="cari-divisi" id="cari-divisi" class="form-control"
                                 placeholder="Cari Divisi" />

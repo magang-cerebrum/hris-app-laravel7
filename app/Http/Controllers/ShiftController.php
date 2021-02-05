@@ -42,7 +42,7 @@ class ShiftController extends Controller
             'end_working_time' => 'required'
         ]);
         MasterShift::create($request->all());
-        return redirect('/data/shift')->with('status','Waktu Shift Berhasil Ditambahkan');
+        return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Ditambahkan');
     }
 
     /**
@@ -87,7 +87,7 @@ class ShiftController extends Controller
                 'start_working_time' => $request->start_working_time,
                 'end_working_time' => $request->end_working_time
             ]);
-        return redirect('/data/shift')->with('status','Waktu Shift Berhasil Dirubah');
+        return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Dirubah');
     }
 
     /**
@@ -99,6 +99,6 @@ class ShiftController extends Controller
     public function destroy(MasterShift $shift)
     {
         MasterShift::destroy($shift->id);
-        return redirect('/data/shift')->with('status','Waktu Shift Berhasil Dihapus');
+        return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Dihapus');
     }
 }

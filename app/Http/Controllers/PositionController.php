@@ -38,7 +38,7 @@ class PositionController extends Controller
     {
         $request->validate(['name' => 'required']);
         MasterPosition::create($request->all());
-        return redirect('/data/position')->with('status','Jabatan Berhasil Ditambahkan');
+        return redirect('/admin/position')->with('status','Jabatan Berhasil Ditambahkan');
     }
 
     /**
@@ -75,7 +75,7 @@ class PositionController extends Controller
         $request->validate(['name' => 'required']);
         MasterPosition::where('id', $position->id)
             ->update(['name' => $request->name]);
-        return redirect('/data/position')->with('status','Jabatan Berhasil Dirubah');
+        return redirect('/admin/position')->with('status','Jabatan Berhasil Dirubah');
     }
 
     /**
@@ -87,6 +87,6 @@ class PositionController extends Controller
     public function destroy(MasterPosition $position)
     {
         MasterPosition::destroy($position->id);
-        return redirect('/data/position')->with('status','Jabatan Berhasil Dihapus');
+        return redirect('/admin/position')->with('status','Jabatan Berhasil Dihapus');
     }
 }

@@ -2,7 +2,7 @@
     background-image: url('../../img/background/bg-img.jpg');
 }
 .cls-content {
-    padding-top: 5vh;
+    padding-top: 3vh;
 }
 .cls-content .cls-content-sm {
     text-align: left;
@@ -20,20 +20,12 @@ label.col-md-3{
 .cls-content .cls-content-sm {
     width: 80%;
 }
-@media (min-width: 350px){
-    textarea.form-control {
-        height: 100px;
-    }
-}
 @media (min-width: 992px){
     .col-md-3 {
         width: 20%;
     }
     .col-md-9 {
         width: 80%;
-    }
-    textarea.form-control {
-        height: 50px;
     }
 }
 .pad-ver {

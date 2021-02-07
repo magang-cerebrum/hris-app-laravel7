@@ -19,7 +19,7 @@ class MasterRecruitmentController extends Controller
     public function index()
     {
         $data = MasterRecruitment::paginate(5);
-        return view('masterData.adminRecruitment', ['data' => $data]);
+        return view('masterData.recruitment.adminRecruitment', ['data' => $data]);
     }
 
     /**

@@ -21,7 +21,7 @@ class MasterJobController extends Controller
     public function indexJob()
     {
         $dataJob = MasterJobRecruitment::all();
-        return view('recruitment.job', ['dataJob' => $dataJob]);
+        return view('masterData.job.job', ['dataJob' => $dataJob]);
     }
 
     /**
@@ -31,7 +31,7 @@ class MasterJobController extends Controller
      */
     public function create()
     {
-        //
+        return view('masterData.job.jobAdd');
     }
 
     /**
@@ -42,7 +42,14 @@ class MasterJobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required|alpha',
+            'descript'=>'required',
+            'required'=>'required'
+        ]);
+
+        MasterJobRecruitment::create($request->all());
+        return redirect('/admin/job');
     }
 
     /**

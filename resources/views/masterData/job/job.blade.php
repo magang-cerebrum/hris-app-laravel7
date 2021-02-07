@@ -1,24 +1,27 @@
 @extends('layout/templateAdmin')
 @section('title', 'Rekruitasi')
+@section('content-title', 'Rekruitasi / Lowongan Tersedia')
+@section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
         <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Daftar Pelamar</h3>
-            </div>
-
             <!-- Striped Table -->
             <!--===================================================-->
             <div class="panel-body">
                 <div class="table-responsive">
-                    <div class="col-sm-2">
-                        <a href="{{url('/admin/job/add')}}" class="btn btn-primary btn-labeled"
-                            style="margin-bottom:15px">
-                            <i class="btn-label fa fa-plus"></i>
-                            Tambah Divisi
-                        </a>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <a href="{{url('/admin/job/add')}}" class="btn btn-primary btn-labeled"
+                                style="margin-bottom:15px">
+                                <i class="btn-label fa fa-plus"></i>
+                                Tambah Divisi
+                            </a>
+                        </div>
                     </div>
                     @if (count($dataJob) == 0)
-                        <h1>Data Kosong</h1>
+                        <div class="text-center">
+                            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+                            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+                        </div>
                         @else
                             <table id="masterdata-division"
                             class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
@@ -39,7 +42,7 @@
                                             <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
                                             <td class="text-center">{{$item->name}}</td>
                                             <td class="text-center">{{$item->descript}}</td>
-                                            <td class="text-center">{{$item->require}}</td>
+                                            <td class="text-center">{{$item->required}}</td>
                                             <td class="text-center">
                                                 <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
                                                     @method('delete')

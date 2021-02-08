@@ -21,6 +21,7 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
+//login
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
@@ -28,6 +29,8 @@ Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index']);
 Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index']);
 Route::get('/staff/password/{user}',[UserController::class,'edit']);
 Route::put('/staff/password/{user}/saved',[UserController::class,'update']);
+Route::get('/admin/password/{user}',[UserController::class,'edit']);
+Route::put('/admin/password/{user}/saved',[UserController::class,'update']);
 
 //route recruitment
 Route::get('/recruitment',[ MasterJobController::class,'index']);

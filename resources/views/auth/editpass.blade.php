@@ -28,8 +28,32 @@
     <div class="cls-content">
         <div class="cls-content-sm panel">
             <div class="panel-body">
+                
+                @if (Request::is('admin/password/*'))
+                    
                 <div class="mar-ver pad-btm">
-                    <h1 class="h3">Change Password</h1>
+                    <h1 class="h3">Admin Change Password</h1>
+                    <p>Human Resource Information System Change Password Pages</p>
+                </div>
+                <form action="/admin/password/{{$pass->id}}/saved" method="post">
+                    @csrf
+                    @method('put')
+                    <div class="form-group">
+                       Password Lama : <input type="password" name="oldpassword" class="form-control" placeholder="Old Password" autofocus>
+                    </div>
+                    @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                    @endif
+                    <div class="form-group">
+                       Password Baru : <input name="newpassword" type="password" class="form-control" placeholder="New Password">
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+                 </form>
+                @elseif (Request::is('staff/password/*'))
+                <div class="mar-ver pad-btm">
+                    <h1 class="h3">Staff Change Password</h1>
                     <p>Human Resource Information System Change Password Pages</p>
                 </div>
                 <form action="/staff/password/{{$pass->id}}/saved" method="post">
@@ -47,7 +71,9 @@
                        Password Baru : <input name="newpassword" type="password" class="form-control" placeholder="New Password">
                     </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+
                 </form>
+                @endif
             </div>
     
         </div>

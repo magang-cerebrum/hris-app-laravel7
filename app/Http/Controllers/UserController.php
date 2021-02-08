@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Hash;
 use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class UserController extends Controller
 {
     /**
@@ -80,9 +79,20 @@ class UserController extends Controller
            }
            else return back()->with('error','Password Lama Salah !');    
 
-           MasterUser::Where('id',$user->id)->update([
-               'password'=>Hash::make($request->newpassword)
-           ]);return redirect('/dashboard/staff');
+           
+           if(Auth::user()->role_id == 1){
+            MasterUser::Where('id',$user->id)->update([
+                'password'=>Hash::make($request->newpassword)
+            ]);
+            return redirect('/admin/dashboard');
+           }
+           else{
+            MasterUser::Where('id',$user->id)->update([
+                'password'=>Hash::make($request->newpassword)
+            ]);
+            return redirect('/staff/dashboard');
+           }
+           
         
     }
 

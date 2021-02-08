@@ -24,16 +24,12 @@ Route::get('/home', function () {
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
-<<<<<<< HEAD
-Route::get('/dashboard/admin', [AdminAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/dashboard/staff', [StaffAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/staff/password/{user}',[UserController::class,'edit'])->name('password');
-=======
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index']);
 Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index']);
 Route::get('/staff/password/{user}',[UserController::class,'edit']);
->>>>>>> 37e56322cca5adeea35dd55f6ca45bb31d324d8a
 Route::put('/staff/password/{user}/saved',[UserController::class,'update']);
+Route::get('/admin/password/{user}',[UserController::class,'edit']);
+Route::put('/admin/password/{user}/saved',[UserController::class,'update']);
 
 //route recruitment
 Route::get('/recruitment',[ MasterJobController::class,'index']);

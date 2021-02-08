@@ -28,19 +28,19 @@
                     @csrf
                     <div class="form-group">
                         <input required type="text" name="nip" class="form-control" placeholder="NIP or Email" autofocus>
-                        @error('nip')
-                                <div class="invalid-feedback is-invalid" role="alert">
-                                    <strong>Error : {{ session()->get('error')}}</strong>
-                                </div>
-                            @enderror
+                        
+                                {{-- <div class="invalid-feedback is-invalid" role="alert">
+                                    <strong>{{ session()->get('errornip')}}</strong>
+                                </div> --}}
+                            
                     </div>
                     <div class="form-group">
                         <input name="password" type="password" class="form-control" placeholder="Password" required>
-                        @error('password')
+                        
                         <div class="invalid-feedback is-invalid" role="alert">
-                            <strong>Error : {{ session()->get('error')}}</strong>
+                            <strong>{{ session()->get('error')}}</strong>
                         </div>
-                    @enderror
+                    
                     </div>
            
                     <div class="checkbox pad-btm text-left">

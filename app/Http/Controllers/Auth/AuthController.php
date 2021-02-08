@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\MasterUser;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
@@ -17,10 +19,10 @@ class AuthController extends Controller
     elseif(Auth::check() == true){
         $stats = Auth::User()->role_id;
         if($stats==1){
-            return redirect('/dashboard/admin');
+            return redirect('/admin/dashboard');
         }
         elseif($stats == 2){
-            return redirect('/dashboard/staff');
+            return redirect('/staff/dashboard');
         }
         // else return redirect('/login');
     }
@@ -32,27 +34,38 @@ class AuthController extends Controller
             'nip'=>'required|string',
             'password' => 'required|string',
         ]);
-        // $user = MasterUser::all();
+        // $userpass = DB::table('master_users')->where(['nip'=>$request->nip])->get(); 
+        //     $user = MasterUser::where('nip',$request->nip)->first();
+        $user = MasterUser::where('nip',$request->nip)->first();
+        // dump($user['password']);
+        // die;
         $credentials = $request->only('nip','password');
         // $remember_me  = $request->remember ? true : false;
         if (Auth::attempt($credentials) ) {
-            $userlog = MasterUser::where(['nip'=>$credentials['nip']]);
+            // $userlog = MasterUser::where(['nip'=>$credentials['nip']]);
             $stats = Auth::User()->role_id;
             if($stats==1){
-                return redirect('/dashboard/admin');
+                return redirect('/admin/dashboard');
             }
             elseif($stats == 2){
-                return redirect('/dashboard/staff');
+                return redirect('/staff/dashboard');
             }
             // return dd(MasterUser::all());
         }
-        // else if (!Hash::check( $request->password,$user->password)   ){
-        //     // $request->validate([
-        //     //     // 'oldpassword'=>User::get()->password,
-        //     //     'newpassword'=>'required'
-        //     //     ]);
-        //     return back()->with('error','Password Salah !');
+        else if ( !Hash::check($request->password,$user['password']) or $request->nip!=$user['nip']){
+            // $request->validate([
+            //     // 'oldpassword'=>User::get()->password,
+            //     'newpassword'=>'required'
+            //     ]);
+            return back()->with('error','NIP atau Password Salah !');
+        }
+        // else if($request->nip!=$user['nip']){
+        //     return back()->with('errornip','NIP tidak ditemukan !');
         // }
+        // else if (!Hash::check($request->nip, $user[0]->nip)){
+
+        // }
+
         // return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
     }
 

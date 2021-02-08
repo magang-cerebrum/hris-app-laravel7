@@ -17,7 +17,7 @@ class AdminAuthDashboardController extends Controller
                 'nama'=>$user->name,
                 'email'=>$user->email,
                 'role'=>$user->role_id,
-                'stats'=>$user
+                'id'=>$user->id
             ]);
         }
     }

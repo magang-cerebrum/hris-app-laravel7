@@ -104,7 +104,7 @@
                                         <a href="{{ url('admin/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin/password')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
+                                        <a href="/admin/password/{{$id}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
                                         <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
@@ -176,7 +176,7 @@
                                         <a href="{{ url('admin/profile')}}" class="list-group-item">
                                             <i class="demo-psi-male icon-lg icon-fw"></i> Profile
                                         </a>
-                                        <a href="{{ url('admin/password')}}" class="list-group-item">
+                                        <a href="/admin/password/{{$id}}" class="list-group-item">
                                             <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                         </a>
                                         <a href="{{ url('login')}}" class="list-group-item">

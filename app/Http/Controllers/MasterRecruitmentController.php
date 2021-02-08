@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\MasterRecruitment;
 use App\MasterJobRecruitment;
-use Asset\cv_upload;
-use Asset\portofolio_upload;
+use Asset\upload_recruitment\cv_upload;
+use Asset\upload_recruitment\portofolio_upload;
 
 class MasterRecruitmentController extends Controller
 {
@@ -18,8 +19,15 @@ class MasterRecruitmentController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $data = MasterRecruitment::paginate(5);
-        return view('masterData.recruitment.adminRecruitment', ['data' => $data]);
+        return view('masterData.recruitment.adminRecruitment', [
+            'data' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -60,12 +68,12 @@ class MasterRecruitmentController extends Controller
 
         $cv = $request->file('file_cv');
         $cv_name = "cv_" . $request->name . "_" . date('Y-m-d H-i-s') . "." . $cv->getClientOriginalExtension();
-        $tujuan_upload = 'cv_upload';
+        $tujuan_upload = 'upload_recruitment/cv_upload';
         $cv->move($tujuan_upload, $cv_name);
 
         $portofolio = $request->file('file_portofolio');
         $portofolio_name = "portofolio_" . $request->name . "_" . date('Y-m-d H-i-s') . "." . $cv->getClientOriginalExtension();
-        $tujuan_upload = 'portofolio_upload';
+        $tujuan_upload = 'upload_recruitment/portofolio_upload';
         $portofolio->move($tujuan_upload, $portofolio_name);
 
 
@@ -130,11 +138,11 @@ class MasterRecruitmentController extends Controller
      */
     public function destroy(MasterRecruitment $recruitment)
     {
-        $path_cv = 'cv_upload/'.$recruitment->file_cv;
+        $path_cv = 'upload_recruitment/cv_upload/'.$recruitment->file_cv;
         $file_path_cv = public_path($path_cv);
         unlink($file_path_cv);
 
-        $path_porto = 'portofolio_upload/'.$recruitment->file_portofolio;
+        $path_porto = 'upload_recruitment/portofolio_upload/'.$recruitment->file_portofolio;
         $file_path_porto = public_path($path_porto);
         unlink($file_path_porto);
 

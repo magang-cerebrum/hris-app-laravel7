@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DataStaffController extends Controller
 {
@@ -15,6 +16,7 @@ class DataStaffController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $staff = DB::table('master_users')
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
@@ -31,7 +33,13 @@ class DataStaffController extends Controller
                 )
         ->get();
         // $staff = MasterUser::paginate(5);
-        return view('masterdata.datastaff.list',['staff' => $staff]);
+        return view('datastaff.list',[
+            'staff' => $staff,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -41,6 +49,7 @@ class DataStaffController extends Controller
      */
     public function create()
     {   
+        $user = Auth::user();
         $divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->get();
         $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->get();
         $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
@@ -51,6 +60,10 @@ class DataStaffController extends Controller
             'positions'=>$positions,
             'roles'=>$roles,
             'shifts'=>$shifts,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
             ]
         );
     }
@@ -104,6 +117,7 @@ class DataStaffController extends Controller
      */
     public function edit(MasterUser $staff)
     {
+        $user = Auth::user();
         $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
@@ -114,7 +128,11 @@ class DataStaffController extends Controller
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles,
-            'shifts'=>$shifts
+            'shifts'=>$shifts,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
         ]);
     }
 

@@ -1,4 +1,4 @@
-@extends('layout/templateAdmin')
+@extends('layouts/templateAdmin')
 @section('title', 'Rekruitasi')
 @section('content-title', 'Rekruitasi / Lowongan Tersedia')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')

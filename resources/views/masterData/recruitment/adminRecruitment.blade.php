@@ -1,55 +1,63 @@
-@extends('layout/templateAdmin')
+@extends('layouts/templateAdmin')
 @section('title', 'Rekruitasi')
+@section('content-title', 'Rekruitasi / Daftar Rekruitasi')
+@section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
         <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Daftar Pelamar</h3>
-            </div>
-
             <!-- Striped Table -->
             <!--===================================================-->
             <div class="panel-body">
                 <div class="table-responsive">
                     @if (count($data) == 0)
-                        <h1>Data Kosong</h1>
+                        <div class="text-center">
+                            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+                            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+                        </div>
                         @else
-                            <table class="table table-striped">
+                            <table id="masterdata-division"
+                            class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
+                            role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
+                            cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Nama Lengkap</th>
-                                        <th>Tempat Tanggal Lahir</th>
-                                        <th>Domisili</th>
-                                        <th>No Telfon</th>
-                                        <th>Email</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Pendidikan Terakhir</th>
-                                        <th>Posisi</th>
-                                        <th>File</th>
-                                        <th>Aksi</th>
+                                        <th class="sorting text-center" tabindex="0">No</th>
+                                        <th class="sorting text-center" tabindex="0">Nama Lengkap</th>
+                                        <th class="sorting text-center" tabindex="0">Tempat Tanggal Lahir</th>
+                                        <th class="sorting text-center" tabindex="0">Domisili</th>
+                                        <th class="sorting text-center" tabindex="0">No Telfon</th>
+                                        <th class="sorting text-center" tabindex="0">Email</th>
+                                        <th class="sorting text-center" tabindex="0">Jenis Kelamin</th>
+                                        <th class="sorting text-center" tabindex="0">Pendidikan Terakhir</th>
+                                        <th class="sorting text-center" tabindex="0">Posisi</th>
+                                        <th class="sorting text-center" tabindex="0">File</th>
+                                        <th class="sorting text-center" tabindex="0">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $item)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$item->name}}</td>
-                                            <td>{{$item->dob}}</td>
-                                            <td>{{$item->live_at}}</td>
-                                            <td>{{$item->phone_number}}</td>
-                                            <td>{{$item->email}}</td>
-                                            <td>{{$item->gender}}</td>
-                                            <td>{{$item->last_education}}</td>
-                                            <td>{{$item->position}}</td>
-                                            <td>
-                                                <a href="{{ asset('/cv_upload/'.$item->file_cv)}}" target="blank">
-                                                    <button class="btn btn-primary btn-lg btn-block">Cv</button>
+                                        <tr class="sorting text-center" tabindex="0">
+                                            <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
+                                            <td class="text-center">{{$item->name}}</td>
+                                            <td class="text-center">{{$item->dob}}</td>
+                                            <td class="text-center">{{$item->live_at}}</td>
+                                            <td class="text-center">{{$item->phone_number}}</td>
+                                            <td class="text-center">{{$item->email}}</td>
+                                            <td class="text-center">{{$item->gender}}</td>
+                                            <td class="text-center">{{$item->last_education}}</td>
+                                            <td class="text-center">{{$item->position}}</td>
+                                            <td class="text-center">
+                                                <a href="{{ asset('/upload_recruitment/cv_upload/'.$item->file_cv)}}" target="blank">
+                                                    <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Buka CV">
+                                                        <i class="fa fa-file icon-lg"></i>
+                                                    </button>
                                                 </a>
-                                                <a href="{{ asset('/portofolio_upload/'.$item->file_portofolio)}}" target="blank">
-                                                    <button class="btn btn-primary btn-lg btn-block">Portofolio</button>
+                                                <a href="{{ asset('/upload_recruitment/portofolio_upload/'.$item->file_portofolio)}}" target="blank">
+                                                    <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Buka Portofolio">
+                                                        <i class="fa fa-file icon-lg"></i>
+                                                    </button>
                                                 </a>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <form action="/admin/recruitment/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
                                                     @method('delete')
                                                     @csrf

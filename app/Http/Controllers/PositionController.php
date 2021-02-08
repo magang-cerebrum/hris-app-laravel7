@@ -14,8 +14,15 @@ class PositionController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $position = MasterPosition::paginate(5);
-        return view('masterdata.position.list',['position' => $position]);
+        return view('masterdata.position.list',[
+            'position' => $position,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -25,7 +32,13 @@ class PositionController extends Controller
      */
     public function create()
     {
-        return view('masterdata.position.create');
+        $user = Auth::user();
+        return view('masterdata.position.create', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -60,7 +73,14 @@ class PositionController extends Controller
      */
     public function edit(MasterPosition $position)
     {
-        return view('masterdata.position.edit',['position' => $position]);
+        $user = Auth::user();
+        return view('masterdata.position.edit',[
+            'position' => $position,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**

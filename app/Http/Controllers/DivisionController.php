@@ -16,8 +16,15 @@ class DivisionController extends Controller
      */
     public function index()
     {   
+        $user = Auth::user();
         $division = MasterDivision::paginate(5);
-        return view('masterdata.division.list',['division' => $division]);
+        return view('masterdata.division.list',[
+            'division' => $division,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -27,7 +34,13 @@ class DivisionController extends Controller
      */
     public function create()
     {
-        return view('masterdata.division.create');
+        $user = Auth::user();
+        return view('masterdata.division.create', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -62,7 +75,14 @@ class DivisionController extends Controller
      */
     public function edit(MasterDivision $division)
     {
-        return view('masterdata.division.edit',['division' => $division]);
+        $user = Auth::user();
+        return view('masterdata.division.edit',[
+            'division' => $division,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**

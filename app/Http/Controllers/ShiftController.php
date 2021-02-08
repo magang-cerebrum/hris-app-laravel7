@@ -14,8 +14,15 @@ class ShiftController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $shift = MasterShift::paginate(5);
-        return view('masterdata.shift.list',['shift' => $shift]);
+        return view('masterdata.shift.list',[
+            'shift' => $shift,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -25,7 +32,13 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        return view('masterdata.shift.create');
+        $user = Auth::user();
+        return view('masterdata.shift.create', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -64,7 +77,14 @@ class ShiftController extends Controller
      */
     public function edit(MasterShift $shift)
     {
-        return view('masterdata.shift.edit',['shift' => $shift]);
+        $user = Auth::user();
+        return view('masterdata.shift.edit',[
+            'shift' => $shift,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**

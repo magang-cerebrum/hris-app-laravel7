@@ -15,8 +15,9 @@ class AdminAuthDashboardController extends Controller
         else if(Gate::allows('is_admin')){
             // return 'Admin';
             $user = Auth::user();
-
+            $data = MasterRecruitment::paginate(5);
             return view('dashboard.admin',[
+                'data_recruitment'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

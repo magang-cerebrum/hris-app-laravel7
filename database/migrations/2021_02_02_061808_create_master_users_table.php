@@ -37,6 +37,7 @@ class CreateMasterUsersTable extends Migration
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('shift_id')->nullable();
             $table->timestamps();
+            // $table->rememberToken();
             
             $table->foreign('division_id')->references('id')->on('master_divisions')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('position_id')->references('id')->on('master_positions')->onUpdate('cascade')->onDelete('set null');

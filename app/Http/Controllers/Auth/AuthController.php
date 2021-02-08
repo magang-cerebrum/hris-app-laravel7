@@ -15,20 +15,20 @@ class AuthController extends Controller
 {
     public function login()
     {
-    if (Auth::check()==false){
+        if (Auth::check()==false){
+            return view('auth.login');
+        }
+        elseif(Auth::check() == true){
+            $stats = Auth::User()->role_id;
+            if($stats==1){
+                return redirect('/admin/dashboard');
+            }
+            elseif($stats == 2){
+                return redirect('/staff/dashboard');
+            }
+            // else return redirect('/login');
+        }
         return view('auth.login');
-    }
-    elseif(Auth::check() == true){
-        $stats = Auth::User()->role_id;
-        if($stats==1){
-            return redirect('/admin/dashboard');
-        }
-        elseif($stats == 2){
-            return redirect('/staff/dashboard');
-        }
-        // else return redirect('/login');
-    }
-    return view('auth.login');
     }
 
     public function authenticate(Request $request)
@@ -73,13 +73,13 @@ class AuthController extends Controller
         // }
 
         // return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
+        return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
 
         }
-        return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
+        public function logout() {
+            Auth::logout();
+            return redirect('login');
+        }
     }
 
-    public function logout() {
-        Auth::logout();
-        return redirect('login');
-    }
-}
+

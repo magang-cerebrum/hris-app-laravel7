@@ -18,10 +18,10 @@ class DataStaffController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')
-        ->join('master_divisions','master_users.division_id','=','master_divisions.id')
-        ->join('master_positions','master_users.position_id','=','master_positions.id')
-        ->join('master_roles','master_users.role_id','=','master_roles.id')
-        ->join('master_shifts','master_users.shift_id','=','master_shifts.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
+        ->leftJoin('master_shifts','master_users.shift_id','=','master_shifts.id')
         ->select(
                 'master_users.*',
                 'master_divisions.name as division_name',
@@ -55,7 +55,7 @@ class DataStaffController extends Controller
         $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
         $shifts = DB::table('master_shifts')->select('name as shift_name','id as shift_id')->get();
 
-        return view('datastaff.create',[
+        return view('masterdata.datastaff.create',[
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles,
@@ -95,7 +95,7 @@ class DataStaffController extends Controller
             'shift_id' => 'numeric'
         ]);
         MasterUser::create($request->all());
-        return redirect('/data/staff')->with('status','Data Staff Berhasil Ditambahkan');
+        return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Ditambahkan');
     }
 
     /**
@@ -123,7 +123,7 @@ class DataStaffController extends Controller
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
         $shifts = DB::table('master_shifts')->select('name as shifts_name','id as shifts_id')->get();
 
-        return view('datastaff.edit',[
+        return view('masterdata.datastaff.edit',[
             'staff' => $staff,
             'divisions'=>$divisions,
             'positions'=>$positions,
@@ -146,7 +146,7 @@ class DataStaffController extends Controller
     public function update(Request $request, MasterUser $staff)
     {
         $request->validate([
-            'nip' => 'required|numeric|unique:master_users,nip',
+            'nip' => 'required|numeric',
             'name' => 'required',
             'dob' => 'required',
             'phone_number' => 'numeric',
@@ -185,7 +185,7 @@ class DataStaffController extends Controller
                 'role_id' => $request->role_id,
                 'shift_id' => $request->shift_id
             ]);
-        return redirect('/data/staff')->with('status','Data Staff Berhasil Dirubah');
+        return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Dirubah');
     }
 
     /**
@@ -197,6 +197,6 @@ class DataStaffController extends Controller
     public function destroy(MasterUser $staff)
     {
         MasterUser::destroy($staff->id);
-        return redirect('/data/staff')->with('status','Data Staff Berhasil Dihapus');
+        return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Dihapus');
     }
 }

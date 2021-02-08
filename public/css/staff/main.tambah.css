@@ -58,3 +58,7 @@
 #content-container:before {
     background-color: transparent;
 }
+
+.panel-body {
+    padding: 35px 20px 25px;
+}

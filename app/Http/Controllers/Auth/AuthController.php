@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\MasterUser;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Access\Gate;
+
 class AuthController extends Controller
 {
     public function login()
@@ -26,6 +28,7 @@ class AuthController extends Controller
         }
         // else return redirect('/login');
     }
+    return view('auth.login');
     }
 
     public function authenticate(Request $request)
@@ -39,10 +42,12 @@ class AuthController extends Controller
         $user = MasterUser::where('nip',$request->nip)->first();
         // dump($user['password']);
         // die;
+
         $credentials = $request->only('nip','password');
-        // $remember_me  = $request->remember ? true : false;
         if (Auth::attempt($credentials) ) {
+
             // $userlog = MasterUser::where(['nip'=>$credentials['nip']]);
+
             $stats = Auth::User()->role_id;
             if($stats==1){
                 return redirect('/admin/dashboard');
@@ -50,6 +55,7 @@ class AuthController extends Controller
             elseif($stats == 2){
                 return redirect('/staff/dashboard');
             }
+
             
         }
         else if ( !Hash::check($request->password,$user['password']) or $request->nip!=$user['nip']){
@@ -67,10 +73,13 @@ class AuthController extends Controller
         // }
 
         // return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
+
+        }
+        return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
     }
 
     public function logout() {
         Auth::logout();
-        return redirect('/login');
+        return redirect('login');
     }
 }

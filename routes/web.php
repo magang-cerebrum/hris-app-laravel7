@@ -42,6 +42,7 @@ Route::delete('/admin/recruitment/{recruitment}',[ MasterRecruitmentController::
 Route::delete('/admin/job/{job}',[ MasterJobController::class,'destroy']);
 Route::get('/admin/job/add',[ MasterJobController::class,'create']);
 Route::post('/admin/job',[ MasterJobController::class,'store']);
+Route::get('/admin/job',[ MasterJobController::class,'indexJob']);
 //route masterdata staff
 Route::get('/admin/data-staff',[App\Http\Controllers\DataStaffController::class,'index']);
 Route::get('/admin/data-staff/add',[App\Http\Controllers\DataStaffController::class,'create']);

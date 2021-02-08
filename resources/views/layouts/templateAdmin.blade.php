@@ -131,8 +131,8 @@
             <div id="content-container">
                 <div id="page-head">
                     <div class="pad-all text-center">
-                        <h3>Selamat Datang Di Aplikasi HRIS </h3>
-                        <p>(Human Resource Information System)</p>
+                        <h3>@yield('content-title')</h3>
+                        <p>@yield('content-subtitle')</p>
                     </div>
                 </div>
                 <!--Page content-->
@@ -209,6 +209,7 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
+                                            <li><a href="{{ url('admin/achievement')}}"><i class="demo-psi-medal-2"></i>Pengghargaan</a></li>
 											<li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
@@ -225,7 +226,7 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/shift')}}"><i class="demo-psi-calendar-4"></i>Cuti</a></li>
+                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="demo-psi-calendar-4"></i>Cuti</a></li>
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
@@ -234,10 +235,17 @@
                                     
                                     <!--Menu list item-->
 						            <li>
-						                <a href="{{ url('admin/recruitment')}}">
+						                <a href="{{ url('#')}}">
 						                    <i class="fa fa-handshake-o"></i>
-						                    <span class="menu-title">Rekruitasi</span>
-						                </a>
+                                            <span class="menu-title">Rekruitasi</span>
+                                            <i class="arrow"></i>
+                                        </a>
+
+                                        <!--Submenu-->
+						                <ul class="collapse">
+                                            <li><a href="{{ url('admin/job')}}"><i class="demo-psi-idea-2"></i>Lowongan Tersedia</a></li>
+                                            <li><a href="{{ url('admin/recruitment')}}"><i class="fa fa-handshake-o"></i>Daftar Rekruitasi</a></li>
+						                </ul>
                                     </li>
                                     
                                     <!--Menu list item-->

@@ -133,8 +133,8 @@
             <div id="content-container">
                 <div id="page-head">
                     <div class="pad-all text-center">
-                        <h3>Selamat Datang Di Aplikasi HRIS </h3>
-                        <p>(Human Resource Information System)</p>
+                        <h3>@yield('content-title')</h3>
+                        <p>@yield('content-subtitle')</p>
                     </div>
                 </div>
                 <!--Page content-->

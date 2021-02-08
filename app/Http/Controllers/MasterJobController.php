@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\MasterPosition;
 use Illuminate\Http\Request;
+use App\MasterJobRecruitment;
 
-class PositionController extends Controller
+class MasterJobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,14 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $position = MasterPosition::paginate(5);
-        return view('masterdata.position.list',['position' => $position]);
+        $data = MasterJobRecruitment::all();
+        return view('recruitment.recruitment', ['data' => $data]);
+    }
+
+    public function indexJob()
+    {
+        $dataJob = MasterJobRecruitment::all();
+        return view('masterData.job.job', ['dataJob' => $dataJob]);
     }
 
     /**
@@ -25,7 +31,7 @@ class PositionController extends Controller
      */
     public function create()
     {
-        return view('masterdata.position.create');
+        return view('masterData.job.jobAdd');
     }
 
     /**
@@ -36,9 +42,14 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required']);
-        MasterPosition::create($request->all());
-        return redirect('/admin/position')->with('status','Jabatan Berhasil Ditambahkan');
+        $request->validate([
+            'name'=>'required|alpha',
+            'descript'=>'required',
+            'required'=>'required'
+        ]);
+
+        MasterJobRecruitment::create($request->all());
+        return redirect('/admin/job');
     }
 
     /**
@@ -58,9 +69,9 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(MasterPosition $position)
+    public function edit($id)
     {
-        return view('masterdata.position.edit',['position' => $position]);
+        //
     }
 
     /**
@@ -70,12 +81,9 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MasterPosition $position)
+    public function update(Request $request, $id)
     {
-        $request->validate(['name' => 'required']);
-        MasterPosition::where('id', $position->id)
-            ->update(['name' => $request->name]);
-        return redirect('/admin/position')->with('status','Jabatan Berhasil Dirubah');
+        //
     }
 
     /**
@@ -84,9 +92,9 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MasterPosition $position)
+    public function destroy(MasterJobRecruitment $job)
     {
-        MasterPosition::destroy($position->id);
-        return redirect('/admin/position')->with('status','Jabatan Berhasil Dihapus');
+        MasterJobRecruitment::destroy($job->id);
+        return redirect('/admin/job');
     }
 }

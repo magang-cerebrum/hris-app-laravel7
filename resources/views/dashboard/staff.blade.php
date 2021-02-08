@@ -37,6 +37,7 @@
                         <img src="{{ asset('img/logo-cerebrum.png')}}" alt="Cerebrum Logo" class="brand-icon">
                         <div class="brand-title">
                             <span class="brand-text">PT. Cerebrum Edukanesia</span>
+                           
                         </div>
                     </a>
                 </div>
@@ -108,7 +109,7 @@
                                         <a href="/staff/password/{{$id}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
+                                        <a href="/logout"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -142,6 +143,7 @@
                 <!--===================================================-->
                 <div id="page-content">
                     @yield('content')
+                  
                     
                 </div>
                 <!--===================================================-->
@@ -184,7 +186,7 @@
                                             <a href="{{ url('staff/password')}}" class="list-group-item">
                                                 <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                             </a>
-                                            <a href="{{ url('logout')}}" class="list-group-item">
+                                            <a href="/logout" class="list-group-item">
                                                 <i class="demo-psi-unlock icon-lg icon-fw"></i> Logout
                                             </a>
                                         </div>

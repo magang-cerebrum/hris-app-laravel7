@@ -18,4 +18,7 @@ class MasterUser extends Authenticatable
     protected $nullable = [
         'live_at','profile_photo','contract_duration','end_work_date','division_id','position_id','shift_id'
     ];
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }

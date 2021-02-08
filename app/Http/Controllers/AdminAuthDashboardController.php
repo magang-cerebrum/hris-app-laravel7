@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 class AdminAuthDashboardController extends Controller
@@ -12,7 +12,13 @@ class AdminAuthDashboardController extends Controller
         }
         else if(Gate::allows('is_admin')){
             // return 'Admin';
-            return view('dashboard.admin');
+            $user=Auth::user();
+            return view('dashboard.admin',[
+                'nama'=>$user->name,
+                'email'=>$user->email,
+                'role'=>$user->role_id,
+                'stats'=>$user
+            ]);
         }
     }
 }

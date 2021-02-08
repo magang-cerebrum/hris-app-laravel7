@@ -107,7 +107,7 @@
                                         <a href="{{ url('admin/password')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('login')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
+                                        <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -168,8 +168,8 @@
                                             <span class="pull-right dropdown-toggle">
                                                 <i class="dropdown-caret"></i>
                                             </span>
-                                            <p class="mnp-name">Aaron Chavez</p>
-                                            <span class="mnp-desc">aaron.cha@themeon.net</span>
+                                            <p class="mnp-name">{{$nama}}</p>
+                                            <span class="mnp-desc">{{$email}}</span>
                                         </a>
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">

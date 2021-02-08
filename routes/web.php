@@ -22,9 +22,9 @@ Route::get('/home', function () {
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
-Route::get('/dashboard/admin', [AdminAuthDashboardController::class,'index']);
-Route::get('/dashboard/staff', [StaffAuthDashboardController::class,'index']);
-Route::get('/staff/password/{user}',[UserController::class,'edit']);
+Route::get('/dashboard/admin', [AdminAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/dashboard/staff', [StaffAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/password/{user}',[UserController::class,'edit'])->name('password');
 Route::put('/staff/password/{user}/saved',[UserController::class,'update']);
 
 //route recruitment

@@ -1,4 +1,3 @@
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,27 +27,32 @@
                 <form method='POST' action="{{route('login')}}">
                     @csrf
                     <div class="form-group">
-                        <input type="text" name="nip" class="form-control" placeholder="NIP or Email" autofocus>
+                        <input required type="text" name="nip" class="form-control" placeholder="NIP or Email" autofocus>
                         @error('nip')
                                 <div class="invalid-feedback is-invalid" role="alert">
-                                    <strong>Error : {{$message}}</strong>
+                                    <strong>Error : {{ session()->get('error')}}</strong>
                                 </div>
                             @enderror
                     </div>
                     <div class="form-group">
-                        <input name="password" type="password" class="form-control" placeholder="Password">
+                        <input name="password" type="password" class="form-control" placeholder="Password" required>
                         @error('password')
                         <div class="invalid-feedback is-invalid" role="alert">
-                            <strong>Error : {{$message}}</strong>
+                            <strong>Error : {{ session()->get('error')}}</strong>
                         </div>
                     @enderror
+                    </div>
+           
+                    <div class="checkbox pad-btm text-left">
+                        <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" name="remember">
+                        <label for="demo-form-checkbox">Remember me</label>
                     </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                 </form>
             </div>
-    
+            {{-- {{dd(Auth::check())}} --}}
+            {{-- {{dd(MasterUser::all()->password)}} --}}
+            {{-- <p>{{dd(Auth::logout())}}</p> --}}
         </div>
     </div>
-
-
-  
+</body>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
-use App\User;
+use App\MasterUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
     /**
@@ -43,7 +45,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(MasterUser $user)
     {
         //
     }
@@ -54,7 +56,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(MasterUser $user)
     {
         return view('auth.editpass',['pass' => $user]);
     }
@@ -66,9 +68,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, MasterUser $user)
     {
-        if (Hash::check($request->olpassword, $user->password)) {
+        if (Hash::check($request->oldpassword, $user->password)) {
             
             $request->validate([
                 // 'oldpassword'=>User::get()->password,
@@ -76,7 +78,9 @@ class UserController extends Controller
                 ]);
         
            }
-           User::Where('id',$user->id)->update([
+           else return back()->with('error','Password Lama Salah !');    
+
+           MasterUser::Where('id',$user->id)->update([
                'password'=>Hash::make($request->newpassword)
            ]);return redirect('/dashboard/staff');
         
@@ -88,7 +92,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(MasterUser $user)
     {
         //
     }

@@ -50,7 +50,7 @@ class AuthController extends Controller
             elseif($stats == 2){
                 return redirect('/staff/dashboard');
             }
-            // return dd(MasterUser::all());
+            
         }
         else if ( !Hash::check($request->password,$user['password']) or $request->nip!=$user['nip']){
             // $request->validate([

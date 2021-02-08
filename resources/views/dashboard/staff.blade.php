@@ -1,284 +1,183 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
-    <title>HRIS Cerebrum | @yield('title')</title>
-
-    <link href="{{ url('https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700')}}" rel='stylesheet' type='text/css'>
-    <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('css/nifty.min.css')}}" rel="stylesheet">
-
-    <link href="{{ asset('css/staff/main.tambah.css')}}" rel="stylesheet">
-
-    <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-
-    <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
-    <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
-    <script src="{{ asset('js/jquery.min.js')}}"></script>
-
-</head>
-<body>
-    <div id="container" class="effect aside-float aside-bright mainnav-lg">
-        
-        <!--NAVBAR-->
-        <!--===================================================-->
-        <header id="navbar">
-            <div id="navbar-container" class="boxed">
-
-                <!--Brand logo & name-->
-                <!--================================-->
-                <div class="navbar-header">
-                    <a href="{{ url('staff/dashboard')}}" class="navbar-brand">
-                        <img src="{{ asset('img/logo-cerebrum.png')}}" alt="Cerebrum Logo" class="brand-icon">
-                        <div class="brand-title">
-                            <span class="brand-text">PT. Cerebrum Edukanesia</span>
-                           
-                        </div>
-                    </a>
+@extends('layouts/templateStaff')
+@section('title', 'Rekruitasi')
+@section('content-title', 'Selamat Datang Di Aplikasi HRIS')
+@section('content-subtitle', '(Human Resource Information System)')
+@section('content')
+    <div class="row mt-10">
+        <div class="col-md-4">
+            <div class="panel panel-warning panel-colorful media middle pad-all">
+                <div class="media-left">
+                    <div class="pad-hor">
+                        <i class="demo-pli-checked-user icon-3x"></i>
+                    </div>
                 </div>
-                <!--================================-->
-                <!--End brand logo & name-->
-
-
-                <!--Navbar Dropdown-->
-                <!--================================-->
-                <div class="navbar-content">
-                    <ul class="nav navbar-top-links">
-
-                        <!--Navigation toogle button-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li class="tgl-menu-btn">
-                            <a class="mainnav-toggle" href="{{ url('#')}}">
-                                <i class="demo-pli-list-view"></i>
-                            </a>
-                        </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End Navigation toogle button-->
-
-
-
-                        <!--Search-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li>
-                            <div class="custom-search-form">
-                                <label class="btn btn-trans" for="search-input" data-toggle="collapse" data-target="#nav-searchbox">
-                                    <i class="demo-psi-magnifi-glass"></i>
-                                </label>
-                                <form>
-                                    <div class="search-container collapse" id="nav-searchbox">
-                                        <input id="search-input" type="text" class="form-control" placeholder="Pencarian...">
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End Search-->
-
-                    </ul>
-                    <ul class="nav navbar-top-links">
-
-
-                        <!--Mega dropdown-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li class="mega-dropdown">
-                            <a href="{{ url('staff/dashboard')}}">
-                                <i class="demo-psi-layout-grid"></i>
-                            </a>
-                        </li>
-                        <!--User dropdown-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li id="dropdown-user" class="dropdown">
-                            <a href="{{ url('#')}}" data-toggle="dropdown" class="dropdown-toggle text-right">
-                                <span class="ic-user pull-right">
-                                    <i class="demo-psi-male"></i>
-                                </span>
-                            </a>
-
-
-                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
-                                <ul class="head-list">
-                                    <li>
-                                        <a href="{{ url('staff/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="/staff/password/{{$id}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="/logout"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End user dropdown-->
- 
-                    </ul>
+                <div class="media-body">
+                    <p class="text-2x mar-no text-semibold">241</p>
+                    <p class="mar-no">Staff Akhtif</p>
                 </div>
-                <!--================================-->
-                <!--End Navbar Dropdown-->
             </div>
-        </header>
-        <!--===================================================-->
-        <!--END NAVBAR-->
-        
-
-        <!--Page content-->
-        <!--===================================================-->
-        <div class="boxed">
-            <!--CONTENT CONTAINER-->
-            <!--===================================================-->
-            <div id="content-container">
-                <div id="page-head">
-                    <div class="pad-all text-center">
-                        <h3>Selamat Datang Di Aplikasi HRIS </h3>
-                        <p>(Human Resource Information System)</p>
-                    </div>
-                </div>
-                <!--Page content-->
-                <!--===================================================-->
-                <div id="page-content">
-                    @yield('content')
-                  
-                    
-                </div>
-                <!--===================================================-->
-                <!--End page content-->
-            </div
-            <!--===================================================-->
-            <!--END CONTENT CONTAINER-->
-
-            <!--MAIN NAVIGATION-->
-            <!--===================================================-->
-                <nav id="mainnav-container">
-                    <div id="mainnav">
-
-                        <!--Menu-->
-                        <!--================================-->
-                        <div id="mainnav-menu-wrap">
-                            <div class="nano">
-                                <div class="nano-content">
-
-                                    <!--Profile Widget-->
-                                    <!--================================-->
-                                    <div id="mainnav-profile" class="mainnav-profile">
-                                        <div class="profile-wrap text-center">
-                                            <div class="pad-btm">
-                                                <img class="img-circle img-md" src="{{ asset('img/profile-photos/3.png')}}" alt="Profile Picture">
-                                            </div>
-                                            <a href="{{ url('#profile-nav')}}" class="box-block" data-toggle="collapse" aria-expanded="false">
-                                                <span class="pull-right dropdown-toggle">
-                                                    <i class="dropdown-caret"></i>
-                                                </span>
-                                                <p class="mnp-name">{{$nama}}</p>
-                                                
-                                                <span class="mnp-desc">{{$email}}</span>
-                                            </a>
-                                        </div>
-                                        <div id="profile-nav" class="collapse list-group bg-trans">
-                                            <a href="{{ url('staff/profile')}}" class="list-group-item">
-                                                <i class="demo-psi-male icon-lg icon-fw"></i> Profile
-                                            </a>
-                                            <a href="/staff/password/{{$id}}" class="list-group-item">
-                                                <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
-                                            </a>
-                                            <a href="/logout" class="list-group-item">
-                                                <i class="demo-psi-unlock icon-lg icon-fw"></i> Logout
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <ul id="mainnav-menu" class="list-group">
-                            
-                                        <!--Category name-->
-                                        <li class="list-header">Navigation</li>
-                            
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a href="{{ url('staff/dashboard')}}">
-                                                <i class="demo-psi-home"></i>
-                                                <span class="menu-title">Dashboard</span>
-                                            </a>
-                                        </li>
-                            
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a href="{{ url('staff/presence')}}">
-                                                <i class="demo-psi-checked-user"></i>
-                                                <span class="menu-title">Presensi</span>
-                                            </a>
-                                        </li>
-                            
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a href="{{ url('staff/paid-leave')}}">
-                                                <i class="fa fa-calendar-minus-o"></i>
-                                                <span class="menu-title">Cuti</span>
-                                            </a>
-                                        </li>
-                                        
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a href="{{ url('staff/salary')}}">
-                                                <i class="fa fa-money"></i>
-                                                <span class="menu-title">Gaji</span>
-                                            </a>
-                                        </li>
-                                        
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a href="{{ url('staff/ticketing')}}">
-                                                <i class="demo-psi-support"></i>
-                                                <span class="menu-title">Ticketing</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--================================-->
-                        <!--End menu-->
-
-                    </div>
-                </nav>
-            <!--===================================================-->
-            <!--END MAIN NAVIGATION-->
         </div>
-        
-
-        <!-- FOOTER -->
-        <!--===================================================-->
-        <footer id="footer">
-
-            <p class="pad-lft">&#0169; 2021 PT. Cerebrum Edukanesia</p>
-
-        </footer>
-        <!--===================================================-->
-        <!-- END FOOTER -->
-
-
-        <!-- SCROLL PAGE BUTTON -->
-        <!--===================================================-->
-        <button class="scroll-top btn">
-            <i class="pci-chevron chevron-up"></i>
-        </button>
-        <!--===================================================-->
+        <div class="col-md-4">
+            <div class="panel panel-info panel-colorful media middle pad-all">
+                <div class="media-left">
+                    <div class="pad-hor">
+                        <i class="demo-pli-remove-user icon-3x"></i>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <p class="text-2x mar-no text-semibold">241</p>
+                    <p class="mar-no">Staff Non-Aktif</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-mint panel-colorful media middle pad-all">
+                <div class="media-left">
+                    <div class="pad-hor">
+                        <i class="demo-pli-clock icon-3x"></i>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <p class="text-2x mar-no text-semibold">241</p>
+                    <p class="mar-no">Staff Hadir</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <!--===================================================-->
-    <!-- END OF CONTAINER -->
+    <div class="row mt-10" style="padding: 0 10px">
+        <div class="col-md-5 panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Daftar Pengajuan Cuti</h3>
+            </div>
+            <div class="text-center">
+                <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+                <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 200px">
+            </div>
+            {{-- <div class="table-responsive">
+                <table id="masterdata-division"
+                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
+                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
+                cellspacing="0">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting text-center" tabindex="0">No</th>
+                            <th class="sorting text-center" tabindex="0">Nama Staff</th>
+                            <th class="sorting text-center" tabindex="0">Divisi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($dataJob as $item)
+                            <tr>
+                                <td class="sorting text-center" tabindex="0">1</td>
+                                <td class="text-center">Data Entry</td>
+                                <td class="text-center">Dummy</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div> --}}
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6 panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Daftar Rekruitasi</h3>
+            </div>
+            <div class="table-responsive">
+                <table id="masterdata-division"
+                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
+                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
+                cellspacing="0">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting text-center" tabindex="0">No</th>
+                            <th class="sorting text-center" tabindex="0">Nama Lengkap</th>
+                            <th class="sorting text-center" tabindex="0">Pendidikan Terakhir</th>
+                            <th class="sorting text-center" tabindex="0">Posisi</th>
+                            {{-- <th class="sorting text-center" tabindex="0">Aksi</th> --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- @foreach ($dataJob as $item) --}}
+                            <tr>
+                                <td class="sorting text-center" tabindex="0">1</td>
+                                <td class="text-center">Data Entry</td>
+                                <td class="text-center">Dummy</td>
+                                <td class="text-center">Dummy</td>
+                                {{-- <td class="text-center">
+                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                            <i class="fa fa-trash icon-lg"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
 
-    <script src="{{ asset('js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('js/nifty.min.js')}}"></script>
-
-    <script src="{{ asset('plugins/flot-charts/jquery.flot.min.js')}}"></script>
-	<script src="{{ asset('plugins/flot-charts/jquery.flot.resize.min.js')}}"></script>
-    <script src="{{ asset('plugins/flot-charts/jquery.flot.tooltip.min.js')}}"></script>
-    
-    <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
-
-</body>
-</html>
+                            <tr>
+                                <td class="sorting text-center" tabindex="0">1</td>
+                                <td class="text-center">Data Entry</td>
+                                <td class="text-center">Dummy</td>
+                                <td class="text-center">Dummy</td>
+                                {{-- <td class="text-center">
+                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                            <i class="fa fa-trash icon-lg"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
+                            <tr>
+                                <td class="sorting text-center" tabindex="0">1</td>
+                                <td class="text-center">Data Entry</td>
+                                <td class="text-center">Dummy</td>
+                                <td class="text-center">Dummy</td>
+                                {{-- <td class="text-center">
+                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                            <i class="fa fa-trash icon-lg"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
+                            <tr>
+                                <td class="sorting text-center" tabindex="0">1</td>
+                                <td class="text-center">Data Entry</td>
+                                <td class="text-center">Dummy</td>
+                                <td class="text-center">Dummy</td>
+                                {{-- <td class="text-center">
+                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                            <i class="fa fa-trash icon-lg"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
+                            <tr>
+                                <td class="sorting text-center" tabindex="0">1</td>
+                                <td class="text-center">Data Entry</td>
+                                <td class="text-center">Dummy</td>
+                                <td class="text-center">Dummy</td>
+                                {{-- <td class="text-center">
+                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                            <i class="fa fa-trash icon-lg"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
+                        {{-- @endforeach --}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection

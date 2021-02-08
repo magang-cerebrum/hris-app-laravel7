@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\MasterJobRecruitment;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 
 class MasterJobController extends Controller
 {
@@ -20,8 +24,16 @@ class MasterJobController extends Controller
 
     public function indexJob()
     {
-        $dataJob = MasterJobRecruitment::all();
-        return view('masterData.job.job', ['dataJob' => $dataJob]);
+        $dataJob = MasterJobRecruitment::paginate(5);
+        $user = Auth::user();
+
+        return view('masterData.job.job', [
+            'dataJob' => $dataJob,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -31,7 +43,13 @@ class MasterJobController extends Controller
      */
     public function create()
     {
-        return view('masterData.job.jobAdd');
+        $user = Auth::user();
+        return view('masterData.job.jobAdd', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**

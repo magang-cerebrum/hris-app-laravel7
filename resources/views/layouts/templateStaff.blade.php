@@ -104,7 +104,7 @@
                                         <a href="{{ url('staff/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('staff/password')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
+                                        <a href="{{ url('staff/password/'.$id)}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
                                         <a href="{{ url('login')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
@@ -164,21 +164,21 @@
                                     <div id="mainnav-profile" class="mainnav-profile">
                                         <div class="profile-wrap text-center">
                                             <div class="pad-btm">
-                                                <img class="img-circle img-md" src="{{ asset('img/profile-photos/3.png')}}" alt="Profile Picture">
+                                                <img class="img-circle img-md" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
                                             </div>
                                             <a href="{{ url('#profile-nav')}}" class="box-block" data-toggle="collapse" aria-expanded="false">
                                                 <span class="pull-right dropdown-toggle">
                                                     <i class="dropdown-caret"></i>
                                                 </span>
-                                                <p class="mnp-name">Aaron Chavez</p>
-                                                <span class="mnp-desc">aaron.cha@themeon.net</span>
+                                                <p class="mnp-name">{{$name}}</p>
+                                                <span class="mnp-desc">{{$email}}</span>
                                             </a>
                                         </div>
                                         <div id="profile-nav" class="collapse list-group bg-trans">
                                             <a href="{{ url('staff/profile')}}" class="list-group-item">
                                                 <i class="demo-psi-male icon-lg icon-fw"></i> Profile
                                             </a>
-                                            <a href="{{ url('staff/password')}}" class="list-group-item">
+                                            <a href="{{ url('staff/password/'.$id)}}" class="list-group-item">
                                                 <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                             </a>
                                             <a href="{{ url('login')}}" class="list-group-item">

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -21,6 +21,64 @@ class StaffAuthDashboardController extends Controller
                 'id'=>$user->id
             ]);
         }
+    }
+    public function profile()
+    {
+        $data = Auth::user();
+        $divisions = DB::table('master_divisions')->where('id', '=', $data->division_id)->get();
+        $positions = DB::table('master_positions')->where('id', '=', $data->position_id)->get();
+        $roles = DB::table('master_roles')->where('id', '=', $data->role_id)->get();
+        $shifts = DB::table('master_shifts')->where('id', '=', $data->shift_id)->get();
+
+        return view('dashboard.profile',[
+            'nama'=>$data->name,
+            'email'=>$data->email,
+            'role'=>$data->role_id,
+            'data' => $data,
+            'divisions'=>$divisions,
+            'positions'=>$positions,
+            'roles'=>$roles,
+            'shifts'=>$shifts
+            ]);
+    }
+    public function editprofile()
+    {
+        $data = Auth::user();
+        $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
+        $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
+        $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
+        $shifts = DB::table('master_shifts')->select('name as shifts_name','id as shifts_id')->get();
+
+        return view('dashboard.editprofile',[
+            'data' => $data,
+            'divisions'=>$divisions,
+            'positions'=>$positions,
+            'roles'=>$roles,
+            'shifts'=>$shifts
+            ]);
+    }
+    public function updateprofile(Request $request, MasterUser $user)
+    {
+        // dd($request);
+        $request->validate([
+            'nip' => 'required|numeric',
+            'name' => 'required',
+            'dob' => 'required',
+            'phone_number' => 'numeric',
+            'email' => 'email',
+            'password' => 'required'
+        ]);
+        MasterUser::where('id', $user->id)
+            ->update([
+                'nip' => $request->nip,
+                'name' => $request->name,
+                'dob' => $request->dob,
+                'live_at' => $request->live_at,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'profile_photo' => $request->profile_photo,
+            ]);
+        return redirect('/staff/profile')->with('status','Profil Berhasil Dirubah');
     }
     
 }

@@ -17,10 +17,10 @@ class AuthController extends Controller
     elseif(Auth::check() == true){
         $stats = Auth::User()->role_id;
         if($stats==1){
-            return redirect('/dashboard/admin');
+            return redirect('/admin/dashboard');
         }
         elseif($stats == 2){
-            return redirect('/dashboard/staff');
+            return redirect('/staff/dashboard');
         }
         // else return redirect('/login');
     }
@@ -39,10 +39,10 @@ class AuthController extends Controller
             $userlog = MasterUser::where(['nip'=>$credentials['nip']]);
             $stats = Auth::User()->role_id;
             if($stats==1){
-                return redirect('/dashboard/admin');
+                return redirect('/admin/dashboard');
             }
             elseif($stats == 2){
-                return redirect('/dashboard/staff');
+                return redirect('/staff/dashboard');
             }
             // return dd(MasterUser::all());
         }

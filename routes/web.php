@@ -24,15 +24,9 @@ Route::get('/home', function () {
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
-<<<<<<< HEAD
-Route::get('/dashboard/admin', [AdminAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/dashboard/staff', [StaffAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/staff/password/{user}',[UserController::class,'edit'])->name('password');
-=======
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index']);
 Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index']);
 Route::get('/staff/password/{user}',[UserController::class,'edit']);
->>>>>>> 37e56322cca5adeea35dd55f6ca45bb31d324d8a
 Route::put('/staff/password/{user}/saved',[UserController::class,'update']);
 
 //route recruitment
@@ -45,6 +39,7 @@ Route::delete('/admin/recruitment/{recruitment}',[ MasterRecruitmentController::
 Route::delete('/admin/job/{job}',[ MasterJobController::class,'destroy']);
 Route::get('/admin/job/add',[ MasterJobController::class,'create']);
 Route::post('/admin/job',[ MasterJobController::class,'store']);
+Route::get('/admin/job',[ MasterJobController::class,'indexJob']);
 //route masterdata staff
 Route::get('/admin/data-staff',[App\Http\Controllers\DataStaffController::class,'index']);
 Route::get('/admin/data-staff/add',[App\Http\Controllers\DataStaffController::class,'create']);

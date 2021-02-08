@@ -1,17 +1,18 @@
-@extends('layout/templateAdmin')
+@extends('layouts/templateAdmin')
 @section('title', 'Rekruitasi')
+@section('content-title', 'Rekruitasi / Daftar Rekruitasi')
+@section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
         <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Daftar Pelamar</h3>
-            </div>
-
             <!-- Striped Table -->
             <!--===================================================-->
             <div class="panel-body">
                 <div class="table-responsive">
                     @if (count($data) == 0)
-                        <h1>Data Kosong</h1>
+                        <div class="text-center">
+                            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+                            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+                        </div>
                         @else
                             <table class="table table-striped">
                                 <thead>

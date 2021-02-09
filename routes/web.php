@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StaffAuthDashboardController;
 use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\MasterJobController;
+use App\Http\Controllers\MasterLeaveTypeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,7 @@ use App\Http\Controllers\MasterJobController;
 
 
 //login
+Route::get('/', 'Auth\AuthController@login')->name('login');
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
@@ -81,8 +83,16 @@ Route::get('/admin/shift/{shift}/edit', [App\Http\Controllers\ShiftController::c
 Route::put('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'update']);
 Route::delete('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'destroy']);
 
+// Route Tipe Cuti List
+Route::get('/admin/paid-leave-type',[MasterLeaveTypeController::class,'index'])->name('tablelist');
+Route::get('/admin/paid-leave-type/add',[MasterLeaveTypeController::class,'create'])->name('addleavetype');
+Route::post('/admin/paid-leave-type',[MasterLeaveTypeController::class,'store'])->name('save');
+Route::get('/admin/paid-leave-type/{leavetype}/edit',[MasterLeaveTypeController::class,'edit']);
+Route::put('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
+Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'destroy']); 
+
 //route system log
 
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 
-Route::get('/', 'Auth\AuthController@login')->name('login');
+

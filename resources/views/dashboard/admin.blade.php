@@ -46,13 +46,13 @@
     </div>
     <div class="row mt-10">
         <div class="col-md-6">
-            <div class="panel media middle pad-all" style="min-height: 340px">
+            <div class="panel media middle pad-all" style="min-height: 350px">
                 <div class="panel-heading">
                     <h3 class="panel-title">Daftar Pengajuan Cuti</h3>
                 </div>
                 <div class="text-center">
                     <h1 class="h3">Data Tidak Tersedia</h1>
-                    <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 230px">
+                    <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 220px">
                 </div>
                 {{-- <div class="table-responsive">
                     <table id="masterdata-division"
@@ -80,8 +80,8 @@
             </div>
         </div>
         {{-- <div class="col-md-1"></div> --}}
-        <div class="col-md-6 panel">
-            <div class="panel media middle pad-all" style="min-height: 340px">
+        <div class="col-md-6">
+            <div class="panel media middle pad-all" style="min-height: 350px">
                 <div class="panel-heading">
                     <h3 class="panel-title">Daftar Rekruitasi</h3>
                 </div>

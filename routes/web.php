@@ -17,9 +17,6 @@ use App\Http\Controllers\MasterJobController;
 |
 */
 
-Route::get('/home', function () {
-    return view('welcome');
-})->name('home');
 
 //login
 Route::get('/login', 'Auth\AuthController@login')->name('login');
@@ -87,3 +84,5 @@ Route::delete('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::cla
 //route system log
 
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
+
+Route::get('/', 'Auth\AuthController@login')->name('login');

@@ -83,3 +83,7 @@ Route::post('/admin/shift', [App\Http\Controllers\ShiftController::class, 'store
 Route::get('/admin/shift/{shift}/edit', [App\Http\Controllers\ShiftController::class, 'edit']);
 Route::put('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'update']);
 Route::delete('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'destroy']);
+
+//route system log
+
+Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);

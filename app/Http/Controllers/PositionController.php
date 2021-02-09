@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MasterPosition;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PositionController extends Controller
 {

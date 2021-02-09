@@ -110,9 +110,13 @@ class MasterJobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MasterJobRecruitment $job)
+    public function destroy(Request $request)
     {
-        MasterJobRecruitment::destroy($job->id);
+        $ids = $request->input('check');
+        foreach($ids as $deletes) {
+            $data= MasterJobRecruitment::where("id",$deletes)->first();
+            $data->delete();
+        }
         return redirect('/admin/job');
     }
 }

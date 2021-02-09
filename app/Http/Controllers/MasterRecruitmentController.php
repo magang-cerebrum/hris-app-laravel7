@@ -138,15 +138,26 @@ class MasterRecruitmentController extends Controller
      */
     public function destroy(MasterRecruitment $recruitment)
     {
-        $path_cv = 'upload_recruitment/cv_upload/'.$recruitment->file_cv;
-        $file_path_cv = public_path($path_cv);
-        unlink($file_path_cv);
+        //
+    }
 
-        $path_porto = 'upload_recruitment/portofolio_upload/'.$recruitment->file_portofolio;
-        $file_path_porto = public_path($path_porto);
-        unlink($file_path_porto);
+    public function destroyAll(Request $request)
+    {
+        $ids = $request->input('check');
+        
+        foreach($ids as $deletes) {
+           $data= MasterRecruitment::where("id",$deletes)->first();
 
-        MasterRecruitment::destroy($recruitment->id);
+           $path_cv = 'upload_recruitment/cv_upload/'.$data->file_cv;
+           $file_path_cv = public_path($path_cv);
+           unlink($file_path_cv);
+
+           $path_porto = 'upload_recruitment/portofolio_upload/'.$data->file_portofolio;
+           $file_path_porto = public_path($path_porto);
+           unlink($file_path_porto);
+
+           $data->delete();
+        }
         return redirect('/admin/recruitment');
     }
 }

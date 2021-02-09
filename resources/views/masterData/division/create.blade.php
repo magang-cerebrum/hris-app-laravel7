@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Tambah Divisi')
+@section('content-title','Master Data / Divisi / Tambah Divisi')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Tambah Divisi')
 @section('content')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MasterPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PositionController extends Controller
 {
@@ -109,5 +110,11 @@ class PositionController extends Controller
     {
         MasterPosition::destroy($position->id);
         return redirect('/admin/position')->with('status','Jabatan Berhasil Dihapus');
+    }
+    public function destroyAll(Request $request){
+        foreach ($request->selectid as $item) {
+            DB::table('master_positions')->where('id','=',$item)->delete();
+        }
+        return redirect('/admin/position')->with('status','Data Jabatan Terpilih Berhasil Dihapus');
     }
 }

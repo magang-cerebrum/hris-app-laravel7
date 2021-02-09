@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Edit Data Shift')
+@section('content-title','Master Data / Shift / Edit Data Shift')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Edit Shift')
 @section('content')

@@ -69,6 +69,7 @@ class StaffAuthDashboardController extends Controller
             'name' => 'required',
             'dob' => 'required',
             'phone_number' => 'numeric',
+            'gender' => 'required',
             'email' => 'email',
             'password' => 'required'
         ]);
@@ -79,6 +80,7 @@ class StaffAuthDashboardController extends Controller
                 'dob' => $request->dob,
                 'live_at' => $request->live_at,
                 'phone_number' => $request->phone_number,
+                'gender' => $request->gender,
                 'email' => $request->email,
                 'profile_photo' => $request->profile_photo,
             ]);

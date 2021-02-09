@@ -14,10 +14,14 @@
         <h3 class="panel-title text-bold text-center">Edit Profile User</h3>
     </div>
     <div class="panel-body">
-        <form class="form-horizontal" method="POST" action="{{($data->role_id == 1 ? '/admin/profile/'.$data->id : '/staff/profile/'.$data->id)}}">
+        <form class="form-horizontal" method="POST"
+            action="{{($data->role_id == 1 ? '/admin/profile/'.$data->id : '/staff/profile/'.$data->id)}}">
             @csrf
             @method('put')
             <div class="panel-body">
+                <input type="hidden" name="password" class="form-control invisible" value="{{$data->password}}">
+                <input type="hidden" name="profile_photo" class="form-control invisible"
+                    value="{{$data->profile_photo}}">
                 <div class="form-group">
                     <div class="row">
                         <label class="col-sm-2 control-label">NIP:</label>
@@ -28,14 +32,6 @@
                                 Mohon isi NIP.
                             </div> @enderror
                         </div>
-                    </div>
-                </div>
-                <input type="hidden" name="password" class="form-control invisible"
-                    value="{{$data->password}}">
-                <input type="hidden" name="profile_photo" class="form-control invisible"
-                    value="{{$data->profile_photo}}">
-                <div class="form-group">
-                    <div class="row">
                         <label class="col-sm-2 control-label">Nama Staff:</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Nama Lengkap" name="name"
@@ -44,6 +40,11 @@
                                 Mohon isi nama lengkap.
                             </div> @enderror
                         </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
                         <label class="col-sm-2 control-label">Tanggal Lahir:</label>
                         <div id="datepicker-editprof-dob">
                             <div class="col-sm-4">
@@ -54,6 +55,18 @@
                                 </div>
                                 @error('dob') <div class="text-danger invalid-feedback mt-3">Mohon isi
                                     tanggal lahir.</div> @enderror
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Jenis Kelamin:</label>
+                        <div class="col-sm-4">
+                            <div class="radio">
+                                <!-- Inline radio buttons -->
+                                <input id="employee_type_radio-1" class="magic-radio" type="radio" name="gender"
+                                    value="Laki-laki" {{$data->gender == 'Laki-laki' ? 'checked' : ''}}>
+                                <label for="employee_type_radio-1">Laki-laki</label>
+                                <input id="employee_type_radio-2" class="magic-radio" type="radio" name="gender"
+                                    value="Perempuan" {{$data->gender == 'Perempuan' ? 'checked' : ''}}>
+                                <label for="employee_type_radio-2">Perempuan</label>
                             </div>
                         </div>
                     </div>
@@ -254,34 +267,34 @@
     </div>
 </div>
 
-        <!--Bootstrap Timepicker [ OPTIONAL ]-->
-        <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-        <!--Bootstrap Select [ OPTIONAL ]-->
-        <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+<!--Bootstrap Timepicker [ OPTIONAL ]-->
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
+<!--Bootstrap Select [ OPTIONAL ]-->
+<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
-        <script>
-            function showContractOption() {
-                if (document.getElementById('employee_status_radio-1').checked) {
-                    document.getElementById('input-contract_duration').style.display = 'none';
-                } else {
-                    document.getElementById('input-contract_duration').style.display = 'block';
-                }
-            };
+<script>
+    function showContractOption() {
+        if (document.getElementById('employee_status_radio-1').checked) {
+            document.getElementById('input-contract_duration').style.display = 'none';
+        } else {
+            document.getElementById('input-contract_duration').style.display = 'block';
+        }
+    };
 
-            $(document).ready(function () {
-                $('#datepicker-editprof-dob .input-group.date').datepicker({
-                    format: 'yyyy/mm/dd',
-                    autoclose: true
-                });
-                $('#datepicker-editprof-mulai-kerja .input-group.date').datepicker({
-                    format: 'yyyy/mm/dd',
-                    autoclose: true
-                });
-                $('#datepicker-editprof-selesai-kerja .input-group.date').datepicker({
-                    format: 'yyyy/mm/dd',
-                    autoclose: true
-                });
-            });
+    $(document).ready(function () {
+        $('#datepicker-editprof-dob .input-group.date').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+        $('#datepicker-editprof-mulai-kerja .input-group.date').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+        $('#datepicker-editprof-selesai-kerja .input-group.date').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+    });
 
-        </script>
-        @endsection
+</script>
+@endsection

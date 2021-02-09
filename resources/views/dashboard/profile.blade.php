@@ -43,7 +43,12 @@
                         </div>
                         <label class="col-sm-2 control-label" for="textarea-input-live_at">Alamat:</label>
                         <div class="col-sm-4">
-                            <textarea id="textarea-input-live_at" rows="3" class="form-control" placeholder="Alamat Lengkap" name="live_at" readonly>{{$data->live_at}}</textarea>
+                            <textarea id="textarea-input-live_at" rows="2" class="form-control" placeholder="Alamat Lengkap" name="live_at" readonly>{{$data->live_at}}</textarea>
+                        </div>
+                        <label class="col-sm-2 control-label">Jenis Kelamin:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="Jenis Kelamin" name="genderr"
+                                value="{{$data->gender}}" readonly>
                         </div>
                     </div>
                 </div>

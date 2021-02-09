@@ -499,7 +499,6 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Logging\\Mysqlhrisloghandler' => __DIR__ . '/../..' . '/app/Logging/Mysqlhrisloghandler.php',
         'App\\MasterDivision' => __DIR__ . '/../..' . '/app/MasterDivision.php',
         'App\\MasterJobRecruitment' => __DIR__ . '/../..' . '/app/MasterJobRecruitment.php',
         'App\\MasterLeaveType' => __DIR__ . '/../..' . '/app/MasterLeaveType.php',

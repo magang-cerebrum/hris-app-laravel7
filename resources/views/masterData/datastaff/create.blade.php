@@ -26,10 +26,6 @@
                                 Mohon isi NIP.
                             </div> @enderror
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
                         <label class="col-sm-2 control-label">Nama Staff:</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Nama Lengkap" name="name"
@@ -38,6 +34,10 @@
                                 Mohon isi nama lengkap.
                             </div> @enderror
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
                         <label class="col-sm-2 control-label">Tanggal Lahir:</label>
                         <div id="datepicker-input-dob">
                             <div class="col-sm-4">
@@ -48,6 +48,18 @@
                                 </div>
                                 @error('dob') <div class="text-danger invalid-feedback mt-3">Mohon isi
                                     tanggal lahir.</div> @enderror
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Jenis Kelamin:</label>
+                        <div class="col-sm-4">
+                            <div class="radio">
+                                <!-- Inline radio buttons -->
+                                <input id="gender-1" class="magic-radio" type="radio"
+                                    name="gender" value="Laki-laki">
+                                <label for="gender-1">Laki-laki</label>
+                                <input id="gender-2" class="magic-radio" type="radio"
+                                    name="gender" value="Perempuan">
+                                <label for="gender-2">Perempuan</label>
                             </div>
                         </div>
                     </div>

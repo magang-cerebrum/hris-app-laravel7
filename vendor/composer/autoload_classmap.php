@@ -30,7 +30,6 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
-    'App\\Logging\\Mysqlhrisloghandler' => $baseDir . '/app/Logging/Mysqlhrisloghandler.php',
     'App\\MasterDivision' => $baseDir . '/app/MasterDivision.php',
     'App\\MasterJobRecruitment' => $baseDir . '/app/MasterJobRecruitment.php',
     'App\\MasterLeaveType' => $baseDir . '/app/MasterLeaveType.php',

@@ -75,42 +75,11 @@
                         </tr>
                         @endforeach
                     </tbody>
+                   
                 </table>
-                <div class="row">
-                    <div class="col-sm-5"></div>
-                    <div class="col-sm-2">
-                        <ul class="pagination">
-                            {{ $data->links() }}
-                        </ul>
-                    </div>
-                    <div class="col-sm-5"></div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-    {{-- <script>
-        $(document).ready(function(){
-
-            fetch_data();
-
-            function fetch_data(query =''){
-                $.ajax({
-                    url:"{{ route('data.division.search') }}",
-    method:'GET',
-    data:{query:query},
-    dataType:'json',
-    success:function(data)
-    {
-    ('tbody').html(data.table_data);
-    }
-    })
-    }
-
-    $(document).on('keyup','#cari-divisi',function(){
-    var query = $(this).val();
-    fetch_data(query);
-    });
-    });
-    </script> --}}
+   
     @endsection

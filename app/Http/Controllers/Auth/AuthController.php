@@ -10,7 +10,8 @@ use App\MasterUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Access\Gate;
-
+use Illuminate\Support\Facades\Log;
+use Spatie\Activitylog\Models\Activity;
 class AuthController extends Controller
 {
     public function login()
@@ -49,10 +50,15 @@ class AuthController extends Controller
             // $userlog = MasterUser::where(['nip'=>$credentials['nip']]);
 
             $stats = Auth::User()->role_id;
+            $user = Auth::user()->name;
             if($stats==1){
+                // Log::channel('hris_log')->info($user.' Telah Login (Admin)');
+                activity()->log($user.' Telah Login (Admin)');
                 return redirect('/admin/dashboard');
             }
             elseif($stats == 2){
+                // Log::channel('hris_log')->info($user.' Telah Login (Staff)');
+                activity()->log($user.' Telah Login (Staff)');
                 return redirect('/staff/dashboard');
             }
 
@@ -77,6 +83,18 @@ class AuthController extends Controller
 
         }
         public function logout() {
+            $stats = Auth::User()->role_id;
+            $user = Auth::user()->name;
+            if($stats==1){
+                // Log::channel('hris_log')->info($user.' Telah Login (Admin)');
+                activity()->log($user.' Telah Logout (Admin)');
+            
+            }
+            elseif($stats == 2){
+                // Log::channel('hris_log')->info($user.' Telah Login (Staff)');
+                activity()->log($user.' Telah Logout (Staff)');
+               
+            }
             Auth::logout();
             return redirect('/login');
         }

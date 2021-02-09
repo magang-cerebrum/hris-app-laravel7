@@ -94,5 +94,6 @@ Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::c
 //route system log
 
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
+Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
 

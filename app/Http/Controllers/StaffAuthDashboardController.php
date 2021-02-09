@@ -34,9 +34,10 @@ class StaffAuthDashboardController extends Controller
         $shifts = DB::table('master_shifts')->where('id', '=', $data->shift_id)->get();
 
         return view('dashboard.profile',[
-            'nama'=>$data->name,
-            'email'=>$data->email,
-            'role'=>$data->role_id,
+            'id' =>$data->id,
+            'name'=> $data->name,
+            'email'=> $data->email,
+            'profile_photo'=> $data->profile_photo,
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,

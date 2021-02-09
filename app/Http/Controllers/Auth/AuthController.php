@@ -59,23 +59,9 @@ class AuthController extends Controller
             
         }
         else if ( !Hash::check($request->password,$user['password']) or $request->nip!=$user['nip']){
-            // $request->validate([
-            //     // 'oldpassword'=>User::get()->password,
-            //     'newpassword'=>'required'
-            //     ]);
             return back()->with('error','NIP atau Password Salah !');
         }
-        // else if($request->nip!=$user['nip']){
-        //     return back()->with('errornip','NIP tidak ditemukan !');
-        // }
-        // else if (!Hash::check($request->nip, $user[0]->nip)){
-
-        // }
-
-        // return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
-
-        }
-        return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
+        // seturn redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
     }
 
     public function logout() {

@@ -107,7 +107,7 @@
                                         <a href="{{ url('staff/password')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('login')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
+                                        <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -181,7 +181,7 @@
                                             <a href="{{ url('staff/password')}}" class="list-group-item">
                                                 <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                             </a>
-                                            <a href="{{ url('login')}}" class="list-group-item">
+                                            <a href="{{ url('logout')}}" class="list-group-item">
                                                 <i class="demo-psi-unlock icon-lg icon-fw"></i> Logout
                                             </a>
                                         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MasterShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShiftController extends Controller
 {
@@ -121,5 +122,11 @@ class ShiftController extends Controller
     {
         MasterShift::destroy($shift->id);
         return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Dihapus');
+    }
+    public function destroyAll(Request $request){
+        foreach ($request->selectid as $item) {
+            DB::table('master_shifts')->where('id','=',$item)->delete();
+        }
+        return redirect('/admin/shift')->with('status','Data Shift Terpilih Berhasil Dihapus');
     }
 }

@@ -35,9 +35,10 @@ class AdminAuthDashboardController extends Controller
         $shifts = DB::table('master_shifts')->where('id', '=', $data->shift_id)->get();
 
         return view('dashboard.profile',[
-            'nama'=>$data->name,
+            'name'=>$data->name,
             'email'=>$data->email,
-            'role'=>$data->role_id,
+            'id'=>$data->id,
+            'profile_photo'=>$data->profile_photo,
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,
@@ -54,6 +55,10 @@ class AdminAuthDashboardController extends Controller
         $shifts = DB::table('master_shifts')->select('name as shifts_name','id as shifts_id')->get();
 
         return view('dashboard.editprofile',[
+            'name'=>$data->name,
+            'email'=>$data->email,
+            'id'=>$data->id,
+            'profile_photo'=>$data->profile_photo,
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,

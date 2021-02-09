@@ -112,6 +112,13 @@ class DivisionController extends Controller
         return redirect('/admin/division')->with('status','Divisi Berhasil Dihapus');
     }
 
+    public function destroyAll(Request $request){
+        foreach ($request->selectid as $item) {
+            DB::table('master_divisions')->where('id','=',$item)->delete();
+        }
+        return redirect('/admin/division')->with('status','Data Divisi Terpilih Berhasil Dihapus');
+    }
+
     // public function search(Request $request){
 
     //     if($request->ajax()){

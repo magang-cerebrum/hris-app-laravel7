@@ -31,9 +31,9 @@ class DataStaffController extends Controller
                 'master_shifts.start_working_time as start_working_time',
                 'master_shifts.end_working_time as end_working_time'
                 )
-        ->get();
+        ->paginate(5);
         // $staff = MasterUser::paginate(5);
-        return view('datastaff.list',[
+        return view('masterdata.datastaff.list',[
             'staff' => $staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -198,5 +198,11 @@ class DataStaffController extends Controller
     {
         MasterUser::destroy($staff->id);
         return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Dihapus');
+    }
+    public function destroyAll(Request $request){
+        foreach ($request->selectid as $item) {
+            DB::table('master_users')->where('id','=',$item)->delete();
+        }
+        return redirect('/admin/data-staff')->with('status','Data User Terpilih Berhasil Dihapus');
     }
 }

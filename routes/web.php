@@ -57,7 +57,7 @@ Route::get('/admin/data-staff/add',[App\Http\Controllers\DataStaffController::cl
 Route::post('/admin/data-staff', [App\Http\Controllers\DataStaffController::class, 'store']);
 Route::get('/admin/data-staff/{staff}/edit', [App\Http\Controllers\DataStaffController::class, 'edit']);
 Route::put('/admin/data-staff/{staff}', [App\Http\Controllers\DataStaffController::class, 'update']);
-Route::delete('/admin/data-staff/{staff}', [App\Http\Controllers\DataStaffController::class, 'destroy']);
+Route::delete('/admin/data-staff/', [App\Http\Controllers\DataStaffController::class, 'destroyAll']);
 
 //route masterdata divisi
 Route::get('/admin/division',[App\Http\Controllers\DivisionController::class,'index']);
@@ -65,7 +65,7 @@ Route::get('/admin/division/add',[App\Http\Controllers\DivisionController::class
 Route::post('/admin/division', [App\Http\Controllers\DivisionController::class, 'store']);
 Route::get('/admin/division/{division}/edit', [App\Http\Controllers\DivisionController::class, 'edit']);
 Route::put('/admin/division/{division}', [App\Http\Controllers\DivisionController::class, 'update']);
-Route::delete('/admin/division/{division}', [App\Http\Controllers\DivisionController::class, 'destroy']);
+Route::delete('/admin/division', [App\Http\Controllers\DivisionController::class, 'destroyAll']);
 
 //route masterdata posisi
 Route::get('/admin/position',[App\Http\Controllers\PositionController::class,'index']);
@@ -73,7 +73,7 @@ Route::get('/admin/position/add',[App\Http\Controllers\PositionController::class
 Route::post('/admin/position', [App\Http\Controllers\PositionController::class, 'store']);
 Route::get('/admin/position/{position}/edit', [App\Http\Controllers\PositionController::class, 'edit']);
 Route::put('/admin/position/{position}', [App\Http\Controllers\PositionController::class, 'update']);
-Route::delete('/admin/position/{position}', [App\Http\Controllers\PositionController::class, 'destroy']);
+Route::delete('/admin/position/', [App\Http\Controllers\PositionController::class, 'destroyAll']);
 
 //route masterdata shift
 Route::get('/admin/shift',[App\Http\Controllers\ShiftController::class,'index']);
@@ -81,7 +81,7 @@ Route::get('/admin/shift/add',[App\Http\Controllers\ShiftController::class,'crea
 Route::post('/admin/shift', [App\Http\Controllers\ShiftController::class, 'store']);
 Route::get('/admin/shift/{shift}/edit', [App\Http\Controllers\ShiftController::class, 'edit']);
 Route::put('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'update']);
-Route::delete('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'destroy']);
+Route::delete('/admin/shift/', [App\Http\Controllers\ShiftController::class, 'destroyAll']);
 
 // Route Tipe Cuti List
 Route::get('/admin/paid-leave-type',[MasterLeaveTypeController::class,'index'])->name('tablelist');

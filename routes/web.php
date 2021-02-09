@@ -43,10 +43,10 @@ Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'update
 Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
-Route::delete('/admin/recruitment/{recruitment}',[ MasterRecruitmentController::class,'destroy']);
+Route::delete('/admin/rectuitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
 
 //route masterdata job
-Route::delete('/admin/job/{job}',[ MasterJobController::class,'destroy']);
+Route::delete('/admin/job/delete',[ MasterJobController::class,'destroy']);
 Route::get('/admin/job/add',[ MasterJobController::class,'create']);
 Route::post('/admin/job',[ MasterJobController::class,'store']);
 Route::get('/admin/job',[ MasterJobController::class,'indexJob']);

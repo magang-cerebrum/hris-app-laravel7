@@ -46,7 +46,7 @@
     </div>
     <div class="row mt-10">
         <div class="col-md-6">
-            <div class="panel media middle pad-all" style="min-height: 350px">
+            <div class="panel media middle pad-all" style="min-height: 365px">
                 <div class="panel-heading">
                     <h3 class="panel-title">Daftar Pengajuan Cuti</h3>
                 </div>
@@ -79,9 +79,8 @@
                 </div> --}}
             </div>
         </div>
-        {{-- <div class="col-md-1"></div> --}}
         <div class="col-md-6">
-            <div class="panel media middle pad-all" style="min-height: 350px">
+            <div class="panel media middle pad-all" style="min-height: 365px">
                 <div class="panel-heading">
                     <h3 class="panel-title">Daftar Rekruitasi</h3>
                 </div>

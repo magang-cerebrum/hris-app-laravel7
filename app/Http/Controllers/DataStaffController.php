@@ -33,7 +33,7 @@ class DataStaffController extends Controller
                 )
         ->get();
         // $staff = MasterUser::paginate(5);
-        return view('datastaff.list',[
+        return view('masterdata.datastaff.list',[
             'staff' => $staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

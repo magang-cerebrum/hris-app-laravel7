@@ -40,6 +40,13 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+        'hris_log'=>[
+            'driver' =>'custom',
+            'level' => 'info',
+            'handler'=>App\Logging\Mysqlhrisloghandler::class,
+            'via' => App\Logging\hrislog::class,
+            
+        ],
 
         'single' => [
             'driver' => 'single',

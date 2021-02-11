@@ -91,8 +91,13 @@ Route::get('/admin/paid-leave-type/{leavetype}/edit',[MasterLeaveTypeController:
 Route::put('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
 Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'destroy']); 
 
-//route system log
+// Route Transaksi Cuti
+Route::get('/admin/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'index']);
+Route::delete('/admin/paid-leave/delete',[App\Http\Controllers\TransactionPaidLeaveController::class,'destroy']);
+Route::get('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'create']);
+Route::post('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'store']);
 
+//route system log
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 

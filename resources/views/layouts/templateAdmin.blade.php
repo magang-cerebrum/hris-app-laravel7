@@ -20,6 +20,8 @@
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
 
+    @yield('head')
+
 </head>
 <body>
     <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -305,5 +307,7 @@
     
     <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
 
+    @yield('script')
+    
 </body>
 </html>

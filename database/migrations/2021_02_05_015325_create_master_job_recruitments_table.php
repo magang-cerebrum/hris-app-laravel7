@@ -16,8 +16,8 @@ class CreateMasterJobRecruitmentsTable extends Migration
         Schema::create('master_job_recruitments', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->string('descript', 255);
-            $table->string('required', 255);
+            $table->text('descript');
+            $table->text('required');
             $table->timestamps();
         });
     }

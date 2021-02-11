@@ -100,7 +100,13 @@
         $("#btn-delete").click(function () {
             var confirm = window.confirm(
             "Apakah Anda yakin ingin menghapus data-data ini?");
-            if (confirm) $("#form-mul-delete").submit()
+            console.log(confirm);
+            if (confirm == true) {
+                $("#form-mul-delete").submit()
+            } else {
+                return false;
+            }
+            
         });
     });
 </script>

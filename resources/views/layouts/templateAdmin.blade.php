@@ -19,13 +19,11 @@
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
-
     @yield('head')
-
 </head>
 <body>
+    @include('sweetalert::alert')
     <div id="container" class="effect aside-float aside-bright mainnav-lg">
-        
         <!--NAVBAR-->
         <!--===================================================-->
         <header id="navbar">

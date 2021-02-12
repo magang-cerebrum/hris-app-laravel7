@@ -80,8 +80,11 @@
         </div>
     </div>
 </div>
+@section('script')
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        // modal
         $(document).on('click', '#detail_staff', function () {
             var nip = $(this).data('nip');
             var name = $(this).data('name');
@@ -105,7 +108,7 @@
 
             var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
-            $("#img-modal").attr("src", bebas);
+            $("#img-modal").attr("src", join);
 
             $('#nip').text(nip);
             $('#name').text(name);
@@ -114,7 +117,6 @@
             $('#gender').text(gender);
             $('#email').text(email);
             $('#phone_number').text(phone_number);
-            // $('#profile_photo').text(profile_photo);
             $('#employee_status').text(employee_status);
             $('#employee_type').text(employee_type);
             $('#status').text(status);
@@ -126,7 +128,68 @@
             $('#position_name').text(position_name);
             $('#role_name').text(role_name);
             $('#shift_name').text(shift_name);
-        })
+        });
+
+        // check all
+        $("#check-all").click(function () {
+            if ($(this).is(":checked"))
+                $(".check-item").prop("checked", true);
+            else
+                $(".check-item").prop("checked", false);
+        });
     });
+    
+    // Sweetalert 2
+    function submit_delete(){
+        event.preventDefault();
+        var check = document.querySelector('.check-item:checked');
+        if (check != null){
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data terpilih?',
+                text: "Data yang sudah di hapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Tidak'
+                }
+            ).then((result) => {
+                if (result.value == true) {
+                    $("#form-mul-delete").submit();
+                }}
+            );
+        } else {
+            Swal.fire({
+                title: 'Sepertinya ada kesalahan...',
+                text: "Tidak ada data yang dipilih untuk dihapus!",
+                icon: 'error',
+            })
+        }
+    }
+
+    // live search
+    function search_staff() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("cari-staff");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("masterdata-staff");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            for (j = 3; j < 6; j++ ){
+                    td = tr[i].getElementsByTagName("td")[j];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
 
 </script>
+@endsection

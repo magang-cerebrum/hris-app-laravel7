@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StaffAuthDashboardController extends Controller
 {
@@ -84,7 +85,8 @@ class StaffAuthDashboardController extends Controller
                 'email' => $request->email,
                 'profile_photo' => $request->profile_photo,
             ]);
-        return redirect('/staff/profile')->with('status','Profil Berhasil Dirubah');
+            Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
+        return redirect('/staff/profile');
     }
     
 }

@@ -6,6 +6,7 @@ use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DataStaffController extends Controller
 {
@@ -31,8 +32,8 @@ class DataStaffController extends Controller
                 'master_shifts.start_working_time as start_working_time',
                 'master_shifts.end_working_time as end_working_time'
                 )
-        ->paginate(5);
-        // $staff = MasterUser::paginate(5);
+        ->get();
+        // ->paginate(5); if paginate on
         return view('masterdata.datastaff.list',[
             'staff' => $staff,
             'name'=>$user->name,
@@ -96,7 +97,8 @@ class DataStaffController extends Controller
             'shift_id' => 'numeric'
         ]);
         MasterUser::create($request->all());
-        return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Ditambahkan');
+        Alert::success('Berhasil!', 'Staff baru telah ditambahkan!');
+        return redirect('/admin/data-staff');
     }
 
     /**
@@ -188,7 +190,8 @@ class DataStaffController extends Controller
                 'role_id' => $request->role_id,
                 'shift_id' => $request->shift_id
             ]);
-        return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Dirubah');
+            Alert::success('Berhasil!', 'Staff dengan nama '. $request->name . ' berhasil diperbaharui!');
+        return redirect('/admin/data-staff');
     }
 
     /**
@@ -200,12 +203,14 @@ class DataStaffController extends Controller
     public function destroy(MasterUser $staff)
     {
         MasterUser::destroy($staff->id);
-        return redirect('/admin/data-staff')->with('status','Data Staff Berhasil Dihapus');
+        return redirect('/admin/data-staff');
     }
     public function destroyAll(Request $request){
+        $request->validate(['selectid' => 'required']);
         foreach ($request->selectid as $item) {
-            DB::table('master_users')->where('id','=',$item)->delete();
+            // DB::table('master_users')->where('id','=',$item)->delete();
         }
-        return redirect('/admin/data-staff')->with('status','Data User Terpilih Berhasil Dihapus');
+        Alert::success('Berhasil!', 'Staff yang dipilih berhasil dihapus!');
+        return redirect('/admin/data-staff');
     }
 }

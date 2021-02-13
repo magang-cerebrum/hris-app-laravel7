@@ -6,6 +6,7 @@ use App\MasterDivision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DivisionController extends Controller
 {
@@ -53,7 +54,8 @@ class DivisionController extends Controller
     {
         $request->validate(['name' => 'required']);
         MasterDivision::create($request->all());
-        return redirect('/admin/division')->with('status','Divisi Berhasil Ditambahkan');
+        Alert::success('Berhasil!', 'Divisi baru telah ditambahkan!');
+        return redirect('/admin/division');
     }
 
     /**
@@ -97,7 +99,8 @@ class DivisionController extends Controller
         $request->validate(['name' => 'required']);
         MasterDivision::where('id', $division->id)
             ->update(['name' => $request->name]);
-        return redirect('/admin/division')->with('status','Divisi Berhasil Dirubah');
+            Alert::success('Berhasil!', 'Divisi '. $division->name . ' telah diganti menjadi Divisi '. $request->name . '!');
+        return redirect('/admin/division');
     }
 
     /**
@@ -109,58 +112,15 @@ class DivisionController extends Controller
     public function destroy(MasterDivision $division)
     {
         MasterDivision::destroy($division->id);
-        return redirect('/admin/division')->with('status','Divisi Berhasil Dihapus');
+        return redirect('/admin/division');
     }
 
     public function destroyAll(Request $request){
         foreach ($request->selectid as $item) {
             DB::table('master_divisions')->where('id','=',$item)->delete();
         }
-        return redirect('/admin/division')->with('status','Data Divisi Terpilih Berhasil Dihapus');
+        Alert::success('Berhasil!', 'Divisi yang dipilih berhasil dihapus!');
+        return redirect('/admin/division');
     }
 
-    // public function search(Request $request){
-
-    //     if($request->ajax()){
-    //         $output = '';
-    //         $query = $request->get('query');
-
-    //         if($query != ''){
-    //             $data = DB::table('master_divisions')
-    //                 ->where('name','like','%'.'$query'.'%')
-    //                 ->orderBy('id','asc')
-    //                 ->get();
-    //         }
-    //         else{
-    //             $data = DB::table('master_divisions')
-    //             ->orderBy('id','asc')
-    //             ->get();
-    //         }
-
-    //         $total_row = $data->count();
-
-    //         if($total_row > 0){
-    //             foreach ($data as $row){
-    //                 $output .= '
-    //                 <tr>
-    //                     <td>'.$row->id.'</td>
-    //                     <td>'.$row->name.'</td>
-    //                 </tr>
-    //                 ';
-    //             }
-    //         }
-    //         else{
-    //             $output = '
-    //             <tr>
-    //                 <td class="text-center" colspan="3">Tidak Ada Data Ditemukan</td>
-    //             </tr>
-    //             ';
-    //         }
-
-    //         $data = array(
-    //             'table_data' => $output,
-    //         );
-    //         echo json_encode($data);
-    //     }
-    // }
 }

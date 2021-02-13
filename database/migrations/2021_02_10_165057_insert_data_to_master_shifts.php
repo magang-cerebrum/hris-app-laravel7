@@ -23,7 +23,7 @@ class InsertDataToMasterShifts extends Migration
                 'id' => 1,
                 'name' => 'Shift Pagi',
                 'start_working_time' => '08:00:00',
-                'end_working_time' => '13:00:00'
+                'end_working_time' => '17:00:00'
             ],
             [
                 'id' => 2,

@@ -6,6 +6,7 @@ use App\MasterShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ShiftController extends Controller
 {
@@ -57,7 +58,8 @@ class ShiftController extends Controller
             'end_working_time' => 'required'
         ]);
         MasterShift::create($request->all());
-        return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Ditambahkan');
+        Alert::success('Berhasil!', 'Shift baru telah ditambahkan!');
+        return redirect('/admin/shift');
     }
 
     /**
@@ -109,7 +111,8 @@ class ShiftController extends Controller
                 'start_working_time' => $request->start_working_time,
                 'end_working_time' => $request->end_working_time
             ]);
-        return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Dirubah');
+            Alert::success('Berhasil!', 'Shift '. $shift->name . ' telah diperbaharui!');
+        return redirect('/admin/shift');
     }
 
     /**
@@ -121,12 +124,13 @@ class ShiftController extends Controller
     public function destroy(MasterShift $shift)
     {
         MasterShift::destroy($shift->id);
-        return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Dihapus');
+        return redirect('/admin/shift');
     }
     public function destroyAll(Request $request){
         foreach ($request->selectid as $item) {
             DB::table('master_shifts')->where('id','=',$item)->delete();
         }
-        return redirect('/admin/shift')->with('status','Data Shift Terpilih Berhasil Dihapus');
+        Alert::success('Berhasil!', 'Shift yang dipilih berhasil dihapus!');
+        return redirect('/admin/shift');
     }
 }

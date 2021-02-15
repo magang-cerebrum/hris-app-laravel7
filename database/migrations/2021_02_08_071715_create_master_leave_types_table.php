@@ -15,7 +15,7 @@ class CreateMasterLeaveTypesTable extends Migration
     {
         Schema::create('master_leave_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',50);
             $table->integer('default_day');
             $table->timestamps();
         });

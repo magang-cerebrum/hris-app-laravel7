@@ -22,15 +22,11 @@ class DataStaffController extends Controller
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
-        ->leftJoin('master_shifts','master_users.shift_id','=','master_shifts.id')
         ->select(
                 'master_users.*',
                 'master_divisions.name as division_name',
                 'master_positions.name as position_name',
-                'master_roles.name as role_name',
-                'master_shifts.name as shift_name',
-                'master_shifts.start_working_time as start_working_time',
-                'master_shifts.end_working_time as end_working_time'
+                'master_roles.name as role_name'
                 )
         ->get();
         // ->paginate(5); if paginate on

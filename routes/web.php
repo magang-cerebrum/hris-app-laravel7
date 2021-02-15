@@ -101,4 +101,9 @@ Route::post('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveContro
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
+//route staff presence
+Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
+Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
+
+
 

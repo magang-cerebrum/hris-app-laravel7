@@ -22,6 +22,7 @@ class CreateMasterUsersTable extends Migration
             $table->date('dob');
             $table->string('live_at',200);
             $table->string('phone_number',13);
+            $table->enum('gender',['Laki-laki','Perempuan']);
             $table->string('email',60);
             $table->string('password',100);
             $table->string('profile_photo', 100)->default('default.jpg');

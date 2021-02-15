@@ -57,18 +57,14 @@
                         <tr>
                             <td><label for="yearly_leave_remaining">Sisa Cuti Tahunan: </label></td>
                             <td><span id="yearly_leave_remaining"></span></td>
+                            <td><label for="role_name">Hak Akses: </label></td>
+                            <td><span id="role_name"></span></td>
                         </tr>
                         <tr>
                             <td><label for="division_name">Divisi: </label></td>
                             <td><span id="division_name"></span></td>
                             <td><label for="position_name">Jabatan: </label></td>
                             <td><span id="position_name"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="role_name">Hak Akses: </label></td>
-                            <td><span id="role_name"></span></td>
-                            <td><label for="shift_name">Shift saat ini: </label></td>
-                            <td><span id="shift_name"></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -103,7 +99,6 @@
             var division_name = $(this).data('division_name');
             var position_name = $(this).data('position_name');
             var role_name = $(this).data('role_name');
-            var shift_name = $(this).data('shift_name');
 
             var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
@@ -126,7 +121,6 @@
             $('#division_name').text(division_name);
             $('#position_name').text(position_name);
             $('#role_name').text(role_name);
-            $('#shift_name').text(shift_name);
         });
 
         // check all

@@ -9,10 +9,8 @@ class MasterJobSchedule extends Model
     protected $fillable=[
         'month',
         'year',
+        'date',
         'user_id',
-        for ($x = 1; $x < 32 ; $x++) {
-            'shift_id_day_'.$x,
-        }
-        'total'
+        'shift_id'
     ];
 }

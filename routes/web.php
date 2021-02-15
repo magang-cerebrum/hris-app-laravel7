@@ -101,6 +101,9 @@ Route::post('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveContro
 Route::get('/staff/paid-leave/history',[App\Http\Controllers\TransactionPaidLeaveController::class,'show']);
 Route::delete('/staff/paid-leave/delete',[App\Http\Controllers\TransactionPaidLeaveController::class,'destroy_staff']);
 
+// Route Jadwal Kerja
+Route::get('/admin/schedule',[App\Http\Controllers\MasterJobScheduleController::class, 'index']);
+
 //route system log
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);

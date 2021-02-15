@@ -87,17 +87,20 @@
             </div>
             <!--===================================================-->
             <!-- End Striped Table -->
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#master').on('click', function(e) {
-                if($(this).is(':checked',true)) {
-                    $(".sub_chk").prop('checked', true);  
-                }
-                else {  
-                    $(".sub_chk").prop('checked',false);  
-                }  
-            });
+    </div> 
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#master').on('click', function(e) {
+            if($(this).is(':checked',true)) {
+                $(".sub_chk").prop('checked', true);  
+            }
+            else {  
+                $(".sub_chk").prop('checked',false);  
+            }  
         });
-    </script>
+    });
+</script>
 @endsection

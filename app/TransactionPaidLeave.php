@@ -10,7 +10,10 @@ class TransactionPaidLeave extends Model
         'user_id',
         'paid_leave_date_start',
         'paid_leave_date_end',
+        'days',
         'status',
-        'paid_leave_type_id'
+        'paid_leave_type_id',
+        'needs',
+        'informations'
     ];
 }

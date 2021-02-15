@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TransactionPaidLeave;
 use App\MasterLeaveType;
+use App\MasterUser;
 use App\User;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +22,7 @@ class TransactionPaidLeaveController extends Controller
     public function index()
     {
         $data = DB::table('transaction_paid_leaves')
+        ->where('transaction_paid_leaves.status', '=', 'Diajukan')
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->select(
@@ -31,24 +34,39 @@ class TransactionPaidLeaveController extends Controller
             )
         ->paginate(5);
         $user = Auth::user();
-
-        
-        // $start = date($data[0]->paid_leave_date_start);
-        // $end = date($data[0]->paid_leave_date_end);
-        // $paid_leave = date_diff($end, $start) + 1;
-
-        $start = strtotime($data[0]->paid_leave_date_start);
-        $end = strtotime($data[0]->paid_leave_date_end);
-        $paid_leave = (($end - $start) / 86400) + 1 ;
-        dd($paid_leave);
         
         return view('masterData.transactionleave.list', [
             'data' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
-            'id'=>$user->id,
-            'day'=>$paid_leave
+            'id'=>$user->id
+        ]);
+    }
+
+    public function history()
+    {
+        $data = DB::table('transaction_paid_leaves')
+        ->where('transaction_paid_leaves.status', '!=', 'Diajukan')
+        ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+        ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
+        ->select(
+            'transaction_paid_leaves.*',
+            
+            'master_users.name as user_name',
+            'master_users.nip as user_nip',
+            'master_users.yearly_leave_remaining as user_laeve_remaining',
+            'master_leave_types.name as type_name'
+            )
+        ->paginate(5);
+        $user = Auth::user();
+
+        return view('masterData.transactionleave.history', [
+            'data' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
         ]);
     }
 
@@ -82,17 +100,29 @@ class TransactionPaidLeaveController extends Controller
             'user_id'=>'required',
             'paid_leave_type_id'=>'required',
             'paid_leave_date_start'=>'required',
-            'paid_leave_date_end'=>'required'
+            'paid_leave_date_end'=>'required',
+            'needs'=>'required'
         ]);
         
+        $info = "-";
         $status = "Diajukan";
+
+        $start = $request->paid_leave_date_start;
+        $end = $request->paid_leave_date_end;
+        $datetime1 = new DateTime($start);
+        $datetime2 = new DateTime($end);
+        $interval = $datetime1->diff($datetime2);
+        $paid_leave = ($interval->format('%a')) + 1;
 
         TransactionPaidLeave::create([
             'user_id'=>$request->user_id,
             'paid_leave_date_start'=>$request->paid_leave_date_start,
             'paid_leave_date_end'=>$request->paid_leave_date_end,
+            'days'=>$paid_leave,
             'status'=>$status,
-            'paid_leave_type_id'=>$request->paid_leave_type_id
+            'paid_leave_type_id'=>$request->paid_leave_type_id,
+            'needs'=>$request->needs,
+            'informations'=>$info
 
         ]);
         return redirect('/staff/paid-leave');
@@ -104,9 +134,28 @@ class TransactionPaidLeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $user = Auth::user();
+
+        $data = DB::table('transaction_paid_leaves')
+        ->where('user_id', '=', $user->id)
+        ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+        ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
+        ->select(
+            'transaction_paid_leaves.*',
+            'master_users.yearly_leave_remaining as user_laeve_remaining',
+            'master_leave_types.name as type_name'
+            )
+        ->paginate(5);
+        
+        return view('staff.transactionleave.history',[
+            'data'=>$data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -127,9 +176,17 @@ class TransactionPaidLeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_approve(Request $request)
     {
-        //
+        $ids = $request->input('check');
+        foreach($ids as $check_id) {
+            $data = TransactionPaidLeave::where("id",$check_id)->first();
+            $data_user = MasterUser::where("id",$data->user_id)->first();
+            $remaining_days_off = $data_user->yearly_leave_remaining - $data->days;
+            $data->update(['status' => 'Diterima']);
+            $data_user->update(['yearly_leave_remaining' => $remaining_days_off]);
+        }
+        return redirect('/admin/paid-leave');
     }
 
     /**
@@ -146,5 +203,15 @@ class TransactionPaidLeaveController extends Controller
             $data->delete();
         }
         return redirect('/admin/paid-leave');
+    }
+
+    public function destroy_staff(Request $request)
+    {
+        $ids = $request->input('check');
+        foreach($ids as $deletes) {
+            $data = TransactionPaidLeave::where("id",$deletes)->first();
+            $data->delete();
+        }
+        return redirect('/staff/paid-leave/history');
     }
 }

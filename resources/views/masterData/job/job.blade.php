@@ -26,7 +26,11 @@
                             <form action="{{ url('/admin/job/delete')}}" method="POST" style="display: inline">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" name="submit" style="margin-top: -15px" class="btn btn-danger">Delete All Selected</button>
+                                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" style="margin-top: -15px" type="submit" data-toggle="tooltip"
+                                    data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                    <i class="btn-label fa fa-trash"></i>
+                                    Hapus Data Terpilih
+                                </button>
                             </div>
                             </div>
                                 <table id="masterdata-division"

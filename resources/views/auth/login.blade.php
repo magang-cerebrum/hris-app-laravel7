@@ -27,7 +27,7 @@
                 <form method='POST' action="{{route('login')}}">
                     @csrf
                     <div class="form-group">
-                        <input required type="text" name="nip" class="form-control" placeholder="NIP or Email" autofocus>
+                        <input required type="text" name="nip" class="form-control" placeholder="NIP" autofocus>
                         
                                 {{-- <div class="invalid-feedback is-invalid" role="alert">
                                     <strong>{{ session()->get('errornip')}}</strong>

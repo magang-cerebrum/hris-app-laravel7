@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label" for="demo-text-input">Tanggal Mulai</label>
                         <div class="col-md-4">
                             <input id="paid_leave_start" type="text" class="form-control @error('paid_leave_start') is-invalid @enderror" placeholder="Tanggal Mulai" name="paid_leave_date_start">
@@ -45,6 +45,16 @@
                             <input id="paid_leave_end" type="text" class="form-control @error('paid_leave_end') is-invalid @enderror" placeholder="Tanggal Selesai" name="paid_leave_date_end">
                             @error('paid_leave_end') <div class="text-danger invalid-feedback mt-3">
                                 Tanggal lelesai tidak boleh kosong.
+                                </div> @enderror
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-md-2 control-label" for="demo-textarea-input">Keterangan Keperluan</label>
+                        <div class="col-md-10">
+                            <textarea id="needs" rows="4" class="form-control @error('needs') is-invalid @enderror" placeholder="Keterangan Keperluan" name="needs"></textarea>
+                            @error('needs') <div class="text-danger invalid-feedback mt-3">
+                                Keterangan keperluan tidak boleh kosong.
                                 </div> @enderror
                         </div>
                     </div>

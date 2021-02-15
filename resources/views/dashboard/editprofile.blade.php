@@ -25,14 +25,6 @@
                     value="{{$data->profile_photo}}">
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-sm-2 control-label">NIP:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="NIP" name="nip"
-                                class="form-control @error('nip') is-invalid @enderror" value="{{$data->nip}}">
-                            @error('nip') <div class="text-danger invalid-feedback mt-3">
-                                Mohon isi NIP.
-                            </div> @enderror
-                        </div>
                         <label class="col-sm-2 control-label">Nama Staff:</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Nama Lengkap" name="name"
@@ -232,16 +224,6 @@
                                 <option value="{{$item->roles_id}}"
                                     {{ $data->role_id == $item->roles_id ? 'selected' : '' }}>
                                     {{$item->roles_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label" for="division_id">Waktu Shift:</label>
-                        <div class="col-sm-4">
-                            <select class="selectpicker" data-style="btn-pink" name="shift_id">
-                                @foreach ($shifts as $item)
-                                <option value="{{$item->shifts_id}}"
-                                    {{ $data->shift_id == $item->shifts_id ? 'selected' : '' }}>
-                                    {{$item->shifts_name}}</option>
                                 @endforeach
                             </select>
                         </div>

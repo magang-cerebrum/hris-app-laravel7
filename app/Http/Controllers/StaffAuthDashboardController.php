@@ -66,7 +66,6 @@ class StaffAuthDashboardController extends Controller
     {
         // dd($request);
         $request->validate([
-            'nip' => 'required|numeric',
             'name' => 'required',
             'dob' => 'required',
             'phone_number' => 'numeric',
@@ -76,7 +75,6 @@ class StaffAuthDashboardController extends Controller
         ]);
         MasterUser::where('id', $user->id)
             ->update([
-                'nip' => $request->nip,
                 'name' => $request->name,
                 'dob' => $request->dob,
                 'live_at' => $request->live_at,

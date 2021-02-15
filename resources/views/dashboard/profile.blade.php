@@ -126,10 +126,6 @@
                         <div class="col-sm-4">
                             <input type="text" placeholder="Hak Akses" name="role" class="form-control" value="{{$roles[0]->name}}" readonly>
                         </div>
-                        <label class="col-sm-2 control-label" for="shift_id">Waktu Shift:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Shift" name="shift" class="form-control" value="{{$shifts[0]->name}}" readonly>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">

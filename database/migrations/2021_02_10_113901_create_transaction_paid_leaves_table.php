@@ -20,8 +20,11 @@ class CreateTransactionPaidLeavesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->date('paid_leave_date_start');
             $table->date('paid_leave_date_end');
+            $table->integer('days');
             $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);
             $table->unsignedBigInteger('paid_leave_type_id')->nullable();
+            $table->text('needs');
+            $table->text('informations');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('master_users')->onUpdate('cascade')->onDelete('set null');

@@ -17,7 +17,11 @@
                             <form action="{{ url('/admin/rectuitment/delete-all')}}" method="POST">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" name="submit" style="margin-bottom: 10px" class="btn btn-danger">Delete All Selected</button>
+                                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                                    data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                    <i class="btn-label fa fa-trash"></i>
+                                    Hapus Data Terpilih
+                                </button>
                                 <table id="masterdata-division"
                                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
@@ -83,17 +87,20 @@
             </div>
             <!--===================================================-->
             <!-- End Striped Table -->
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#master').on('click', function(e) {
-                if($(this).is(':checked',true)) {
-                    $(".sub_chk").prop('checked', true);  
-                }
-                else {  
-                    $(".sub_chk").prop('checked',false);  
-                }  
-            });
+    </div> 
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#master').on('click', function(e) {
+            if($(this).is(':checked',true)) {
+                $(".sub_chk").prop('checked', true);  
+            }
+            else {  
+                $(".sub_chk").prop('checked',false);  
+            }  
         });
-    </script>
+    });
+</script>
 @endsection

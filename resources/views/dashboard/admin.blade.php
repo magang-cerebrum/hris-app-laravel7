@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('title', 'Rekruitasi')
+@section('title', 'Dashboard Admin')
 @section('content-title', 'Selamat Datang Di Aplikasi HRIS')
 @section('content-subtitle', '(Human Resource Information System)')
 @section('content')

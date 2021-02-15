@@ -3,11 +3,12 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Edit Data Staff')
 @section('content')
-
+@section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <!--Bootstrap Select [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+@endsection
 
 <div class="panel">
     <div class="panel-heading">
@@ -266,7 +267,7 @@
         </form>
     </div>
 </div>
-
+@section('script')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <!--Bootstrap Select [ OPTIONAL ]-->
@@ -295,6 +296,6 @@
             autoclose: true
         });
     });
-
 </script>
+@endsection
 @endsection

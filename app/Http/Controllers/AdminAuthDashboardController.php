@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class AdminAuthDashboardController extends Controller
 {
     public function index(){
@@ -120,6 +122,7 @@ class AdminAuthDashboardController extends Controller
                 'role_id' => $request->role_id,
                 'shift_id' => $request->shift_id
             ]);
-        return redirect('/admin/profile')->with('status','Profil Berhasil Dirubah');
+            Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
+        return redirect('/admin/profile');
     }
 }

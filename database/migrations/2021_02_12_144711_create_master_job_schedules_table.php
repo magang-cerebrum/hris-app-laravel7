@@ -17,13 +17,14 @@ class CreateMasterJobSchedulesTable extends Migration
             $table->id();
             $table->string('month', 20);
             $table->string('year', 5);
-            $table->date('date');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('shift_id')->nullable();
+            for ($i = 1; $i < 32; $i++) {
+                $table->unsignedBigInteger('shift_'.$i)->nullable();
+            }
+            $table->integer('total_hour');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('master_users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('shift_id')->references('id')->on('master_shifts')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

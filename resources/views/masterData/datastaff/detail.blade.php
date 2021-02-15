@@ -21,7 +21,7 @@
                             <td><span id="dob"></span></td>
                             <td rowspan="10"></td>        
                             <td rowspan="4" colspan="2" class="text-center">
-                                <img id="img-modal" src=""
+                                <img id="img-modal" style="width: 128px" src=""
                                     alt="Tidak ada foto profil.">
                             </td>
                         </tr>

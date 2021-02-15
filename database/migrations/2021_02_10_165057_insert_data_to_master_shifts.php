@@ -21,15 +21,24 @@ class InsertDataToMasterShifts extends Migration
         DB::table('master_shifts')->insert([
             [
                 'id' => 1,
-                'name' => 'Shift Pagi',
-                'start_working_time' => '08:00:00',
-                'end_working_time' => '17:00:00'
+                'name' => 'Off',
+                'start_working_time' => '00:00:00',
+                'end_working_time' => '00:00:00',
+                'total_hour' => 0
             ],
             [
                 'id' => 2,
-                'name' => 'Shift Siang',
+                'name' => 'Pagi',
+                'start_working_time' => '08:00:00',
+                'end_working_time' => '17:00:00',
+                'total_hour' => 9
+            ],
+            [
+                'id' => 3,
+                'name' => 'Siang',
                 'start_working_time' => '13:00:00',
-                'end_working_time' => '21:00:00'
+                'end_working_time' => '21:00:00',
+                'total_hour' => 8
             ]
             ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

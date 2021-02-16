@@ -55,6 +55,9 @@
                                 colspan="1" aria-label="Jam masuk: activate to sort column ascending">Jam Masuk</th>
                             <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
                                 colspan="1" aria-label="Jam Kerja: activate to sort column ascending">Jam Keluar</th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                            colspan="1" aria-label="Jam Kerja: activate to sort column ascending">Jam Sehari</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -75,6 +78,8 @@
                             <td class="text-center">{{$row->name}}</td>
                             <td class="text-center">{{$row->start_working_time}}</td>
                             <td class="text-center">{{$row->end_working_time}}</td>
+                            <td class="text-center">{{$row->total_hour}} jam</td>
+
                         </tr>
                         @endforeach
                     </tbody>

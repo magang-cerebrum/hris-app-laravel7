@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MasterPresence;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PresenceController extends Controller
 {
@@ -15,7 +16,7 @@ class PresenceController extends Controller
         ->select('in_time','out_time','late_time','late_time_rounded')
         ->first();
         // dd($presence);
-        return view('staff.presence.today',[
+        return view('staff.presence.history',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -25,7 +26,7 @@ class PresenceController extends Controller
     }
     public function test_presence(){
         $user = Auth::user(); // diganti siapa yg absen
-        $waktu_masuk = date_create('08:09:52'); //diganti masuk kapan
+        $waktu_masuk = date_create('08:11:52'); //diganti masuk kapan
         $waktu_keluar = date_create('17:05:33'); //
         $waktu_sehari = date_diff($waktu_masuk, $waktu_keluar);
         $dibuletin = null;
@@ -43,7 +44,6 @@ class PresenceController extends Controller
             $telat = null;
             $dibuletin = null;
         }
-        // dd($telat, $dibuletin);
         MasterPresence::updateOrCreate([
             'user_id' => $user->id,
             'in_time' => $waktu_masuk,
@@ -54,5 +54,15 @@ class PresenceController extends Controller
             'presence_date' => date('Y/m/d')
         ]);
         return redirect('/staff/presence');
+    }
+
+    public function search(Request $request){
+        $request->validate([
+            'start' => 'required',
+            'end' => 'required'
+        ]);
+        $user=Auth::user();
+        $data = MasterPresence::whereBetween('presence_date',[date($request->start),date($request->end)])->where('user_id','=',$user->id)->paginate(5);
+        return view('staff.presence.result',['data' => $data]);
     }
 }

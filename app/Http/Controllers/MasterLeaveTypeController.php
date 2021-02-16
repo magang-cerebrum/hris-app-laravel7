@@ -6,6 +6,8 @@ use App\MasterLeaveType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class MasterLeaveTypeController extends Controller
 {
     /**
@@ -19,13 +21,13 @@ class MasterLeaveTypeController extends Controller
             return abort(403,'Access Denied, Only Admin Can Access');
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
-            $list = MasterLeaveType::paginate(5);
+            $leavetype = MasterLeaveType::paginate(5);
 
-            return view('masterdata.leavetype.list',['data'=>$list,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
+            return view('masterdata.leavetype.list',['leavetype'=>$leavetype,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
             ]);
         }
         
@@ -43,10 +45,10 @@ class MasterLeaveTypeController extends Controller
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
             return view('masterdata.leavetype.create',[
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
             ]);
         }
     }
@@ -61,9 +63,10 @@ class MasterLeaveTypeController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'default_day'=>'required'
+            'default_day'=>'required|numeric'
         ]);
         MasterLeaveType::create($request->all());
+        Alert::success('Berhasil!', 'Tipe Cuti baru telah ditambahkan!');
         return redirect('/admin/paid-leave-type');
     }
 
@@ -91,10 +94,10 @@ class MasterLeaveTypeController extends Controller
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
             return view('masterdata.leavetype.edit',['cuti' => $leavetype,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
             ]);
         }
         
@@ -111,12 +114,14 @@ class MasterLeaveTypeController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'default_day'=>'required'
+            'default_day'=>'required|numeric'
         ]);
         MasterLeaveType::where('id',$leavetype->id)->update([
             'name'=>$request->name,
             'default_day'=>$request->default_day
-        ]);return redirect('admin/paid-leave-type');
+        ]);
+        Alert::success('Berhasil!', 'Tipe Cuti '. $leavetype->name . ' berhasil diperbaharui');
+        return redirect('admin/paid-leave-type');
     }
 
     /**
@@ -128,6 +133,14 @@ class MasterLeaveTypeController extends Controller
     public function destroy(MasterLeaveType $leavetype)
     {
         MasterLeaveType::destroy($leavetype->id);
+        return redirect('/admin/paid-leave-type');
+    }
+
+    public function destroyAll(Request $request){
+        foreach ($request->selectid as $item) {
+            MasterLeaveType::where('id','=',$item)->delete();
+        }
+        Alert::success('Berhasil!', 'Tipe Cuti yang dipilih berhasil dihapus!');
         return redirect('/admin/paid-leave-type');
     }
 }

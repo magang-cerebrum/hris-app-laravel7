@@ -197,7 +197,7 @@ class DataStaffController extends Controller
     public function destroyAll(Request $request){
         $request->validate(['selectid' => 'required']);
         foreach ($request->selectid as $item) {
-            DB::table('master_users')->where('id','=',$item)->delete();
+            MasterUser::where('id','=',$item)->delete();
         }
         Alert::success('Berhasil!', 'Staff yang dipilih berhasil dihapus!');
         return redirect('/admin/data-staff');

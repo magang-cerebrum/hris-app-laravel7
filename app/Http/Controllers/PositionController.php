@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\MasterPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PositionController extends Controller
@@ -116,7 +115,7 @@ class PositionController extends Controller
     }
     public function destroyAll(Request $request){
         foreach ($request->selectid as $item) {
-            DB::table('master_positions')->where('id','=',$item)->delete();
+            MasterPosition::where('id','=',$item)->delete();
         }
         Alert::success('Berhasil!', 'Jabatan yang dipilih berhasil dihapus!');
         return redirect('/admin/position');

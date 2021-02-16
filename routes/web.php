@@ -89,7 +89,7 @@ Route::get('/admin/paid-leave-type/add',[MasterLeaveTypeController::class,'creat
 Route::post('/admin/paid-leave-type',[MasterLeaveTypeController::class,'store'])->name('save');
 Route::get('/admin/paid-leave-type/{leavetype}/edit',[MasterLeaveTypeController::class,'edit']);
 Route::put('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
-Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'destroy']); 
+Route::delete('/admin/paid-leave-type/',[MasterLeaveTypeController::class,'destroyAll']); 
 
 // Route Transaksi Cuti
 Route::get('/admin/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'index']);

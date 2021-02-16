@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\MasterDivision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DivisionController extends Controller
@@ -117,7 +116,7 @@ class DivisionController extends Controller
 
     public function destroyAll(Request $request){
         foreach ($request->selectid as $item) {
-            DB::table('master_divisions')->where('id','=',$item)->delete();
+            MasterDivision::where('id','=',$item)->delete();
         }
         Alert::success('Berhasil!', 'Divisi yang dipilih berhasil dihapus!');
         return redirect('/admin/division');

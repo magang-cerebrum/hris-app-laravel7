@@ -227,7 +227,7 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="demo-psi-calendar-4"></i>Cuti</a></li>
+                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="demo-psi-calendar-4"></i>Tipe Cuti</a></li>
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>

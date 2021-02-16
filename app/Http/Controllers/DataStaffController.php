@@ -50,13 +50,11 @@ class DataStaffController extends Controller
         $divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->get();
         $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->get();
         $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
-        $shifts = DB::table('master_shifts')->select('name as shift_name','id as shift_id')->get();
 
         return view('masterdata.datastaff.create',[
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles,
-            'shifts'=>$shifts,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -89,8 +87,7 @@ class DataStaffController extends Controller
             'yearly_leave_remaining' => 'numeric',
             'division_id' => 'numeric',
             'position_id' => 'numeric',
-            'role_id' => 'numeric',
-            'shift_id' => 'numeric'
+            'role_id' => 'numeric'
         ]);
         MasterUser::create($request->all());
         Alert::success('Berhasil!', 'Staff baru telah ditambahkan!');
@@ -120,14 +117,12 @@ class DataStaffController extends Controller
         $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
-        $shifts = DB::table('master_shifts')->select('name as shifts_name','id as shifts_id')->get();
 
         return view('masterdata.datastaff.edit',[
             'staff' => $staff,
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles,
-            'shifts'=>$shifts,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -160,8 +155,7 @@ class DataStaffController extends Controller
             'yearly_leave_remaining' => 'numeric',
             'division_id' => 'numeric',
             'position_id' => 'numeric',
-            'role_id' => 'numeric',
-            'shift_id' => 'numeric'
+            'role_id' => 'numeric'
         ]);
         MasterUser::where('id', $staff->id)
             ->update([
@@ -183,8 +177,7 @@ class DataStaffController extends Controller
                 'yearly_leave_remaining' => $request->yearly_leave_remaining,
                 'division_id' => $request->division_id,
                 'position_id' => $request->position_id,
-                'role_id' => $request->role_id,
-                'shift_id' => $request->shift_id
+                'role_id' => $request->role_id
             ]);
             Alert::success('Berhasil!', 'Staff dengan nama '. $request->name . ' berhasil diperbaharui!');
         return redirect('/admin/data-staff');
@@ -204,7 +197,7 @@ class DataStaffController extends Controller
     public function destroyAll(Request $request){
         $request->validate(['selectid' => 'required']);
         foreach ($request->selectid as $item) {
-            // DB::table('master_users')->where('id','=',$item)->delete();
+            DB::table('master_users')->where('id','=',$item)->delete();
         }
         Alert::success('Berhasil!', 'Staff yang dipilih berhasil dihapus!');
         return redirect('/admin/data-staff');

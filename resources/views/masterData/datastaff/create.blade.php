@@ -221,14 +221,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label" for="division_id">Waktu Shift:</label>
-                        <div class="col-sm-4">
-                            <select class="selectpicker" data-style="btn-pink" name="shift_id">
-                                @foreach ($shifts as $item)
-                                <option value="{{$item->shift_id}}">{{$item->shift_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">

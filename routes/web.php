@@ -111,6 +111,7 @@ Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroys
 //route staff presence
 Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
+Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
 
 
 

@@ -3,8 +3,10 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Tambah Shift')
 @section('content')
+@section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-timepicker/bootstrap-timepicker.min.css")}}" rel="stylesheet">
+@endsection
 
 <div class="panel">
     <div class="panel-heading">
@@ -54,10 +56,9 @@
         </form>
     </div>
 </div>
-
+@section('script')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-timepicker/bootstrap-timepicker.min.js")}}"></script>
-
 <script>
     $(document).ready(function () {
         $('#timepicker-input-shift-masuk').timepicker({
@@ -76,4 +77,5 @@
     });
 
 </script>
+@endsection
 @endsection

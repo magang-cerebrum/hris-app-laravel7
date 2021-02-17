@@ -27,9 +27,10 @@ class InsertDataDummyToMasterUsers extends Migration
                 'dob' => '2000/02/20',
                 'live_at' => 'Uranus',
                 'phone_number' => '1234567890',
+                'gender' => 'Laki-laki',
                 'email' => 'admin@dummy.com',
                 'password' => Hash::make('cerebrum'),
-                'profile_photo' => 'default.jpg',
+                'profile_photo' => 'defaultL.jpg',
                 'employee_status' => 'Tetap',
                 'employee_type' => 'Fulltime',
                 'status' => 'Aktif',
@@ -37,8 +38,7 @@ class InsertDataDummyToMasterUsers extends Migration
                 'yearly_leave_remaining' => 12,
                 'division_id' => 6,
                 'position_id' => 3,
-                'role_id' => 1,
-                'shift_id' => 1
+                'role_id' => 1
             ],
             [
                 'id' => 2,
@@ -47,9 +47,10 @@ class InsertDataDummyToMasterUsers extends Migration
                 'dob' => '2000/12/20',
                 'live_at' => 'Saturnus',
                 'phone_number' => '0987654321',
+                'gender' => 'Perempuan',
                 'email' => 'staff@dummy.com',
                 'password' => Hash::make('cerebrum'),
-                'profile_photo' => 'default.jpg',
+                'profile_photo' => 'defaultP.png',
                 'employee_status' => 'Tetap',
                 'employee_type' => 'Fulltime',
                 'status' => 'Aktif',
@@ -57,8 +58,7 @@ class InsertDataDummyToMasterUsers extends Migration
                 'yearly_leave_remaining' => 12,
                 'division_id' => 1,
                 'position_id' => 4,
-                'role_id' => 2,
-                'shift_id' => 1
+                'role_id' => 2
             ],
             [
                 'id' => 3,
@@ -67,9 +67,10 @@ class InsertDataDummyToMasterUsers extends Migration
                 'dob' => '2000/12/20',
                 'live_at' => 'Saturnus',
                 'phone_number' => '0987654321',
+                'gender' => 'Laki-laki',
                 'email' => 'oistaff@dummy.com',
                 'password' => Hash::make('cerebrum'),
-                'profile_photo' => 'default.jpg',
+                'profile_photo' => 'defaultL.jpg',
                 'employee_status' => 'Tetap',
                 'employee_type' => 'Fulltime',
                 'status' => 'Aktif',
@@ -77,8 +78,7 @@ class InsertDataDummyToMasterUsers extends Migration
                 'yearly_leave_remaining' => 12,
                 'division_id' => 1,
                 'position_id' => 4,
-                'role_id' => 2,
-                'shift_id' => 1
+                'role_id' => 2
             ],
             ]);
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

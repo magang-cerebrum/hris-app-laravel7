@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Tambah Tipe Cuti')
+@section('content-title','Master Data / Tipe Cuti / Tambah Tipe Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Tambah Tipe Cuti')
 @section('content')
@@ -12,8 +12,8 @@
             @csrf
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="hor-inputdivisibaru">Tambah Tipe Cuti Baru:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-2 control-label" for="name">Tambah Tipe Cuti Baru:</label>
+                    <div class="col-sm-4">
                         <input type="text" placeholder="Nama Tipe Cuti" name="name"
                             class="form-control @error('name') is-invalid @enderror">
                             
@@ -21,16 +21,14 @@
                             Nama Tipe Cuti baru tidak boleh kosong.
                         </div> @enderror
                     </div>
-                    <label class="col-sm-2 control-label" for="hor-inputdivisibaru">Jumlah Hari Cuti:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-2 control-label" for="default_day">Jumlah Hari Cuti:</label>
+                    <div class="col-sm-4">
                         <input type="text" placeholder="Jumlah Hari Cuti" name="default_day"
-                            class="form-control @error('name') is-invalid @enderror">
-                            
+                            class="form-control @error('default_day') is-invalid @enderror">
                         @error('name') <div class="text-danger invalid-feedback mt-3">
-                            Nama Tipe Cuti baru tidak boleh kosong.
+                            Jumlah Hari Cuti tidak boleh kosong.
                         </div> @enderror
                     </div>
-                    
                 </div>
                 <div class="panel-footer text-right">
                     <button class="btn btn-mint" type="submit">Tambah</button>

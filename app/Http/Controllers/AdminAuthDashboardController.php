@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 use App\MasterUser;
 use App\MasterRecruitment;
+use App\TransactionPaidLeave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class AdminAuthDashboardController extends Controller
 {
     public function index(){
@@ -14,11 +17,20 @@ class AdminAuthDashboardController extends Controller
             return abort(403,'Must be Admin');
         }
         else if(Gate::allows('is_admin')){
-            // return 'Admin';
             $user = Auth::user();
-            $data = MasterRecruitment::paginate(5);
+            $data_paid = DB::table('transaction_paid_leaves')
+            ->where('transaction_paid_leaves.status', '=', 'Diajukan')
+            ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+            ->select(
+                'transaction_paid_leaves.*',
+                'master_users.name as user_name',
+                'master_users.nip as user_nip'
+                )
+            ->paginate(5);
+            $data_rect = MasterRecruitment::paginate(5);
             return view('dashboard.admin',[
-                'data_recruitment'=>$data,
+                'data_recruitment'=>$data_rect,
+                'data_paid_leave'=>$data_paid,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -110,6 +122,7 @@ class AdminAuthDashboardController extends Controller
                 'role_id' => $request->role_id,
                 'shift_id' => $request->shift_id
             ]);
-        return redirect('/admin/profile')->with('status','Profil Berhasil Dirubah');
+            Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
+        return redirect('/admin/profile');
     }
 }

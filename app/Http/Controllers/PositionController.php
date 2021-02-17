@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\MasterPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PositionController extends Controller
 {
@@ -55,7 +55,8 @@ class PositionController extends Controller
         $user = Auth::user()->name;
         MasterPosition::create($request->all());
         activity()->log('Jabatan '.$request->name.' telah ditambahkan oleh admin ' . $user);
-        return redirect('/admin/position')->with('status','Jabatan Berhasil Ditambahkan');
+        Alert::success('Berhasil!', 'Jabatan baru telah ditambahkan!');
+        return redirect('/admin/position');
     }
 
     /**
@@ -102,10 +103,9 @@ class PositionController extends Controller
         // dd($past);
         MasterPosition::where('id', $position->id)
             ->update(['name' => $request->name]);
-        // activity()->log('Jabatan '. $request->name.' telah di-update oleh admin ' . $user);
         activity()->log($user.' telah memperbarui posisi ' .$past[0]->name .' menjadi '.$request->name );
-
-        return redirect('/admin/position')->with('status','Jabatan Berhasil Dirubah');
+        Alert::success('Berhasil!', 'Jabatan '. $position->name . ' telah diganti menjadi Jabatan '. $request->name . '!');
+        return redirect('/admin/position');
     }
 
     /**
@@ -117,12 +117,13 @@ class PositionController extends Controller
     public function destroy(MasterPosition $position)
     {
         MasterPosition::destroy($position->id);
-        return redirect('/admin/position')->with('status','Jabatan Berhasil Dihapus');
+        return redirect('/admin/position');
     }
     public function destroyAll(Request $request){
         foreach ($request->selectid as $item) {
-            DB::table('master_positions')->where('id','=',$item)->delete();
+            MasterPosition::where('id','=',$item)->delete();
         }
-        return redirect('/admin/position')->with('status','Data Jabatan Terpilih Berhasil Dihapus');
+        Alert::success('Berhasil!', 'Jabatan yang dipilih berhasil dihapus!');
+        return redirect('/admin/position');
     }
 }

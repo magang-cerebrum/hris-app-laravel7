@@ -19,9 +19,10 @@
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
-
+    @yield('head')
 </head>
 <body>
+    @include('sweetalert::alert')
     <div id="container" class="effect aside-float aside-bright mainnav-lg">
         
         <!--NAVBAR-->
@@ -210,10 +211,17 @@
                             
                                         <!--Menu list item-->
                                         <li>
-                                            <a href="{{ url('staff/paid-leave')}}">
+                                            <a href="{{ url('#')}}">
                                                 <i class="fa fa-calendar-minus-o"></i>
                                                 <span class="menu-title">Cuti</span>
+                                                <i class="arrow"></i>
                                             </a>
+
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a href="{{ url('staff/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Pengajuan Cuti</a></li>
+                                                <li><a href="{{ url('staff/paid-leave/history')}}"><i class="demo-psi-calendar-4"></i>Riwayat Cuti</a></li>
+                                            </ul>
                                         </li>
                                         
                                         <!--Menu list item-->
@@ -274,6 +282,8 @@
     <script src="{{ asset('plugins/flot-charts/jquery.flot.tooltip.min.js')}}"></script>
     
     <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
+
+    @yield('script')
 
 </body>
 </html>

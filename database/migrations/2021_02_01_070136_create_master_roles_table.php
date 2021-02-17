@@ -15,7 +15,7 @@ class CreateMasterRolesTable extends Migration
     {
         Schema::create('master_roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',20);
             $table->timestamps();
         });
     }

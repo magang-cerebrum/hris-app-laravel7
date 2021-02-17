@@ -3,12 +3,6 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Profile Data Staff')
 @section('content')
-
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
-<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-<!--Bootstrap Select [ OPTIONAL ]-->
-<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
-
 <div class="panel">
     <div class="panel-heading">
         <h3 class="panel-title text-bold text-center">Profile User</h3>
@@ -132,10 +126,6 @@
                         <div class="col-sm-4">
                             <input type="text" placeholder="Hak Akses" name="role" class="form-control" value="{{$roles[0]->name}}" readonly>
                         </div>
-                        <label class="col-sm-2 control-label" for="shift_id">Waktu Shift:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Shift" name="shift" class="form-control" value="{{$shifts[0]->name}}" readonly>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -154,35 +144,4 @@
         </form>
     </div>
 </div>
-
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
-<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-<!--Bootstrap Select [ OPTIONAL ]-->
-<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
-
-<script>
-    function showContractOption() {
-        if (document.getElementById('employee_status_radio-1').checked) {
-            document.getElementById('input-contract_duration').style.display = 'none';
-        } else {
-            document.getElementById('input-contract_duration').style.display = 'block';
-        }
-    };
-
-    $(document).ready(function () {
-        $('#datepicker-edit-dob .input-group.date').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true
-        });
-        $('#datepicker-edit-mulai-kerja .input-group.date').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true
-        });
-        $('#datepicker-edit-selesai-kerja .input-group.date').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true
-        });
-    });
-
-</script>
 @endsection

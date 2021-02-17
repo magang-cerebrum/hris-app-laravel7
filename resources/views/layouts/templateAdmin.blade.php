@@ -20,16 +20,16 @@
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
 
-
     <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.min.css')}}">
     <script href="{{asset('plugins/noUiSlider/nouislider.js')}}"></script>
     <script href="{{asset('plugins/noUiSlider/nouislider.min.js')}}"></script>
 
+    @yield('head')
 </head>
 <body>
+    @include('sweetalert::alert')
     <div id="container" class="effect aside-float aside-bright mainnav-lg">
-        
         <!--NAVBAR-->
         <!--===================================================-->
         <header id="navbar">
@@ -216,7 +216,8 @@
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
                                             <li><a href="{{ url('admin/achievement/scoring')}}"><i class="demo-psi-medal-2"></i>Pengghargaan</a></li>
-											<li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
+											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Jadwal Kerja</a></li>
+                                            <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
 						                </ul>
@@ -232,7 +233,7 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="demo-psi-calendar-4"></i>Cuti</a></li>
+                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="demo-psi-calendar-4"></i>Tipe Cuti</a></li>
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
@@ -311,5 +312,7 @@
     
     <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
 
+    @yield('script')
+    
 </body>
 </html>

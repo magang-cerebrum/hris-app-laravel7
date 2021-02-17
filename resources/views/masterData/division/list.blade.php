@@ -1,19 +1,16 @@
 @extends('layouts/templateAdmin')
-@section('title','Masterdata Divisi')
 @section('content-title','Master Data / Divisi')
+@section('title','Masterdata Divisi')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-<!--Datatables [ OPTIONAL ]-->
+@section('head')
+{{-- Sweetalert 2 --}}
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+@endsection
 <div class="panel">
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
-                @if (session('status'))
-                <div class="alert alert-info alert-dismissable">
-                    <button class="close" data-dismiss="alert"><i class="pci-cross pci-circle"></i></button>
-                    {{session('status')}}
-                </div>
-                @endif
                 <div class="row">
                     <div class="col-sm-2">
                         <a href="{{url('/admin/division/add')}}" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom:15px" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Data Divisi Baru">
@@ -21,25 +18,26 @@
                             Tambah Divisi
                         </a>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-6">
                         <form action="/admin/division" method="POST" id="form-mul-delete">
                             @csrf
                             @method('delete')
                             <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                                data-container="body" data-placement="top" data-original-title="Hapus Data">
+                                data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()">
                                 <i class="btn-label fa fa-trash"></i>
                                 Hapus Data Terpilih
                             </button>
+                            @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
+                                Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
                     </div>
-                    <div class="col-sm-5"></div>
-                    <div class="col-sm-3 hidden">
+                    <div class="col-sm-4">
                         <div class="form-group float-right">
-                            {{-- <input type="text" name="cari-divisi" id="cari-divisi" class="form-control"
-                                placeholder="Cari Divisi" /> --}}
+                            <input type="text" id="cari-divisi" class="form-control"
+                                placeholder="Cari Divisi" onkeyup="search_division()">
                         </div>
                     </div>
                 </div>
-                <table id="masterdata-division"
+                <table id="masterdata-divisi"
                     class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
                     aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                     <thead>
@@ -76,18 +74,20 @@
                 </table>
                 </form>
                 <div class="row">
-                    <div class="col-sm-5"></div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10 text-center">
                         <ul class="pagination">
                             {{ $division->links() }}
                         </ul>
                     </div>
-                    <div class="col-sm-5"></div>
+                    <div class="col-sm-1"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@section('script')
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $("#check-all").click(function () {
@@ -96,12 +96,58 @@
             else
                 $(".check-item").prop("checked",false);
         });
-
-        $("#btn-delete").click(function () {
-            var confirm = window.confirm(
-            "Apakah Anda yakin ingin menghapus data-data ini?");
-            if (confirm) $("#form-mul-delete").submit()
-        });
     });
+    // Sweetalert 2
+    function submit_delete(){
+        event.preventDefault();
+        var check = document.querySelector('.check-item:checked');
+        if (check != null){
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data terpilih?',
+                text: "Data yang sudah di hapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Tidak'
+                }
+            ).then((result) => {
+                if (result.value == true) {
+                    $("#form-mul-delete").submit();
+                }}
+            );
+        } else {
+            Swal.fire({
+                title: 'Sepertinya ada kesalahan...',
+                text: "Tidak ada data yang dipilih untuk dihapus!",
+                icon: 'error',
+            })
+        }
+    }
+
+    // live search
+    function search_division() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("cari-divisi");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("masterdata-divisi");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            for (j = 3; j < 4; j++ ){
+                    td = tr[i].getElementsByTagName("td")[j];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
 </script>
+@endsection
 @endsection

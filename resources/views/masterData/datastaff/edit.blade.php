@@ -3,10 +3,12 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Edit Data Staff')
 @section('content')
+@section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <!--Bootstrap Select [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+@endsection
 <div class="panel">
     <div class="panel-heading">
         <h3 class="panel-title text-center text-bold">Form Edit Data Staff</h3>
@@ -54,11 +56,11 @@
                         <div class="col-sm-4">
                             <div class="radio">
                                 <!-- Inline radio buttons -->
-                                <input id="gender-1" class="magic-radio" type="radio"
-                                    name="gender" value="Laki-laki" {{$staff->gender == 'Laki-laki' ? 'checked' : ''}}>
+                                <input id="gender-1" class="magic-radio" type="radio" name="gender" value="Laki-laki"
+                                    {{$staff->gender == 'Laki-laki' ? 'checked' : ''}}>
                                 <label for="gender-1">Laki-laki</label>
-                                <input id="gender-2" class="magic-radio" type="radio"
-                                    name="gender" value="Perempuan" {{$staff->gender == 'Perempuan' ? 'checked' : ''}}>
+                                <input id="gender-2" class="magic-radio" type="radio" name="gender" value="Perempuan"
+                                    {{$staff->gender == 'Perempuan' ? 'checked' : ''}}>
                                 <label for="gender-2">Perempuan</label>
                             </div>
                         </div>
@@ -233,16 +235,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label" for="division_id">Waktu Shift:</label>
-                        <div class="col-sm-4">
-                            <select class="selectpicker" data-style="btn-pink" name="shift_id">
-                                @foreach ($shifts as $item)
-                                <option value="{{$item->shifts_id}}"
-                                    {{ $staff->shift_id == $item->shifts_id ? 'selected' : '' }}>
-                                    {{$item->shifts_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -264,35 +256,36 @@
         </form>
     </div>
 </div>
+@section('script')
+<!--Bootstrap Timepicker [ OPTIONAL ]-->
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
+<!--Bootstrap Select [ OPTIONAL ]-->
+<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
-        <!--Bootstrap Timepicker [ OPTIONAL ]-->
-        <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-        <!--Bootstrap Select [ OPTIONAL ]-->
-        <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+<script>
+    function showContractOption() {
+        if (document.getElementById('employee_status_radio-1').checked) {
+            document.getElementById('input-contract_duration').style.display = 'none';
+        } else {
+            document.getElementById('input-contract_duration').style.display = 'block';
+        }
+    };
 
-        <script>
-            function showContractOption() {
-                if (document.getElementById('employee_status_radio-1').checked) {
-                    document.getElementById('input-contract_duration').style.display = 'none';
-                } else {
-                    document.getElementById('input-contract_duration').style.display = 'block';
-                }
-            };
+    $(document).ready(function () {
+        $('#datepicker-edit-dob .input-group.date').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+        $('#datepicker-edit-mulai-kerja .input-group.date').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+        $('#datepicker-edit-selesai-kerja .input-group.date').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+    });
 
-            $(document).ready(function () {
-                $('#datepicker-edit-dob .input-group.date').datepicker({
-                    format: 'yyyy/mm/dd',
-                    autoclose: true
-                });
-                $('#datepicker-edit-mulai-kerja .input-group.date').datepicker({
-                    format: 'yyyy/mm/dd',
-                    autoclose: true
-                });
-                $('#datepicker-edit-selesai-kerja .input-group.date').datepicker({
-                    format: 'yyyy/mm/dd',
-                    autoclose: true
-                });
-            });
-
-        </script>
-        @endsection
+</script>
+@endsection
+@endsection

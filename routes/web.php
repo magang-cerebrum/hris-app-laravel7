@@ -90,15 +90,33 @@ Route::get('/admin/paid-leave-type/add',[MasterLeaveTypeController::class,'creat
 Route::post('/admin/paid-leave-type',[MasterLeaveTypeController::class,'store'])->name('save');
 Route::get('/admin/paid-leave-type/{leavetype}/edit',[MasterLeaveTypeController::class,'edit']);
 Route::put('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
-Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'destroy']); 
+Route::delete('/admin/paid-leave-type/',[MasterLeaveTypeController::class,'destroyAll']); 
+
+// Route Transaksi Cuti
+Route::get('/admin/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'index']);
+Route::get('/admin/paid-leave/history',[App\Http\Controllers\TransactionPaidLeaveController::class,'history']);
+Route::delete('/admin/paid-leave/delete',[App\Http\Controllers\TransactionPaidLeaveController::class,'destroy']);
+Route::put('/admin/paid-leave/approve',[App\Http\Controllers\TransactionPaidLeaveController::class,'update_approve']);
+Route::get('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'create']);
+Route::post('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'store']);
+Route::get('/staff/paid-leave/history',[App\Http\Controllers\TransactionPaidLeaveController::class,'show']);
+Route::delete('/staff/paid-leave/delete',[App\Http\Controllers\TransactionPaidLeaveController::class,'destroy_staff']);
+
+// Route Jadwal Kerja
+Route::get('/admin/schedule',[App\Http\Controllers\MasterJobScheduleController::class, 'index']);
 
 //route system log
-
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
 //Route Achievement
 Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
+//route staff presence
+Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
+Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
+Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
+
+
 
 //Route Achievement Dates
 // Route::get('/admin/achievement', [App\Http\Controllers\AchievementDateController::class,'index']);

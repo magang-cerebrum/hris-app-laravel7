@@ -201,7 +201,8 @@
     <script>
         $(document).ready(function () {
             $('#tanggal-input').datepicker({
-                format: 'dd-mm-yyyy'
+                format: 'dd-mm-yyyy',
+                autoclose: true
             });
         })
     </script>

@@ -15,6 +15,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
+        "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-activitylog": "^3.16"
     },
     "require-dev": {

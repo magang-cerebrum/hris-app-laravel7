@@ -423,6 +423,24 @@ private static $installed = array (
         0 => 'v7.28.4',
       ),
     ),
+    'jaybizzle/crawler-detect' => 
+    array (
+      'pretty_version' => 'v1.2.104',
+      'version' => '1.2.104.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a581e89a9212c4e9d18049666dc735718c29de9c',
+    ),
+    'jenssegers/agent' => 
+    array (
+      'pretty_version' => 'v2.6.4',
+      'version' => '2.6.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'daa11c43729510b3700bc34d414664966b03bffe',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -474,6 +492,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2',
+    ),
+    'mobiledetect/mobiledetectlib' => 
+    array (
+      'pretty_version' => '2.8.35',
+      'version' => '2.8.35.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '68a35170fdf36e7b35f9c125e5102338dbc3ff65',
     ),
     'mockery/mockery' => 
     array (

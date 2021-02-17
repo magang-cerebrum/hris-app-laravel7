@@ -91,7 +91,8 @@ class MasterRecruitmentController extends Controller
         ]);
 
         
-        
+        // $user = Auth::user()->name;
+        activity()->log('Seorang pelamar telah mengisi form rekruitasi untuk posisi' .' '. $request->position);
         // return redirect('/success');
         return view('recruitment.recruitmentSucces');
     }

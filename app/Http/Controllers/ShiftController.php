@@ -50,7 +50,8 @@ class ShiftController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $user = Auth::user()->name;
         $request->validate([
             'name' => 'required',
             'start_working_time' => 'required',
@@ -68,7 +69,7 @@ class ShiftController extends Controller
             'end_working_time' => $request->end_working_time,
             'total_hour' => $interval
         ]);
-
+        activity()->log('Data ' .$request->name.' baru telah ditambahkan oleh '.$user);
         Alert::success('Berhasil!', 'Shift baru telah ditambahkan!');
         return redirect('/admin/shift');
     }
@@ -111,6 +112,8 @@ class ShiftController extends Controller
      */
     public function update(Request $request, MasterShift $shift)
     {
+        $user = Auth::user()->name;
+        $past = MasterShift::where('id',$shift->id)->get();
         $request->validate([
             'name' => 'required',
             'start_working_time' => 'required',
@@ -129,7 +132,8 @@ class ShiftController extends Controller
                 'end_working_time' => $request->end_working_time,
                 'total_hour' => $interval
             ]);
-            Alert::success('Berhasil!', 'Shift '. $shift->name . ' telah diperbaharui!');
+        activity()->log($user.' telah memperbarui  ' .$past[0]->name .' ('.$past[0]->start_working_time.'-'.$past[0]->end_working_time.') '.' menjadi '.$request->name .' ('.$request->start_working_time.'-'.$request->end_working_time.') ' );    
+        Alert::success('Berhasil!', 'Shift '. $shift->name . ' telah diperbaharui!');
         return redirect('/admin/shift');
     }
 

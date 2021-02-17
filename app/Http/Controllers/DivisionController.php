@@ -53,6 +53,8 @@ class DivisionController extends Controller
     {
         $request->validate(['name' => 'required']);
         MasterDivision::create($request->all());
+        $user = Auth::user()->name;
+        activity()->log('Divisi '. $request->name .' telah ditambahkan oleh Admin '. $user);
         return redirect('/admin/division')->with('status','Divisi Berhasil Ditambahkan');
     }
 
@@ -95,8 +97,13 @@ class DivisionController extends Controller
     public function update(Request $request, MasterDivision $division)
     {
         $request->validate(['name' => 'required']);
+        $past = MasterDivision::where('id',$division->id)->get();
         MasterDivision::where('id', $division->id)
             ->update(['name' => $request->name]);
+            $user = Auth::user()->name;
+        // activity()->log('Divisi '. $request->name .' telah di-update oleh Admin '. $user);
+        activity()->log($user.' telah memperbarui Divisi ' .$past[0]->name .' menjadi '.$request->name );
+        
         return redirect('/admin/division')->with('status','Divisi Berhasil Dirubah');
     }
 
@@ -113,9 +120,16 @@ class DivisionController extends Controller
     }
 
     public function destroyAll(Request $request){
+        $i = 0;
+        $user = Auth::user()->name;
         foreach ($request->selectid as $item) {
+            $namadiv = DB::table('master_divisions')->where('id','=',$item)->get();
             DB::table('master_divisions')->where('id','=',$item)->delete();
+            // dd($namadiv[$i]->name);
+            activity()->log('Divisi '. $namadiv[$i]->name .' telah di-hapus oleh Admin '. $user);
+            $i++;
         }
+        
         return redirect('/admin/division')->with('status','Data Divisi Terpilih Berhasil Dihapus');
     }
 

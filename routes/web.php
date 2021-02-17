@@ -7,6 +7,7 @@ use App\Http\Controllers\StaffAuthDashboardController;
 use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterLeaveTypeController;
+use App\Http\Controllers\MasterAchievementController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,4 +97,12 @@ Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::c
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
+//Route Achievement
+Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
 
+//Route Achievement Dates
+// Route::get('/admin/achievement', [App\Http\Controllers\AchievementDateController::class,'index']);
+Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
+Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
+Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
+Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);

@@ -64,6 +64,8 @@ class MasterLeaveTypeController extends Controller
             'default_day'=>'required'
         ]);
         MasterLeaveType::create($request->all());
+        $user = Auth::user()->name;
+        activity()->log($user.' telah menambahkan tipe cuti baru' .'('. $request->name.')');
         return redirect('/admin/paid-leave-type');
     }
 
@@ -113,10 +115,17 @@ class MasterLeaveTypeController extends Controller
             'name'=>'required',
             'default_day'=>'required'
         ]);
+        $past = MasterLeaveType::where('id',$leavetype->id)->get();
+        // dd($past[0]);
         MasterLeaveType::where('id',$leavetype->id)->update([
             'name'=>$request->name,
             'default_day'=>$request->default_day
-        ]);return redirect('admin/paid-leave-type');
+        ]);
+        
+        // dd($past[0]->name);
+        $user = Auth::user()->name;
+        activity()->log($user.' telah memperbarui tipe cuti '.'(' .$past[0]->name .')'.' ('.$past[0]->default_day.' hari)'. ' menjadi '.$request->name . ' ('.$request->default_day.' hari)');
+        return redirect('admin/paid-leave-type');
     }
 
     /**
@@ -128,6 +137,8 @@ class MasterLeaveTypeController extends Controller
     public function destroy(MasterLeaveType $leavetype)
     {
         MasterLeaveType::destroy($leavetype->id);
+        $user = Auth::user()->name;
+        activity()->log($user.' telah menghapus tipe cuti ' .'('. $leavetype->name.')');
         return redirect('/admin/paid-leave-type');
     }
 }

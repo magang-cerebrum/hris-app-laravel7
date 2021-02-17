@@ -51,7 +51,8 @@
                     <tbody>
                         @foreach ($data as $row)
                         <tr>
-                            <td tabindex="0" class="sorting_1 text-center">{{$row->id}}</td>
+                            <td tabindex="0" class="sorting_1 text-center">{{(($data->currentPage() * 10) - 10) + $loop->iteration}}</td>
+                            {{-- <td tabindex="0" class="sorting_1 text-center">{{$row->id}}</td> --}}
                             <td class="text-center">{{$row->name}}</td>
                             <td class="text-center">{{$row->default_day}} Hari</td>
 

@@ -52,7 +52,9 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required']);
+        $user = Auth::user()->name;
         MasterPosition::create($request->all());
+        activity()->log('Jabatan '.$request->name.' telah ditambahkan oleh admin ' . $user);
         return redirect('/admin/position')->with('status','Jabatan Berhasil Ditambahkan');
     }
 
@@ -95,8 +97,14 @@ class PositionController extends Controller
     public function update(Request $request, MasterPosition $position)
     {
         $request->validate(['name' => 'required']);
+        $user = Auth::user()->name;
+        $past = MasterPosition::where('id',$position->id)->get();
+        // dd($past);
         MasterPosition::where('id', $position->id)
             ->update(['name' => $request->name]);
+        // activity()->log('Jabatan '. $request->name.' telah di-update oleh admin ' . $user);
+        activity()->log($user.' telah memperbarui posisi ' .$past[0]->name .' menjadi '.$request->name );
+
         return redirect('/admin/position')->with('status','Jabatan Berhasil Dirubah');
     }
 

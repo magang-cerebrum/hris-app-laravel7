@@ -56,7 +56,9 @@ class ShiftController extends Controller
             'start_working_time' => 'required',
             'end_working_time' => 'required'
         ]);
+        $user = Auth::user()->name;
         MasterShift::create($request->all());
+        activity()->log('Data ' .$request->name.' baru telah ditambahkan oleh '.$user);
         return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Ditambahkan');
     }
 
@@ -103,12 +105,16 @@ class ShiftController extends Controller
             'start_working_time' => 'required',
             'end_working_time' => 'required'
         ]);
+        $user = Auth::user()->name;
+        $past = MasterShift::where('id',$shift->id)->get();
         MasterShift::where('id', $shift->id)
             ->update([
                 'name' => $request->name,
                 'start_working_time' => $request->start_working_time,
                 'end_working_time' => $request->end_working_time
             ]);
+        activity()->log($user.' telah memperbarui  ' .$past[0]->name .' ('.$past[0]->start_working_time.'-'.$past[0]->end_working_time.') '.' menjadi '.$request->name .' ('.$request->start_working_time.'-'.$request->end_working_time.') ' );
+
         return redirect('/admin/shift')->with('status','Waktu Shift Berhasil Dirubah');
     }
 

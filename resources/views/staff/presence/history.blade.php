@@ -2,10 +2,14 @@
 @section('title', 'Presensi')
 @section('content-title', 'Presensi')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
+<<<<<<< HEAD
 @section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
+=======
+
+>>>>>>> 88e7c0cb817b5e8ea291dddea60c6857174128cd
 
 @section('content')
 <div class="panel panel-bordered panel-primary">

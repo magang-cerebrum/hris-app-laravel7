@@ -18,13 +18,24 @@ class MasterAchievementController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $count = MasterAchievement::count();
+        $max = MasterAchievement::max('score');
+        $data = DB::table('master_achievements')->
+        leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
+        ->orderBy('score','desc')->get();
+        // dd($data);
         return view('masterData.achievement.list',[
             'name'=>$user->name,
-        'profile_photo'=>$user->profile_photo,
-        'email'=>$user->email,
-        'id'=>$user->id
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+
+            'data'=>$data,
+            'count'=>$count,
+            'max'=>$max
+            
+            ]);
         
-        ]);
     }
 
     /**
@@ -43,9 +54,26 @@ class MasterAchievementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function search(Request $request){
+        // $name = DB::table('master_achievements')->
+        // leftjoin('master_users',
+        // 'master_achievements.achievement_user_id','=','master_users.id')
+        // ->select('master_users.name')->get();
+        // // dd($name);
+        $data = MasterAchievement::where(['month'=>$request->month,
+        'year'=>$request->year])->
+        leftjoin('master_users',
+        'master_achievements.achievement_user_id','=','master_users.id')
+        ->orderBy('score','desc')
+        ->get();
+        $is_champ = MasterAchievement::where(['month'=>$request->month,
+        'year'=>$request->year])->max('score');
+        // dd($is_champ);
+        $count = count($data);
+        return view('masterData.achievement.result',['data'=>$data,
+        'count'=>$count,
+        'employee_of_the_month' =>$is_champ
+        ]);
     }
 
     /**
@@ -54,10 +82,7 @@ class MasterAchievementController extends Controller
      * @param  \App\MasterAchievement  $masterAchievement
      * @return \Illuminate\Http\Response
      */
-    public function show(MasterAchievement $masterAchievement)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -65,10 +90,7 @@ class MasterAchievementController extends Controller
      * @param  \App\MasterAchievement  $masterAchievement
      * @return \Illuminate\Http\Response
      */
-    public function edit(MasterAchievement $masterAchievement)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
@@ -77,11 +99,7 @@ class MasterAchievementController extends Controller
      * @param  \App\MasterAchievement  $masterAchievement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MasterAchievement $masterAchievement)
-    {
-        //
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -119,6 +137,6 @@ class MasterAchievementController extends Controller
                 'achievement_user_id'=>$data_id
             ]);
         }
-        return redirect('/admin/achievement/scoring');
+        return redirect('/admin/achievement');
     }
 }

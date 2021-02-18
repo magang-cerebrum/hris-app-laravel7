@@ -147,7 +147,7 @@
         table = document.getElementById("masterdata-shift");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            for (j = 3; j < 6; j++ ){
+            for (j = 3; j < 7; j++ ){
                     td = tr[i].getElementsByTagName("td")[j];
                 if (td) {
                     txtValue = td.textContent || td.innerText;

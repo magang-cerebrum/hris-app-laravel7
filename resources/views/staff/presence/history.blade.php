@@ -5,7 +5,6 @@
 @section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')

@@ -215,14 +215,14 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
-                                            <li><a href="{{ url('admin/achievement/scoring')}}"><i class="demo-psi-medal-2"></i>Pengghargaan</a></li>
+                                            {{-- <li class="list-divider"></li> --}}
 											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Jadwal Kerja</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
 						                </ul>
 						            </li>
-						
+                                    
 						            <!--Menu list item-->
 						            <li>
 						                <a href="{{ url('#')}}">
@@ -268,6 +268,21 @@
                                             <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Daftar Ticketing</a></li>
 											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log Sistem Aplikasi</a></li>
 						                </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            {{-- <i class="fa fa-trophy"></i> --}}
+                                            <span class="menu-title">Penghargaan</span>
+                                            <i class="arrow"></i>
+                                        </a>
+                                        
+                                        <!--Submenu-->
+                                        <ul class="collapse">
+                                            <li><a href="/admin/achievement">Leaderboard</a></li>
+                                            <li><a href="/admin/achievement/scoring">Scoring</a></li>
+                                        </ul>
+                
                                     </li>
                                 </ul>
                             </div>

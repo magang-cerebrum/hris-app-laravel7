@@ -119,8 +119,9 @@ Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::c
 
 
 //Route Achievement Dates
-// Route::get('/admin/achievement', [App\Http\Controllers\AchievementDateController::class,'index']);
-Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
-Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
+Route::get('/admin/achievement', [App\Http\Controllers\MasterAchievementController::class,'index']);
+// Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
+// Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
 Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
 Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);
+Route::post('/admin/achievement/search',[MasterAchievementController::class,'search']);

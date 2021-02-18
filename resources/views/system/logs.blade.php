@@ -89,6 +89,7 @@
             var confirm = window.confirm(
             "Apakah Anda yakin ingin menghapus data-data ini?");
             if (confirm) $("#form-mul-delete").submit()
+            else return false
         });
     });
 </script>

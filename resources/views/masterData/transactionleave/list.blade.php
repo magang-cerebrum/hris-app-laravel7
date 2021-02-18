@@ -10,6 +10,7 @@
                     <div class="col-sm-6 jobTambah">
                         <a href="{{url('/admin/paid-leave/history')}}" class="btn btn-primary btn-labeled"
                             style="margin-bottom:15px">
+                            <i class="fa fa-history"></i>
                             Riwayat Pengajuan
                         </a>
                 @if (count($data) == 0)

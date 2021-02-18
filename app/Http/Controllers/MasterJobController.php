@@ -65,8 +65,10 @@ class MasterJobController extends Controller
             'descript'=>'required',
             'required'=>'required'
         ]);
-
+        
         MasterJobRecruitment::create($request->all());
+        $user = Auth::user()->name;
+        activity()->log('Admin ' .$user.' Telah menambahkan Lowongan ' . $request->name . " bagian " . $request->descript);
         return redirect('/admin/job');
     }
 
@@ -117,6 +119,8 @@ class MasterJobController extends Controller
             $data= MasterJobRecruitment::where("id",$deletes)->first();
             $data->delete();
         }
+        $user = Auth::user()->name;
+        activity()->log('Admin ' .$user.' Telah menghapus Lowongan ' . $data->name  . " bagian " . $data->descript);
         return redirect('/admin/job');
     }
 }

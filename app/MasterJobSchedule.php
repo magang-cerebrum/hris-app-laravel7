@@ -41,6 +41,6 @@ class MasterJobSchedule extends Model
         'shift_29',
         'shift_30',
         'shift_31',
-        'total'
+        'total_hour'
     ];
 }

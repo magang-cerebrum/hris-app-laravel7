@@ -215,7 +215,6 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
-                                            <li><a href="{{ url('admin/achievement/scoring')}}"><i class="demo-psi-medal-2"></i>Pengghargaan</a></li>
 											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Jadwal Kerja</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>

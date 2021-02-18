@@ -27,10 +27,18 @@ class AdminAuthDashboardController extends Controller
                 'master_users.nip as user_nip'
                 )
             ->paginate(5);
+            $user_act = DB::table('master_users')
+            ->where('status', '=', 'aktif')
+            ->get();
+            $user_nact = DB::table('master_users')
+            ->where('status', '!=', 'aktif')
+            ->get();
             $data_rect = MasterRecruitment::paginate(5);
             return view('dashboard.admin',[
                 'data_recruitment'=>$data_rect,
                 'data_paid_leave'=>$data_paid,
+                'data_user_active'=>$user_act,
+                'data_user_non_active'=>$user_nact,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

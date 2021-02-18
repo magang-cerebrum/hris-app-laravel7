@@ -104,6 +104,10 @@ Route::delete('/staff/paid-leave/delete',[App\Http\Controllers\TransactionPaidLe
 
 // Route Jadwal Kerja
 Route::get('/admin/schedule',[App\Http\Controllers\MasterJobScheduleController::class, 'index']);
+Route::get('/admin/schedule/add',[App\Http\Controllers\MasterJobScheduleController::class, 'index_add']);
+Route::post('/admin/schedule/add-schedule',[App\Http\Controllers\MasterJobScheduleController::class, 'schedule_add']);
+Route::post('/admin/schedule/post',[App\Http\Controllers\MasterJobScheduleController::class, 'schedule_post']);
+Route::get('/staff/schedule/',[App\Http\Controllers\MasterJobScheduleController::class, 'staff_index']);
 
 //route system log
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);

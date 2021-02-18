@@ -67,7 +67,7 @@
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
-                            <td class="text-center">{{$row->name}}</td>
+                            <td class="text-center">Divisi {{$row->name}}</td>
                         </tr>
                         @endforeach
                     </tbody>

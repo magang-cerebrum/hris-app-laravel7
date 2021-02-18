@@ -7,6 +7,7 @@ use App\Http\Controllers\StaffAuthDashboardController;
 use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterLeaveTypeController;
+use App\Http\Controllers\MasterAchievementController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,7 +90,7 @@ Route::get('/admin/paid-leave-type/add',[MasterLeaveTypeController::class,'creat
 Route::post('/admin/paid-leave-type',[MasterLeaveTypeController::class,'store'])->name('save');
 Route::get('/admin/paid-leave-type/{leavetype}/edit',[MasterLeaveTypeController::class,'edit']);
 Route::put('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
-Route::delete('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'destroy']); 
+Route::delete('/admin/paid-leave-type/',[MasterLeaveTypeController::class,'destroyAll']); 
 
 // Route Transaksi Cuti
 Route::get('/admin/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'index']);
@@ -112,9 +113,18 @@ Route::get('/staff/schedule/',[App\Http\Controllers\MasterJobScheduleController:
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
+//Route Achievement
+Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
 //route staff presence
 Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
+Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
 
 
 
+//Route Achievement Dates
+// Route::get('/admin/achievement', [App\Http\Controllers\AchievementDateController::class,'index']);
+Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
+Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
+Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
+Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);

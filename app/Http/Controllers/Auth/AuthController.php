@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\Log;
-use Spatie\Activitylog\Models\Activity;
+use Jenssegers\Agent\Agent;
 class AuthController extends Controller
 {
     public function login()
@@ -34,6 +34,7 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
+        $agent = new Agent();
         $request->validate([
             'nip'=>'required|string',
             'password' => 'required|string',
@@ -52,11 +53,13 @@ class AuthController extends Controller
             $stats = Auth::User()->role_id;
             $user = Auth::user()->name;
             if($stats==1){
-                // Log::channel('hris_log')->info($user.' Telah Login (Admin)');
-                activity()->log($user.' Telah Login (Admin)');
+                $device = $agent->platform();
+                // dd($device);
+                activity()->log($user.' Telah Login (Admin) pada platform ' . $device);
                 return redirect('/admin/dashboard');
             }
             elseif($stats == 2){
+
                 // Log::channel('hris_log')->info($user.' Telah Login (Staff)');
                 activity()->log($user.' Telah Login (Staff)');
                 return redirect('/staff/dashboard');

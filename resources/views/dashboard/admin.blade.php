@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="media-body">
-                    <p class="text-2x mar-no text-semibold">241</p>
+                    <p class="text-2x mar-no text-semibold">{{count($data_user_active)}}</p>
                     <p class="mar-no">Staff Aktif</p>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="media-body">
-                    <p class="text-2x mar-no text-semibold">241</p>
+                    <p class="text-2x mar-no text-semibold">{{count($data_user_non_active)}}</p>
                     <p class="mar-no">Staff Non-Aktif</p>
                 </div>
             </div>

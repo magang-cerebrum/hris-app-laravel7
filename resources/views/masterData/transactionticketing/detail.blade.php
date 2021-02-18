@@ -32,12 +32,12 @@
                         </tr>
                         <tr>
                             <td><label for="message">Pesan Ticket: </label></td>
-                            <td colspan="4" rowspan="3"><textarea name="message" id="message" cols="100" rows="4" disabled></textarea></td>
+                            <td colspan="4" rowspan="3"><textarea name="message" id="message" cols="90" rows="4" disabled></textarea></td>
                         </tr>
                         <tr></tr><tr></tr>
                         <tr>
                             <td><label for="response">Respon Ticket: </label></td>
-                            <td colspan="4" rowspan="3"><textarea name="response" id="response" cols="100" rows="4" disabled></textarea></td>
+                            <td colspan="4" rowspan="3"><textarea name="response" id="response" cols="90" rows="4" disabled></textarea></td>
                         </tr>
                     </tbody>
                 </table>
@@ -58,14 +58,16 @@
 <script type="text/javascript">
     function toogle_selesai() {
         if (document.getElementById('lihat_selesai_radio-2').checked) {
-            document.getElementById('master').style.display = 'none';
+            document.getElementById('masterdata-ticketing').style.display = '';
+            document.getElementById('masterdata-ticketing-full').style.display = 'none';
         } else {
-            console.log('off');
+            document.getElementById('masterdata-ticketing').style.display = 'none';
+            document.getElementById('masterdata-ticketing-full').style.display = '';
         }
     };
 
     $(document).ready(function () {
-        // modal
+        $("#masterdata-ticketing-full").hide();
         $(document).on('click', '#detail_ticket', function () {
             var id = $(this).data('id');
             var name = $(this).data('name');
@@ -103,25 +105,6 @@
             else
                 $(".check-item").prop("checked", false);
         });
-
-        //toogle selesai
-        $('.lihat_selesai').click(function () {            
-            if (this.checked) {
-                $.ajax({
-                    url: '/admin/ticketing/selesai',
-                    type: 'GET',
-                    data: $(this).serialize(),
-                    success: function (data) {
-                        $("#masterdata-ticketing").html(data);
-                    },
-                    error: function (jXHR, textStatus, errorThrown) {
-                        alert(errorThrown);
-                    }
-                });
-            } else {
-                return false;
-            }
-        });
     });
     //lihat selesai
     
@@ -157,13 +140,13 @@
 
     // live search
     function search_ticket() {
-        var input, filter, table, tr, td, i, txtValue;
+        var input, filter, table, tr, td, i, j, txtValue;
         input = document.getElementById("cari-ticket");
         filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-ticketing");
+        table = document.getElementById("masterdata-ticketing-full");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 6; j++ ){
+            for (j = 2; j < 7; j++ ){
                     td = tr[i].getElementsByTagName("td")[j];
                 if (td) {
                     txtValue = td.textContent || td.innerText;

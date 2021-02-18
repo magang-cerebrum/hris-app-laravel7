@@ -14,10 +14,8 @@ class TicketingController extends Controller
         $user = Auth::user();
         $ticketing = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
             ->select(['transaction_ticketings.*','master_users.name'])
-            ->where('transaction_ticketings.status', '=','Dikirimkan')
-            ->orWhere('transaction_ticketings.status', '=','On Progress')
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->get();
         
         return view('masterdata.transactionticketing.list',[
             'ticketing' => $ticketing,
@@ -63,15 +61,6 @@ class TicketingController extends Controller
         }
         Alert::success('Berhasil!', 'Ticket dengan ID terpilih sekarang berstatus On Progress');
         return redirect('/admin/ticketing');
-    }
-    public function lihat_selesai(){
-        $ticketing = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
-            ->select(['transaction_ticketings.*','master_users.name'])
-            ->orderByDesc('created_at')
-            ->paginate(10);
-        return view('masterdata.transactionticketing.selesai',[
-            'ticketing' => $ticketing,
-        ]);
     }
     public function staff_index(){
         $user = Auth::user();

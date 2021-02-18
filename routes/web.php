@@ -124,7 +124,6 @@ Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::c
 Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);
 Route::get('/admin/ticketing/{ticket}/edit',[App\Http\Controllers\TicketingController::class,'admin_edit']);
 Route::put('/admin/ticketing/on-progress',[App\Http\Controllers\TicketingController::class,'make_on_progress']);
-Route::get('/admin/ticketing/selesai',[App\Http\Controllers\TicketingController::class,'lihat_selesai']);
 Route::put('/admin/ticketing/{ticket}',[App\Http\Controllers\TicketingController::class,'admin_response']);
 Route::delete('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_delete']);
 Route::get('/staff/ticketing/',[App\Http\Controllers\TicketingController::class,'staff_index']);

@@ -208,6 +208,14 @@
                                                 <span class="menu-title">Presensi</span>
                                             </a>
                                         </li>
+
+                                        <!--Menu list item-->
+                                        <li>
+                                            <a href="{{ url('staff/schedule')}}">
+                                                <i class="demo-psi-checked-user"></i>
+                                                <span class="menu-title">Jadwal Kerja</span>
+                                            </a>
+                                        </li>
                             
                                         <!--Menu list item-->
                                         <li>

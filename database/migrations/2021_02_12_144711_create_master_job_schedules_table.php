@@ -19,7 +19,7 @@ class CreateMasterJobSchedulesTable extends Migration
             $table->string('year', 5);
             $table->unsignedBigInteger('user_id')->nullable();
             for ($i = 1; $i < 32; $i++) {
-                $table->unsignedBigInteger('shift_'.$i)->nullable();
+                $table->string('shift_'.$i, 25)->nullable();
             }
             $table->integer('total_hour');
             $table->timestamps();

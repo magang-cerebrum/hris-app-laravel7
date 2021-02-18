@@ -15,7 +15,7 @@
                         <form action="{{ url('/admin/paid-leave/delete')}}" method="POST" style="display: inline">
                             @method('delete')
                             @csrf
-                            <button id="btn-delete" class="btn btn-primary btn-danger add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                            <button id="btn-delete" class="btn btn-danger add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
                                 data-container="body" data-placement="top" data-original-title="Hapus Riwayat Pengajuan Cuti">
                                 <i class="btn-label fa fa-trash"></i>
                                 Hapus Data Terpilih

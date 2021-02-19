@@ -32,14 +32,14 @@
                         </tr>
                         <tr>
                             <td><label for="message">Pesan Ticket: </label></td>
-                            <td colspan="4" rowspan="3"><textarea name="message" id="message" cols="100" rows="4"
+                            <td colspan="4" rowspan="3"><textarea name="message" id="message" rows="2"
                                     disabled></textarea></td>
                         </tr>
                         <tr></tr>
                         <tr></tr>
                         <tr>
                             <td><label for="response">Respon Ticket: </label></td>
-                            <td colspan="4" rowspan="3"><textarea name="response" id="response" cols="100" rows="4"
+                            <td colspan="4" rowspan="3"><textarea name="response" id="response" rows="2"
                                     disabled></textarea></td>
                         </tr>
                     </tbody>

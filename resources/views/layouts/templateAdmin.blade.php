@@ -215,10 +215,6 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
-<<<<<<< HEAD
-=======
-                                            {{-- <li class="list-divider"></li> --}}
->>>>>>> eff406381b4917a28f59429dd3a900be8c280fdb
 											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Jadwal Kerja</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
@@ -284,8 +280,8 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Daftar Ticketing</a></li>
-											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log Sistem Aplikasi</a></li>
+                                            <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Ticketing</a></li>
+											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log</a></li>
 						                </ul>
                                     </li>
                                 </ul>

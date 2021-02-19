@@ -120,6 +120,18 @@ Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'st
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
 Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
 
+//route transaction ticketing
+Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);
+Route::get('/admin/ticketing/{ticket}/edit',[App\Http\Controllers\TicketingController::class,'admin_edit']);
+Route::put('/admin/ticketing/on-progress',[App\Http\Controllers\TicketingController::class,'make_on_progress']);
+Route::put('/admin/ticketing/{ticket}',[App\Http\Controllers\TicketingController::class,'admin_response']);
+Route::delete('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_delete']);
+Route::get('/staff/ticketing/',[App\Http\Controllers\TicketingController::class,'staff_index']);
+Route::get('/staff/ticketing/create',[App\Http\Controllers\TicketingController::class,'staff_create']);
+Route::post('/staff/ticketing/input',[App\Http\Controllers\TicketingController::class,'staff_input']);
+
+
+
 
 
 //Route Achievement Dates

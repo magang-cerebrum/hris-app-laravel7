@@ -30,7 +30,7 @@ input[type=range]::-webkit-slider-thumb {
   height: 20px;
   width: 39px;
   border-radius: 7px;
-  background: url();
+  background: #65001c;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -3.6px;
@@ -206,7 +206,7 @@ input[type=range]:focus::-ms-fill-upper {
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
 <script>   
-   
+   console.log("{{$item->name}}")
     function slidervalfunc(){
          var tr = document.getElementsByTagName('tr');
          for (i = 1; i<tr.length;i++){

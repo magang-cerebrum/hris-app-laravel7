@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('title','Ticketing')
+@section('title','Sistem')
 @section('content-title','Sistem / Ticketing')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
@@ -7,7 +7,10 @@
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Ticketing</h3>
+    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">

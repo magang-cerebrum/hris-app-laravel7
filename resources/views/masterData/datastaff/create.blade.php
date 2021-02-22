@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Data Staff / Data / Tambah Data Staff')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Tambah Data Staff')
+@section('title','Data Staff')
 @section('content')
 @section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
@@ -10,9 +10,9 @@
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 @endsection
 
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title text-bold text-center">Form Tambah Data Staff</h3>
+        <h3 class="panel-title">Form Tambah Data Staff</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" action="/admin/data-staff" method="POST">

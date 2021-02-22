@@ -1,13 +1,16 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Sistem / Ticketing / Kirim Respon Ticket')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Kirim Respon Ticket')
+@section('title','Sistem')
 @section('content')
 @section('head')
     <!--Bootstrap Select [ OPTIONAL ]-->
     <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 @endsection
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Kirim Respon Ticket</h3>
+    </div>
     <div class="panel-body">
         <form class="form-horizontal" action="/admin/ticketing/{{$ticketing->id}}" method="POST">
             @csrf

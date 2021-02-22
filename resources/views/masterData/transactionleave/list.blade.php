@@ -1,9 +1,12 @@
 @extends('layouts/templateAdmin')
-@section('title','Masterdata Cuti')
-@section('content-title','Data Staff / Cuti')
+@section('title','Data Staff')
+@section('content-title','Data Staff / Daftar Pengajuan Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-    <div class="panel">
+    <div class="panel panel-danger panel-bordere">
+        <div class="panel-heading">
+            <h3 class="panel-title">Daftar Pengajuan Cuti Staff</h3>
+        </div>
         <div class="panel-body">
             <div class="table-responsive">
                 <div class="row">

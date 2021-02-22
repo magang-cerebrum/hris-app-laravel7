@@ -147,4 +147,4 @@ Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'sc
 Route::post('/admin/achievement/search',[MasterAchievementController::class,'search']);
 // Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
 // Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
-Route::get('/admin/achievement/charts', [MasterAchievementController::class,'charts']);
+Route::get('/admin/achievement/charts', [MasterAchievementController::class,'admin_charts']);

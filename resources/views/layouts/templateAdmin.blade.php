@@ -215,10 +215,23 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
-											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Jadwal Kerja</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
+						                </ul>
+						            </li>
+
+                                    <li>
+						                <a href="{{ url('#')}}">
+						                    <i class="demo-psi-checked-user"></i>
+						                    <span class="menu-title">Jadwal Kerja</span>
+											<i class="arrow"></i>
+						                </a>
+						
+						                <!--Submenu-->
+						                <ul class="collapse">
+                                            <li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-calendar-4"></i>Daftar Jadwal</a></li>
+											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Tambah Jadwal</a></li>
 						                </ul>
 						            </li>
                                     
@@ -236,6 +249,7 @@
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
+                                            <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Tanggal Merah</a></li>
 						                </ul>
                                     </li>
 

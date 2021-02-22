@@ -31,6 +31,10 @@
                             <td><span id="diajukan"></span></td>
                         </tr>
                         <tr>
+                            <td><label for="direspon">Tanggal Ticket Direspon: </label></td>
+                            <td><span id="direspon"></span></td>
+                        </tr>
+                        <tr>
                             <td><label for="message">Pesan Ticket: </label></td>
                             <td colspan="4" rowspan="3"><textarea name="message" id="message" cols="90" rows="4" disabled></textarea></td>
                         </tr>
@@ -76,6 +80,7 @@
             var response = $(this).data('response');
             var status = $(this).data('status');
             var diajukan = $(this).data('diajukan');
+            var direspon = $(this).data('direspon');
 
             var join = `{{ url('/admin/ticketing/`+ id + `/edit')}}`;
 
@@ -96,6 +101,7 @@
             $('#response').text(response);
             $('#status').text(status);
             $('#diajukan').text(diajukan);
+            $('#direspon').text(direspon);
         });
 
         // check all

@@ -24,7 +24,6 @@
                                 Jadikan On Progress
                             </button>
                             <div class="radio mar-hor" style="display: inline">
-                                <!-- Inline radio buttons -->
                                 <label for="">Lihat Ticket Selesai: </label>
                                 <input id="lihat_selesai_radio-1" class="magic-radio" type="radio" name="lihat_selesai"
                                     value="On" onclick="toogle_selesai()">
@@ -37,8 +36,8 @@
                     <div class="col-sm-1"></div>
                     <div class="col-sm-3">
                         <div class="input-group mar-btm float-right">
-                            <input type="text" id="cari-ticket" class="form-control" placeholder="Cari Ticket Pada Posisi ON"
-                                onkeyup="search_ticket()">
+                            <input type="text" id="cari-ticket" class="form-control"
+                                placeholder="Cari Ticket Pada Posisi ON" onkeyup="search_ticket()">
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
@@ -81,7 +80,13 @@
                                     style="display: inline; margin: auto 5px" data-id="{{$row->id}}"
                                     data-name="{{$row->name}}" data-category="{{$row->category}}"
                                     data-message="{{$row->message}}" data-response="{{$row->response}}"
-                                    data-status="{{$row->status}}" data-diajukan="{{$row->created_at}}">
+                                    data-status="{{$row->status}}" data-diajukan="{{indonesian_date($row->created_at,true)}}"
+                                    @if ($row->created_at == $row->updated_at)
+                                    data-direspon="-"
+                                    @else
+                                    data-direspon="{{indonesian_date($row->updated_at,true)}}"
+                                    @endif
+                                    >
                                     <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Detail Ticket"
                                         type="button">
@@ -110,7 +115,7 @@
                                 <span class="label label-success">Selesai</span>
                                 @endif
                             </td>
-                            <td class="text-center">{{$row->created_at}}</td>
+                            <td class="text-center">{{indonesian_date($row->created_at,true)}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -154,7 +159,13 @@
                                     style="display: inline; margin: auto 5px" data-id="{{$row->id}}"
                                     data-name="{{$row->name}}" data-category="{{$row->category}}"
                                     data-message="{{$row->message}}" data-response="{{$row->response}}"
-                                    data-status="{{$row->status}}" data-diajukan="{{$row->created_at}}">
+                                    data-status="{{$row->status}}" data-diajukan="{{indonesian_date($row->created_at,true)}}"
+                                    @if ($row->created_at == $row->updated_at)
+                                    data-direspon="-"
+                                    @else
+                                    data-direspon="{{indonesian_date($row->updated_at,true)}}"
+                                    @endif
+                                    >
                                     <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Detail Ticket"
                                         type="button">
@@ -183,7 +194,7 @@
                                 <span class="label label-success">Selesai</span>
                                 @endif
                             </td>
-                            <td class="text-center">{{$row->created_at}}</td>
+                            <td class="text-center">{{indonesian_date($row->created_at,true)}}</td>
                         </tr>
                         @endif
                         @endforeach

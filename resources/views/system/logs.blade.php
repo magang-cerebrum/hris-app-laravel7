@@ -61,7 +61,7 @@
                                     <input type="checkbox" name="selectid[]" value="{{$row->id}}" class="check-item">
                                 </td>
                                 <td class="text-center">{{$row->description}}</td>
-                                <td class="text-center">{{$row->created_at}}</td>
+                                <td class="text-center">{{indonesian_date($row->created_at,true)}}</td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -76,40 +76,7 @@ class MasterAchievementController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\MasterAchievement  $masterAchievement
-     * @return \Illuminate\Http\Response
-     */
-    
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\MasterAchievement  $masterAchievement
-     * @return \Illuminate\Http\Response
-     */
    
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\MasterAchievement  $masterAchievement
-     * @return \Illuminate\Http\Response
-     */
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\MasterAchievement  $masterAchievement
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MasterAchievement $masterAchievement)
-    {
-        //
-    }
     public function scoring(Request $request , MasterAchievement $masterAchievement){
         $user = Auth::user();
         $data = DB::table('master_users')->get();
@@ -138,5 +105,22 @@ class MasterAchievementController extends Controller
             ]);
         }
         return redirect('/admin/achievement');
+    }
+    public function charts (){
+        $user = Auth::user();
+        $data = DB::table('master_achievements')->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
+        $count = count($data);
+        // dd($data);
+        // $month = DB::table('master_achievements')->
+        // leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
+        return view('masterdata.achievement.charts_admin',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data,
+            'count' =>$count
+        ]);
+          
     }
 }

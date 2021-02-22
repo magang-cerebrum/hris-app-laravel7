@@ -2,8 +2,104 @@
 @section('title','Sistem / Sistem Achievement')
 @section('content-title','Achievement Scoring')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 
+@section('head')
+    
+
+    <style>
+        input[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 12.8px;
+  cursor: pointer;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: #FF0404;
+  border-radius: 25px;
+  border: 0px solid #000101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 39px;
+  border-radius: 7px;
+  background: #65001c;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -3.6px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #FF0404;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 12.8px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: #FF0404;
+  border-radius: 25px;
+  border: 0px solid #000101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 39px;
+  border-radius: 7px;
+  background: #4F0505;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 12.8px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 39px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #FF0404;
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #FF0404;
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 39px;
+  border-radius: 7px;
+  background: #65001c;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #FF0404;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #FF0404;
+}
+
+
+
+    </style>
+@endsection
+@section('content')
 <div class="panel">
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 
@@ -46,7 +142,13 @@
                         <option value="November">November</option>
                         <option value="Desember">Desember</option>
                     </select>
-                    <input type="text" name="year" >
+
+                    <div class="form-group has-success">
+                        <label for="demo-vs-scsinput" class="control-label">Tahun</label>
+                        <input type="text" id="demo-vs-scsinput" class="form-control" name="year">
+                    </div>
+
+                    {{-- <input type="text" name="year" placeholder="Tahun"> --}}
                 <table id="masterdata-division"
                     class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
                     aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
@@ -98,22 +200,27 @@
     </div>
 </form>
 </div>
+
+@section('script')
+
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
-   <script>   
+<script>   
+   console.log("{{$item->name}}")
+    function slidervalfunc(){
+         var tr = document.getElementsByTagName('tr');
+         for (i = 1; i<tr.length;i++){
+     
+             var output = document.getElementById('val_'+i)
+             var slider= document.getElementById('customRange_' + i)
+                 console.log(slider.value)
+                 output.innerHTML = slider.value + '/100'
+             
+             }
+             
+         
+     }
+ //    </script>
+@endsection
    
-   function slidervalfunc(){
-        var tr = document.getElementsByTagName('tr');
-        for (i = 1; i<tr.length;i++){
-    
-            var output = document.getElementById('val_'+i)
-            var slider= document.getElementById('customRange_' + i)
-                console.log(slider.value)
-                output.innerHTML = slider.value + '/100'
-            
-            }
-            
-        
-    }
-//    </script>
 @endsection

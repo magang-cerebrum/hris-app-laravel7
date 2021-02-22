@@ -4,7 +4,11 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
-    
+<style>
+    tbody {
+        color: black;
+    }
+</style>
 @endsection
 @section('content')
 

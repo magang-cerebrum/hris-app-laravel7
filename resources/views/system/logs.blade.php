@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('title','Sistem Log HRIS')
+@section('title','Sistem')
 @section('content-title','Sistem / Log Aplikasi HRIS')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
@@ -7,7 +7,10 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Log Aplikasi HRIS</h3>
+    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">

@@ -1,13 +1,16 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Shift')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Masterdata Waktu Shift')
+@section('title','Master Data')
 @section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Shift</h3>
+    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">

@@ -1,9 +1,12 @@
 @extends('layouts/templateStaff')
-@section('title','Masterdata Cuti')
-@section('content-title','Data Staff / Cuti')
+@section('title','Cuti')
+@section('content-title','Cuti / Riwayat Pengajuan Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-    <div class="panel">
+    <div class="panel panel-primary panel-bordered">
+        <div class="panel-heading">
+            <h3 class="panel-title">Riwayat Pengajuan Cuti</h3>
+        </div>
         <div class="panel-body">
             <div class="table-responsive">
                 @if (count($data) == 0)

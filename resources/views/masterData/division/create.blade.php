@@ -1,11 +1,11 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Divisi / Tambah Divisi')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Tambah Divisi')
+@section('title','Master Data')
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title text-center text-bold">Form Tambah Divisi</h3>
+        <h3 class="panel-title">Form Tambah Divisi</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" action="/admin/division" method="POST">

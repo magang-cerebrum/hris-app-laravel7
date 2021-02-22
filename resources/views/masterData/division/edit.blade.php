@@ -1,11 +1,11 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Divisi / Edit Divisi')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Edit Divisi')
+@section('title','Master Data')
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title text-center text-bold">Form Edit Divisi</h3>
+        <h3 class="panel-title">Form Edit Divisi</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" action="/admin/division/{{$division->id}}" method="POST">

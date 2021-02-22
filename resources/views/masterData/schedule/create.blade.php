@@ -1,13 +1,16 @@
 @extends('layouts/templateAdmin')
-@section('title','Pilih Staff untuk Jadwal Kerja')
-@section('content-title','Data Staff / Pilih Staff untuk Jadwal Kerja')
+@section('title','Jadwal Kerja')
+@section('content-title','Jadwal Kerja / Pilih Staff untuk Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Pilih Staff untuk Jadwal Kerja</h3>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline">

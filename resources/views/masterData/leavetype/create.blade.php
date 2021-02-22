@@ -1,11 +1,11 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Tipe Cuti / Tambah Tipe Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Tambah Tipe Cuti')
+@section('title','Master Data')
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title text-center text-bold">Form Tambah Data Tipe Cuti</h3>
+        <h3 class="panel-title">Form Tambah Data Tipe Cuti</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" action="/admin/paid-leave-type" method="POST">

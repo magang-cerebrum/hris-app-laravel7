@@ -1,16 +1,16 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Shift / Tambah Data Shift')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Tambah Shift')
+@section('title','Master Data')
 @section('content')
 @section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-timepicker/bootstrap-timepicker.min.css")}}" rel="stylesheet">
 @endsection
 
-<div class="panel">
+<div class="panel  panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title text-center text-bold">Form Tambah Shift</h3>
+        <h3 class="panel-title">Form Tambah Shift</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" action="/admin/shift" method="POST">

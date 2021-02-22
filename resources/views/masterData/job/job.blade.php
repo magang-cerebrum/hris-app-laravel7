@@ -3,9 +3,12 @@
 @section('content-title', 'Rekruitasi / Lowongan Tersedia')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-        <div class="panel">
+        <div class="panel panel-danger panel-bordered">
             <!-- Striped Table -->
             <!--===================================================-->
+            <div class="panel-heading">
+                <h3 class="panel-title">Daftar Lowongan Tersedia</h3>
+            </div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <div class="row">

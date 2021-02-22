@@ -3,7 +3,10 @@
 @section('content-title', 'Rekruitasi / Tambah Data Lowongan')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-    <div class="panel">
+    <div class="panel panel-danger panel-bordered">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tambah Data Lowongan</h3>
+        </div>
         <div class="panel-body">
             <form class="form-horizontal" action="/admin/job" method="POST">
                 @csrf

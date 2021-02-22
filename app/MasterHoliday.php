@@ -9,6 +9,5 @@ class MasterHoliday extends Model
     protected $fillable=[
         'information',
         'date',
-        'total_day'
     ];
 }

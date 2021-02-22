@@ -13,16 +13,35 @@
 @endsection
 @section('content')
 <div id="charts-achievement">
-   
 </div>
+
 @section('script')
     <script>
-        for(var i = 0; i<"{{$count}}";i++){
-        //     var data = "{{$data}}"
-        // console.log(data[i])
-        console.log(i)
-        }
         
+        var data = {!! json_encode($data) !!}
+        // for(var i = 0; i< "{{$count}}"; i++){
+        //     console.log(data[i]);
+        //     var pageviews = [[i,data[i].score]];
+        // }
+        var pageviews = [
+            [1, data[0] ?  data[0].score : 0],
+            [2, data[1] ?  data[1].score : 0],
+            [3, data[2] ?  data[2].score : 0],
+            [4, data[3] ?  data[3].score : 0],
+            [5, data[4] ?  data[4].score : 0],
+            [6, data[5] ?  data[5].score : 0],
+            [7, data[6] ?  data[6].score : 0],
+            [8, data[7] ?  data[7].score : 0],
+            [9, data[8] ?  data[8].score : 0],
+            [10, data[9] ?  data[9].score : 0],
+            [11, data[10] ?  data[10].score : 0],
+            [12, data[11] ?  data[11].score : 0]
+        ];
+        // console.log(data[2] ? "yes" :"no")
+        
+        //  for(var i=0;i<"{{$count}}";i++){
+             
+        //  } 
         $(document).ready(function(){
           
              // var pageviews = [[2,$data->score],[3,90],[4,20]];
@@ -37,7 +56,8 @@
             },
             points: {
                 show: true,
-                radius: 4
+                radius: 4,
+                // symbol : "square"
             }
             },
         ], {
@@ -46,7 +66,8 @@
                 show: true
             },
             points: {
-                show: true
+                show: true,
+                // symbol:"square"
             },
             shadowSize: 0 // Drawing is faster without shadows
         },

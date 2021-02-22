@@ -125,6 +125,10 @@ Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::c
 // Route Hari Libur
 Route::get('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'index']);
 Route::get('/admin/holiday/add',[App\Http\Controllers\HolidayController::class, 'create']);
+Route::post('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'store']);
+Route::get('/admin/holiday/{holiday}/edit',[App\Http\Controllers\HolidayController::class, 'edit']);
+Route::put('/admin/holiday/{holiday}',[App\Http\Controllers\HolidayController::class, 'update']);
+Route::delete('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'destroy']);
 
 //route transaction ticketing
 Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);

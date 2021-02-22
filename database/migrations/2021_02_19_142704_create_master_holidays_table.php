@@ -17,7 +17,6 @@ class CreateMasterHolidaysTable extends Migration
             $table->id();
             $table->string('information', 50);
             $table->date('date');
-            $table->integer('total_day');
             $table->timestamps();
         });
     }

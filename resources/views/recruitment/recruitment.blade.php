@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="demo-text-input">Tempat Lahir</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="tempat-input" class="form-control @error('born_in') is-invalid @enderror" placeholder="Nama Lengkap" name="born_in">
+                                    <input type="text" id="tempat-input" class="form-control @error('born_in') is-invalid @enderror" placeholder="Tempat Lahir" name="born_in">
                                     {{-- <span class="input-group-addon"><i class="fa fa-calendar"></i></span> --}}
                                     @error('born_in') <div class="text-danger invalid-feedback mt-3">
                                         Tempat lahir tidak boleh kosong.
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="demo-text-input">Domisili</label>
                                 <div class="col-md-9">
-                                    <input id="domisili-input" type="text" class="form-control @error('live_at') is-invalid @enderror" placeholder="Tanggal Lahir" name="live_at">
+                                    <input id="domisili-input" type="text" class="form-control @error('live_at') is-invalid @enderror" placeholder="Domisili" name="live_at">
                                     @error('live_at') <div class="text-danger invalid-feedback mt-3">
                                         Domisili tidak boleh kosong.
                                         </div> @enderror
@@ -84,11 +84,11 @@
     
                             <!--Text Input-->
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="demo-text-input">No Telfon WhatsApp</label>
+                                <label class="col-md-3 control-label" for="demo-text-input">No Telepon WhatsApp</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="telfon-input" class="form-control @error('phone_number') is-invalid @enderror" placeholder="No Telfon" name="phone_number">
+                                    <input type="text" id="telfon-input" class="form-control @error('phone_number') is-invalid @enderror" placeholder="No Telepon WhatsApp" name="phone_number">
                                     @error('phone_number') <div class="text-danger invalid-feedback mt-3">
-                                        No telfon whatsApp tidak boleh kosong.
+                                        No Telepon whatsApp tidak boleh kosong.
                                         </div> @enderror
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="demo-email-input">Email</label>
                                 <div class="col-md-9">
-                                    <input type="email" id="email-input" class="form-control @error('email') is-invalid @enderror" placeholder="Enter your email" name="email">
+                                    <input type="email" id="email-input" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email">
                                     @error('email') <div class="text-danger invalid-feedback mt-3">
                                         Email tidak boleh kosong.
                                         </div> @enderror

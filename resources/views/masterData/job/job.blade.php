@@ -7,7 +7,10 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Lowongan Tersedia</h3>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             <div class="row">
@@ -27,52 +30,53 @@
             </div>
             @else
             <div class="col-sm-2">
-            <form action="{{ url('/admin/job/delete')}}" method="POST" style="display: inline" id="form-mul-delete">
-                @method('delete')
-                @csrf
-                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip"
-                    type="submit" data-toggle="tooltip" data-container="body" data-placement="top"
-                    data-original-title="Hapus Lowongan" onclick="submit_delete()">
-                    <i class="btn-label fa fa-trash"></i>
-                    Hapus Data Terpilih
-                </button>
+                <form action="{{ url('/admin/job/delete')}}" method="POST" style="display: inline" id="form-mul-delete">
+                    @method('delete')
+                    @csrf
+                    <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
+                        data-toggle="tooltip" data-container="body" data-placement="top"
+                        data-original-title="Hapus Lowongan" onclick="submit_delete()">
+                        <i class="btn-label fa fa-trash"></i>
+                        Hapus Data Terpilih
+                    </button>
             </div>
             <div class="col-sm-5"></div>
-                <div class="col-sm-3">
-                    <div class="form-group float-right">
-                        <input type="text" id="cari-job" class="form-control" placeholder="Cari Lowongan"
+            <div class="col-sm-3">
+                <div class="form-group float-right">
+                    <input type="text" id="cari-job" class="form-control" placeholder="Cari Lowongan"
                         onkeyup="search_job()">
-                    </div>
                 </div>
+            </div>
         </div>
-    
-    <table id="masterdata-job" class="table table-striped table-bordered no-footer dtr-inline collapsed"
-        role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-        <thead>
-            <tr role="row">
-                <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master">
-                </th>
-                <th class="sorting text-center" tabindex="0">Nama Posisi</th>
-                <th class="sorting text-center" tabindex="0">Deskripsi</th>
-                <th class="sorting text-center" tabindex="0">Persyaratan</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($dataJob as $item)
-            <tr>
-                <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
-                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}">
-                </td>
-                <td class="text-center">{{$item->name}}</td>
-                <td class="text-center">{{$item->descript}}</td>
-                <td class="text-center">{{$item->required}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    </form>
-</div>
+
+        <table id="masterdata-job" class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
+            aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+            <thead>
+                <tr role="row">
+                    <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
+                    <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox"
+                            id="master">
+                    </th>
+                    <th class="sorting text-center" tabindex="0">Nama Posisi</th>
+                    <th class="sorting text-center" tabindex="0">Deskripsi</th>
+                    <th class="sorting text-center" tabindex="0">Persyaratan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($dataJob as $item)
+                <tr>
+                    <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
+                    <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}">
+                    </td>
+                    <td class="text-center">{{$item->name}}</td>
+                    <td class="text-center">{{$item->descript}}</td>
+                    <td class="text-center">{{$item->required}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        </form>
+    </div>
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10 text-center">

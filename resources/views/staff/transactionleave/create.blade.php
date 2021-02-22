@@ -1,5 +1,5 @@
 @extends('layouts/templateStaff')
-@section('title', 'Rekruitasi')
+@section('title', 'Cuti')
 @section('content-title', 'Cuti / Pengajuan Cuti')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 

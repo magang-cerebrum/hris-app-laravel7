@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('title', 'Hari Libur')
+@section('title', 'Master Data')
 @section('content-title', 'Master Data / Daftar Hari Libur')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
@@ -7,7 +7,10 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="panel">
+<div class="panel  panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Hari Libur</h3>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             <div class="row">

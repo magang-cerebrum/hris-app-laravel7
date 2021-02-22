@@ -7,7 +7,10 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Rekruitasi</h3>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             @if (count($data) == 0)

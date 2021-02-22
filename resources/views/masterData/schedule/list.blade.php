@@ -6,6 +6,11 @@
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<style>
+    tbody {
+        color: black;
+    }
+</style>
 @endsection
 @section('content')
 

@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\TransactionPaidLeave;
 use App\MasterLeaveType;
 use App\MasterUser;
-use App\User;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionPaidLeaveController extends Controller
 {
@@ -107,25 +107,37 @@ class TransactionPaidLeaveController extends Controller
         $info = "-";
         $status = "Diajukan";
 
-        $start = $request->paid_leave_date_start;
-        $end = $request->paid_leave_date_end;
-        $datetime1 = new DateTime($start);
-        $datetime2 = new DateTime($end);
+        $datetime1 = new DateTime($request->paid_leave_date_start);
+        $datetime2 = new DateTime($request->paid_leave_date_end);
         $interval = $datetime1->diff($datetime2);
         $paid_leave = ($interval->format('%a')) + 1;
+            
+        $start = $request->paid_leave_date_start;
+        $days_paid_leave = 0;
+        for ($i = 0; $i < $paid_leave; $i++) {
+            $check_days = date('Y/m/d', strtotime('+1 days', strtotime($start)));
+            $check_name_days = date('l', strtotime($check_days));
+
+            if ($check_name_days != "Saturday" && $check_name_days != "Sunday") {
+                $days_paid_leave++;
+            }
+
+            $start = $check_days;
+        }
 
         TransactionPaidLeave::create([
             'user_id'=>$request->user_id,
             'paid_leave_date_start'=>$request->paid_leave_date_start,
             'paid_leave_date_end'=>$request->paid_leave_date_end,
-            'days'=>$paid_leave,
+            'days'=>$days_paid_leave,
             'status'=>$status,
             'paid_leave_type_id'=>$request->paid_leave_type_id,
             'needs'=>$request->needs,
             'informations'=>$info
 
         ]);
-        return redirect('/staff/paid-leave');
+        Alert::success('Berhasil!', 'Pengajuan cuti berhasil terkirim!');
+        return redirect('/staff/paid-leave/history');
     }
 
     /**

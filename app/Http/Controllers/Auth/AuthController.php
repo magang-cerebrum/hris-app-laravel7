@@ -60,8 +60,9 @@ class AuthController extends Controller
             }
             elseif($stats == 2){
 
+                $device = $agent->platform();
                 // Log::channel('hris_log')->info($user.' Telah Login (Staff)');
-                activity()->log($user.' Telah Login (Staff)');
+                activity()->log($user.' Telah Login (Staff) pada platform ' . $device);
                 return redirect('/staff/dashboard');
             }
 

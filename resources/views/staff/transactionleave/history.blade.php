@@ -36,8 +36,8 @@
                                         <tr class="sorting text-center" tabindex="0">
                                             <td class="sorting text-center" tabindex="0">{{$data->currentpage() * 5 - 5 + $loop->iteration}}</td>
                                             <td class="text-center">{{$item->type_name}}</td>
-                                            <td class="text-center">{{$item->paid_leave_date_start}}</td>
-                                            <td class="text-center">{{$item->paid_leave_date_end}}</td>
+                                            <td class="text-center">{{indonesian_date($item->paid_leave_date_start)}}</td>
+                                            <td class="text-center">{{indonesian_date($item->paid_leave_date_end)}}</td>
                                             <td class="text-center">{{$item->days.' hari'}}</td>
                                             <td class="text-center">{{$item->needs}}</td>
                                             <td class="text-center">{{$item->informations}}</td>

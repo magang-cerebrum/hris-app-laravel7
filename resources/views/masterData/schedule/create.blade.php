@@ -1,18 +1,23 @@
 @extends('layouts/templateAdmin')
-@section('title','Data Staff')
-@section('content-title','Data Staff / Tambah Jadwal Kerja')
+@section('title','Pilih Staff untuk Jadwal Kerja')
+@section('content-title','Data Staff / Pilih Staff untuk Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
+@section('head')
+{{-- Sweetalert 2 --}}
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+@endsection
 <div class="panel">
     <div class="panel-body">
         <div class="table-responsive">
             <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline">
                 @csrf
-                <button id="btn-post" class="btn btn-primary add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                    data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja">
-                    <i class="btn-label fa fa-trash"></i>
+                <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                    data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()">
+                    <i class="btn-labeled fa fa-plus"></i>
                     Buat Jadwal Kerja
                 </button>
+                <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
                 <table id="masterdata-division"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
@@ -47,6 +52,7 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#master').on('click', function(e) {
@@ -58,5 +64,21 @@
             }  
         });
     });
+
+    // Sweetalert 2
+    function submit_add(){
+        
+        var check = document.querySelector('.sub_chk:checked');
+        console.log(check);
+        if (check == null){
+            Swal.fire({
+                title: 'Sepertinya ada kesalahan...',
+                text: "Tidak ada staff yang dipilih untuk diatur jadwalnya!",
+                icon: 'error',
+            });
+            event.preventDefault();
+            return false;
+        }
+    }
 </script>
 @endsection

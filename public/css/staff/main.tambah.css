@@ -62,3 +62,7 @@
 .panel-body {
     padding: 35px 20px 25px;
 }
+
+.panel-primary .panel-heading, .panel-primary .panel-footer {
+    background: linear-gradient(90deg, #05032D 12.29%, #27257C 100%);
+}

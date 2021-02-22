@@ -122,6 +122,10 @@ Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'st
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
 Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
 
+// Route Hari Libur
+Route::get('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'index']);
+Route::get('/admin/holiday/add',[App\Http\Controllers\HolidayController::class, 'create']);
+
 //route transaction ticketing
 Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);
 Route::get('/admin/ticketing/{ticket}/edit',[App\Http\Controllers\TicketingController::class,'admin_edit']);
@@ -132,11 +136,7 @@ Route::get('/staff/ticketing/',[App\Http\Controllers\TicketingController::class,
 Route::get('/staff/ticketing/create',[App\Http\Controllers\TicketingController::class,'staff_create']);
 Route::post('/staff/ticketing/input',[App\Http\Controllers\TicketingController::class,'staff_input']);
 
-
-
-
-
-//Route Achievement 
+//Route Achievement Dates
 Route::get('/admin/achievement', [App\Http\Controllers\MasterAchievementController::class,'index']);
 Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
 Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);

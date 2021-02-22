@@ -34,4 +34,5 @@ return array(
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     '6b34c85f7b1ad6faa15aa12109e030f2' => $vendorDir . '/realrashid/sweet-alert/src/functions.php',
     '72b1e3f4a2af9b30b3f137b3ec2057fc' => $vendorDir . '/spatie/laravel-activitylog/src/helpers.php',
+    'd21d43db5f6e840ee7b10744ec7fdf66' => $baseDir . '/app/Helpers/helpers.php',
 );

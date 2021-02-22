@@ -131,7 +131,7 @@ class HolidayController extends Controller
                 'information' => $request->information,
                 'date' => $request->date
             ]);
-        Alert::success('Berhasil!', 'Hari Libur ' . $holiday->information . ' telah diperbaharui!');
+        Alert::success('Berhasil!', 'Hari Libur ' . $holiday->information . ' berhasil diperbaharui!');
         return redirect('/admin/holiday');
     }
 

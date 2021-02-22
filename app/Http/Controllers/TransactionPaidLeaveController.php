@@ -111,14 +111,17 @@ class TransactionPaidLeaveController extends Controller
         $datetime2 = new DateTime($request->paid_leave_date_end);
         $interval = $datetime1->diff($datetime2);
         $paid_leave = ($interval->format('%a')) + 1;
-            
-        $start = $request->paid_leave_date_start;
+
+        $start = date('Y/m/d', strtotime('-1 days', strtotime($request->paid_leave_date_start)));
         $days_paid_leave = 0;
         for ($i = 0; $i < $paid_leave; $i++) {
             $check_days = date('Y/m/d', strtotime('+1 days', strtotime($start)));
             $check_name_days = date('l', strtotime($check_days));
 
-            if ($check_name_days != "Saturday" && $check_name_days != "Sunday") {
+            $check_holiday = DB::table('master_holidays')
+            ->where('date','=',$check_days)->get();
+
+            if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
                 $days_paid_leave++;
             }
 

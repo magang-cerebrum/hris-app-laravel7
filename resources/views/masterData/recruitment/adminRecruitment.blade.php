@@ -24,12 +24,12 @@
                                 </button>
                                 <table id="masterdata-division"
                                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
+                                role="grid" aria-describedby="demo-dt-basic_info" style="width: 98%;"
                                 cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                                            <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master"></th>
+                                            <th class="sorting text-center" tabindex="0" style="width: 4%">No</th>
+                                            <th class="sorting text-center" tabindex="0" style="width: 5%">All <input type="checkbox" id="master"></th>
                                             <th class="sorting text-center" tabindex="0">Nama Lengkap</th>
                                             <th class="sorting text-center" tabindex="0">Tempat Tanggal Lahir</th>
                                             <th class="sorting text-center" tabindex="0">Domisili</th>
@@ -56,12 +56,12 @@
                                                 <td class="text-center">{{$item->position}}</td>
                                                 <td class="text-center">
                                                     <a href="{{ asset('/upload_recruitment/cv_upload/'.$item->file_cv)}}" target="blank">
-                                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Buka CV">
+                                                        <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Buka CV">
                                                             <i class="fa fa-file icon-lg"></i>
                                                         </button>
                                                     </a>
                                                     <a href="{{ asset('/upload_recruitment/portofolio_upload/'.$item->file_portofolio)}}" target="blank">
-                                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Buka Portofolio">
+                                                        <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Buka Portofolio">
                                                             <i class="fa fa-file icon-lg"></i>
                                                         </button>
                                                     </a>

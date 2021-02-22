@@ -20,10 +20,10 @@
 <div class="panel">
     <div class="panel-body">
         <div class="table-responsive">
-            <form action="{{ url('/admin/schedule/post')}}" method="POST" style="display: inline;" class="form-horizontal">
+            <form action="{{ url('/admin/schedule/post')}}" method="POST" style="display: inline;" class="form-horizontal" id="form-bulan-tahun">
                 @csrf
                 <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                    data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal">
+                    data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal" onclick="submit_add()">
                     <i class="btn-label fa fa-send-o"></i>
                     Kirim Jadwal
                 </button>
@@ -53,7 +53,6 @@
                         <label class="control-label" for="schedule">Tahun : </label>
                     </div>
                     <div class="col-sm-4">
-                        <span class="input-group-addon">Tahun :</span>
                         <input id="year-input" type="text" class="form-control @error('year') is-invalid @enderror" placeholder="Tahun" name="year">
                         @error('year') <div class="text-danger invalid-feedback mt-3">
                             Tahun tidak boleh kosong.
@@ -133,5 +132,19 @@
             }
             
         });
+
+        function submit_add(){
+            event.preventDefault();
+            var check = document.getElementById('year-input').value;
+            if (check != ''){
+                $('#form-bulan-tahun').submit();
+            } else{
+                Swal.fire({
+                    title: 'Sepertinya ada kesalahan...',
+                    text: "Mohon isi tahun terlebih dahulu...",
+                    icon: 'error',
+                })
+            }
+        }
     </script>
 @endsection

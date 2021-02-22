@@ -294,8 +294,8 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Daftar Ticketing</a></li>
-											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log Sistem Aplikasi</a></li>
+                                            <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Ticketing</a></li>
+											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log</a></li>
 						                </ul>
                                     </li>
                                 </ul>

@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\TransactionPaidLeave;
 use App\MasterLeaveType;
 use App\MasterUser;
-use App\User;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionPaidLeaveController extends Controller
 {
@@ -136,7 +136,8 @@ class TransactionPaidLeaveController extends Controller
             'informations'=>$info
 
         ]);
-        return redirect('/staff/paid-leave');
+        Alert::success('Berhasil!', 'Pengajuan cuti berhasil terkirim!');
+        return redirect('/staff/paid-leave/history');
     }
 
     /**

@@ -1,10 +1,11 @@
 @extends('layouts/templateAdmin')
-@section('title','Data Staff')
-@section('content-title','Data Staff / Tambah Jadwal Kerja')
+@section('title','Tambah Jadwal Kerja')
+@section('content-title','Data Staff / Jadwal Kerja / Tambah Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+    <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <style>
         table .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
             width: 80px;
@@ -19,21 +20,21 @@
 <div class="panel">
     <div class="panel-body">
         <div class="table-responsive">
-            <form action="{{ url('/admin/schedule/post')}}" method="POST" style="display: inline;">
+            <form action="{{ url('/admin/schedule/post')}}" method="POST" style="display: inline;" class="form-horizontal">
                 @csrf
-                <button id="btn-delete" class="btn btn-success add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                    data-container="body" data-placement="top" data-original-title="Hapus Riwayat Pengajuan Cuti">
-                    <i class="btn-label fa fa-trash"></i>
+                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                    data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal">
+                    <i class="btn-label fa fa-send-o"></i>
                     Kirim Jadwal
                 </button>
                 <input name="count" value="{{count($data_user)}}" hidden>
-                <div class="row">
-                    {{-- <div class="col-sm-2">
-                        <label class="control-label" for="schedule">Bulan</label>
-                    </div> --}}
-                    <div class="col-sm-3">
-                        <span class="input-group-addon">Tahun :</span>
-                        <select class="selectpicker" data-style="btn-success" style="width: 100%" name="month" >
+                <div class="row mar-btm">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-1">
+                        <label class="control-label" for="month">Bulan : </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="selectpicker" data-style="btn-pink" style="width: 100%" name="month" >
                             <option value="Januari">Januari</option>
                             <option value="Februari">Februari</option>
                             <option value="Maret">Maret</option>
@@ -48,9 +49,9 @@
                             <option value="Desember">Desember</option>
                         </select>
                     </div>
-                    {{-- <div class="col-sm-2">
-                        <label class="control-label" for="schedule">Tahun</label>
-                    </div> --}}
+                    <div class="col-sm-1">
+                        <label class="control-label" for="schedule">Tahun : </label>
+                    </div>
                     <div class="col-sm-4">
                         <span class="input-group-addon">Tahun :</span>
                         <input id="year-input" type="text" class="form-control @error('year') is-invalid @enderror" placeholder="Tahun" name="year">
@@ -92,7 +93,7 @@
                                     <td class="text-center">
                                         <select class="selectpicker {{'sub-master_'.$i}}" data-style="btn-success" style="width: 100%" name="{{'shift_'.$i.'_'.$loop->iteration}}" >
                                             @foreach ($data_shift as $item_shift)
-                                            <option value="{{$item_shift->id}}" class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}">
+                                            <option value="{{$item_shift->id}}" class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}" {{$loop->iteration == '2' ? 'selected' : ''}}>
                                                 {{$item_shift->name}}
                                             </option>
                                             @endforeach
@@ -111,21 +112,24 @@
 
 @section('script')
     <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.option_2').prop('selected', true);
             for (let index = 1; index < 32; index++) {
-                $('#master_'+ index).on('click', function(e) {
+                $('#master_'+ index).on('click', function(event) {
                     if($(this).is(':checked',true)) {
                         $('.select-master_' + index + '_2').prop('selected', true);
                         // $(".sub-master_" + index).prop('disabled', false);  
+                        console.log('pagi');
                     }
                     else {  
                         $('.select-master_' + index + '_1').prop('selected', true);
                         // $(".sub-master_" + index).prop('disabled', true);  
+                        console.log('off');
                     }
                     $(".sub-master_" + index).selectpicker('refresh');
                 });
+                
             }
             
         });

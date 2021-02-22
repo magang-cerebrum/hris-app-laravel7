@@ -37,53 +37,55 @@
                         </div>
                     </div>
                 </div>
-                <table id="masterdata-shift"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
-                    aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 5%">
-                                No</th>
-                            <th class="text-center"  style="width: 6%">
-                                All <input type="checkbox" id="check-all">
-                            </th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
-                                colspan="1" aria-label="Action" style="width: 10%">Aksi</th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
-                                colspan="1" aria-label="Position: activate to sort column ascending">Nama Shift</th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
-                                colspan="1" aria-label="Jam masuk: activate to sort column ascending">Jam Masuk</th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
-                                colspan="1" aria-label="Jam Kerja: activate to sort column ascending">Jam Keluar</th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
-                            colspan="1" aria-label="Jam Kerja: activate to sort column ascending">Jam Sehari</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($shift as $row)
-                        <tr>
-                            <td tabindex="0" class="sorting_1 text-center">{{(($shift->currentPage() * 5) - 5) + $loop->iteration}}</td>
-                                <td class="text-center">
-                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
-                                </td>
-                                <td class="text-center">
-                                    <a href="/admin/shift/{{$row->id}}/edit"
-                                        class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Edit Waktu Shift"
-                                        type="button">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </td>
-                            <td class="text-center">{{$row->name}}</td>
-                            <td class="text-center">{{$row->start_working_time}}</td>
-                            <td class="text-center">{{$row->end_working_time}}</td>
-                            <td class="text-center">{{$row->total_hour}} jam</td>
+                <div class="table-responsive">
+                    <table id="masterdata-shift"
+                        class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
+                        aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 5%">
+                                    No</th>
+                                <th class="text-center"  style="width: 6%">
+                                    All <input type="checkbox" id="check-all">
+                                </th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                                    colspan="1" aria-label="Action" style="width: 10%">Aksi</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                                    colspan="1" aria-label="Position: activate to sort column ascending">Nama Shift</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                                    colspan="1" aria-label="Jam masuk: activate to sort column ascending">Jam Masuk</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                                    colspan="1" aria-label="Jam Kerja: activate to sort column ascending">Jam Keluar</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                                colspan="1" aria-label="Jam Kerja: activate to sort column ascending">Jam Sehari</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($shift as $row)
+                            <tr>
+                                <td tabindex="0" class="sorting_1 text-center">{{(($shift->currentPage() * 5) - 5) + $loop->iteration}}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/admin/shift/{{$row->id}}/edit"
+                                            class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                            data-container="body" data-placement="top" data-original-title="Edit Waktu Shift"
+                                            type="button">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                <td class="text-center">{{$row->name}}</td>
+                                <td class="text-center">{{$row->start_working_time}}</td>
+                                <td class="text-center">{{$row->end_working_time}}</td>
+                                <td class="text-center">{{$row->total_hour}} jam</td>
 
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 </form>
                 <div class="row">
                     <div class="col-sm-1"></div>
@@ -147,7 +149,7 @@
         table = document.getElementById("masterdata-shift");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            for (j = 3; j < 6; j++ ){
+            for (j = 3; j < 7; j++ ){
                     td = tr[i].getElementsByTagName("td")[j];
                 if (td) {
                     txtValue = td.textContent || td.innerText;

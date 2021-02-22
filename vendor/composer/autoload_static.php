@@ -35,6 +35,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '6b34c85f7b1ad6faa15aa12109e030f2' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/functions.php',
         '72b1e3f4a2af9b30b3f137b3ec2057fc' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/helpers.php',
+        'd21d43db5f6e840ee7b10744ec7fdf66' => __DIR__ . '/../..' . '/app/Helpers/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -518,6 +519,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Http\\Controllers\\PresenceController' => __DIR__ . '/../..' . '/app/Http/Controllers/PresenceController.php',
         'App\\Http\\Controllers\\ShiftController' => __DIR__ . '/../..' . '/app/Http/Controllers/ShiftController.php',
         'App\\Http\\Controllers\\StaffAuthDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/StaffAuthDashboardController.php',
+        'App\\Http\\Controllers\\TicketingController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketingController.php',
         'App\\Http\\Controllers\\TransactionPaidLeaveController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionPaidLeaveController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -535,7 +537,6 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\MasterJobRecruitment' => __DIR__ . '/../..' . '/app/MasterJobRecruitment.php',
         'App\\MasterJobSchedule' => __DIR__ . '/../..' . '/app/MasterJobSchedule.php',
         'App\\MasterLeaveType' => __DIR__ . '/../..' . '/app/MasterLeaveType.php',
-        'App\\MasterLog' => __DIR__ . '/../..' . '/app/MasterLog.php',
         'App\\MasterPosition' => __DIR__ . '/../..' . '/app/MasterPosition.php',
         'App\\MasterPresence' => __DIR__ . '/../..' . '/app/MasterPresence.php',
         'App\\MasterRecruitment' => __DIR__ . '/../..' . '/app/MasterRecruitment.php',
@@ -548,6 +549,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\TransactionPaidLeave' => __DIR__ . '/../..' . '/app/TransactionPaidLeave.php',
+        'App\\TransactionTicketing' => __DIR__ . '/../..' . '/app/TransactionTicketing.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',

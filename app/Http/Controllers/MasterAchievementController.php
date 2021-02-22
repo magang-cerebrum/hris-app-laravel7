@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MasterAchievementController extends Controller
 {
@@ -104,6 +105,7 @@ class MasterAchievementController extends Controller
                 'achievement_user_id'=>$data_id
             ]);
         }
+        Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
         return redirect('/admin/achievement');
     }
     public function admin_charts (){

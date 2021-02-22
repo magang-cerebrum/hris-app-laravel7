@@ -75,12 +75,12 @@
                                     <span class="label label-success">Selesai</span>
                                     @endif
                                 </td>
-                                <td class="text-center">{{$row->created_at}}</td>
+                                <td class="text-center">{{indonesian_date($row->created_at,true)}}</td>
                                 <td class="text-center">
                                     @if ($row->created_at == $row->updated_at)
                                         -
                                     @else
-                                        {{$row->updated_at}}
+                                        {{indonesian_date($row->updated_at,true)}}
                                     @endif
                                 </td>
                             </tr>
@@ -94,11 +94,6 @@
     <div class="panel-footer text-right">
         <button data-toggle="modal" data-target="#modal-input-ticket" class="btn btn-pink float-right" id="input-ticket">Input Ticket Baru</button>
     </div>
-    
-</div>
-
-<div id="panel-output">
-        
 </div>
 @include('staff/transactionticketing/modal')
 @endsection

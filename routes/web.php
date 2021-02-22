@@ -46,7 +46,7 @@ Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'update
 Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
-Route::delete('/admin/rectuitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
 
 //route masterdata job
 Route::delete('/admin/job/delete',[ MasterJobController::class,'destroy']);

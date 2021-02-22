@@ -1,6 +1,6 @@
-<div class="panel panel-bordered panel-dark">
+<div class="panel panel-bordered panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Hasil Pencarian Presensi</h3>
+        <h3 class="panel-title">Hasil Pencarian Presensi | {{indonesian_date($start)}} hingga {{indonesian_date($end)}}</h3>
     </div>
     <div class="panel-body">
         <div class="table-responsive">
@@ -25,7 +25,7 @@
                     @foreach ($data as $row)
                     <tr>
                         <td tabindex="0" class="sorting_1 text-center">{{(($data->currentPage() * 5) - 5) + $loop->iteration}}</td>
-                        <td class="text-center">{{$row->presence_date}}</td>
+                        <td class="text-center">{{indonesian_date($row->presence_date)}}</td>
                         <td class="text-center">{{$row->in_time}}</td>
                         <td class="text-center">{{$row->out_time}}</td>
                         <td class="text-center">{{$row->inaday_time}}</td>

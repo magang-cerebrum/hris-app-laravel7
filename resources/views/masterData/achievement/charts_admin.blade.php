@@ -12,7 +12,14 @@
 </style>
 @endsection
 @section('content')
-<div id="charts-achievement">
+<div class="panel panel-bordered panel-danger">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{'Grafik " Dummy Staff " tahun '.$data[0]->year}}</h3>
+    </div>
+    <div class="panel-body">
+        <div id="charts-achievement">
+        </div>
+    </div>
 </div>
 
 @section('script')
@@ -84,6 +91,8 @@
         },
         yaxis: {
             ticks: 9,
+            min : 0,
+            max : 100,
             tickColor: 'rgba(0,0,0,.1)'
         },
         xaxis: {

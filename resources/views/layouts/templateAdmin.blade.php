@@ -231,7 +231,7 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-calendar-4"></i>Daftar Jadwal</a></li>
-											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Tambah Jadwal</a></li>
+											<li><a href="{{ url('admin/schedule/add')}}"><i class="demo-psi-checked-user"></i>Tambah Jadwal</a></li>
 						                </ul>
 						            </li>
                                     

@@ -9,6 +9,7 @@ use App\MasterShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MasterJobScheduleController extends Controller
 {
@@ -17,10 +18,23 @@ class MasterJobScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function index_month()
     {
         $user = Auth::user();
+        return view('masterData.schedule.list', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
+    }
+
+    public function index(Request $request)
+    {
         $data = DB::table('master_job_schedules')
+        ->where('month', '=', $request->month)
+        ->where('year', '=', $request->year)
         ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->select(
             'master_job_schedules.*',
@@ -29,12 +43,8 @@ class MasterJobScheduleController extends Controller
             )->get()
         ;
 
-        return view('masterData.schedule.list', [
-            'data'=>$data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
+        return view('masterData.schedule.result', [
+            'data'=>$data
         ]);
     }
 
@@ -190,7 +200,7 @@ class MasterJobScheduleController extends Controller
             ->where('year', '=', $request->year)
             ->get();
 
-            if (count($check) == 0 ) {
+            if (count($data_check) == 0 ) {
                 MasterJobSchedule::create([
                     'month'=>$request->month,
                     'year'=>$request->year,
@@ -230,7 +240,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             }
         }
-
+        Alert::success('Berhasil!', 'Jadwal staff baru berhasil ditambahkan!');
         return redirect('/admin/schedule');
     }
     

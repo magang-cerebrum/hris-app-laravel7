@@ -55,6 +55,7 @@
                                 <label class="col-md-3 control-label" for="demo-text-input">Tempat Lahir</label>
                                 <div class="col-md-9">
                                     <input type="text" id="tempat-input" class="form-control @error('born_in') is-invalid @enderror" placeholder="Nama Lengkap" name="born_in">
+                                    {{-- <span class="input-group-addon"><i class="fa fa-calendar"></i></span> --}}
                                     @error('born_in') <div class="text-danger invalid-feedback mt-3">
                                         Tempat lahir tidak boleh kosong.
                                         </div> @enderror
@@ -64,7 +65,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="demo-text-input">Tanggal Lahir</label>
                                 <div class="col-md-9">
-                                    <input id="tanggal-input" type="text" class="form-control @error('dob') is-invalid @enderror" placeholder="Tanggal Lahir" name="dob">
+                                    <input id="tanggal-input" type="text" class="form-control @error('dob') is-invalid @enderror" placeholder="Tanggal Lahir" name="dob" autocomplete="off">
                                     @error('dob') <div class="text-danger invalid-feedback mt-3">
                                         Tanggal lahir tidak boleh kosong.
                                         </div> @enderror

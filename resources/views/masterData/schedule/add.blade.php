@@ -31,7 +31,8 @@
                     {{-- <div class="col-sm-2">
                         <label class="control-label" for="schedule">Bulan</label>
                     </div> --}}
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
+                        <span class="input-group-addon">Tahun :</span>
                         <select class="selectpicker" data-style="btn-success" style="width: 100%" name="month" >
                             <option value="Januari">Januari</option>
                             <option value="Februari">Februari</option>
@@ -51,6 +52,7 @@
                         <label class="control-label" for="schedule">Tahun</label>
                     </div> --}}
                     <div class="col-sm-4">
+                        <span class="input-group-addon">Tahun :</span>
                         <input id="year-input" type="text" class="form-control @error('year') is-invalid @enderror" placeholder="Tahun" name="year">
                         @error('year') <div class="text-danger invalid-feedback mt-3">
                             Tahun tidak boleh kosong.

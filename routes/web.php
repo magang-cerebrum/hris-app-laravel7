@@ -120,7 +120,9 @@ Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'st
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
 Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
 
-
+// Route Hari Libur
+Route::get('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'index']);
+Route::get('/admin/holiday/add',[App\Http\Controllers\HolidayController::class, 'create']);
 
 //Route Achievement Dates
 Route::get('/admin/achievement', [App\Http\Controllers\MasterAchievementController::class,'index']);

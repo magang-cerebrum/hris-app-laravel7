@@ -78,3 +78,11 @@
 .panel-body {
     padding: 35px 20px 25px;
 }
+
+.panel-danger .panel-heading, .panel-danger .panel-footer {
+    background: linear-gradient(90deg, #4F0505 12.29%, #FF0404 100%);
+}
+
+#mainnav .list-divider {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+}

@@ -145,6 +145,8 @@ class MasterJobScheduleController extends Controller
                 }
             }
         }
+
+
         for ($i = 1; $i <= $request->count; $i++) {
             global $total_hour;
             $total_hour = 0;
@@ -182,43 +184,51 @@ class MasterJobScheduleController extends Controller
             $shift_30 = check('shift_30_'.$i, $request);
             $shift_31 = check('shift_31_'.$i, $request);
 
-            MasterJobSchedule::create([
-                'month'=>$request->month,
-                'year'=>$request->year,
-                'user_id'=>$request->$user_id,
-                'shift_1'=>$shift_1,
-                'shift_2'=>$shift_2,
-                'shift_3'=>$shift_3,
-                'shift_4'=>$shift_4,
-                'shift_5'=>$shift_5,
-                'shift_6'=>$shift_6,
-                'shift_7'=>$shift_7,
-                'shift_8'=>$shift_8,
-                'shift_9'=>$shift_9,
-                'shift_10'=>$shift_10,
-                'shift_11'=>$shift_11,
-                'shift_12'=>$shift_12,
-                'shift_13'=>$shift_13,
-                'shift_14'=>$shift_14,
-                'shift_15'=>$shift_15,
-                'shift_16'=>$shift_16,
-                'shift_17'=>$shift_17,
-                'shift_18'=>$shift_18,
-                'shift_19'=>$shift_19,
-                'shift_20'=>$shift_20,
-                'shift_21'=>$shift_21,
-                'shift_22'=>$shift_22,
-                'shift_23'=>$shift_23,
-                'shift_24'=>$shift_24,
-                'shift_25'=>$shift_25,
-                'shift_26'=>$shift_26,
-                'shift_27'=>$shift_27,
-                'shift_28'=>$shift_28,
-                'shift_29'=>$shift_29,
-                'shift_30'=>$shift_30,
-                'shift_31'=>$shift_31,
-                'total_hour'=>$total_hour
-            ]);
+            $data_check = DB::table('master_job_schedules')
+            ->where('user_id', '=', $request->$user_id)
+            ->where('month', '=', $request->month)
+            ->where('year', '=', $request->year)
+            ->get();
+
+            if (count($check) == 0 ) {
+                MasterJobSchedule::create([
+                    'month'=>$request->month,
+                    'year'=>$request->year,
+                    'user_id'=>$request->$user_id,
+                    'shift_1'=>$shift_1,
+                    'shift_2'=>$shift_2,
+                    'shift_3'=>$shift_3,
+                    'shift_4'=>$shift_4,
+                    'shift_5'=>$shift_5,
+                    'shift_6'=>$shift_6,
+                    'shift_7'=>$shift_7,
+                    'shift_8'=>$shift_8,
+                    'shift_9'=>$shift_9,
+                    'shift_10'=>$shift_10,
+                    'shift_11'=>$shift_11,
+                    'shift_12'=>$shift_12,
+                    'shift_13'=>$shift_13,
+                    'shift_14'=>$shift_14,
+                    'shift_15'=>$shift_15,
+                    'shift_16'=>$shift_16,
+                    'shift_17'=>$shift_17,
+                    'shift_18'=>$shift_18,
+                    'shift_19'=>$shift_19,
+                    'shift_20'=>$shift_20,
+                    'shift_21'=>$shift_21,
+                    'shift_22'=>$shift_22,
+                    'shift_23'=>$shift_23,
+                    'shift_24'=>$shift_24,
+                    'shift_25'=>$shift_25,
+                    'shift_26'=>$shift_26,
+                    'shift_27'=>$shift_27,
+                    'shift_28'=>$shift_28,
+                    'shift_29'=>$shift_29,
+                    'shift_30'=>$shift_30,
+                    'shift_31'=>$shift_31,
+                    'total_hour'=>$total_hour
+                ]);
+            }
         }
 
         return redirect('/admin/schedule');

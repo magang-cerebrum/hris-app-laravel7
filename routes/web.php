@@ -126,6 +126,10 @@ Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::c
 // Route Hari Libur
 Route::get('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'index']);
 Route::get('/admin/holiday/add',[App\Http\Controllers\HolidayController::class, 'create']);
+Route::post('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'store']);
+Route::get('/admin/holiday/{holiday}/edit',[App\Http\Controllers\HolidayController::class, 'edit']);
+Route::put('/admin/holiday/{holiday}',[App\Http\Controllers\HolidayController::class, 'update']);
+Route::delete('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'destroy']);
 
 //route transaction ticketing
 Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);
@@ -144,4 +148,4 @@ Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'sc
 Route::post('/admin/achievement/search',[MasterAchievementController::class,'search']);
 // Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
 // Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
-Route::get('/admin/achievement/charts', [MasterAchievementController::class,'charts']);
+Route::get('/admin/achievement/charts', [MasterAchievementController::class,'admin_charts']);

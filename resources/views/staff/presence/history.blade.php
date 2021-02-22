@@ -20,10 +20,10 @@
                 <div class="col-sm-11">
                     <div class="input-group input-daterange">
                         <input type="text" class="form-control @error('start') is-invalid @enderror"
-                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}"  autocomplete="off">
+                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off">
                         <span class="input-group-addon">sampai</span>
                         <input type="text" class="form-control @error('end') is-invalid @enderror"
-                            placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}"  autocomplete="off">
+                            placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}" autocomplete="off">
                     </div>
                     @error('start') <div class="text-danger invalid-feedback mt-3">Mohon isi
                         tanggal mulai.</div> @enderror

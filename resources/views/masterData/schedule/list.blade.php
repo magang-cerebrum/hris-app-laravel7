@@ -4,6 +4,8 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+{{-- Sweetalert 2 --}}
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <style>
     tbody {
         color: black;
@@ -68,6 +70,8 @@
 
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+{{-- Sweetalert 2 --}}
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
     
         
@@ -83,7 +87,12 @@
                     $("#panel-output").html(data);
                 },
                 error: function (jXHR, textStatus, errorThrown) {
-                    alert(errorThrown);
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Form belum diisi dengan benar / Tidak ada data jadwal untuk bulan terpilih",
+                        icon: 'error',
+                        width: 600
+                    });
                 }
             });
         });

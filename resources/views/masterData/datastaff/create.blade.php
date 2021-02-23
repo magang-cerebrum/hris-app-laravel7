@@ -259,15 +259,19 @@
     $(document).ready(function () {
         $('#datepicker-input-dob .input-group.date').datepicker({
             format: 'yyyy/mm/dd',
-            autoclose: true
+            autoclose: true,
+            orientation: 'bottom'
         });
         $('#datepicker-input-mulai-kerja .input-group.date').datepicker({
             format: 'yyyy/mm/dd',
-            autoclose: true
+            autoclose: true,
+            orientation: 'bottom',
+            todayBtn: true
         });
         $('#datepicker-input-selesai-kerja .input-group.date').datepicker({
             format: 'yyyy/mm/dd',
-            autoclose: true
+            autoclose: true,
+            orientation: 'bottom'
         });
     });
 </script>

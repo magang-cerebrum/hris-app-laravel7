@@ -10,9 +10,9 @@
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 @endsection
 
-<div class="panel">
+<div class="panel panel-bordered {{$data->role_id  == 1 ? 'panel-danger' : 'panel-primary'}}">
     <div class="panel-heading">
-        <h3 class="panel-title text-bold text-center">Edit Profile User</h3>
+        <h3 class="panel-title">Edit Profile User</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" method="POST"
@@ -20,6 +20,7 @@
             @csrf
             @method('put')
             <div class="panel-body">
+                <input type="hidden" name="nip" class="form-control invisible" value="{{$data->nip}}">
                 <input type="hidden" name="password" class="form-control invisible" value="{{$data->password}}">
                 <input type="hidden" name="profile_photo" class="form-control invisible"
                     value="{{$data->profile_photo}}">
@@ -242,12 +243,14 @@
                     </div>
                 </div>
                 @endif
-                <div class="panel-footer text-right">
-                    <button class="btn btn-mint" type="submit">Simpan</button>
-                </div>
+                
             </div>
-        </form>
-    </div>
+        </div>
+    
+        <div class="panel-footer text-right">
+            <button class="btn btn-mint" type="submit">Simpan</button>
+        </div>     
+    </form>     
 </div>
 @section('script')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->

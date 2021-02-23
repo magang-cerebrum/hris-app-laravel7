@@ -73,7 +73,7 @@
     </div>
 </div>
 
-@section('script')
+
 <script>
     var data_off = document.getElementsByClassName('Off');
     var data_pagi = document.getElementsByClassName('Pagi');
@@ -89,4 +89,4 @@
     }
 
 </script>
-@endsection
+

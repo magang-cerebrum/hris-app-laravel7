@@ -1,4 +1,4 @@
-<!-- modal -->
+<!-- modal detail ticket-->
 <div class="modal fade" id="modal-detail-ticket" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -57,7 +57,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-                <h5 class="modal-title text-bold text-center">Input Ticket Baru Ticket</h5>
+                <h5 class="modal-title text-bold text-center">Input Ticket Baru</h5>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" action="/staff/ticketing/input" method="POST">

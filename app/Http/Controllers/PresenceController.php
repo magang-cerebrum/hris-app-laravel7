@@ -61,8 +61,14 @@ class PresenceController extends Controller
             'start' => 'required',
             'end' => 'required'
         ]);
+        $start = date_format(date_create($request->start),'Y-m-d');
+        $end = date_format(date_create($request->end),'Y-m-d');
         $user=Auth::user();
         $data = MasterPresence::whereBetween('presence_date',[date($request->start),date($request->end)])->where('user_id','=',$user->id)->paginate(5);
-        return view('staff.presence.result',['data' => $data]);
+        return view('staff.presence.result',[
+            'data' => $data,
+            'start' => $start,
+            'end' => $end
+        ]);
     }
 }

@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MasterJobController extends Controller
 {
@@ -69,6 +70,7 @@ class MasterJobController extends Controller
         MasterJobRecruitment::create($request->all());
         $user = Auth::user()->name;
         activity()->log('Admin ' .$user.' Telah menambahkan Lowongan ' . $request->name . " bagian " . $request->descript);
+        Alert::success('Berhasil!', 'Lowongan baru telah ditambahkan!');
         return redirect('/admin/job');
     }
 
@@ -121,6 +123,7 @@ class MasterJobController extends Controller
         }
         $user = Auth::user()->name;
         activity()->log('Admin ' .$user.' Telah menghapus Lowongan ' . $data->name  . " bagian " . $data->descript);
+        Alert::success('Berhasil!', 'Lowongan yang dipilih berhasil dihapus!');
         return redirect('/admin/job');
     }
 }

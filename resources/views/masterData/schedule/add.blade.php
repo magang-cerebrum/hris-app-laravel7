@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
-@section('title','Tambah Jadwal Kerja')
-@section('content-title','Data Staff / Jadwal Kerja / Tambah Jadwal Kerja')
+@section('title','Jadwal Kerja')
+@section('content-title','Jadwal Kerja / Tambah Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
@@ -17,7 +17,10 @@
 @endsection
 
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Form Tambah Jadwal Kerja</h3>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             <form action="{{ url('/admin/schedule/post')}}" method="POST" style="display: inline;" class="form-horizontal" id="form-bulan-tahun">

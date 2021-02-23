@@ -5,6 +5,8 @@
 @section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
+{{-- Sweetalert 2 --}}
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -25,10 +27,6 @@
                         <input type="text" class="form-control @error('end') is-invalid @enderror"
                             placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}" autocomplete="off">
                     </div>
-                    @error('start') <div class="text-danger invalid-feedback mt-3">Mohon isi
-                        tanggal mulai.</div> @enderror
-                    @error('end') <div class="text-danger invalid-feedback mt-3">Mohon isi
-                    tanggal akhir.</div> @enderror
                 </div>
             </div>
     </div>
@@ -46,6 +44,8 @@
 @section('script')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
+{{-- Sweetalert 2 --}}
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $('#cari-presensi').on('submit', function (event) {
@@ -58,7 +58,11 @@
                     $("#panel-output").html(data);
                 },
                 error: function (jXHR, textStatus, errorThrown) {
-                    alert(errorThrown);
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Mohon isi dulu form dengan benar...",
+                        icon: 'error',
+                    });
                 }
             });
         });

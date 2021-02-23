@@ -1,6 +1,6 @@
 @extends('layouts/templateStaff')
 @section('title','Jadwal Kerja')
-@section('content-title','Data Staff / Jadwal Kerja')
+@section('content-title','Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
@@ -25,10 +25,12 @@
             }
         }
     ?>
-    <div class="panel">
+    <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_this_month[0]->month.' - '.$data_this_month[0]->year}}</h3>
+        </div>
         <div class="panel-body">
             <div class="table-responsive">
-                <h1>{{$data_this_month[0]->month}}</h1>
                 <table id="schedule-this-month"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
@@ -51,9 +53,15 @@
                         @endif
                     @endfor
                 </table>
+            </div>
+        </div>
 
-                @if (count($data_next_month) != 0) 
-                    <h1>{{$data_next_month[0]->month}}</h1>
+        @if (count($data_next_month) != 0) 
+            <div class="panel-heading">
+                <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_next_month[0]->month.' - '.$data_next_month[0]->year}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
                     <table id="schedule-this-month"
                     class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                     role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
@@ -76,9 +84,9 @@
                             @endif
                         @endfor
                     </table>
-                @endif
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection
 

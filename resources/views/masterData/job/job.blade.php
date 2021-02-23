@@ -14,7 +14,7 @@
     <div class="panel-body">
         <div class="table-responsive">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-2 mar-rgt">
                     <a href="{{url('/admin/job/add')}}" class="btn btn-primary btn-labeled add-tooltip"
                         data-toggle="tooltip" data-container="body" data-placement="top"
                         data-original-title="Tambah Lowongan Baru" style="margin-bottom:15px">
@@ -40,7 +40,7 @@
                         Hapus Data Terpilih
                     </button>
             </div>
-            <div class="col-sm-5"></div>
+            <div class="col-sm-4"></div>
             <div class="col-sm-3">
                 <div class="form-group float-right">
                     <input type="text" id="cari-job" class="form-control" placeholder="Cari Lowongan"

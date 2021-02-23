@@ -3,9 +3,9 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Profile Data Staff')
 @section('content')
-<div class="panel">
+<div class="panel panel-bordered {{$data->role_id  == 1 ? 'panel-danger' : 'panel-primary'}}">
     <div class="panel-heading">
-        <h3 class="panel-title text-bold text-center">Profile User</h3>
+        <h3 class="panel-title">Profile User</h3>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" method="POST">
@@ -37,7 +37,8 @@
                         </div>
                         <label class="col-sm-2 control-label" for="textarea-input-live_at">Alamat:</label>
                         <div class="col-sm-4">
-                            <textarea id="textarea-input-live_at" rows="2" class="form-control" placeholder="Alamat Lengkap" name="live_at" readonly>{{$data->live_at}}</textarea>
+                            <textarea id="textarea-input-live_at" rows="2" class="form-control"
+                                placeholder="Alamat Lengkap" name="live_at" readonly>{{$data->live_at}}</textarea>
                         </div>
                         <label class="col-sm-2 control-label">Jenis Kelamin:</label>
                         <div class="col-sm-4">
@@ -82,28 +83,32 @@
                     <div class="row">
                         <label class="col-sm-2 control-label">Tipe Karyawan:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Tipe Karyawan" name="employee_type" class="form-control" value="{{$data->employee_type}}" readonly>
+                            <input type="text" placeholder="Tipe Karyawan" name="employee_type" class="form-control"
+                                value="{{$data->employee_type}}" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <label class="col-sm-2 control-label text-center">Foto Profil:</label>
-                                <div class="col-sm-4 text-center offset">
-                                    <img class="img-lg" src="{{asset('img/profile-photos/'.$data->profile_photo)}}" alt="Foto Profil Tidak Tersedia">
-                                </div>
+                        <div class="col-sm-4 text-center offset">
+                            <img class="img-lg" src="{{asset('img/profile-photos/'.$data->profile_photo)}}"
+                                alt="Foto Profil Tidak Tersedia">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <label class="col-sm-2 control-label">Tanggal Mulai Bekerja:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Tanggal Mulai Bekerja" name="start_work_date" class="form-control" value="{{$data->start_work_date}}" readonly>
+                            <input type="text" placeholder="Tanggal Mulai Bekerja" name="start_work_date"
+                                class="form-control" value="{{$data->start_work_date}}" readonly>
                         </div>
                         @if ($data->end_work_date != '')
                         <label class="col-sm-2 control-label">Tanggal Akhir Bekerja:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Tanggal Akhir Bekerja" name="end_work_date" class="form-control" value="{{$data->end_work_date}}" readonly>
+                            <input type="text" placeholder="Tanggal Akhir Bekerja" name="end_work_date"
+                                class="form-control" value="{{$data->end_work_date}}" readonly>
                         </div>
                         @endif
                     </div>
@@ -112,11 +117,13 @@
                     <div class="row">
                         <label class="col-sm-2 control-label" for="division_id">Divisi:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Divisi" name="divisi" class="form-control" value="{{$divisions[0]->name}}" readonly>
+                            <input type="text" placeholder="Divisi" name="divisi" class="form-control"
+                                value="{{$divisions[0]->name}}" readonly>
                         </div>
                         <label class="col-sm-2 control-label" for="position_id">Jabatan:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Jabatan" name="jabatan" class="form-control" value="{{$positions[0]->name}}" readonly>
+                            <input type="text" placeholder="Jabatan" name="jabatan" class="form-control"
+                                value="{{$positions[0]->name}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -124,7 +131,8 @@
                     <div class="row">
                         <label class="col-sm-2 control-label" for="role_id">Hak akses:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Hak Akses" name="role" class="form-control" value="{{$roles[0]->name}}" readonly>
+                            <input type="text" placeholder="Hak Akses" name="role" class="form-control"
+                                value="{{$roles[0]->name}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -133,15 +141,16 @@
                         <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Sisa cuti diisi hanya dengan angka"
-                                name="yearly_leave_remaining" class="form-control" value="{{$data->yearly_leave_remaining}}" readonly>
+                                name="yearly_leave_remaining" class="form-control"
+                                value="{{$data->yearly_leave_remaining}}" readonly>
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer text-right">
-                    <a href="/admin/profile/edit" class="btn btn-mint" type="submit">Ubah Profil</a>
-                </div>
             </div>
-        </form>
     </div>
+    <div class="panel-footer text-right">
+        <a href="/admin/profile/edit" class="btn btn-mint" type="submit">Ubah Profil</a>
+    </div>
+    </form>
 </div>
 @endsection

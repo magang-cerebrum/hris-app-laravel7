@@ -10,19 +10,13 @@
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('css/nifty.min.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('css/admin/main.tambah.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/login/main.tambah.css')}}" rel="stylesheet">
 
     <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
-    <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
-    <script src="{{ asset('js/jquery.min.js')}}"></script>
-
 </head>
 <body>
-    {{-- <div id="bg-overlay1" class="bg-img"></div>
-    <div class="cls-content"> --}}
         
     <div id="bg-overlay1" class="bg-img"></div>
     <div class="cls-content">
@@ -49,7 +43,7 @@
                     <div class="form-group">
                        Password Baru : <input name="newpassword" type="password" class="form-control" placeholder="New Password">
                     </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
                  </form>
                 @elseif (Request::is('staff/password/*'))
                 <div class="mar-ver pad-btm">
@@ -68,9 +62,17 @@
                     </div>
                     @endif
                     <div class="form-group">
-                       Password Baru : <input name="newpassword" type="password" class="form-control" placeholder="New Password">
+                       Password Baru : <input name="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" placeholder="New Password">
                     </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+                    
+                    {{-- @if (session()->has('error2'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error2') }}
+                    </div>
+                    @endif
+                     --}}
+
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
 
                 </form>
                 @endif

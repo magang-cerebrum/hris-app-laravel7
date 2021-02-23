@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
-@section('title','Sistem / Sistem Achievement')
-@section('content-title','Achievement Charts')
+@section('title','Achievement')
+@section('content-title','Penghargaan / Achievement Charts')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
@@ -12,6 +12,7 @@
 </style>
 @endsection
 @section('content')
+{{-- {{dd(Auth::user())}} --}}
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Grafik " Dummy Staff " tahun '.$data[0]->year}}</h3>

@@ -1,10 +1,9 @@
 @extends('layouts/templateAdmin')
-@section('title','Sistem / Leader Board Karyawan HRIS')
-@section('content-title','LeaderBoard Karyawan')
+@section('title','Achievement')
+@section('content-title','Penghargaan / Leaderboard Staff')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
-<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
-    
+<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">    
 @endsection
 @section('content')
 
@@ -16,7 +15,7 @@
         <form action="/admin/achievement/search" method="post" id="cari-achievement">
             @csrf
             {{-- <label class="col-sm-1 control-label">Bulan:</label> --}}
-            <div id="datepicker-input-cari">
+            <div>
                 <div class="col-sm-6">
                     <div class="input-group">
                         <span class="input-group-addon">Bulan :</span>

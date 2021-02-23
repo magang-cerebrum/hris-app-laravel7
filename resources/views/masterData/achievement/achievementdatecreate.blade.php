@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Data Staff / Penghargaan / Tambah Tanggal')
+@section('content-title','Penghargaan / Tambah Tanggal')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Tambah Tanggal')
+@section('title','Achievement')
 @section('content')
 <div class="panel">
     <div class="panel-heading">

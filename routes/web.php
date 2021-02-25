@@ -164,7 +164,7 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::get('/scoring',[MasterAchievementController::class,'scoring']);
     Route::post('/scoring',[MasterAchievementController::class,'scored']);
     Route::post('/search',[MasterAchievementController::class,'search']);
-    Route::get('/charts', [MasterAchievementController::class,'admin_charts']);
+    Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
 });
 
 //route achievement ==STAFF==

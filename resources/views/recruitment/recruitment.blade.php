@@ -45,8 +45,9 @@
                                 <label class="col-md-3 control-label" for="demo-text-input">Nama Lengkap</label>
                                 <div class="col-md-9">
                                     <input type="text" id="nama-input" class="form-control @error('name') is-invalid @enderror" placeholder="Nama Lengkap" name="name">
+                                    {{-- <span class="input-group-addon"><i class="fa fa-calendar"></i></span> --}}
                                     @error('name') <div class="text-danger invalid-feedback mt-3">
-                                        Nama lengkap tidak boleh kosong.
+                                        Nama Lengkap tidak boleh kosong.
                                         </div> @enderror
                                 </div>
                             </div>

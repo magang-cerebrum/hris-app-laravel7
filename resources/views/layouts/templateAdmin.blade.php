@@ -238,15 +238,15 @@
                                     <li>
                                         <a href="#">
                                             <i class="fa fa-trophy"></i>
-                                            <span class="menu-title">Penghargaan</span>
+                                            <span class="menu-title">Pencapaian</span>
                                             <i class="arrow"></i>
                                         </a>
                                         
                                         <!--Submenu-->
                                         <ul class="collapse">
                                             <li><a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
-                                            <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Scoring</a></li>
-                                            <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Charts Score</a></li>
+                                            <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
+                                            <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>
                                         </ul>
                 
                                     </li>

@@ -21,7 +21,6 @@ use App\MasterAchievement;
 |
 */
 
-
 //login
 Route::get('/', 'Auth\AuthController@login')->name('login');
 Route::get('/login', 'Auth\AuthController@login')->name('login');

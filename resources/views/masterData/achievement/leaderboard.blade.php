@@ -22,9 +22,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">Bulan :</span>
                         
-                        <select class="selectpicker" data-style="btn-info" 
-                        style="width: 100%" 
-                        id="filter-bulan"  name="month">
+                        <select class="selectpicker" data-style="btn-info" style="width: 100%"  id="filter-bulan"  name="month">
                             <option value=" "></option>
                             <option value="Januari">Januari</option>
                             <option value="Februari">Februari</option>
@@ -43,15 +41,10 @@
                         <input type="text" class="form-control @error('year') is-invalid @enderror"
                             placeholder="Tahun" name="year" value="{{old('year')}}"  autocomplete="off">
                     </div>
-                    {{-- @error('start') <div class="text-danger invalid-feedback mt-3">Mohon isi
-                        tanggal mulai.</div> @enderror
-                    @error('end') <div class="text-danger invalid-feedback mt-3">Mohon isi
-                    tanggal akhir.</div> @enderror --}}
                 </div>
             </div>
     </div>
     <div class="panel-footer text-right">
-        {{-- <a href="/staff/presence/test" class="btn btn-warning float-right">Toogle presensi</a> --}}
         <button type="submit" class="btn btn-success float-right" >Cari Achievement</button>
     </div>
     </form>
@@ -84,7 +77,7 @@
                 error: function (jXHR, textStatus, errorThrown) {
                     Swal.fire({
                         title: errorThrown,
-                        text: "Form belum diisi dengan benar / Tidak ada data achievement untuk bulan terpilih",
+                        text: "Form belum diisi dengan benar / Tidak ada data achievement untuk bulan atau tahun terpilih",
                         icon: 'error',
                         width: 600
                     });

@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\MasterUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\MessageBag;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class UserController extends Controller
 {
 
@@ -30,7 +30,7 @@ class UserController extends Controller
                 [
                 'oldpassword'=>MasterUser::where('id', '=',Auth::user()->id)->select('password')->get(),
                 'newpassword'=>'required|min:8'
-                ],
+                ]
             );
             
                 
@@ -45,6 +45,7 @@ class UserController extends Controller
             MasterUser::Where('id',$user->id)->update([
                'password'=>Hash::make($request->newpassword)
            ]);
+           Alert::success('Berhasil!', 'Password akun anda berhasil di rubah!');
            if(Auth::user()->role_id == 1){
             return redirect('/admin/dashboard');
            }

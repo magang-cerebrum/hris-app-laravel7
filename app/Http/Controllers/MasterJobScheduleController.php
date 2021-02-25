@@ -40,40 +40,29 @@ class MasterJobScheduleController extends Controller
             'master_job_schedules.*',
             'master_users.nip as user_nip',
             'master_users.name as user_name'
-            )->get()
-        ;
+        )->get();
+
+        $cal = CAL_GREGORIAN;
+        $month = switch_month($request->month, false);
+        $days_in_month = cal_days_in_month($cal, $month, $request->year);
+
+        // dd($days_in_month);
 
         return view('masterData.schedule.result', [
-            'data'=>$data
+            'data'=>$data,
+            'count_day'=>$days_in_month
         ]);
     }
 
     public function staff_index()
     {
-        function check_month($check){
-            switch ($check) {
-                case '01' : return "Januari"; break;
-                case '02' : return "Februari"; break;
-                case '03' : return "Maret"; break;
-                case '04' : return "April"; break;
-                case '05' : return "Mei"; break;
-                case '06' : return "Juni"; break;
-                case '07' : return "Juli"; break;
-                case '08' : return "Agustus"; break;
-                case '09' : return "September"; break;
-                case '10' : return "Oktober"; break;
-                case '11' : return "November"; break;
-                case '12' : return "Desember"; break;
-            }
-        }
-
         $cal = CAL_GREGORIAN;
         $month = date('m');
         $year = date('Y');
         $days_in_month = cal_days_in_month($cal, $month, $year);
 
-        $this_month = check_month($month);
-        $next_month = check_month(intval($month) + 1);
+        $this_month = switch_month($month);
+        $next_month = switch_month(intval($month) + 1);
 
         $user = Auth::user();
         $data_this_month = DB::table('master_job_schedules')
@@ -126,14 +115,34 @@ class MasterJobScheduleController extends Controller
         $user = Auth::user();
         $ids = $request->input('check');
         $data_user = array();
+        $data_id = array();
         foreach($ids as $id) {
             $data = MasterUser::where("id",$id)->first();
             array_push($data_user, $data);
+            array_push($data_id, $data->id);
         }
         $data_shift = MasterShift::all();
 
+        $cal = CAL_GREGORIAN;
+        $month = switch_month($request->month, false);
+        $days_in_month = cal_days_in_month($cal, $month, $request->year);
+
+        $data_holiday = DB::table('master_holidays')
+        ->where('date', 'LIKE', $request->year.'-'.$month.'%')->get();
+
+        $data_paid_leave = DB::table('accepted_paid_leaves')
+        ->where('date', 'LIKE', $request->year.'-'.$month.'%')
+        ->whereIn('user_id',$data_id)
+        ->get();
+
         return view('masterData.schedule.add', [
             'data_user'=>$data_user,
+            'data_holiday'=>$data_holiday,
+            'data_paid_leave'=>$data_paid_leave,
+            'count_day'=>$days_in_month,
+            'number_of_month'=>$month,
+            'month'=>$request->month,
+            'year'=>$request->year,
             'data_shift'=>$data_shift,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -155,7 +164,6 @@ class MasterJobScheduleController extends Controller
                 }
             }
         }
-
 
         for ($i = 1; $i <= $request->count; $i++) {
             global $total_hour;

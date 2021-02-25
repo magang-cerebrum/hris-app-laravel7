@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\MasterHoliday;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 
 class HolidayController extends Controller
 {
@@ -69,6 +70,25 @@ class HolidayController extends Controller
 
         for ($i=0; $i < $total_day; $i++) {
             $check_days = date('Y/m/d', strtotime('+1 days', strtotime($date)));
+            $check_month = switch_month(date('m', strtotime($check_days)));
+            $check_year = date('Y', strtotime($check_days));
+            $check_day = date('j', strtotime($check_days));
+
+            $data_schedule = DB::table('master_job_schedules')
+            ->where('month','=',$check_month)
+            ->where('year','=',$check_year)
+            ->get();
+
+            foreach ($data_schedule as $item) {
+                $date_shift = 'shift_'.$check_day;
+                $total_hour = $item->total_hour;
+                $shift = $item->$date_shift;
+                $shift_hour = $total_hour - check_hour_shift($shift);
+                
+                DB::table('master_job_schedules')
+                ->where('id', '=', $item->id)
+                ->update(['shift_'.$check_day => 'Off', 'total_hour' => $shift_hour]);
+            }
 
             MasterHoliday::create([
                 'information' => $request->information,

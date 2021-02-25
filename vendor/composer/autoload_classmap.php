@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\AcceptedPaidLeave' => $baseDir . '/app/AcceptedPaidLeave.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminAuthDashboardController' => $baseDir . '/app/Http/Controllers/AdminAuthDashboardController.php',
@@ -13,6 +14,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DataStaffController' => $baseDir . '/app/Http/Controllers/DataStaffController.php',
     'App\\Http\\Controllers\\DivisionController' => $baseDir . '/app/Http/Controllers/DivisionController.php',
+    'App\\Http\\Controllers\\HolidayController' => $baseDir . '/app/Http/Controllers/HolidayController.php',
     'App\\Http\\Controllers\\LogController' => $baseDir . '/app/Http/Controllers/LogController.php',
     'App\\Http\\Controllers\\MasterAchievementController' => $baseDir . '/app/Http/Controllers/MasterAchievementController.php',
     'App\\Http\\Controllers\\MasterJobController' => $baseDir . '/app/Http/Controllers/MasterJobController.php',

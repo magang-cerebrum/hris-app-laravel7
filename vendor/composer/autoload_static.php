@@ -502,6 +502,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
     );
 
     public static $classMap = array (
+        'App\\AcceptedPaidLeave' => __DIR__ . '/../..' . '/app/AcceptedPaidLeave.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminAuthDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminAuthDashboardController.php',
@@ -509,6 +510,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DataStaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/DataStaffController.php',
         'App\\Http\\Controllers\\DivisionController' => __DIR__ . '/../..' . '/app/Http/Controllers/DivisionController.php',
+        'App\\Http\\Controllers\\HolidayController' => __DIR__ . '/../..' . '/app/Http/Controllers/HolidayController.php',
         'App\\Http\\Controllers\\LogController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogController.php',
         'App\\Http\\Controllers\\MasterAchievementController' => __DIR__ . '/../..' . '/app/Http/Controllers/MasterAchievementController.php',
         'App\\Http\\Controllers\\MasterJobController' => __DIR__ . '/../..' . '/app/Http/Controllers/MasterJobController.php',

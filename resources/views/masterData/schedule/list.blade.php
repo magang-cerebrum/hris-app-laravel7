@@ -57,7 +57,7 @@
     </div>
     <div class="panel-footer text-right">
         {{-- <a href="/staff/presence/test" class="btn btn-warning float-right">Toogle presensi</a> --}}
-        <button type="submit" class="btn btn-success float-right" >Cari Jadwal Kerja</button>
+        <button type="submit" class="btn btn-mint float-right" >Cari Jadwal Kerja</button>
     </div>
     </form>
 </div>

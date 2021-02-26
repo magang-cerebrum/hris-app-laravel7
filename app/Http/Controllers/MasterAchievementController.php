@@ -31,7 +31,7 @@ class MasterAchievementController extends Controller
         leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')->get();
         // dd($data);
-        return view('masterData.achievement.list',[
+        return view('masterData.achievement.leaderboard',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -85,11 +85,9 @@ class MasterAchievementController extends Controller
             'email'=>$user->email,
             'id'=>$user->id,
             'data'=>$data
-            ]);
-        }
-        
+        ]);
     }
-
+    }
     public function scored (Request $request){
         if(Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');
@@ -142,8 +140,31 @@ class MasterAchievementController extends Controller
             'count' =>$count
             ]);
         }
-        
-          
+    }
+    public function admin_chart_index()
+    {
+        $user = Auth::user();
+        $currentyear = date('Y');
+        $data = DB::table('master_users')
+        ->join('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
+        ->where('master_achievements.year','=',$currentyear)
+        ->select([
+            'master_users.name',
+            'master_achievements.achievement_user_id',
+            'master_achievements.score',
+            'master_achievements.month',
+            'master_achievements.year'
+        ])->get();
+
+        $staff = DB::table('master_users')->select(['id','name'])->get();
+        return view('masterdata.achievement.listchart',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data,
+            'staff' => $staff
+        ]);
     }
     
 }

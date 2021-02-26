@@ -127,7 +127,7 @@ input[type=range]:focus::-ms-fill-upper {
                                 <option value="April">April</option>
                                 <option value="Mei">Mei</option>
                                 <option value="Juni">Juni</option>
-                                <option value="juli">juli</option>
+                                <option value="Juli">Juli</option>
                                 <option value="Agustus">Agustus</option>
                                 <option value="September">September</option>
                                 <option value="Oktober">Oktober</option>
@@ -204,14 +204,13 @@ input[type=range]:focus::-ms-fill-upper {
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
 <script>   
-   console.log("{{$item->name}}")
+   
     function slidervalfunc(){
          var tr = document.getElementsByTagName('tr');
          for (i = 1; i<tr.length;i++){
      
              var output = document.getElementById('val_'+i)
              var slider= document.getElementById('customRange_' + i)
-                 console.log(slider.value)
                  output.innerHTML = slider.value + '/100'
              
              }

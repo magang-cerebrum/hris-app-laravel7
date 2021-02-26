@@ -155,6 +155,7 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
+    Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });
 
 //route transaction ticketing ==ADMIN==
@@ -168,9 +169,9 @@ Route::prefix('/admin/ticketing')->group(function (){
 
 //route transaction ticketing ==STAFF==
 Route::prefix('/staff/ticketing')->group(function (){
-    Route::get('/staff/ticketing/',[TicketingController::class,'staff_index']);
-    Route::get('/staff/ticketing/create',[TicketingController::class,'staff_create']);
-    Route::post('/staff/ticketing/input',[TicketingController::class,'staff_input']);
+    Route::get('/',[TicketingController::class,'staff_index']);
+    Route::get('/create',[TicketingController::class,'staff_create']);
+    Route::post('/input',[TicketingController::class,'staff_input']);
 });
 
 //route achievement ==ADMIN==

@@ -2,7 +2,16 @@
 @section('title', 'Dashboard Staff')
 @section('content-title', 'Selamat Datang Di Aplikasi HRIS')
 @section('content-subtitle', '(Human Resource Information System)')
+@section('head')
+<style>
+    #staff-charts {
+        width: 100%;
+        height: 400px;
+    }
+</style>
+@endsection
 @section('content')
+
     <div class="row mt-10">
         <div class="col-md-4">
             <div class="panel panel-warning panel-colorful media middle pad-all">
@@ -45,13 +54,15 @@
         </div>
     </div>
     <div class="row mt-10" style="padding: 0 10px">
-        <div class="col-md-5 panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Daftar Pengajuan Cuti</h3>
-            </div>
-            <div class="text-center">
-                <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
-                <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 200px">
+        <div class="col-md-11">
+            <div class="panel panel-bordered panel-primary">
+                <div class="panel-heading">
+                    {{-- <i class="fa"></i> --}}
+                    <h3 class="panel-title">Grafik "{{$name}}" Tahun {{$current_year}} <a href="/staff/achievement/search"><i class="fa fa-info-circle"></i></a></h3>
+                </div>
+                    <div class="panel-body">
+                        <div id="staff-charts"></div>
+                    </div>
             </div>
             {{-- <div class="table-responsive">
                 <table id="masterdata-division"
@@ -78,106 +89,89 @@
             </div> --}}
         </div>
         <div class="col-md-1"></div>
-        <div class="col-md-6 panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Daftar Rekruitasi</h3>
-            </div>
-            <div class="table-responsive">
-                <table id="masterdata-division"
-                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                cellspacing="0">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting text-center" tabindex="0">No</th>
-                            <th class="sorting text-center" tabindex="0">Nama Lengkap</th>
-                            <th class="sorting text-center" tabindex="0">Pendidikan Terakhir</th>
-                            <th class="sorting text-center" tabindex="0">Posisi</th>
-                            {{-- <th class="sorting text-center" tabindex="0">Aksi</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{-- @foreach ($dataJob as $item) --}}
-                            <tr>
-                                <td class="sorting text-center" tabindex="0">1</td>
-                                <td class="text-center">Data Entry</td>
-                                <td class="text-center">Dummy</td>
-                                <td class="text-center">Dummy</td>
-                                {{-- <td class="text-center">
-                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
-                                            <i class="fa fa-trash icon-lg"></i>
-                                        </button>
-                                    </form>
-                                </td> --}}
-                            </tr>
-
-                            <tr>
-                                <td class="sorting text-center" tabindex="0">1</td>
-                                <td class="text-center">Data Entry</td>
-                                <td class="text-center">Dummy</td>
-                                <td class="text-center">Dummy</td>
-                                {{-- <td class="text-center">
-                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
-                                            <i class="fa fa-trash icon-lg"></i>
-                                        </button>
-                                    </form>
-                                </td> --}}
-                            </tr>
-                            <tr>
-                                <td class="sorting text-center" tabindex="0">1</td>
-                                <td class="text-center">Data Entry</td>
-                                <td class="text-center">Dummy</td>
-                                <td class="text-center">Dummy</td>
-                                {{-- <td class="text-center">
-                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
-                                            <i class="fa fa-trash icon-lg"></i>
-                                        </button>
-                                    </form>
-                                </td> --}}
-                            </tr>
-                            <tr>
-                                <td class="sorting text-center" tabindex="0">1</td>
-                                <td class="text-center">Data Entry</td>
-                                <td class="text-center">Dummy</td>
-                                <td class="text-center">Dummy</td>
-                                {{-- <td class="text-center">
-                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
-                                            <i class="fa fa-trash icon-lg"></i>
-                                        </button>
-                                    </form>
-                                </td> --}}
-                            </tr>
-                            <tr>
-                                <td class="sorting text-center" tabindex="0">1</td>
-                                <td class="text-center">Data Entry</td>
-                                <td class="text-center">Dummy</td>
-                                <td class="text-center">Dummy</td>
-                                {{-- <td class="text-center">
-                                    <form action="/admin/job/{{$item->id}}" method="POST" style="display: inline; margin: auto 5px">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-pink btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Hapus Data">
-                                            <i class="fa fa-trash icon-lg"></i>
-                                        </button>
-                                    </form>
-                                </td> --}}
-                            </tr>
-                        {{-- @endforeach --}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        
     </div>
+@section('script')
+<script>
+    var data = {!! json_encode($data) !!}
+       
+        var pageviews = [
+            [1, data[0] ?  data[0].score : 0],
+            [2, data[1] ?  data[1].score : 0],
+            [3, data[2] ?  data[2].score : 0],
+            [4, data[3] ?  data[3].score : 0],
+            [5, data[4] ?  data[4].score : 0],
+            [6, data[5] ?  data[5].score : 0],
+            [7, data[6] ?  data[6].score : 0],
+            [8, data[7] ?  data[7].score : 0],
+            [9, data[8] ?  data[8].score : 0],
+            [10, data[9] ?  data[9].score : 0],
+            [11, data[10] ?  data[10].score : 0],
+            [12, data[11] ?  data[11].score : 0]
+        ];
+        // console.log(pageviews)
+        $(document).ready(function(){
+            $.plot('#staff-charts', [
+        {
+            data: pageviews,
+            lines: {
+                show: true,
+                lineWidth: 0,
+                fill: true,
+                fillColor: {
+                    colors: ["#05032D", "#27257C",{
+                        opacity: 0.7
+                    }, {
+                        opacity: 2
+                    }]
+                }
+            },
+            points: {
+                show: true,
+                radius: 2,
+                fillColor : '#ffffffff'
+                // symbol : "square"
+            },
+            },
+            
+
+        ], {
+        series: {
+            lines: {
+                show: false
+            },
+            points: {
+                show: true,
+                fillColor : '#f5bc00'
+                // symbol:"square"
+            },
+            shadowSize: 0 // Drawing is faster without shadows
+        },
+        colors: ['#05032D'],
+       
+        grid: {
+            borderWidth: 0,
+            hoverable: true,
+            clickable: true
+        },
+        yaxis: {
+            ticks: 9,
+            min : 0,
+            max : 100,
+            tickColor: 'rgba(0,0,0,.1)'
+        },
+        xaxis: {
+
+            ticks: [[1,' January'], [2,'February'], [3,'Maret'], [4,'April'], [5,'Mei'], [6,'Juni'], [7,'July'], [8,'Agustus'], [9,'September'], [10,'Oktober'], [11,'November'], [12,'Desember']],
+            tickColor: 'transparent',
+            tickSize : 14,
+        },
+        tooltip: {
+            show: true,
+            content: 'Bulan: %x, Score: %y'
+        }
+    });
+        });
+</script>
+@endsection
 @endsection

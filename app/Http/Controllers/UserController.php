@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\MasterUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -15,9 +17,25 @@ class UserController extends Controller
     {
         // $message = "Error";
        // dd(MasterUser::where('id', '=',Auth::user()->id)->select('password')->get());
-        return view('auth.editpass',['pass' => $user,
+        
+        if(Route::current()->uri == "admin/password/{user}" && Gate::allows('is_admin')){
+            return view('auth.editpass',['pass' => $user,
             // 'message'=>$message
-        ]);
+            ]);
+        }
+        elseif(Route::current()->uri == "admin/password/{user}" && Gate::denies('is_admin')){
+            return back();
+        }
+        elseif(Route::current()->uri == "staff/password/{user}" && Gate::allows('is_staff')){
+            return view('auth.editpass',['pass' => $user,
+            // 'message'=>$message
+            ]);
+        }
+        elseif(Route::current()->uri == "staff/password/{user}" && Gate::denies('is_staff')){
+            return back();
+        }
+        // else dd("no");
+        // dd(Route::current()->uri);
     }
 
     

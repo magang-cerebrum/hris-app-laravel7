@@ -143,6 +143,10 @@ class MasterAchievementController extends Controller
     }
     public function admin_chart_index()
     {
+        $average = array();
+        $max = array();
+        $min = array();
+
         $user = Auth::user();
         $currentyear = date('Y');
         $data = DB::table('master_users')
@@ -156,6 +160,46 @@ class MasterAchievementController extends Controller
             'master_achievements.year'
         ])->get();
 
+        for ($i=1; $i <= 12; $i++) { 
+            $sum_month = 0;
+            $avg_month = 0;
+            $max_month = 0;
+            $min_month = 100;
+            $data_month = MasterAchievement::
+            where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
+            ->where('year','=',$currentyear)
+            ->get();
+            // dd($data_month);
+            if (count($data_month) == 0) {
+                $sum_month = 0;
+                $avg_month = 0;
+                $max_month = 0;
+                $min_month = 0;
+            } else {
+                //find average
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $sum_month += $data_month[$j]->score;
+                }
+                $avg_month = $sum_month / count($data_month);
+                //find max
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $temp_score = $data_month[$j]->score;
+                    if ($temp_score > $max_month) {
+                        $max_month = $temp_score;
+                    }
+                }
+                //find min
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $temp_score = $data_month[$j]->score;
+                    if ($temp_score < $min_month) {
+                        $min_month = $temp_score;
+                    }
+                }
+            }
+            $average[] = $avg_month;
+            $max[] = $max_month;
+            $min[] = $min_month;
+        }
         $staff = DB::table('master_users')->select(['id','name'])->get();
         return view('masterdata.achievement.listchart',[
             'name'=>$user->name,
@@ -163,7 +207,10 @@ class MasterAchievementController extends Controller
             'email'=>$user->email,
             'id'=>$user->id,
             'data'=>$data,
-            'staff' => $staff
+            'staff' => $staff,
+            'average' => $average,
+            'max' => $max,
+            'min' => $min
         ]);
     }
     

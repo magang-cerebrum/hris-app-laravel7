@@ -34,34 +34,19 @@
                 </div>
             </div>
             <div class="row" style="margin-bottom: 10px">
-                <label class="col-md-2 control-label" for="paid_leave_date_start">Tanggal Mulai</label>
-                <div id="datepicker-input-start">
-                    <div class="col-md-4">
-                        <div class="input-group date">
-                            <input type="text" class="form-control @error('paid_leave_start') is-invalid @enderror"
-                                placeholder="Tanggal Mulai" name="paid_leave_date_start">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            @error('paid_leave_start') <div class="text-danger invalid-feedback mt-3">
-                                Tanggal mulai tidak boleh kosong.
-                            </div> @enderror
-                        </div>
-                    </div>
-                </div>
-                <label class="col-md-2 control-label" for="paid_leave_date_end">Tanggal Selesai</label>
-                <div id="datepicker-input-end">
-                    <div class="col-md-4">
-                        <div class="input-group date">
-                            <input type="text" class="form-control @error('paid_leave_end') is-invalid @enderror"
-                                placeholder="Tanggal Selesai" name="paid_leave_date_end">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            @error('paid_leave_end') <div class="text-danger invalid-feedback mt-3">
-                                Tanggal selesai tidak boleh kosong.
-                            </div> @enderror
+                <label class="col-sm-2 control-label">Tanggal:</label>
+                <div id="datepicker-input-cuti">
+                    <div class="col-sm-10">
+                        <div class="input-group input-daterange">
+                            <input type="text" class="form-control @error('paid_leave_date_start') is-invalid @enderror"
+                                placeholder="Tanggal Mulai" name="paid_leave_date_start" value="{{old('paid_leave_date_start')}}" autocomplete="off">
+                            <span class="input-group-addon">sampai</span>
+                            <input type="text" class="form-control @error('paid_leave_date_end') is-invalid @enderror"
+                                placeholder="Tanggal Berakhir" name="paid_leave_date_end" value="{{old('paid_leave_date_start')}}" autocomplete="off">
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <label class="col-md-2 control-label" for="demo-textarea-input">Keterangan Keperluan</label>
                 <div class="col-md-10">
@@ -85,15 +70,11 @@
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
     $(document).ready(function () {
-        $('#datepicker-input-start .input-group.date').datepicker({
+        $('#datepicker-input-cuti .input-daterange').datepicker({
             format: 'yyyy/mm/dd',
+            todayBtn: "linked",
             autoclose: true,
-            orientation: 'bottom'
-        });
-        $('#datepicker-input-end .input-group.date').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true,
-            orientation: 'bottom'
+            todayHighlight: true
         });
     })
 

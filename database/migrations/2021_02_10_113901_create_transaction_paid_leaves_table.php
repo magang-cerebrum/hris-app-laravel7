@@ -21,7 +21,7 @@ class CreateTransactionPaidLeavesTable extends Migration
             $table->date('paid_leave_date_start');
             $table->date('paid_leave_date_end');
             $table->integer('days');
-            $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);
+            $table->enum('status', ['Diajukan','Pending','Diterima', 'Ditolak','Cancel']);
             $table->unsignedBigInteger('paid_leave_type_id')->nullable();
             $table->text('needs');
             $table->text('informations');

@@ -27,12 +27,12 @@ Route::get('/', 'Auth\AuthController@login')->name('login');
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
-Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index']);
-Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index']);
-Route::get('/staff/password/{user}',[UserController::class,'edit']);
-Route::put('/staff/password/{user}/saved',[UserController::class,'update']);
-Route::get('/admin/password/{user}',[UserController::class,'edit']);
-Route::put('/admin/password/{user}/saved',[UserController::class,'update']);
+Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'],[MasterAchievementController::class,'staff_chart'])->middleware('auth');
+Route::get('/staff/password/{user}',[UserController::class,'edit'])->middleware('auth');
+Route::put('/staff/password/{user}/saved',[UserController::class,'update'])->middleware('auth');
+Route::get('/admin/password/{user}',[UserController::class,'edit'])->middleware('auth');
+Route::put('/admin/password/{user}/saved',[UserController::class,'update'])->middleware('auth');
 
 //route profile
 Route::get('/admin/profile', [AdminAuthDashboardController::class,'profile']);
@@ -116,36 +116,32 @@ Route::get('/staff/schedule/',[App\Http\Controllers\MasterJobScheduleController:
 Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
-//Route Achievement
-// Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
 //route staff presence
 Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
 Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
 
 // Route Hari Libur
-Route::get('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'index']);
-Route::get('/admin/holiday/add',[App\Http\Controllers\HolidayController::class, 'create']);
+Route::get('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'index'])->middleware('auth');
+Route::get('/admin/holiday/add',[App\Http\Controllers\HolidayController::class, 'create'])->middleware('auth');
 Route::post('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'store']);
-Route::get('/admin/holiday/{holiday}/edit',[App\Http\Controllers\HolidayController::class, 'edit']);
-Route::put('/admin/holiday/{holiday}',[App\Http\Controllers\HolidayController::class, 'update']);
-Route::delete('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'destroy']);
+Route::get('/admin/holiday/{holiday}/edit',[App\Http\Controllers\HolidayController::class, 'edit'])->middleware('auth');
+Route::put('/admin/holiday/{holiday}',[App\Http\Controllers\HolidayController::class, 'update'])->middleware('auth');
+Route::delete('/admin/holiday',[App\Http\Controllers\HolidayController::class, 'destroy'])->middleware('auth');
 
 //route transaction ticketing
 Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);
-Route::get('/admin/ticketing/{ticket}/edit',[App\Http\Controllers\TicketingController::class,'admin_edit']);
-Route::put('/admin/ticketing/on-progress',[App\Http\Controllers\TicketingController::class,'make_on_progress']);
-Route::put('/admin/ticketing/{ticket}',[App\Http\Controllers\TicketingController::class,'admin_response']);
-Route::delete('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_delete']);
-Route::get('/staff/ticketing/',[App\Http\Controllers\TicketingController::class,'staff_index']);
-Route::get('/staff/ticketing/create',[App\Http\Controllers\TicketingController::class,'staff_create']);
-Route::post('/staff/ticketing/input',[App\Http\Controllers\TicketingController::class,'staff_input']);
+Route::get('/admin/ticketing/{ticket}/edit',[App\Http\Controllers\TicketingController::class,'admin_edit'])->middleware('auth');
+Route::put('/admin/ticketing/on-progress',[App\Http\Controllers\TicketingController::class,'make_on_progress'])->middleware('auth');
+Route::put('/admin/ticketing/{ticket}',[App\Http\Controllers\TicketingController::class,'admin_response'])->middleware('auth');
+Route::delete('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_delete'])->middleware('auth');
+Route::get('/staff/ticketing/',[App\Http\Controllers\TicketingController::class,'staff_index'])->middleware('auth');
+Route::get('/staff/ticketing/create',[App\Http\Controllers\TicketingController::class,'staff_create'])->middleware('auth');
+Route::post('/staff/ticketing/input',[App\Http\Controllers\TicketingController::class,'staff_input'])->middleware('auth');
 
-//Route Achievement Dates
-Route::get('/admin/achievement', [App\Http\Controllers\MasterAchievementController::class,'index']);
-Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
-Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);
-Route::post('/admin/achievement/search',[MasterAchievementController::class,'search']);
-// Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
-// Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
-Route::get('/admin/achievement/charts', [MasterAchievementController::class,'admin_charts']);
+//Route Achievement
+Route::get('/admin/achievement', [MasterAchievementController::class,'index'])->middleware('auth');
+Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring'])->middleware('auth');
+Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored'])->middleware('auth');
+Route::post('/admin/achievement/search',[MasterAchievementController::class,'search'])->middleware('auth');
+Route::get('/admin/achievement/charts', [MasterAchievementController::class,'admin_charts'])->middleware('auth');

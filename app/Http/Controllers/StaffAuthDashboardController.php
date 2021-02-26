@@ -7,22 +7,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
 class StaffAuthDashboardController extends Controller
 {
     public function index(){
+        // $lava = new Lavacharts;
         if(Gate::denies('is_staff')){
             return abort(403,'Staff must Login First');
         }
         else if(Gate::allows('is_staff')){
             // return 'Staff';
+            $this_year = date('Y');
             $user = Auth::user(); 
-
+            $data = DB::table('master_achievements')
+        ->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
+        ->where('name','=',$user->name)->where('year','=',$this_year)
+        ->get();
             return view('dashboard.staff',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
-                'id'=>$user->id
+                'id'=>$user->id,
+                'data'=>$data,
+                'current_year'=>$this_year
             ]);
         }
     }

@@ -36,6 +36,21 @@ Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
+Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'],[MasterAchievementController::class,'staff_chart'])->middleware('auth');
+Route::get('/staff/password/{user}',[UserController::class,'edit'])->middleware('auth');
+Route::put('/staff/password/{user}/saved',[UserController::class,'update'])->middleware('auth');
+Route::get('/admin/password/{user}',[UserController::class,'edit'])->middleware('auth');
+Route::put('/admin/password/{user}/saved',[UserController::class,'update'])->middleware('auth');
+
+//route profile
+Route::get('/admin/profile', [AdminAuthDashboardController::class,'profile']);
+Route::get('/admin/profile/edit', [AdminAuthDashboardController::class,'editprofile']);
+Route::put('/admin/profile/{user}', [AdminAuthDashboardController::class,'updateprofile']);
+Route::get('/staff/profile', [StaffAuthDashboardController::class,'profile']);
+Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
+Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
+
 //route landing dashboard, ganti password & profil ==ADMIN==
 Route::prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);

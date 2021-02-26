@@ -19,12 +19,6 @@
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
-
-    <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.min.css')}}">
-    <script href="{{asset('plugins/noUiSlider/nouislider.js')}}"></script>
-    <script href="{{asset('plugins/noUiSlider/nouislider.min.js')}}"></script>
-
     @yield('head')
 </head>
 <body>

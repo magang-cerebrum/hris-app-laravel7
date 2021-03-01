@@ -128,21 +128,20 @@
         });
     }
 
-    var data = {!! json_encode($data) !!}
-       
+    var data = {!! json_encode($score) !!}
         var pageviews = [
-            [1, data[0] ?  data[0].score : 0],
-            [2, data[1] ?  data[1].score : 0],
-            [3, data[2] ?  data[2].score : 0],
-            [4, data[3] ?  data[3].score : 0],
-            [5, data[4] ?  data[4].score : 0],
-            [6, data[5] ?  data[5].score : 0],
-            [7, data[6] ?  data[6].score : 0],
-            [8, data[7] ?  data[7].score : 0],
-            [9, data[8] ?  data[8].score : 0],
-            [10, data[9] ?  data[9].score : 0],
-            [11, data[10] ?  data[10].score : 0],
-            [12, data[11] ?  data[11].score : 0]
+            [1, data[0] ?  data[0] : 0],
+            [2, data[1] ?  data[1] : 0],
+            [3, data[2] ?  data[2] : 0],
+            [4, data[3] ?  data[3] : 0],
+            [5, data[4] ?  data[4] : 0],
+            [6, data[5] ?  data[5] : 0],
+            [7, data[6] ?  data[6] : 0],
+            [8, data[7] ?  data[7] : 0],
+            [9, data[8] ?  data[8] : 0],
+            [10, data[9] ?  data[9] : 0],
+            [11, data[10] ?  data[10] : 0],
+            [12, data[11] ?  data[11] : 0]
         ];
         // console.log(pageviews)
         $(document).ready(function(){
@@ -216,28 +215,26 @@
         $('#year-finder').on('change',function(e){
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
-            // console.log(valueSelected)
             var url_="{{route('ajx')}}";
             $.ajax({
                 type:"PUT",
-                // method:"POST",
                 data:{year:valueSelected},
                 url:url_,
                 dataType:'json',
                 success:function(response){
                     var pageviews = [
-                    [1, response.data[0] ?  response.data[0].score : 0],
-                    [2, response.data[1] ?  response.data[1].score : 0],
-                    [3, response.data[2] ?  response.data[2].score : 0],
-                    [4, response.data[3] ?  response.data[3].score : 0],
-                    [5, response.data[4] ?  response.data[4].score : 0],
-                    [6, response.data[5] ?  response.data[5].score : 0],
-                    [7, response.data[6] ?  response.data[6].score : 0],
-                    [8, response.data[7] ?  response.data[7].score : 0],
-                    [9, response.data[8] ?  response.data[8].score : 0],
-                    [10, response.data[9] ?  response.data[9].score : 0],
-                    [11, response.data[10] ?  response.data[10].score : 0],
-                    [12, response.data[11] ?  response.data[11].score : 0]
+                    [1, response.score[0] ?  response.score[0] : 0],
+                    [2, response.score[1] ?  response.score[1] : 0],
+                    [3, response.score[2] ?  response.score[2] : 0],
+                    [4, response.score[3] ?  response.score[3] : 0],
+                    [5, response.score[4] ?  response.score[4] : 0],
+                    [6, response.score[5] ?  response.score[5] : 0],
+                    [7, response.score[6] ?  response.score[6] : 0],
+                    [8, response.score[7] ?  response.score[7] : 0],
+                    [9, response.score[8] ?  response.score[8] : 0],
+                    [10, response.score[9] ?  response.score[9] : 0],
+                    [11, response.score[10] ?  response.score[10] : 0],
+                    [12, response.score[11] ?  response.score[11] : 0]
                 ];
                 function titname(){
                     return "Jumlah Employee of the month yang anda dapatkan adalah "+response.sum_of_eom+" pada bulan "+response.month_of_eom;

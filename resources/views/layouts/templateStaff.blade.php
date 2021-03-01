@@ -155,6 +155,7 @@
                                                 <p class="mnp-name">{{$name}}</p>
                                                 <span class="mnp-desc">{{$email}}</span>
                                             </a>
+                                            <span class="label label-primary" style="font-size:9px;">Staff</span>
                                         </div>
                                         <div id="profile-nav" class="collapse list-group bg-trans">
                                             <a href="{{ url('staff/profile')}}" class="list-group-item">

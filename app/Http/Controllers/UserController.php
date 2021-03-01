@@ -13,25 +13,27 @@ class UserController extends Controller
 {
 
 
-    public function edit(MasterUser $user)
+    public function edit()
     {
         // $message = "Error";
        // dd(MasterUser::where('id', '=',Auth::user()->id)->select('password')->get());
-        
-        if(Route::current()->uri == "admin/password/{user}" && Gate::allows('is_admin')){
-            return view('auth.editpass',['pass' => $user,
-            // 'message'=>$message
+       $id = Auth::user()->id;
+       $pass = Auth::user()->password;
+        if(Route::current()->uri == "admin/password" && Gate::allows('is_admin')){
+           
+            return view('auth.editpass',['pass' => $pass,
+            'id'=>$id,
             ]);
         }
-        elseif(Route::current()->uri == "admin/password/{user}" && Gate::denies('is_admin')){
+        elseif(Route::current()->uri == "admin/password" && Gate::denies('is_admin')){
             return back();
         }
-        elseif(Route::current()->uri == "staff/password/{user}" && Gate::allows('is_staff')){
-            return view('auth.editpass',['pass' => $user,
-            // 'message'=>$message
+        elseif(Route::current()->uri == "staff/password" && Gate::allows('is_staff')){
+            return view('auth.editpass',['pass' => $pass,
+            'id'=>$id,
             ]);
         }
-        elseif(Route::current()->uri == "staff/password/{user}" && Gate::denies('is_staff')){
+        elseif(Route::current()->uri == "staff/password" && Gate::denies('is_staff')){
             return back();
         }
         // else dd("no");
@@ -39,10 +41,11 @@ class UserController extends Controller
     }
 
     
-    public function update(Request $request, MasterUser $user)
+    public function update(Request $request)
     {   
-        
-        if (Hash::check($request->oldpassword, $user->password)) {
+        $id = Auth::user()->id;
+        $pass = Auth::user()->password;
+        if (Hash::check($request->oldpassword, $pass)) {
             // dd(strlen($request->password));
             $request->validate(
                 [
@@ -60,7 +63,8 @@ class UserController extends Controller
             // elseif (strlen($request->newpassword) < 8){
             //     return back()->with('error2','Password Harus 8 karakter');
             // }
-            MasterUser::Where('id',$user->id)->update([
+            
+            MasterUser::Where('id',$id)->update([
                'password'=>Hash::make($request->newpassword)
            ]);
            Alert::success('Berhasil!', 'Password akun anda berhasil di rubah!');

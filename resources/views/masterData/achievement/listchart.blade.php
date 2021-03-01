@@ -8,11 +8,8 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <style>
     #charts-achievement {
-        width: 830px;
+        width: 870px;
         height:450px;
-    }
-    ::ng-deep.swal2-container .swal-overlay  {
-        z-index: 20000;
     }
 </style>
 @endsection

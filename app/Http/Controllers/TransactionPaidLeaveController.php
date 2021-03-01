@@ -11,6 +11,7 @@ use App\AcceptedPaidLeave;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionPaidLeaveController extends Controller
@@ -271,6 +272,12 @@ class TransactionPaidLeaveController extends Controller
             $data = TransactionPaidLeave::where("id",$deletes)->first();
             $data->delete();
         }
+        return redirect('/staff/paid-leave/history');
+    }
+
+    public function cancel_staff(TransactionPaidLeave $id){
+        TransactionPaidLeave::where('id','=', $id->id)->update(['status' => 'Cancel']);
+        Alert::info('Berhasil!', 'Pengajuan cuti telah di cancel!');
         return redirect('/staff/paid-leave/history');
     }
 }

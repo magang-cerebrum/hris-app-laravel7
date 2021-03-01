@@ -85,7 +85,7 @@
                                 @endif
                             @endforeach
                         </select>
-                        <i class="fa fa-trophy"></i>
+                        <i class="fa fa-trophy" id="eom"></i>
                         </div>
                         <div id="staff-charts"></div>
                     </div>
@@ -239,7 +239,11 @@
                     [11, response.data[10] ?  response.data[10].score : 0],
                     [12, response.data[11] ?  response.data[11].score : 0]
                 ];
-                // console.log(response);
+                function titname(){
+                    return "Jumlah Employee of the month yang anda dapatkan adalah "+response.sum_of_eom+" pada bulan "+response.month_of_eom;
+                }
+                document.getElementById('eom').setAttribute('title',titname())
+                console.log(response);
                 $(document).ready(function(){
             $.plot('#staff-charts', [
         {

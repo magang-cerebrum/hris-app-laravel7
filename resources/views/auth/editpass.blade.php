@@ -31,15 +31,16 @@
         <div class="cls-content-sm panel">
             <div class="panel-body">
                 
-                @if (Request::is('admin/password/*'))
+                @if (Request::is('admin/password'))
                     
                 <div class="mar-ver pad-btm">
                     <h1 class="h3">Admin Change Password </h1><i class="fa fa-info-circle" title="Gunakan CTRL + SPACE untuk melihat password atau bisa klik pada logo gembok"></i>
                     <p>Human Resource Information System Change Password Pages</p>
                 </div>
-                <form action="/admin/password/{{$pass->id}}/saved" method="post">
+                <form action="/admin/password/saved" method="post">
                     @csrf
                     @method('put')
+                    <input type="hidden" name="id" value="{{$id}}">
                     <div class="form-group">
                         Password Lama : 
                         <div class="input-group">
@@ -65,14 +66,15 @@
                      </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
                  </form>
-                @elseif (Request::is('staff/password/*'))
+                @elseif (Request::is('staff/password'))
                 <div class="mar-ver pad-btm">
                     <h1 class="h3">Staff Change Password</h1><i class="fa fa-info-circle" title="Gunakan CTRL + SPACE untuk melihat password atau bisa klik pada logo gembok"></i>
                     <p>Human Resource Information System Change Password Pages</p>
                 </div>
-                <form action="/staff/password/{{$pass->id}}/saved" method="post">
+                <form action="/staff/password/saved" method="post">
                     @csrf
                     @method('put')
+                    <input type="hidden" name="id" value="{{$id}}">
                     <div class="form-group">
                         Password Lama : 
                         <div class="input-group">

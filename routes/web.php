@@ -38,10 +38,12 @@ Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
 Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'],[MasterAchievementController::class,'staff_chart'])->middleware('auth');
-Route::get('/staff/password/{user}',[UserController::class,'edit'])->middleware('auth');
-Route::put('/staff/password/{user}/saved',[UserController::class,'update'])->middleware('auth');
-Route::get('/admin/password/{user}',[UserController::class,'edit'])->middleware('auth');
-Route::put('/admin/password/{user}/saved',[UserController::class,'update'])->middleware('auth');
+Route::PUT('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
+Route::GET('/staff/charts/tes', [StaffAuthDashboardController::class,'test']);
+Route::get('/staff/password',[UserController::class,'edit'])->middleware('auth');
+Route::put('/staff/password/saved',[UserController::class,'update'])->middleware('auth');
+Route::get('/admin/password',[UserController::class,'edit'])->middleware('auth');
+Route::put('/admin/password/saved',[UserController::class,'update'])->middleware('auth');
 
 //route profile
 Route::get('/admin/profile', [AdminAuthDashboardController::class,'profile']);

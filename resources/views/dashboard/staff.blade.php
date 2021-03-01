@@ -3,11 +3,24 @@
 @section('content-title', 'Selamat Datang Di Aplikasi HRIS')
 @section('content-subtitle', '(Human Resource Information System)')
 @section('head')
+<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     #staff-charts {
         width: 100%;
         height: 400px;
     }
+    #charts {
+        position: relative;
+    }
+    #years {
+        position: absolute;
+        right: 4px;
+        top: 4px;
+    }
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+            width: 80px;
+        }
 </style>
 @endsection
 @section('content')
@@ -58,9 +71,22 @@
             <div class="panel panel-bordered panel-primary">
                 <div class="panel-heading">
                     {{-- <i class="fa"></i> --}}
-                    <h3 class="panel-title">Grafik "{{$name}}" Tahun {{$current_year}} <a href="/staff/achievement/search"><i class="fa fa-info-circle"></i></a></h3>
+                    <h3 class="panel-title">Grafik "{{$name}}" Tahun 
+                        <span id="textval">{{$current_year}}</span>
+                    </h3>
                 </div>
-                    <div class="panel-body">
+                    <div class="panel-body" id="charts">
+                        <div id="years">
+                        <select name="select" id="year-finder" class="selectpicker" data-style="btn-primary" onchange="showChange()">
+                            @foreach ($year_list as $item)
+                                @if ($item->year == $current_year)
+                                <option value="{{$item->year}}" selected>{{$item->year}}</option> 
+                                @else <option value="{{$item->year}}">{{$item->year}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <i class="fa fa-trophy"></i>
+                        </div>
                         <div id="staff-charts"></div>
                     </div>
             </div>
@@ -92,7 +118,16 @@
         
     </div>
 @section('script')
+<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
+    function showChange(){
+        $('#year-finder').on('change',function(e){
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        document.getElementById("textval").innerText = valueSelected;
+        });
+    }
+
     var data = {!! json_encode($data) !!}
        
         var pageviews = [
@@ -172,6 +207,111 @@
         }
     });
         });
+        $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+        $('#year-finder').on('change',function(e){
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            // console.log(valueSelected)
+            var url_="{{route('ajx')}}";
+            $.ajax({
+                type:"PUT",
+                // method:"POST",
+                data:{year:valueSelected},
+                url:url_,
+                dataType:'json',
+                success:function(response){
+                    var pageviews = [
+                    [1, response.data[0] ?  response.data[0].score : 0],
+                    [2, response.data[1] ?  response.data[1].score : 0],
+                    [3, response.data[2] ?  response.data[2].score : 0],
+                    [4, response.data[3] ?  response.data[3].score : 0],
+                    [5, response.data[4] ?  response.data[4].score : 0],
+                    [6, response.data[5] ?  response.data[5].score : 0],
+                    [7, response.data[6] ?  response.data[6].score : 0],
+                    [8, response.data[7] ?  response.data[7].score : 0],
+                    [9, response.data[8] ?  response.data[8].score : 0],
+                    [10, response.data[9] ?  response.data[9].score : 0],
+                    [11, response.data[10] ?  response.data[10].score : 0],
+                    [12, response.data[11] ?  response.data[11].score : 0]
+                ];
+                // console.log(response);
+                $(document).ready(function(){
+            $.plot('#staff-charts', [
+        {
+            data: pageviews,
+            lines: {
+                show: true,
+                lineWidth: 0,
+                fill: true,
+                fillColor: {
+                    colors: ["#05032D", "#27257C",{
+                        opacity: 0.7
+                    }, {
+                        opacity: 2
+                    }]
+                }
+            },
+            points: {
+                show: true,
+                radius: 2,
+                fillColor : '#ffffffff'
+                // symbol : "square"
+            },
+            },
+            
+
+        ], {
+        series: {
+            lines: {
+                show: false
+            },
+            points: {
+                show: true,
+                fillColor : '#f5bc00'
+                // symbol:"square"
+            },
+            shadowSize: 0 // Drawing is faster without shadows
+        },
+        colors: ['#05032D'],
+       
+        grid: {
+            borderWidth: 0,
+            hoverable: true,
+            clickable: true
+        },
+        yaxis: {
+            ticks: 9,
+            min : 0,
+            max : 100,
+            tickColor: 'rgba(0,0,0,.1)'
+        },
+        xaxis: {
+
+            ticks: [[1,' January'], [2,'February'], [3,'Maret'], [4,'April'], [5,'Mei'], [6,'Juni'], [7,'July'], [8,'Agustus'], [9,'September'], [10,'Oktober'], [11,'November'], [12,'Desember']],
+            tickColor: 'transparent',
+            tickSize : 14,
+        },
+        tooltip: {
+            show: true,
+            content: 'Bulan: %x, Score: %y'
+        }
+    });
+        });
+                    // console.log(pageviews)
+                    // console.log(response.data)
+                    // console.log(response.year)
+                    
+                },
+                error : function(jXHR, textStatus, errorThrown){
+                    console.log(errorThrown)
+                }
+            })
+        })
 </script>
 @endsection
 @endsection

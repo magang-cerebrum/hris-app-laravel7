@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\MasterUser;
 use App\MasterRecruitment;
-use App\TransactionPaidLeave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -28,17 +27,23 @@ class AdminAuthDashboardController extends Controller
                 )
             ->paginate(5);
             $user_act = DB::table('master_users')
-            ->where('status', '=', 'aktif')
-            ->get();
+                ->where('status', '=', 'aktif')
+                ->get();
             $user_nact = DB::table('master_users')
-            ->where('status', '!=', 'aktif')
-            ->get();
+                ->where('status', '!=', 'aktif')
+                ->get();
+            $data_ticket = DB::table('transaction_ticketings')
+                ->select('status')
+                ->where('status','=','Dikirimkan')
+                ->orWhere('status','=','On Progress')
+                ->get();
             $data_rect = MasterRecruitment::paginate(5);
             return view('dashboard.admin',[
                 'data_recruitment'=>$data_rect,
                 'data_paid_leave'=>$data_paid,
                 'data_user_active'=>$user_act,
                 'data_user_non_active'=>$user_nact,
+                'data_ticket'=> $data_ticket,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

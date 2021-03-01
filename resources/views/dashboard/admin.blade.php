@@ -34,12 +34,12 @@
             <div class="panel panel-mint panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
-                        <i class="demo-pli-clock icon-3x"></i>
+                        <i class="demo-pli-inbox-into icon-3x"></i>
                     </div>
                 </div>
                 <div class="media-body">
-                    <p class="text-2x mar-no text-semibold">241</p>
-                    <p class="mar-no">Staff Hadir</p>
+                    <p class="text-2x mar-no text-semibold">{{count($data_ticket)}}</p>
+                    <p class="mar-no">Ticket Belum Selesai</p>
                 </div>
             </div>
         </div>

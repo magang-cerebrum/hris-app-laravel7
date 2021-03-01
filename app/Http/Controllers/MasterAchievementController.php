@@ -143,39 +143,42 @@ class MasterAchievementController extends Controller
     }
     public function admin_chart_index()
     {
+        $score = array();
         $average = array();
         $max = array();
         $min = array();
+        $temp = array();
 
         $user = Auth::user();
-        $currentyear = date('Y');
         $data = DB::table('master_users')
         ->join('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
-        ->where('master_achievements.year','=',$currentyear)
+        ->where('master_achievements.year','=',date('Y'))
         ->select([
             'master_users.name',
             'master_achievements.achievement_user_id',
-            'master_achievements.score',
             'master_achievements.month',
             'master_achievements.year'
         ])->get();
 
-        for ($i=1; $i <= 12; $i++) { 
+        for ($i=1; $i <= 12; $i++) {
             $sum_month = 0;
             $avg_month = 0;
             $max_month = 0;
             $min_month = 100;
             $data_month = MasterAchievement::
             where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
-            ->where('year','=',$currentyear)
+            ->where('year','=',date('Y'))
             ->get();
-            // dd($data_month);
             if (count($data_month) == 0) {
                 $sum_month = 0;
                 $avg_month = 0;
                 $max_month = 0;
                 $min_month = 0;
             } else {
+                //insert score matches month
+                for ($j=0; $j < count($data_month); $j++) {
+                    $temp[$i][$j] = $data_month[$j]->score;
+                }
                 //find average
                 for ($j=0; $j < count($data_month); $j++) { 
                     $sum_month += $data_month[$j]->score;
@@ -196,10 +199,17 @@ class MasterAchievementController extends Controller
                     }
                 }
             }
-            $average[] = $avg_month;
-            $max[] = $max_month;
-            $min[] = $min_month;
+            // dd($temp[$i-1]);
+            if (array_key_exists($i,$temp)) {
+                $score[$i-1] = $temp[$i];
+            } else {
+                $score[$i-1] = 0;
+            }
+            $average[$i-1] = $avg_month;
+            $max[$i-1] = $max_month;
+            $min[$i-1] = $min_month;
         }
+        // dd($score,$average,$max,$min);
         $staff = DB::table('master_users')->select(['id','name'])->get();
         return view('masterdata.achievement.listchart',[
             'name'=>$user->name,
@@ -208,6 +218,7 @@ class MasterAchievementController extends Controller
             'id'=>$user->id,
             'data'=>$data,
             'staff' => $staff,
+            'score' => $score,
             'average' => $average,
             'max' => $max,
             'min' => $min

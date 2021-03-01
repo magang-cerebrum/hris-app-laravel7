@@ -77,8 +77,6 @@
                                     <i class="demo-psi-male"></i>
                                 </span>
                             </a>
-
-
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
                                 <ul class="head-list">
                                     <li>
@@ -95,7 +93,6 @@
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
- 
                     </ul>
                 </div>
                 <!--================================-->
@@ -152,6 +149,7 @@
                                             <p class="mnp-name">{{$name}}</p>
                                             <span class="mnp-desc">{{$email}}</span>
                                         </a>
+                                        <span class="label label-danger" style="font-size:9px;">Admin</span>
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">
                                         <a href="{{ url('admin/profile')}}" class="list-group-item">

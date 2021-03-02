@@ -45,14 +45,6 @@ class InsertDataToMasterDivisions extends Migration
             ],
             [
                 'id' => 7,
-                'name' => 'Product'
-            ],
-            [
-                'id' => 8,
-                'name' => 'Development'
-            ],
-            [
-                'id' => 9,
                 'name' => 'One Ring'
             ],
             

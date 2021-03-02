@@ -8,7 +8,7 @@ use App\TransactionTicketing;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Gate;
-class TicketingController extends Controller
+class TransactionTicketingController extends Controller
 {
     public function admin_index(){
         if(Gate::denies('is_admin')){
@@ -72,12 +72,22 @@ class TicketingController extends Controller
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')) {
-        foreach ($request->selectid as $item) {
-            TransactionTicketing::where('id', $item)->update([
-                'status' => 'On Progress',
-                'response' => 'Ticket sedang dalam tahap pengerjaan, mohon ditunggu ya kak :)'
-            ]);
-        }
+            if ($request->selectid[0] != '') {
+                foreach ($request->selectid as $item) {
+                    TransactionTicketing::where('id', $item)->update([
+                        'status' => 'On Progress',
+                        'response' => 'Ticket sedang dalam tahap pengerjaan, mohon ditunggu ya kak :)'
+                    ]);
+                }
+            } else {
+                foreach ($request->selectid_full as $item) {
+                    TransactionTicketing::where('id', $item)->update([
+                        'status' => 'On Progress',
+                        'response' => 'Ticket sedang dalam tahap pengerjaan, mohon ditunggu ya kak :)'
+                    ]);
+                }
+            }
+        
         Alert::success('Berhasil!', 'Ticket dengan ID terpilih sekarang berstatus On Progress');
         return redirect('/admin/ticketing');
     }

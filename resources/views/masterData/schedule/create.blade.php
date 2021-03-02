@@ -17,7 +17,7 @@
             <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-chek-user-month">
                 @csrf
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
                             data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()">
                             <i class="btn-labeled fa fa-plus"></i>

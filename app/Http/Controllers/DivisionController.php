@@ -16,7 +16,7 @@ class DivisionController extends Controller
     public function index()
     {   
         $user = Auth::user();
-        $division = MasterDivision::paginate(5);
+        $division = MasterDivision::get();
         return view('masterdata.division.list',[
             'division' => $division,
             'name'=>$user->name,

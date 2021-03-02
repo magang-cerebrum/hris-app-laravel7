@@ -56,7 +56,7 @@
                         <tbody>
                             @foreach ($position as $row)
                             <tr>
-                                <td tabindex="0" class="sorting_1 text-center">{{(($position->currentPage() * 5) - 5) + $loop->iteration}}</td>
+                                <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">
                                     <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
                                 </td>
@@ -65,7 +65,7 @@
                                         class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Edit Jabatan" type="button">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                <td class="text-center">{{$row->name}}</td>
+                                <td class="text-center">{{$row->name}} ({{$row->abbreviation}})</td>
                                 </td>
                             </tr>
                             @endforeach
@@ -73,15 +73,6 @@
                     </table>
                 </div>
             </form>
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10 text-center">
-                        <ul class="pagination">
-                            {{ $position->links() }}
-                        </ul>
-                    </div>
-                    <div class="col-sm-1"></div>
-                </div>
             </div>
         </div>
     </div>

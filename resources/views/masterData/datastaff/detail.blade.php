@@ -78,7 +78,23 @@
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script type="text/javascript">
+    function toogle_nonaktif() {
+            if (document.getElementById('toogle-nonaktif-radio-2').checked) {
+                document.getElementById('masterdata-staff').style.display = 'none';
+                document.getElementById('masterdata-staff-active').style.display = '';
+                document.getElementById('count-all').style.display = 'none';
+                document.getElementById('count-active').style.display = '';
+            } else {
+                document.getElementById('masterdata-staff').style.display = '';
+                document.getElementById('masterdata-staff-active').style.display = 'none';
+                document.getElementById('count-all').style.display = '';
+                document.getElementById('count-active').style.display = 'none';
+            }
+        };
+
     $(document).ready(function () {
+        $("#masterdata-staff").hide();
+        $("#count-all").hide();
         // modal
         $(document).on('click', '#detail_staff', function () {
             var nip = $(this).data('nip');
@@ -130,13 +146,21 @@
             else
                 $(".check-item").prop("checked", false);
         });
+        // check all
+        $("#check-all-active").click(function () {
+            if ($(this).is(":checked"))
+                $(".check-item-active").prop("checked", true);
+            else
+                $(".check-item-active").prop("checked", false);
+        });
     });
     
     // Sweetalert 2
     function submit_delete(){
         event.preventDefault();
-        var check = document.querySelector('.check-item:checked');
-        if (check != null){
+        var check1 = document.querySelector('.check-item:checked');
+        var check2 = document.querySelector('.check-item-active:checked');
+        if (check1 != null || check2 != null){
             Swal.fire({
                 title: 'Anda yakin ingin menghapus data terpilih?',
                 text: "Data yang sudah di hapus tidak bisa dikembalikan!",
@@ -163,10 +187,12 @@
 
     // live search
     function search_staff() {
-        var input, filter, table, tr, td, i, txtValue;
+        var input, filter, active, table, tr, td, i, txtValue;
         input = document.getElementById("cari-staff");
         filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-staff");
+        active = $('#masterdata-staff').is(":visible");
+        if (active) table = document.getElementById("masterdata-staff");
+        else table = document.getElementById("masterdata-staff-active");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
             for (j = 3; j < 6; j++ ){

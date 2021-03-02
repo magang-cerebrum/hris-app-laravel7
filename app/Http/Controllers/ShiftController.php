@@ -17,7 +17,7 @@ class ShiftController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $shift = MasterShift::paginate(5);
+        $shift = MasterShift::get();
         return view('masterdata.shift.list',[
             'shift' => $shift,
             'name'=>$user->name,

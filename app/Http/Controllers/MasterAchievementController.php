@@ -113,6 +113,17 @@ class MasterAchievementController extends Controller
         }
         
     }
+<<<<<<< HEAD
+    public function charts (){
+        $user = Auth::user();
+        $data = DB::table('master_achievements')->
+        leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
+        $count = count($data);
+        
+        // $month = DB::table('master_achievements')->
+        // leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
+        return view('masterdata.achievement.charts_admin',[
+=======
     public function admin_charts (){
         if (Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');
@@ -132,12 +143,17 @@ class MasterAchievementController extends Controller
         // $month = DB::table('master_achievements')->
         // leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
             return view('masterdata.achievement.charts_admin',[
+>>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id,
             'data'=>$data,
             'count' =>$count
+<<<<<<< HEAD
+        ]);
+    }
+=======
             ]);
         }
     }
@@ -225,4 +241,5 @@ class MasterAchievementController extends Controller
         ]);
     }
     
+>>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
 }

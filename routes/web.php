@@ -42,8 +42,8 @@ Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'],[MasterAchievementController::class,'staff_chart'])->middleware('auth');
-Route::put('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
 Route::get('/staff/password',[UserController::class,'edit'])->middleware('auth');
 Route::put('/staff/password/saved',[UserController::class,'update'])->middleware('auth');
 Route::get('/admin/password',[UserController::class,'edit'])->middleware('auth');

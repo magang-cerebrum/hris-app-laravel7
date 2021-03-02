@@ -65,7 +65,7 @@
                                         class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Edit Jabatan" type="button">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                <td class="text-center">{{$row->name}}</td>
+                                <td class="text-center">{{$row->name}} ({{$row->abbreviation}})</td>
                                 </td>
                             </tr>
                             @endforeach

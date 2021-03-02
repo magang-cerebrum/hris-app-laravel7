@@ -73,3 +73,35 @@ function switch_month($value, $initial = true) {
         }
     }
 }
+
+function division_schedule($position_id){
+    switch ($position_id) {
+        case 3:
+            return [1,2,3,4,5,6,7,8];
+            break;
+        case 4:
+            return [1];
+            break;
+        case 5:
+            return [2,3,4];
+            break;
+        case 6:
+            return [5,6];
+            break;
+        case 7:
+            return [2];
+            break;
+        case 8:
+            return [3];
+            break;
+        case 9:
+            return [4];
+            break;
+        case 10:
+            return [5];
+            break;
+        
+    }
+
+    
+}

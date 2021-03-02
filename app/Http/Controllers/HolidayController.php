@@ -60,19 +60,44 @@ class HolidayController extends Controller
             'start' => 'required',
             'end' => 'required',
         ]);
-        
-        $start_date = date_create($request->start);
-        $end_date = date_create($request->end);
-        $interval = date_diff($start_date,$end_date);
+
+        $interval = date_diff(date_create($request->start),date_create($request->end));
         $total_day = $interval->format('%a') + 1;
         
         $date = date('Y/m/d', strtotime('-1 days', strtotime($request->start)));
 
         for ($i=0; $i < $total_day; $i++) {
             $check_days = date('Y/m/d', strtotime('+1 days', strtotime($date)));
-            $check_month = switch_month(date('m', strtotime($check_days)));
+            $month = date('m', strtotime($check_days));
+            $check_month = switch_month($month);
             $check_year = date('Y', strtotime($check_days));
             $check_day = date('j', strtotime($check_days));
+
+            $accept_paid_leave = DB::table('accepted_paid_leaves')
+            ->where('date', '=', $check_year.'-'.$month.'-'.$check_day)->get();
+
+            foreach ($accept_paid_leave as $item_accept) {
+                DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$item_accept->paid_leave_id);
+                DB::statement('UPDATE master_users SET `yearly_leave_remaining` = `yearly_leave_remaining` + 1 WHERE `id` = '.$item_accept->user_id);
+                DB::table('accepted_paid_leaves')->where('id', '=', $item_accept->id)->delete();
+            }
+
+            $transaction_paid_leave = DB::table('transaction_paid_leaves')
+            ->whereIn('status', ['Diajukan', 'Pending'])->get();
+            
+            foreach ($transaction_paid_leave as $item_transaction) {
+                $transaction_interval = date_diff(date_create($item_transaction->paid_leave_date_start),date_create($item_transaction->paid_leave_date_end));
+                $transaction_total_day = $transaction_interval->format('%a') + 1;
+
+                $transaction_date_start = date('Y-m-d', strtotime('-1 days', strtotime($item_transaction->paid_leave_date_start)));
+                for ($x = 0; $x <$transaction_total_day; $x++) {
+                    $check_transaction_days = date('Y-m-d', strtotime('+1 days', strtotime($transaction_date_start)));
+                    if ($check_transaction_days == $check_year.'-'.$month.'-'.$check_day) {
+                        DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$item_transaction->id);
+                    }
+                    $transaction_date_start = $check_transaction_days;
+                }
+            }
 
             $data_schedule = DB::table('master_job_schedules')
             ->where('month','=',$check_month)
@@ -90,14 +115,20 @@ class HolidayController extends Controller
                 ->update(['shift_'.$check_day => 'Off', 'total_hour' => $shift_hour]);
             }
 
+            if ($i == 1) {
+                // die();
+            }
+
             MasterHoliday::create([
                 'information' => $request->information,
                 'date' => $check_days,
                 'total_day' => $total_day
             ]); 
 
-            $date =$check_days;
+            $date = $check_days;
         }
+
+        // die();
         
         Alert::success('Berhasil!', 'Hari libur baru telah ditambahkan!');
         return redirect('/admin/holiday');

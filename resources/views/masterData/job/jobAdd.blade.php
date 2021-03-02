@@ -46,3 +46,10 @@
         </form>
     </div>
 @endsection
+
+@section('script')
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.replace( 'require' );
+    </script>
+@endsection

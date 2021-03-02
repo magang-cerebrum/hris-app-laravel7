@@ -220,8 +220,10 @@ class TransactionPaidLeaveController extends Controller
                 ->get();
 
                 if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
-                    $temp_accept_leave = DB::table('accepted_paid_leave')
-                    ->where('date', '=', $check_days)->get();
+                    $temp_accept_leave = DB::table('accepted_paid_leaves')
+                    ->where('date', '=', $check_days)
+                    ->where('user_id', '=', $data->user_id)
+                    ->get();
                     if(count($temp_accept_leave) == 0 ) {
                         AcceptedPaidLeave::create([
                             'paid_leave_id'=>$data->id,
@@ -229,7 +231,7 @@ class TransactionPaidLeaveController extends Controller
                             'date'=>$check_days
                         ]);
                     }
-                    
+
                     if (count($data_schedule) != 0) {
                         $day = date('j', strtotime($check_days));
                         $temp = 'shift_'.$day;

@@ -13,16 +13,11 @@ use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
 use App\Http\Controllers\MasterAchievementController;
-<<<<<<< HEAD
-use App\MasterAchievement;
-
-=======
 use App\Http\Controllers\TransactionPaidLeaveController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\TransactionTicketingController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -108,62 +103,6 @@ Route::prefix('/admin/position')->group(function(){
 });
 
 //route masterdata shift
-<<<<<<< HEAD
-Route::get('/admin/shift',[App\Http\Controllers\ShiftController::class,'index']);
-Route::get('/admin/shift/add',[App\Http\Controllers\ShiftController::class,'create']);
-Route::post('/admin/shift', [App\Http\Controllers\ShiftController::class, 'store']);
-Route::get('/admin/shift/{shift}/edit', [App\Http\Controllers\ShiftController::class, 'edit']);
-Route::put('/admin/shift/{shift}', [App\Http\Controllers\ShiftController::class, 'update']);
-Route::delete('/admin/shift/', [App\Http\Controllers\ShiftController::class, 'destroyAll']);
-
-// Route Tipe Cuti List
-Route::get('/admin/paid-leave-type',[MasterLeaveTypeController::class,'index'])->name('tablelist');
-Route::get('/admin/paid-leave-type/add',[MasterLeaveTypeController::class,'create'])->name('addleavetype');
-Route::post('/admin/paid-leave-type',[MasterLeaveTypeController::class,'store'])->name('save');
-Route::get('/admin/paid-leave-type/{leavetype}/edit',[MasterLeaveTypeController::class,'edit']);
-Route::put('/admin/paid-leave-type/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
-Route::delete('/admin/paid-leave-type/',[MasterLeaveTypeController::class,'destroyAll']); 
-
-// Route Transaksi Cuti
-Route::get('/admin/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'index']);
-Route::get('/admin/paid-leave/history',[App\Http\Controllers\TransactionPaidLeaveController::class,'history']);
-Route::delete('/admin/paid-leave/delete',[App\Http\Controllers\TransactionPaidLeaveController::class,'destroy']);
-Route::put('/admin/paid-leave/approve',[App\Http\Controllers\TransactionPaidLeaveController::class,'update_approve']);
-Route::get('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'create']);
-Route::post('/staff/paid-leave',[App\Http\Controllers\TransactionPaidLeaveController::class,'store']);
-Route::get('/staff/paid-leave/history',[App\Http\Controllers\TransactionPaidLeaveController::class,'show']);
-Route::delete('/staff/paid-leave/delete',[App\Http\Controllers\TransactionPaidLeaveController::class,'destroy_staff']);
-
-// Route Jadwal Kerja
-Route::get('/admin/schedule',[App\Http\Controllers\MasterJobScheduleController::class, 'index']);
-Route::get('/admin/schedule/add',[App\Http\Controllers\MasterJobScheduleController::class, 'index_add']);
-Route::post('/admin/schedule/add-schedule',[App\Http\Controllers\MasterJobScheduleController::class, 'schedule_add']);
-Route::post('/admin/schedule/post',[App\Http\Controllers\MasterJobScheduleController::class, 'schedule_post']);
-Route::get('/staff/schedule/',[App\Http\Controllers\MasterJobScheduleController::class, 'staff_index']);
-
-//route system log
-Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
-Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
-
-//Route Achievement
-// Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
-//route staff presence
-Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
-Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
-Route::post('/staff/presence/search',[App\Http\Controllers\PresenceController::class,'search']);
-
-//route transaction ticketing
-Route::get('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_index']);
-Route::get('/admin/ticketing/{ticket}/edit',[App\Http\Controllers\TicketingController::class,'admin_edit']);
-Route::put('/admin/ticketing/on-progress',[App\Http\Controllers\TicketingController::class,'make_on_progress']);
-Route::put('/admin/ticketing/{ticket}',[App\Http\Controllers\TicketingController::class,'admin_response']);
-Route::delete('/admin/ticketing',[App\Http\Controllers\TicketingController::class,'admin_delete']);
-Route::get('/staff/ticketing/',[App\Http\Controllers\TicketingController::class,'staff_index']);
-Route::get('/staff/ticketing/create',[App\Http\Controllers\TicketingController::class,'staff_create']);
-Route::post('/staff/ticketing/input',[App\Http\Controllers\TicketingController::class,'staff_input']);
-
-
-=======
 Route::prefix('/admin/shift')->group(function(){
     Route::get('/',[ShiftController::class,'index']);
     Route::get('/add',[ShiftController::class,'create']);
@@ -246,7 +185,6 @@ Route::prefix('/admin/achievement')->group(function () {
 });
 
 //route achievement ==STAFF==
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
 
 //route staff presence
 Route::prefix('/staff/presence')->group(function () {
@@ -269,19 +207,8 @@ Route::prefix('/admin/job')->group(function (){
     Route::delete('/delete',[ MasterJobController::class,'destroy']);
 });
 
-<<<<<<< HEAD
-//Route Achievement 
-Route::get('/admin/achievement', [App\Http\Controllers\MasterAchievementController::class,'index']);
-Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
-Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);
-Route::post('/admin/achievement/search',[MasterAchievementController::class,'search']);
-// Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
-// Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
-Route::get('/admin/achievement/charts', [MasterAchievementController::class,'charts']);
-=======
 //route recruitment
 Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e

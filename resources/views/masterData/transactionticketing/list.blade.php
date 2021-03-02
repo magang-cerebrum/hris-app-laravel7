@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('title','Ticketing')
+@section('title','Sistem')
 @section('content-title','Sistem / Ticketing')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
@@ -7,7 +7,10 @@
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Ticketing</h3>
+    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
@@ -24,7 +27,6 @@
                                 Jadikan On Progress
                             </button>
                             <div class="radio mar-hor" style="display: inline">
-                                <!-- Inline radio buttons -->
                                 <label for="">Lihat Ticket Selesai: </label>
                                 <input id="lihat_selesai_radio-1" class="magic-radio" type="radio" name="lihat_selesai"
                                     value="On" onclick="toogle_selesai()">
@@ -37,8 +39,8 @@
                     <div class="col-sm-1"></div>
                     <div class="col-sm-3">
                         <div class="input-group mar-btm float-right">
-                            <input type="text" id="cari-ticket" class="form-control" placeholder="Cari Ticket Pada Posisi ON"
-                                onkeyup="search_ticket()">
+                            <input type="text" id="cari-ticket" class="form-control"
+                                placeholder="Cari Ticket Pada Posisi ON" onkeyup="search_ticket()">
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
@@ -53,7 +55,7 @@
                                 style="width: 5%">No
                             </th>
                             <th class="text-center" style="width: 6%">
-                                All <input type="checkbox" id="check-all">
+                                All <input type="checkbox" id="check-all-full">
                             </th>
                             <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
                                 colspan="1" aria-label="Position: activate to sort column ascending" style="width: 5%">
@@ -74,14 +76,20 @@
                             <td tabindex="0" class="sorting_1 text-center">
                                 {{$loop->iteration}}</td>
                             <td class="text-center">
-                                <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                <input type="checkbox" class="check-item-full" name="selectid_full[]" value="{{$row->id}}">
                             </td>
                             <td class="text-center">
                                 <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
                                     style="display: inline; margin: auto 5px" data-id="{{$row->id}}"
                                     data-name="{{$row->name}}" data-category="{{$row->category}}"
                                     data-message="{{$row->message}}" data-response="{{$row->response}}"
-                                    data-status="{{$row->status}}" data-diajukan="{{$row->created_at}}">
+                                    data-status="{{$row->status}}" data-diajukan="{{indonesian_date($row->created_at,true)}}"
+                                    @if ($row->created_at == $row->updated_at)
+                                    data-direspon="-"
+                                    @else
+                                    data-direspon="{{indonesian_date($row->updated_at,true)}}"
+                                    @endif
+                                    >
                                     <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Detail Ticket"
                                         type="button">
@@ -110,7 +118,7 @@
                                 <span class="label label-success">Selesai</span>
                                 @endif
                             </td>
-                            <td class="text-center">{{$row->created_at}}</td>
+                            <td class="text-center">{{indonesian_date($row->created_at,true)}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -154,7 +162,13 @@
                                     style="display: inline; margin: auto 5px" data-id="{{$row->id}}"
                                     data-name="{{$row->name}}" data-category="{{$row->category}}"
                                     data-message="{{$row->message}}" data-response="{{$row->response}}"
-                                    data-status="{{$row->status}}" data-diajukan="{{$row->created_at}}">
+                                    data-status="{{$row->status}}" data-diajukan="{{indonesian_date($row->created_at,true)}}"
+                                    @if ($row->created_at == $row->updated_at)
+                                    data-direspon="-"
+                                    @else
+                                    data-direspon="{{indonesian_date($row->updated_at,true)}}"
+                                    @endif
+                                    >
                                     <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Detail Ticket"
                                         type="button">
@@ -183,7 +197,7 @@
                                 <span class="label label-success">Selesai</span>
                                 @endif
                             </td>
-                            <td class="text-center">{{$row->created_at}}</td>
+                            <td class="text-center">{{indonesian_date($row->created_at,true)}}</td>
                         </tr>
                         @endif
                         @endforeach

@@ -19,12 +19,6 @@
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
-
-    <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.min.css')}}">
-    <script href="{{asset('plugins/noUiSlider/nouislider.js')}}"></script>
-    <script href="{{asset('plugins/noUiSlider/nouislider.min.js')}}"></script>
-
     @yield('head')
 </head>
 <body>
@@ -64,25 +58,6 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End Navigation toogle button-->
 
-
-
-                        <!--Search-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li>
-                            <div class="custom-search-form">
-                                <label class="btn btn-trans" for="search-input" data-toggle="collapse" data-target="#nav-searchbox">
-                                    <i class="demo-psi-magnifi-glass"></i>
-                                </label>
-                                <form>
-                                    <div class="search-container collapse" id="nav-searchbox">
-                                        <input id="search-input" type="text" class="form-control" placeholder="Pencarian...">
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End Search-->
-
                     </ul>
                     <ul class="nav navbar-top-links">
 
@@ -102,8 +77,6 @@
                                     <i class="demo-psi-male"></i>
                                 </span>
                             </a>
-
-
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
                                 <ul class="head-list">
                                     <li>
@@ -120,7 +93,6 @@
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
- 
                     </ul>
                 </div>
                 <!--================================-->
@@ -177,6 +149,7 @@
                                             <p class="mnp-name">{{$name}}</p>
                                             <span class="mnp-desc">{{$email}}</span>
                                         </a>
+                                        <span class="label label-danger" style="font-size:9px;">Admin</span>
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">
                                         <a href="{{ url('admin/profile')}}" class="list-group-item">
@@ -215,10 +188,23 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
-											<li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-checked-user"></i>Jadwal Kerja</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
+						                </ul>
+						            </li>
+
+                                    <li>
+						                <a href="{{ url('#')}}">
+						                    <i class="demo-psi-checked-user"></i>
+						                    <span class="menu-title">Jadwal Kerja</span>
+											<i class="arrow"></i>
+						                </a>
+						
+						                <!--Submenu-->
+						                <ul class="collapse">
+                                            <li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-calendar-4"></i>Daftar Jadwal</a></li>
+											<li><a href="{{ url('admin/schedule/add')}}"><i class="demo-psi-checked-user"></i>Tambah Jadwal</a></li>
 						                </ul>
 						            </li>
                                     
@@ -236,6 +222,7 @@
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
+                                            <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Tanggal Merah</a></li>
 						                </ul>
                                     </li>
 
@@ -243,15 +230,20 @@
                                     <li>
                                         <a href="#">
                                             <i class="fa fa-trophy"></i>
-                                            <span class="menu-title">Penghargaan</span>
+                                            <span class="menu-title">Pencapaian</span>
                                             <i class="arrow"></i>
                                         </a>
                                         
                                         <!--Submenu-->
                                         <ul class="collapse">
                                             <li><a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
+<<<<<<< HEAD
                                             <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Scoring</a></li>
                                             <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Charts Score</a></li>
+=======
+                                            <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
+                                            <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>
+>>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
                                         </ul>
                 
                                     </li>

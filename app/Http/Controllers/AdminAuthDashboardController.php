@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\MasterUser;
 use App\MasterRecruitment;
-use App\TransactionPaidLeave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -28,17 +27,23 @@ class AdminAuthDashboardController extends Controller
                 )
             ->paginate(5);
             $user_act = DB::table('master_users')
-            ->where('status', '=', 'aktif')
-            ->get();
+                ->where('status', '=', 'aktif')
+                ->get();
             $user_nact = DB::table('master_users')
-            ->where('status', '!=', 'aktif')
-            ->get();
+                ->where('status', '!=', 'aktif')
+                ->get();
+            $data_ticket = DB::table('transaction_ticketings')
+                ->select('status')
+                ->where('status','=','Dikirimkan')
+                ->orWhere('status','=','On Progress')
+                ->get();
             $data_rect = MasterRecruitment::paginate(5);
             return view('dashboard.admin',[
                 'data_recruitment'=>$data_rect,
                 'data_paid_leave'=>$data_paid,
                 'data_user_active'=>$user_act,
                 'data_user_non_active'=>$user_nact,
+                'data_ticket'=> $data_ticket,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -52,8 +57,7 @@ class AdminAuthDashboardController extends Controller
         $divisions = DB::table('master_divisions')->where('id', '=', $data->division_id)->get();
         $positions = DB::table('master_positions')->where('id', '=', $data->position_id)->get();
         $roles = DB::table('master_roles')->where('id', '=', $data->role_id)->get();
-        $shifts = DB::table('master_shifts')->where('id', '=', $data->shift_id)->get();
-
+        
         return view('dashboard.profile',[
             'name'=>$data->name,
             'email'=>$data->email,
@@ -62,8 +66,7 @@ class AdminAuthDashboardController extends Controller
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,
-            'roles'=>$roles,
-            'shifts'=>$shifts
+            'roles'=>$roles
             ]);
     }
     public function editprofile()
@@ -72,8 +75,7 @@ class AdminAuthDashboardController extends Controller
         $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
-        $shifts = DB::table('master_shifts')->select('name as shifts_name','id as shifts_id')->get();
-
+        
         return view('dashboard.editprofile',[
             'name'=>$data->name,
             'email'=>$data->email,
@@ -82,13 +84,11 @@ class AdminAuthDashboardController extends Controller
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,
-            'roles'=>$roles,
-            'shifts'=>$shifts
+            'roles'=>$roles
             ]);
     }
     public function updateprofile(Request $request, MasterUser $user)
     {
-        // dd($request);
         $request->validate([
             'nip' => 'required|numeric',
             'name' => 'required',
@@ -104,8 +104,7 @@ class AdminAuthDashboardController extends Controller
             'yearly_leave_remaining' => 'numeric',
             'division_id' => 'numeric',
             'position_id' => 'numeric',
-            'role_id' => 'numeric',
-            'shift_id' => 'numeric'
+            'role_id' => 'numeric'
         ]);
         MasterUser::where('id', $user->id)
             ->update([
@@ -127,8 +126,7 @@ class AdminAuthDashboardController extends Controller
                 'yearly_leave_remaining' => $request->yearly_leave_remaining,
                 'division_id' => $request->division_id,
                 'position_id' => $request->position_id,
-                'role_id' => $request->role_id,
-                'shift_id' => $request->shift_id
+                'role_id' => $request->role_id
             ]);
             Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/admin/profile');

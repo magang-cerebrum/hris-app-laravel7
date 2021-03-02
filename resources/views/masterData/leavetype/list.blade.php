@@ -1,13 +1,16 @@
 @extends('layouts/templateAdmin')
-@section('title','Master Data Cuti')
-@section('content-title','Master Data / Tipe Cuti')
+@section('title','Master Data')
+@section('content-title','Master Data / Daftar Tipe Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Tipe Cuti</h3>
+    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">

@@ -35,6 +35,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '6b34c85f7b1ad6faa15aa12109e030f2' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/functions.php',
         '72b1e3f4a2af9b30b3f137b3ec2057fc' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/helpers.php',
+        'd21d43db5f6e840ee7b10744ec7fdf66' => __DIR__ . '/../..' . '/app/Helpers/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -501,14 +502,15 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
     );
 
     public static $classMap = array (
+        'App\\AcceptedPaidLeave' => __DIR__ . '/../..' . '/app/AcceptedPaidLeave.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\AchievementDateController' => __DIR__ . '/../..' . '/app/Http/Controllers/AchievementDateController.php',
         'App\\Http\\Controllers\\AdminAuthDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminAuthDashboardController.php',
         'App\\Http\\Controllers\\Auth\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DataStaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/DataStaffController.php',
         'App\\Http\\Controllers\\DivisionController' => __DIR__ . '/../..' . '/app/Http/Controllers/DivisionController.php',
+        'App\\Http\\Controllers\\HolidayController' => __DIR__ . '/../..' . '/app/Http/Controllers/HolidayController.php',
         'App\\Http\\Controllers\\LogController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogController.php',
         'App\\Http\\Controllers\\MasterAchievementController' => __DIR__ . '/../..' . '/app/Http/Controllers/MasterAchievementController.php',
         'App\\Http\\Controllers\\MasterJobController' => __DIR__ . '/../..' . '/app/Http/Controllers/MasterJobController.php',
@@ -532,12 +534,11 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\MasterAchievement' => __DIR__ . '/../..' . '/app/MasterAchievement.php',
-        'App\\MasterAchievementDate' => __DIR__ . '/../..' . '/app/MasterAchievementDate.php',
         'App\\MasterDivision' => __DIR__ . '/../..' . '/app/MasterDivision.php',
+        'App\\MasterHoliday' => __DIR__ . '/../..' . '/app/MasterHoliday.php',
         'App\\MasterJobRecruitment' => __DIR__ . '/../..' . '/app/MasterJobRecruitment.php',
         'App\\MasterJobSchedule' => __DIR__ . '/../..' . '/app/MasterJobSchedule.php',
         'App\\MasterLeaveType' => __DIR__ . '/../..' . '/app/MasterLeaveType.php',
-        'App\\MasterLog' => __DIR__ . '/../..' . '/app/MasterLog.php',
         'App\\MasterPosition' => __DIR__ . '/../..' . '/app/MasterPosition.php',
         'App\\MasterPresence' => __DIR__ . '/../..' . '/app/MasterPresence.php',
         'App\\MasterRecruitment' => __DIR__ . '/../..' . '/app/MasterRecruitment.php',

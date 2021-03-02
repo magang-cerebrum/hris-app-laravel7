@@ -9,6 +9,7 @@ use App\MasterRecruitment;
 use App\MasterJobRecruitment;
 use Asset\upload_recruitment\cv_upload;
 use Asset\upload_recruitment\portofolio_upload;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MasterRecruitmentController extends Controller
 {
@@ -90,7 +91,6 @@ class MasterRecruitmentController extends Controller
             'file_portofolio'=>$portofolio_name
         ]);
 
-        
         // $user = Auth::user()->name;
         activity()->log('Seorang pelamar telah mengisi form rekruitasi untuk posisi' .' '. $request->position);
         // return redirect('/success');
@@ -147,18 +147,19 @@ class MasterRecruitmentController extends Controller
         $ids = $request->input('check');
         
         foreach($ids as $deletes) {
-           $data= MasterRecruitment::where("id",$deletes)->first();
+            $data= MasterRecruitment::where("id",$deletes)->first();
 
-           $path_cv = 'upload_recruitment/cv_upload/'.$data->file_cv;
-           $file_path_cv = public_path($path_cv);
-           unlink($file_path_cv);
+            $path_cv = 'upload_recruitment/cv_upload/'.$data->file_cv;
+            $file_path_cv = public_path($path_cv);
+            unlink($file_path_cv);
 
-           $path_porto = 'upload_recruitment/portofolio_upload/'.$data->file_portofolio;
-           $file_path_porto = public_path($path_porto);
-           unlink($file_path_porto);
+            $path_porto = 'upload_recruitment/portofolio_upload/'.$data->file_portofolio;
+            $file_path_porto = public_path($path_porto);
+            unlink($file_path_porto);
 
-           $data->delete();
+            $data->delete();
         }
+        Alert::success('Berhasil!', 'Data pelamar terpilih berhasil dihapus!');
         return redirect('/admin/recruitment');
     }
 }

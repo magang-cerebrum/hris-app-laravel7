@@ -1,13 +1,16 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Jabatan')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Masterdata Jabatan')
+@section('title','Master Data')
 @section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
-<div class="panel">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Jabatan</h3>
+    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
@@ -36,47 +39,40 @@
                         </div>
                     </div>
                 </div>
-                <table id="masterdata-jabatan"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
-                    aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 5%">No</th>
-                            <th class="text-center" style="width: 6%">
-                                All <input type="checkbox" id="check-all">
-                            </th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 10%">Aksi</th>
-                            <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Nama Jabatan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($position as $row)
-                        <tr>
-                            <td tabindex="0" class="sorting_1 text-center">{{(($position->currentPage() * 5) - 5) + $loop->iteration}}</td>
-                            <td class="text-center">
-                                <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
-                            </td>
-                            <td class="text-center">
-                                <a href="/admin/position/{{$row->id}}/edit"
-                                    class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Edit Jabatan" type="button">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            <td class="text-center">{{$row->name}}</td>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </form>
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10 text-center">
-                        <ul class="pagination">
-                            {{ $position->links() }}
-                        </ul>
-                    </div>
-                    <div class="col-sm-1"></div>
+                <div class="table-responsive">
+                    <table id="masterdata-jabatan"
+                        class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
+                        aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 5%">No</th>
+                                <th class="text-center" style="width: 6%">
+                                    All <input type="checkbox" id="check-all">
+                                </th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 10%">Aksi</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Nama Jabatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($position as $row)
+                            <tr>
+                                <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                </td>
+                                <td class="text-center">
+                                    <a href="/admin/position/{{$row->id}}/edit"
+                                        class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Edit Jabatan" type="button">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                <td class="text-center">{{$row->name}}</td>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </form>
             </div>
         </div>
     </div>

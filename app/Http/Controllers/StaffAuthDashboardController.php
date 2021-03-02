@@ -7,25 +7,120 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
 class StaffAuthDashboardController extends Controller
 {
     public function index(){
+        
         if(Gate::denies('is_staff')){
             return abort(403,'Staff must Login First');
         }
         else if(Gate::allows('is_staff')){
-            // return 'Staff';
+            $score = array();
+            $sum_of_eom= 0;
+            $month_of_eom = array();
+            $year = date('Y');
+            $this_year = date('Y');
             $user = Auth::user(); 
-
+            for ($i = 1 ; $i<=12;$i++){
+                $max_score=0;
+                $data_month =DB::table('master_achievements')
+                ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)->get();
+                $data_month_user =DB::table('master_achievements')
+                ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)
+                ->where('achievement_user_id','=',$user->id)->get();
+                
+                if(count($data_month) == 0){
+                    $max_score=0;
+                    $temp[$i] = 0;
+                } else {
+                    // //insert score matches month
+                    $temp[$i] = $data_month_user[0]->score;
+                    
+                    //search max
+                    for($j=0;$j<count($data_month);$j++){
+                        $temp_max = $data_month[$j]->score;
+                        if($temp_max>$max_score){
+                            $max_score =$temp;
+                        }
+                    }
+                    // if max score matches user score on that month
+                    if($max_score == $data_month_user[0]->score){
+                        $month_of_eom[] = $data_month_user[0]->month;
+                        $sum_of_eom++;
+                    }                
+                }
+                // if score on a month exists, insert too score array
+                if (array_key_exists($i,$temp)) {
+                    $score[$i-1] = $temp[$i];
+                } else {
+                    $score[$i-1] = 0;
+                }
+            }
+            $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
+            
             return view('dashboard.staff',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
-                'id'=>$user->id
+                'id'=>$user->id,
+                'score'=>$score,
+                'current_year'=>$this_year,
+                'year_list'=>$year_list
             ]);
         }
     }
+    public function ajx(Request $request){
+        $score = array();
+        $sum_of_eom= 0;
+        $month_of_eom = array();
+        $year = $request->input('year');
+        $user =Auth::user()->name;
+        $id = Auth::user()->id;
+
+        for ($i = 1 ; $i<=12;$i++){
+            $max_score=0;
+            $data_month =DB::table('master_achievements')
+            ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)->get();
+            $data_month_user =DB::table('master_achievements')
+            ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)
+            ->where('achievement_user_id','=',$id)->get();
+            
+            if(count($data_month) == 0){
+                $max_score=0;
+                $temp[$i] = 0;
+            } else {
+                // //insert score matches month
+                $temp[$i] = $data_month_user[0]->score;
+                
+                //search max
+                for($j=0;$j<count($data_month);$j++){
+                    $temp_max = $data_month[$j]->score;
+                    if($temp_max>$max_score){
+                        $max_score =$temp;
+                    }
+                }
+                // if max score matches user score on that month
+                if($max_score == $data_month_user[0]->score){
+                    $month_of_eom[] = $data_month_user[0]->month;
+                    $sum_of_eom++;
+                }                
+            }
+            // if score on a month exists, insert too score array
+            if (array_key_exists($i,$temp)) {
+                $score[$i-1] = $temp[$i];
+            } else {
+                $score[$i-1] = 0;
+            }
+        }
+
+        return response()->json([
+            'year'=>$year,
+            'sum_of_eom'=>$sum_of_eom,
+            'month_of_eom'=>$month_of_eom,
+            'score' => $score
+        ]);
+    }
+    
     public function profile()
     {
         $data = Auth::user();

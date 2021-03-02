@@ -1,4 +1,4 @@
-<!-- modal -->
+<!-- modal detail ticket-->
 <div class="modal fade" id="modal-detail-ticket" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -32,14 +32,14 @@
                         </tr>
                         <tr>
                             <td><label for="message">Pesan Ticket: </label></td>
-                            <td colspan="4" rowspan="3"><textarea name="message" id="message" cols="100" rows="4"
+                            <td colspan="4" rowspan="3"><textarea name="message" id="message" rows="2"
                                     disabled></textarea></td>
                         </tr>
                         <tr></tr>
                         <tr></tr>
                         <tr>
                             <td><label for="response">Respon Ticket: </label></td>
-                            <td colspan="4" rowspan="3"><textarea name="response" id="response" cols="100" rows="4"
+                            <td colspan="4" rowspan="3"><textarea name="response" id="response" rows="2"
                                     disabled></textarea></td>
                         </tr>
                     </tbody>
@@ -57,7 +57,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-                <h5 class="modal-title text-bold text-center">Input Ticket Baru Ticket</h5>
+                <h5 class="modal-title text-bold text-center">Input Ticket Baru</h5>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" action="/staff/ticketing/input" method="POST">

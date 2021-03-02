@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use App\TransactionPaidLeave;
 use App\MasterLeaveType;
 use App\MasterUser;
-use App\User;
+use App\AcceptedPaidLeave;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionPaidLeaveController extends Controller
 {
@@ -107,25 +108,38 @@ class TransactionPaidLeaveController extends Controller
         $info = "-";
         $status = "Diajukan";
 
-        $start = $request->paid_leave_date_start;
-        $end = $request->paid_leave_date_end;
-        $datetime1 = new DateTime($start);
-        $datetime2 = new DateTime($end);
-        $interval = $datetime1->diff($datetime2);
+        $interval = (new DateTime($request->paid_leave_date_start))->diff(new DateTime($request->paid_leave_date_end));
         $paid_leave = ($interval->format('%a')) + 1;
+
+        $start = date('Y/m/d', strtotime('-1 days', strtotime($request->paid_leave_date_start)));
+        $days_paid_leave = 0;
+        for ($i = 0; $i < $paid_leave; $i++) {
+            $check_days = date('Y/m/d', strtotime('+1 days', strtotime($start)));
+            $check_name_days = date('l', strtotime($check_days));
+
+            $check_holiday = DB::table('master_holidays')
+            ->where('date','=',$check_days)->get();
+
+            if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
+                $days_paid_leave++;
+            }
+
+            $start = $check_days;
+        }
 
         TransactionPaidLeave::create([
             'user_id'=>$request->user_id,
             'paid_leave_date_start'=>$request->paid_leave_date_start,
             'paid_leave_date_end'=>$request->paid_leave_date_end,
-            'days'=>$paid_leave,
+            'days'=>$days_paid_leave,
             'status'=>$status,
             'paid_leave_type_id'=>$request->paid_leave_type_id,
             'needs'=>$request->needs,
             'informations'=>$info
 
         ]);
-        return redirect('/staff/paid-leave');
+        Alert::success('Berhasil!', 'Pengajuan cuti berhasil terkirim!');
+        return redirect('/staff/paid-leave/history');
     }
 
     /**
@@ -185,6 +199,51 @@ class TransactionPaidLeaveController extends Controller
             $remaining_days_off = $data_user->yearly_leave_remaining - $data->days;
             $data->update(['status' => 'Diterima']);
             $data_user->update(['yearly_leave_remaining' => $remaining_days_off]);
+
+            $interval = (new DateTime($data->paid_leave_date_start))->diff(new DateTime($data->paid_leave_date_end));
+            $paid_leave = ($interval->format('%a')) + 1;
+
+            $start = date('Y-m-d', strtotime('-1 days', strtotime($data->paid_leave_date_start)));
+            for ($i = 0; $i < $paid_leave; $i++) {
+                $check_days = date('Y-m-d', strtotime('+1 days', strtotime($start)));
+                $check_name_days = date('l', strtotime($check_days));
+                $check_month = switch_month(date('m', strtotime($check_days)));
+                $check_year = date('Y', strtotime($check_days));
+
+                $check_holiday = DB::table('master_holidays')
+                ->where('date','=',$check_days)->get();
+
+                $data_schedule = DB::table('master_job_schedules')
+                ->where('user_id', '=', $data->user_id)
+                ->where('month','=',$check_month)
+                ->where('year','=',$check_year)
+                ->get();
+
+                if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
+                    $temp_accept_leave = DB::table('accepted_paid_leave')
+                    ->where('date', '=', $check_days)->get();
+                    if(count($temp_accept_leave) == 0 ) {
+                        AcceptedPaidLeave::create([
+                            'paid_leave_id'=>$data->id,
+                            'user_id'=>$data->user_id,
+                            'date'=>$check_days
+                        ]);
+                    }
+                    
+                    if (count($data_schedule) != 0) {
+                        $day = date('j', strtotime($check_days));
+                        $temp = 'shift_'.$day;
+                        $shift_day = $data_schedule[0]->$temp;
+                        $total_hour = $data_schedule[0]->total_hour - check_hour_shift($shift_day);
+
+                        DB::table('master_job_schedules')
+                        ->where('id', '=', $data_schedule[0]->id)
+                        ->update([$temp => 'Off', 'total_hour' => $total_hour]);
+                    }
+                }
+
+                $start = $check_days;
+            }
         }
         return redirect('/admin/paid-leave');
     }
@@ -212,6 +271,12 @@ class TransactionPaidLeaveController extends Controller
             $data = TransactionPaidLeave::where("id",$deletes)->first();
             $data->delete();
         }
+        return redirect('/staff/paid-leave/history');
+    }
+
+    public function cancel_staff(TransactionPaidLeave $id){
+        TransactionPaidLeave::where('id','=', $id->id)->update(['status' => 'Cancel']);
+        Alert::info('Berhasil!', 'Pengajuan cuti telah di cancel!');
         return redirect('/staff/paid-leave/history');
     }
 }

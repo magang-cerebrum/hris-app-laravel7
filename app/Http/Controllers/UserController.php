@@ -2,94 +2,77 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
-use App\User;
+use Illuminate\Support\Facades\Auth;
+use App\MasterUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    public function edit()
     {
-        //
+        // $message = "Error";
+       // dd(MasterUser::where('id', '=',Auth::user()->id)->select('password')->get());
+       $id = Auth::user()->id;
+       $pass = Auth::user()->password;
+        if(Route::current()->uri == "admin/password" && Gate::allows('is_admin')){
+           
+            return view('auth.editpass',['pass' => $pass,
+            'id'=>$id,
+            ]);
+        }
+        elseif(Route::current()->uri == "admin/password" && Gate::denies('is_admin')){
+            return back();
+        }
+        elseif(Route::current()->uri == "staff/password" && Gate::allows('is_staff')){
+            return view('auth.editpass',['pass' => $pass,
+            'id'=>$id,
+            ]);
+        }
+        elseif(Route::current()->uri == "staff/password" && Gate::denies('is_staff')){
+            return back();
+        }
+        // else dd("no");
+        // dd(Route::current()->uri);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        return view('auth.editpass',['pass' => $user]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        if (Hash::check($request->olpassword, $user->password)) {
+    
+    public function update(Request $request)
+    {   
+        $id = Auth::user()->id;
+        $pass = Auth::user()->password;
+        if (Hash::check($request->oldpassword, $pass)) {
+            // dd(strlen($request->password));
+            $request->validate(
+                [
+                'oldpassword'=>MasterUser::where('id', '=',Auth::user()->id)->select('password')->get(),
+                'newpassword'=>'required|min:8'
+                ]
+            );
             
-            $request->validate([
-                // 'oldpassword'=>User::get()->password,
-                'newpassword'=>'required'
-                ]);
-        
+                
            }
-           User::Where('id',$user->id)->update([
+           elseif(!Hash::check($request->oldpassword,MasterUser::where('id', '=',Auth::user()->id)->select('password')->get())) {
+               return back()->with('error','Password Lama Salah');
+            
+            }
+            // elseif (strlen($request->newpassword) < 8){
+            //     return back()->with('error2','Password Harus 8 karakter');
+            // }
+            
+            MasterUser::Where('id',$id)->update([
                'password'=>Hash::make($request->newpassword)
-           ]);return redirect('/dashboard/staff');
-        
+           ]);
+           Alert::success('Berhasil!', 'Password akun anda berhasil di rubah!');
+           if(Auth::user()->role_id == 1){
+            return redirect('/admin/dashboard');
+           }
+           else return redirect('/staff/dashboard');
+            
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
 }

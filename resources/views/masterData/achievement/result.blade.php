@@ -1,6 +1,6 @@
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
-        <h3 class="panel-title">Leaderboard Achievement </h3>
+        <h3 class="panel-title">{{'Leaderboard Achievement Bulan '.$data[0]->month.' - '.$data[0]->year}}</h3>
     </div>
     <div class="panel-body">
         <table id="presensi-result"

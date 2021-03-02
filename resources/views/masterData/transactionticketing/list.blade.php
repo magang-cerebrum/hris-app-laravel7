@@ -55,7 +55,7 @@
                                 style="width: 5%">No
                             </th>
                             <th class="text-center" style="width: 6%">
-                                All <input type="checkbox" id="check-all">
+                                All <input type="checkbox" id="check-all-full">
                             </th>
                             <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
                                 colspan="1" aria-label="Position: activate to sort column ascending" style="width: 5%">
@@ -76,7 +76,7 @@
                             <td tabindex="0" class="sorting_1 text-center">
                                 {{$loop->iteration}}</td>
                             <td class="text-center">
-                                <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                <input type="checkbox" class="check-item-full" name="selectid_full[]" value="{{$row->id}}">
                             </td>
                             <td class="text-center">
                                 <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"

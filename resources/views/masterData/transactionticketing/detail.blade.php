@@ -111,14 +111,22 @@
             else
                 $(".check-item").prop("checked", false);
         });
+        // check all
+        $("#check-all-full").click(function () {
+            if ($(this).is(":checked"))
+                $(".check-item-full").prop("checked", true);
+            else
+                $(".check-item-full").prop("checked", false);
+        });
     });
     //lihat selesai
     
     // Sweetalert 2
     function submit_on_progress(){
         event.preventDefault();
-        var check = document.querySelector('.check-item:checked');
-        if (check != null){
+        var check1 = document.querySelector('.check-item:checked');
+        var check2 = document.querySelector('.check-item-full:checked');
+        if (check1 != null || check2 != null){
             Swal.fire({
                 title: 'Anda yakin ingin mengubah status ticket terpilih menjadi On Progress?',
                 text: "Ticket yang sudah berstatus Selesai akan kembali berubah menjadi On Progress!",
@@ -146,10 +154,12 @@
 
     // live search
     function search_ticket() {
-        var input, filter, table, tr, td, i, j, txtValue;
+        var input, filter, active, table, tr, td, i, j, txtValue;
         input = document.getElementById("cari-ticket");
         filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-ticketing-full");
+        active = $('#masterdata-ticketing').is(":visible");
+        if (active) table = document.getElementById("masterdata-ticketing");
+        else table = document.getElementById("masterdata-ticketing-full");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
             for (j = 2; j < 7; j++ ){

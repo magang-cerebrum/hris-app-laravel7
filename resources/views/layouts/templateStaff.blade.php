@@ -15,10 +15,11 @@
 
     <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-
+    {{-- <link href="{{ asset('plugins/themify-icons/themify-icons.css')}}" rel="stylesheet"> --}}
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
+
     @yield('head')
 </head>
 <body>
@@ -86,7 +87,7 @@
                                         <a href="{{ url('staff/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('staff/password/'.$id)}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
+                                        <a href="{{ url('staff/password/')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
                                         <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
@@ -155,6 +156,7 @@
                                                 <p class="mnp-name">{{$name}}</p>
                                                 <span class="mnp-desc">{{$email}}</span>
                                             </a>
+                                            <span class="label label-primary" style="font-size:9px;">Staff</span>
                                         </div>
                                         <div id="profile-nav" class="collapse list-group bg-trans">
                                             <a href="{{ url('staff/profile')}}" class="list-group-item">

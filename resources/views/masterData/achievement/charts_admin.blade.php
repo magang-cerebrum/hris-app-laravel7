@@ -64,8 +64,7 @@
             },
             points: {
                 show: true,
-                radius: 4,
-                // symbol : "square"
+                radius: 4
             }
             },
         ], {
@@ -74,8 +73,7 @@
                 show: true
             },
             points: {
-                show: true,
-                // symbol:"square"
+                show: true
             },
             shadowSize: 0 // Drawing is faster without shadows
         },
@@ -92,8 +90,6 @@
         },
         yaxis: {
             ticks: 9,
-            min : 0,
-            max : 100,
             tickColor: 'rgba(0,0,0,.1)'
         },
         xaxis: {

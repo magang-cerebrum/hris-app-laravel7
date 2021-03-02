@@ -15,7 +15,7 @@ use App\Http\Controllers\MasterJobScheduleController;
 use App\Http\Controllers\MasterAchievementController;
 use App\Http\Controllers\TransactionPaidLeaveController;
 use App\Http\Controllers\LogController;
-use App\Http\Controllers\TicketingController;
+use App\Http\Controllers\TransactionTicketingController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
 /*
@@ -35,6 +35,22 @@ Route::get('/', 'Auth\AuthController@login')->name('login');
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
+
+Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
+Route::get('/staff/password',[UserController::class,'edit'])->middleware('auth');
+Route::put('/staff/password/saved',[UserController::class,'update'])->middleware('auth');
+Route::get('/admin/password',[UserController::class,'edit'])->middleware('auth');
+Route::put('/admin/password/saved',[UserController::class,'update'])->middleware('auth');
+
+//route profile
+Route::get('/admin/profile', [AdminAuthDashboardController::class,'profile']);
+Route::get('/admin/profile/edit', [AdminAuthDashboardController::class,'editprofile']);
+Route::put('/admin/profile/{user}', [AdminAuthDashboardController::class,'updateprofile']);
+Route::get('/staff/profile', [StaffAuthDashboardController::class,'profile']);
+Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
+Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
 
 //route landing dashboard, ganti password & profil ==ADMIN==
 Route::prefix('/admin')->group(function () {
@@ -140,22 +156,23 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
+    Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });
 
 //route transaction ticketing ==ADMIN==
 Route::prefix('/admin/ticketing')->group(function (){
-    Route::get('/',[TicketingController::class,'admin_index']);
-    Route::get('/{ticket}/edit',[TicketingController::class,'admin_edit']);
-    Route::put('/on-progress',[TicketingController::class,'make_on_progress']);
-    Route::put('/{ticket}',[TicketingController::class,'admin_response']);
-    Route::delete('/',[TicketingController::class,'admin_delete']);
+    Route::get('/',[TransactionTicketingController::class,'admin_index']);
+    Route::get('/{ticket}/edit',[TransactionTicketingController::class,'admin_edit']);
+    Route::put('/on-progress',[TransactionTicketingController::class,'make_on_progress']);
+    Route::put('/{ticket}',[TransactionTicketingController::class,'admin_response']);
+    Route::delete('/',[TransactionTicketingController::class,'admin_delete']);
 });
 
 //route transaction ticketing ==STAFF==
 Route::prefix('/staff/ticketing')->group(function (){
-    Route::get('/staff/ticketing/',[TicketingController::class,'staff_index']);
-    Route::get('/staff/ticketing/create',[TicketingController::class,'staff_create']);
-    Route::post('/staff/ticketing/input',[TicketingController::class,'staff_input']);
+    Route::get('/',[TransactionTicketingController::class,'staff_index']);
+    Route::get('/create',[TransactionTicketingController::class,'staff_create']);
+    Route::post('/input',[TransactionTicketingController::class,'staff_input']);
 });
 
 //route achievement ==ADMIN==

@@ -15,6 +15,7 @@ class CreateMasterPositionsTable extends Migration
     {
         Schema::create('master_positions', function (Blueprint $table) {
             $table->id();
+            $table->string('abbreviation',50);
             $table->string('name',50);
             $table->timestamps();
         });

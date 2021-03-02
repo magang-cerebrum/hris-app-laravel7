@@ -17,7 +17,10 @@
 </div>
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
-    var data = {!!json_encode($data) !!}
+    var d_score = {!!json_encode($score) !!}
+    var d_average = {!!json_encode($average) !!}
+    var d_max = {!!json_encode($max) !!}
+    var d_min = {!!json_encode($min) !!}
     
     $(document).ready(function () {
         // modal
@@ -29,32 +32,134 @@
             $('#userid').text(userid);
 
             setTimeout(function () {
-                var graph = [];
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i].achievement_user_id == userid) {
-                        graph.push(data[i]);
-                    }
-                }
                 var score = [
-                    [1, graph[0] ? graph[0].score : 0],
-                    [2, graph[1] ? graph[1].score : 0],
-                    [3, graph[2] ? graph[2].score : 0],
-                    [4, graph[3] ? graph[3].score : 0],
-                    [5, graph[4] ? graph[4].score : 0],
-                    [6, graph[5] ? graph[5].score : 0],
-                    [7, graph[6] ? graph[6].score : 0],
-                    [8, graph[7] ? graph[7].score : 0],
-                    [9, graph[8] ? graph[8].score : 0],
-                    [10, graph[9] ? graph[9].score : 0],
-                    [11, graph[10] ? graph[10].score : 0],
-                    [12, graph[11] ? graph[11].score : 0]
+                    [1, d_score[0] ? d_score[0][userid] : 0],
+                    [2, d_score[1] ? d_score[1][userid] : 0],
+                    [3, d_score[2] ? d_score[2][userid] : 0],
+                    [4, d_score[3] ? d_score[3][userid] : 0],
+                    [5, d_score[4] ? d_score[4][userid] : 0],
+                    [6, d_score[5] ? d_score[5][userid] : 0],
+                    [7, d_score[6] ? d_score[6][userid] : 0],
+                    [8, d_score[7] ? d_score[7][userid] : 0],
+                    [9, d_score[8] ? d_score[8][userid] : 0],
+                    [10, d_score[9] ? d_score[9][userid] : 0],
+                    [11, d_score[10] ? d_score[10][userid] : 0],
+                    [12, d_score[11] ? d_score[11][userid] : 0]
                 ];
+                var average = [
+                    [1, d_average[0]],
+                    [2, d_average[1]],
+                    [3, d_average[2]],
+                    [4, d_average[3]],
+                    [5, d_average[4]],
+                    [6, d_average[5]],
+                    [7, d_average[6]],
+                    [8, d_average[7]],
+                    [9, d_average[8]],
+                    [10, d_average[9]],
+                    [11, d_average[10]],
+                    [12, d_average[11]]
+                ];
+                var max = [
+                    [1, d_max[0]],
+                    [2, d_max[1]],
+                    [3, d_max[2]],
+                    [4, d_max[3]],
+                    [5, d_max[4]],
+                    [6, d_max[5]],
+                    [7, d_max[6]],
+                    [8, d_max[7]],
+                    [9, d_max[8]],
+                    [10, d_max[9]],
+                    [11, d_max[10]],
+                    [12, d_max[11]]
+                ];
+                var min = [
+                    [1, d_min[0]],
+                    [2, d_min[1]],
+                    [3, d_min[2]],
+                    [4, d_min[3]],
+                    [5, d_min[4]],
+                    [6, d_min[5]],
+                    [7, d_min[6]],
+                    [8, d_min[7]],
+                    [9, d_min[8]],
+                    [10, d_min[9]],
+                    [11, d_min[10]],
+                    [12, d_min[11]]
+                ];
+
                 $.plot('#charts-achievement', [{
                     data: score,
+                    label: 'Score',
                     lines: {
                         show: true,
                         lineWidth: 2,
-                        fill: false
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.5
+                            }, {
+                                opacity: 0.5
+                            }]
+                        }
+                    },
+                    points: {
+                        show: true,
+                        radius: 4,
+                    }
+                }, {
+                    data: average,
+                    label: 'Rata-rata',
+                    lines: {
+                        show: true,
+                        lineWidth: 2,
+                        fill: false,
+                        // fillColor: {
+                        //     colors: [{
+                        //         opacity: 0.5
+                        //     }, {
+                        //         opacity: 0.5
+                        //     }]
+                        // }
+                    },
+                    points: {
+                        show: true,
+                        radius: 4,
+                    }
+                }, {
+                    data: max,
+                    label: 'Max',
+                    lines: {
+                        show: true,
+                        lineWidth: 2,
+                        fill: false,
+                        // fillColor: {
+                        //     colors: [{
+                        //         opacity: 0.5
+                        //     }, {
+                        //         opacity: 0.5
+                        //     }]
+                        // }
+                    },
+                    points: {
+                        show: true,
+                        radius: 4,
+                    }
+                }, {
+                    data: min,
+                    label: 'Min',
+                    lines: {
+                        show: true,
+                        lineWidth: 2,
+                        fill: false,
+                        // fillColor: {
+                        //     colors: [{
+                        //         opacity: 0.5
+                        //     }, {
+                        //         opacity: 0.5
+                        //     }]
+                        // }
                     },
                     points: {
                         show: true,
@@ -70,10 +175,10 @@
                         },
                         shadowSize: 0
                     },
-                    colors: ['#bf0404', '#177bbb'],
+                    colors: ['#bf0404', '#177bbb','#FFFF00','#6ECCF4'],
                     legend: {
                         show: true,
-                        position: 'nw',
+                        position: 'ne',
                         margin: [15, 0]
                     },
                     grid: {
@@ -106,7 +211,7 @@
                     },
                     tooltip: {
                         show: true,
-                        content: 'Bulan: %x, Score: %y'
+                        content: 'Bulan: %x, Score: %y',
                     }
                 });
             },200);

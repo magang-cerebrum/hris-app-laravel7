@@ -275,4 +275,10 @@ class TransactionPaidLeaveController extends Controller
         }
         return redirect('/staff/paid-leave/history');
     }
+
+    public function cancel_staff(TransactionPaidLeave $id){
+        TransactionPaidLeave::where('id','=', $id->id)->update(['status' => 'Cancel']);
+        Alert::info('Berhasil!', 'Pengajuan cuti telah di cancel!');
+        return redirect('/staff/paid-leave/history');
+    }
 }

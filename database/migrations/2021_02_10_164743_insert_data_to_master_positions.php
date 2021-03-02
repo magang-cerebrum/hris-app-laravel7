@@ -21,50 +21,57 @@ class InsertDataToMasterPositions extends Migration
         DB::table('master_positions')->insert([
             [
                 'id' => 1,
-                'name' => 'CEO'
+                'abbreviation' => 'CEO',
+                'name' => 'Chief Executive Officer'
             ],
             [
                 'id' => 2,
+                'abbreviation' => 'President',
                 'name' => 'President'
             ],
             [
                 'id' => 3,
-                'name' => 'CDO'
+                'abbreviation' => 'CDO',
+                'name' => 'Chief Data Officer'
             ],
             [
                 'id' => 4,
-                'name' => 'CTO'
+                'abbreviation' => 'CTO',
+                'name' => 'Chief Techonology Officer'
             ],
             [
                 'id' => 5,
-                'name' => 'CPO'
+                'abbreviation' => 'CPO',
+                'name' => 'Chief Production Officer'
             ],
             [
                 'id' => 6,
-                'name' => 'CBO'
+                'abbreviation' => 'CBO',
+                'name' => 'Chief Business Officer'
             ],
             [
                 'id' => 7,
-                'name' => 'COO'
+                'abbreviation' => 'COO',
+                'name' => 'Chief Operating Officer'
             ],
             [
                 'id' => 8,
+                'abbreviation' => 'QC',
                 'name' => 'Quality Control'
             ],
             [
                 'id' => 9,
-                'name' => 'CAO'
+                'abbreviation' => 'CAO',
+                'name' => 'Chief Academic Officer'
             ],
             [
                 'id' => 10,
-                'name' => 'CSO'
+                'abbreviation' => 'CSO',
+                'name' => 'Chief Sales Officer'
             ],
             [
                 'id' => 11,
-                'name' => 'Head of'
-            ],
-            [
-                'id' => 12,
+                'abbreviation' => 'Staff',
                 'name' => 'Staff'
             ],
             ]);

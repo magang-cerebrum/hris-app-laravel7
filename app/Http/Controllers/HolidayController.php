@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\MasterHoliday;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 
 class HolidayController extends Controller
@@ -18,6 +19,10 @@ class HolidayController extends Controller
      */
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            return abort(403,'Access Denied, Only Admin Can Access');
+        }
+        elseif(Gate::allows('is_admin')) {
         $data = MasterHoliday::All();
         $user = Auth::user();
 
@@ -27,7 +32,7 @@ class HolidayController extends Controller
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id
-        ]);
+        ]);}
     }
 
     /**
@@ -37,6 +42,10 @@ class HolidayController extends Controller
      */
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            return abort(403,'Access Denied, Only Admin Can Access');
+        }
+        elseif(Gate::allows('is_admin')) {
         $user = Auth::user();
 
         return view('masterData.holiday.add', [
@@ -44,7 +53,7 @@ class HolidayController extends Controller
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id
-        ]);
+        ]);}
     }
 
     /**
@@ -55,6 +64,10 @@ class HolidayController extends Controller
      */
     public function store(Request $request)
     {   
+        if(Gate::denies('is_admin')){
+            return abort(403,'Access Denied, Only Admin Can Access');
+        }
+        elseif(Gate::allows('is_admin')) {
         $request->validate([
             'information' => 'required',
             'start' => 'required',
@@ -132,27 +145,15 @@ class HolidayController extends Controller
         
         Alert::success('Berhasil!', 'Hari libur baru telah ditambahkan!');
         return redirect('/admin/holiday');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(MasterHoliday $holiday)
     {
+        if(Gate::denies('is_admin')){
+            return abort(403,'Access Denied, Only Admin Can Access');
+        }
+        elseif(Gate::allows('is_admin')) {
         $user = Auth::user();
         return view('masterdata.holiday.edit',[
             'holiday' => $holiday,
@@ -160,7 +161,7 @@ class HolidayController extends Controller
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id
-        ]);
+        ]);}
     }
 
     /**
@@ -172,6 +173,10 @@ class HolidayController extends Controller
      */
     public function update(MasterHoliday $holiday, Request $request)
     {
+        if(Gate::denies('is_admin')){
+            return abort(403,'Access Denied, Only Admin Can Access');
+        }
+        elseif(Gate::allows('is_admin')) {
         $request->validate([
             'information' => 'required',
             'date' => 'required|unique:master_holidays,date',
@@ -183,7 +188,7 @@ class HolidayController extends Controller
                 'date' => $request->date
             ]);
         Alert::success('Berhasil!', 'Hari Libur ' . $holiday->information . ' berhasil diperbaharui!');
-        return redirect('/admin/holiday');
+        return redirect('/admin/holiday');}
     }
 
     /**
@@ -194,10 +199,14 @@ class HolidayController extends Controller
      */
     public function destroy(Request $request)
     {
+        if(Gate::denies('is_admin')){
+            return abort(403,'Access Denied, Only Admin Can Access');
+        }
+        elseif(Gate::allows('is_admin')) {
         foreach ($request->selectid as $item) {
             MasterHoliday::where('id','=',$item)->delete();
         }
         Alert::success('Berhasil!', 'Hari libur yang dipilih berhasil dihapus!');
-        return redirect('/admin/holiday');
+        return redirect('/admin/holiday');}
     }
 }

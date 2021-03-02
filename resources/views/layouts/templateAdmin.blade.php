@@ -19,12 +19,6 @@
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
-
-    <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/noUiSlider/nouislider.min.css')}}">
-    <script href="{{asset('plugins/noUiSlider/nouislider.js')}}"></script>
-    <script href="{{asset('plugins/noUiSlider/nouislider.min.js')}}"></script>
-
     @yield('head')
 </head>
 <body>
@@ -83,15 +77,13 @@
                                     <i class="demo-psi-male"></i>
                                 </span>
                             </a>
-
-
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
                                 <ul class="head-list">
                                     <li>
                                         <a href="{{ url('admin/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin/password/'.$id)}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
+                                        <a href="{{ url('admin/password/')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
                                         <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
@@ -101,7 +93,6 @@
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
- 
                     </ul>
                 </div>
                 <!--================================-->
@@ -158,12 +149,13 @@
                                             <p class="mnp-name">{{$name}}</p>
                                             <span class="mnp-desc">{{$email}}</span>
                                         </a>
+                                        <span class="label label-danger" style="font-size:9px;">Admin</span>
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">
                                         <a href="{{ url('admin/profile')}}" class="list-group-item">
                                             <i class="demo-psi-male icon-lg icon-fw"></i> Profile
                                         </a>
-                                        <a href="{{ url('admin/password/'.$id)}}" class="list-group-item">
+                                        <a href="{{ url('admin/password/')}}" class="list-group-item">
                                             <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                         </a>
                                         <a href="{{ url('logout')}}" class="list-group-item">

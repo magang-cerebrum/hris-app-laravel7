@@ -237,13 +237,8 @@
                                         <!--Submenu-->
                                         <ul class="collapse">
                                             <li><a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
-<<<<<<< HEAD
-                                            <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Scoring</a></li>
-                                            <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Charts Score</a></li>
-=======
                                             <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
                                             <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
                                         </ul>
                 
                                     </li>

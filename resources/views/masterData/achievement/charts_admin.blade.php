@@ -1,11 +1,6 @@
 @extends('layouts/templateAdmin')
-<<<<<<< HEAD
-@section('title','Sistem / Sistem Achievement')
-@section('content-title','Achievement Charts')
-=======
 @section('title','Achievement')
 @section('content-title','Penghargaan / Achievement Charts')
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
@@ -17,22 +12,6 @@
 </style>
 @endsection
 @section('content')
-<<<<<<< HEAD
-<div id="charts-achievement"></div>
-@section('script')
-    <script>
-        
-        $(document).ready(function(){
-            for(var i =0; i< "{{$count}}"; i++){
-                var score = "{{$data[" + i
-                // var lengkp = "]}}";
-                // var res = score.concat(lengkp)
-            console.log(score)
-            
-                
-            } 
-            var pageviews = [[2,score],[3,90],[4,20]];
-=======
 {{-- {{dd(Auth::user())}} --}}
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
@@ -74,7 +53,6 @@
         $(document).ready(function(){
           
              // var pageviews = [[2,$data->score],[3,90],[4,20]];
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
      $.plot('#charts-achievement', [
         {
             label: 'Charts Achievement',
@@ -86,12 +64,7 @@
             },
             points: {
                 show: true,
-<<<<<<< HEAD
                 radius: 4
-=======
-                radius: 4,
-                // symbol : "square"
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
             }
             },
         ], {
@@ -100,12 +73,7 @@
                 show: true
             },
             points: {
-<<<<<<< HEAD
                 show: true
-=======
-                show: true,
-                // symbol:"square"
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
             },
             shadowSize: 0 // Drawing is faster without shadows
         },
@@ -122,11 +90,6 @@
         },
         yaxis: {
             ticks: 9,
-<<<<<<< HEAD
-=======
-            min : 0,
-            max : 100,
->>>>>>> 09125fd36d2d637ff5448dc176bca71e3b45cc7e
             tickColor: 'rgba(0,0,0,.1)'
         },
         xaxis: {

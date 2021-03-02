@@ -139,4 +139,21 @@ class MasterAchievementController extends Controller
         }
         return redirect('/admin/achievement');
     }
+    public function charts (){
+        $user = Auth::user();
+        $data = DB::table('master_achievements')->
+        leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
+        $count = count($data);
+        
+        // $month = DB::table('master_achievements')->
+        // leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')->get();
+        return view('masterdata.achievement.charts_admin',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data,
+            'count' =>$count
+        ]);
+    }
 }

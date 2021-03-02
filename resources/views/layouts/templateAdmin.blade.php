@@ -251,6 +251,7 @@
                                         <ul class="collapse">
                                             <li><a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
                                             <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Scoring</a></li>
+                                            <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Charts Score</a></li>
                                         </ul>
                 
                                     </li>

@@ -8,6 +8,8 @@ use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterAchievementController;
+use App\MasterAchievement;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -114,7 +116,7 @@ Route::get('/admin/log',[App\Http\Controllers\LogController::class,'index']);
 Route::delete('/admin/log/',[App\Http\Controllers\LogController::class,'destroyselected']);
 
 //Route Achievement
-Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
+// Route::get('/admin/achievement/scoring', [App\Http\Controllers\MasterAchievementController::class,'score']);
 //route staff presence
 Route::get('/staff/presence',[App\Http\Controllers\PresenceController::class,'staff_view']);
 Route::get('/staff/presence/test',[App\Http\Controllers\PresenceController::class,'test_presence']);
@@ -134,10 +136,11 @@ Route::post('/staff/ticketing/input',[App\Http\Controllers\TicketingController::
 
 
 
-//Route Achievement Dates
+//Route Achievement 
 Route::get('/admin/achievement', [App\Http\Controllers\MasterAchievementController::class,'index']);
-// Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
-// Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
 Route::get('/admin/achievement/scoring',[MasterAchievementController::class,'scoring']);
 Route::post('/admin/achievement/scoring',[MasterAchievementController::class,'scored']);
 Route::post('/admin/achievement/search',[MasterAchievementController::class,'search']);
+// Route::get('/admin/achievement/dates-add',[App\Http\Controllers\AchievementDateController::class,'create'])->name('createaachievementdates');
+// Route::post('/admin/achievement',[App\Http\Controllers\AchievementDateController::class,'store'])->name('datestore');
+Route::get('/admin/achievement/charts', [MasterAchievementController::class,'charts']);

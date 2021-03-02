@@ -62,20 +62,15 @@ class InsertDataToMasterPositions extends Migration
             [
                 'id' => 9,
                 'abbreviation' => 'CAO',
-                'name' => 'Chief Administrative Officer'
+                'name' => 'Chief Academic Officer'
             ],
             [
                 'id' => 10,
                 'abbreviation' => 'CSO',
-                'name' => 'Chief Security Officer'
+                'name' => 'Chief Sales Officer'
             ],
             [
                 'id' => 11,
-                'abbreviation' => 'Head',
-                'name' => 'Head of'
-            ],
-            [
-                'id' => 12,
                 'abbreviation' => 'Staff',
                 'name' => 'Staff'
             ],

@@ -18,8 +18,8 @@ class DataStaffController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $staff = DB::table('master_users')
-        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        $staff = MasterUser::
+        leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
         ->select(
@@ -29,13 +29,14 @@ class DataStaffController extends Controller
                 'master_roles.name as role_name'
                 )
         ->get();
-        // ->paginate(5); if paginate on
+        $aktif = MasterUser::where('status','=','Aktif')->select('nip')->get();
         return view('masterdata.datastaff.list',[
             'staff' => $staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
-            'id'=>$user->id
+            'id'=>$user->id,
+            'aktif'=>count($aktif)
         ]);
     }
 
@@ -195,9 +196,14 @@ class DataStaffController extends Controller
         return redirect('/admin/data-staff');
     }
     public function destroyAll(Request $request){
-        $request->validate(['selectid' => 'required']);
-        foreach ($request->selectid as $item) {
-            MasterUser::where('id','=',$item)->delete();
+        if ($request->selectid[0] != '') {
+            foreach ($request->selectid as $item) {
+                MasterUser::where('id','=',$item)->delete();
+            }            
+        } else {
+            foreach ($request->selectid_active as $item) {
+                MasterUser::where('id','=',$item)->delete();
+            }
         }
         Alert::success('Berhasil!', 'Staff yang dipilih berhasil dihapus!');
         return redirect('/admin/data-staff');

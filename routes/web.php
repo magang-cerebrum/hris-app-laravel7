@@ -15,7 +15,7 @@ use App\Http\Controllers\MasterJobScheduleController;
 use App\Http\Controllers\MasterAchievementController;
 use App\Http\Controllers\TransactionPaidLeaveController;
 use App\Http\Controllers\LogController;
-use App\Http\Controllers\TicketingController;
+use App\Http\Controllers\TransactionTicketingController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
 /*
@@ -161,18 +161,18 @@ Route::prefix('/staff/paid-leave')->group(function(){
 
 //route transaction ticketing ==ADMIN==
 Route::prefix('/admin/ticketing')->group(function (){
-    Route::get('/',[TicketingController::class,'admin_index']);
-    Route::get('/{ticket}/edit',[TicketingController::class,'admin_edit']);
-    Route::put('/on-progress',[TicketingController::class,'make_on_progress']);
-    Route::put('/{ticket}',[TicketingController::class,'admin_response']);
-    Route::delete('/',[TicketingController::class,'admin_delete']);
+    Route::get('/',[TransactionTicketingController::class,'admin_index']);
+    Route::get('/{ticket}/edit',[TransactionTicketingController::class,'admin_edit']);
+    Route::put('/on-progress',[TransactionTicketingController::class,'make_on_progress']);
+    Route::put('/{ticket}',[TransactionTicketingController::class,'admin_response']);
+    Route::delete('/',[TransactionTicketingController::class,'admin_delete']);
 });
 
 //route transaction ticketing ==STAFF==
 Route::prefix('/staff/ticketing')->group(function (){
-    Route::get('/',[TicketingController::class,'staff_index']);
-    Route::get('/create',[TicketingController::class,'staff_create']);
-    Route::post('/input',[TicketingController::class,'staff_input']);
+    Route::get('/',[TransactionTicketingController::class,'staff_index']);
+    Route::get('/create',[TransactionTicketingController::class,'staff_create']);
+    Route::post('/input',[TransactionTicketingController::class,'staff_input']);
 });
 
 //route achievement ==ADMIN==

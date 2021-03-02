@@ -17,7 +17,7 @@ class PositionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $position = MasterPosition::paginate(5);
+        $position = MasterPosition::get();
         return view('masterdata.position.list',[
             'position' => $position,
             'name'=>$user->name,

@@ -12,7 +12,7 @@ class StaffAuthDashboardController extends Controller
     public function index(){
         
         if(Gate::denies('is_staff')){
-            return abort(403,'Staff must Login First');
+            abort(403,'Staff must Login First');
         }
         else if(Gate::allows('is_staff')){
             $score = array();
@@ -40,7 +40,7 @@ class StaffAuthDashboardController extends Controller
                     for($j=0;$j<count($data_month);$j++){
                         $temp_max = $data_month[$j]->score;
                         if($temp_max>$max_score){
-                            $max_score =$temp;
+                            $max_score =$temp_max;
                         }
                     }
                     // if max score matches user score on that month
@@ -57,7 +57,7 @@ class StaffAuthDashboardController extends Controller
                 }
             }
             $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
-            
+            // dd($month_of_eom);
             return view('dashboard.staff',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -65,7 +65,10 @@ class StaffAuthDashboardController extends Controller
                 'id'=>$user->id,
                 'score'=>$score,
                 'current_year'=>$this_year,
-                'year_list'=>$year_list
+                'year_list'=>$year_list,
+                'sum_of_eom'=>$sum_of_eom,
+                'month_of_eom'=>$month_of_eom,
+                
             ]);
         }
     }
@@ -96,7 +99,7 @@ class StaffAuthDashboardController extends Controller
                 for($j=0;$j<count($data_month);$j++){
                     $temp_max = $data_month[$j]->score;
                     if($temp_max>$max_score){
-                        $max_score =$temp;
+                        $max_score =$temp_max;
                     }
                 }
                 // if max score matches user score on that month
@@ -113,13 +116,14 @@ class StaffAuthDashboardController extends Controller
             }
         }
 
-        return response()->json([
+        return response()
+        ->json([
             'year'=>$year,
             'sum_of_eom'=>$sum_of_eom,
             'month_of_eom'=>$month_of_eom,
             'score' => $score
         ]);
-    }
+        }
     
     public function profile()
     {

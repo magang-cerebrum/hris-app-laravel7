@@ -25,54 +25,19 @@
 @endsection
 @section('content')
 
+
     <div class="row mt-10">
-        <div class="col-md-4">
-            <div class="panel panel-warning panel-colorful media middle pad-all">
-                <div class="media-left">
-                    <div class="pad-hor">
-                        <i class="demo-pli-checked-user icon-3x"></i>
-                    </div>
-                </div>
-                <div class="media-body">
-                    <p class="text-2x mar-no text-semibold">241</p>
-                    <p class="mar-no">Staff Akhtif</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-info panel-colorful media middle pad-all">
-                <div class="media-left">
-                    <div class="pad-hor">
-                        <i class="demo-pli-remove-user icon-3x"></i>
-                    </div>
-                </div>
-                <div class="media-body">
-                    <p class="text-2x mar-no text-semibold">241</p>
-                    <p class="mar-no">Staff Non-Aktif</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-mint panel-colorful media middle pad-all">
-                <div class="media-left">
-                    <div class="pad-hor">
-                        <i class="demo-pli-clock icon-3x"></i>
-                    </div>
-                </div>
-                <div class="media-body">
-                    <p class="text-2x mar-no text-semibold">241</p>
-                    <p class="mar-no">Staff Hadir</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-10" style="padding: 0 10px">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <div class="panel panel-bordered panel-primary">
                 <div class="panel-heading">
                     {{-- <i class="fa"></i> --}}
-                    <h3 class="panel-title">Grafik "{{$name}}" Tahun 
-                        <span id="textval">{{$current_year}}</span>
+                        
+                        <h3 class="panel-title">Grafik "{{$name}}" Tahun  
+                            
+                        <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
+                        <i></i>
+                    @else <i class="fa fa-trophy" id="eom_i_test"></i>
+                    @endif
                     </h3>
                 </div>
                     <div class="panel-body" id="charts">
@@ -85,9 +50,27 @@
                                 @endif
                             @endforeach
                         </select>
-                        <i class="fa fa-trophy"></i>
                         </div>
                         <div id="staff-charts"></div>
+                        <br>
+                        <div id="eom_message">
+                            <p id="text_eom_0" class="text-danger"></p>
+                        @if ($sum_of_eom == 0)
+                            <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
+                        @else 
+                        <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah {{$sum_of_eom}} yaitu bulan 
+                            @foreach ($month_of_eom as $item)
+                            
+                            {{-- {{dd($loop->last)}} --}}
+                            @if ($loop->last)
+                            {{$item}}
+                            @else {{$item}}, 
+                            @endif   
+
+                            @endforeach
+                        </p>
+                        @endif
+                        </div>
                     </div>
             </div>
             {{-- <div class="table-responsive">
@@ -114,12 +97,16 @@
                 </table>
             </div> --}}
         </div>
-        <div class="col-md-1"></div>
         
+        
+    </div>
+    <div class="row mt-10">
+        <div class="col-md-12"></div>
     </div>
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
+    
     function showChange(){
         $('#year-finder').on('change',function(e){
         var optionSelected = $("option:selected", this);
@@ -217,7 +204,7 @@
             var valueSelected = this.value;
             var url_="{{route('ajx')}}";
             $.ajax({
-                type:"PUT",
+                type:"GET",
                 data:{year:valueSelected},
                 url:url_,
                 dataType:'json',
@@ -236,7 +223,18 @@
                     [11, response.score[10] ?  response.score[10] : 0],
                     [12, response.score[11] ?  response.score[11] : 0]
                 ];
-                // console.log(response);
+                if(response.sum_of_eom == 0){
+                    document.getElementById('text_eom_0').innerHTML = "Anda Belum mendapatkan Employee of the Month pada Tahun ini";
+                    document.getElementById('text_eom').innerHTML = " ";
+                    document.getElementById('eom_i_test').className = " "
+                    // console.log("NOLLL")
+                }
+                else {
+                    document.getElementById('text_eom_0').innerHTML =" "
+                    document.getElementById('eom_i_test').className = "fa fa-trophy"
+                    document.getElementById('text_eom').innerHTML = "Jumlah Employee of the month yang anda dapatkan adalah " +response.sum_of_eom+ " yaitu bulan " + response.month_of_eom;
+                }
+                console.log(response);
                 $(document).ready(function(){
             $.plot('#staff-charts', [
         {

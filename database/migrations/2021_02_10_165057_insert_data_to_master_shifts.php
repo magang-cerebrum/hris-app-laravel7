@@ -39,7 +39,15 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '13:00:00',
                 'end_working_time' => '21:00:00',
                 'total_hour' => 8
-            ]
+            ],
+            [
+                'id' => 4,
+                'name' => 'Cuti',
+                'start_working_time' => '00:00:00',
+                'end_working_time' => '00:00:00',
+                'total_hour' => 0
+            ],
+            
             ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

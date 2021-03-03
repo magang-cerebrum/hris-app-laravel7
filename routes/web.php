@@ -135,12 +135,12 @@ Route::prefix('/admin/holiday')->group(function() {
 //route jadwal kerja admin & staff
 Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
-    Route::post('/search',[MasterJobScheduleController::class, 'index']);
+    Route::post('/search',[MasterJobScheduleController::class, 'admin_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'index_add']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
 });
-Route::get('/staff/schedule/',[MasterJobScheduleController::class, 'staff_index']);
+Route::get('/staff/schedule/',[MasterJobScheduleController::class, 'staff_calendar']);
 
 //route transaksi cuti ==ADMIN==
 Route::prefix('/admin/paid-leave')->group(function(){

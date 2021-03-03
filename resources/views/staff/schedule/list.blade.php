@@ -4,56 +4,30 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
+    <link href="{{asset("plugins/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet">
+    <link href="{{asset("plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css")}}" rel="stylesheet">
     <style>
-        table, h2.h3 {
-            color: black;
-        }
+        .fc-time{display : none;}
+        .fc-toolbar{display: none;}
+        .fc-event{height: 60px;}
+        .fc-content{text-align: center;padding-top: 22px}
+        td#green{background-color: #8bc34a; width: 20px; height: 20px;}
+        td#blue{background-color: #00bcd4; width: 20px; height: 20px;}
+        td#red{background-color: #ef5350; width: 20px; height: 20px;}
+        td.break{width: 10px; height: 10px;}
     </style>
 @endsection
 
 @section('content')
-    <?php
-        function check_name_day($check) {
-            switch ($check) {
-                case 'Monday': return 'Senin'; break;
-                case 'Tuesday': return 'Selasa'; break;
-                case 'Wednesday': return 'Rabu'; break;
-                case 'Thursday': return 'Kamis'; break;
-                case 'Friday': return "Jum'at"; break;
-                case 'Saturday': return 'Sabtu'; break;
-                case 'Sunday': return 'Minggu'; break;
-            }
-        }
-    ?>
+    
     <div class="panel panel-bordered panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_this_month[0]->month.' - '.$data_this_month[0]->year}}</h3>
         </div>
         <div class="panel-body">
-            <div class="table-responsive">
-                <table id="schedule-this-month"
-                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                cellspacing="0">
-                    @for ($i = 1; $i <= $days; $i++)
-                        @if ($i % 7 == 1)
-                            <tr>
-                        @endif
-                        <td id="{{'td-'.$i}}">
-                            <?php
-                                $data = 'shift_'.$i;
-                                $day=$data_this_month[0]->year.'/'.$month.'/'.$i;
-                                $name_day = check_name_day(date('l', strtotime($day)));
-                            ?>
-                            <p>{{$i}} - <span>{{$name_day}}</span></p>
-                            <h2 class="h3 text-center {{$data_this_month[0]->$data}}">{{$data_this_month[0]->$data}}</h2>
-                        </td>
-                        @if ($i % 7 == 0)
-                            </tr>
-                        @endif
-                    @endfor
-                </table>
-            </div>
+            <div id='calendar-this-month'></div>
+            <br>
+            <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur/Cuti</td></tr></table>
         </div>
 
         @if (count($data_next_month) != 0) 
@@ -61,53 +35,73 @@
                 <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_next_month[0]->month.' - '.$data_next_month[0]->year}}</h3>
             </div>
             <div class="panel-body">
-                <div class="table-responsive">
-                    <table id="schedule-this-month"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                    role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                    cellspacing="0">
-                        @for ($i = 1; $i <= 7; $i++)
-                            @if ($i % 7 == 1)
-                                <tr>
-                            @endif
-                            <td>
-                                <?php
-                                    $data = 'shift_'.$i;
-                                    $day=$data_next_month[0]->year.'/'.$month.'/'.$i;
-                                    $name_day = check_name_day(date('l', strtotime($day)));
-                                ?>
-                                <p>{{$i}} - <span>{{$name_day}}</span></p>
-                                <h2 class="h3 text-center {{$data_next_month[0]->$data}}">{{$data_next_month[0]->$data}}</h2>
-                            </td>
-                            @if ($i % 7 == 0)
-                                </tr>
-                            @endif
-                        @endfor
-                    </table>
-                </div>
+                <div id='calendar-next-month'></div>
+                <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur/Cuti</td></tr></table>
             </div>
         @endif
     </div>
 @endsection
 
 @section('script')
+
+<script src="{{asset("plugins/fullcalendar/lib/moment.min.js")}}"></script>
+<script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
+<script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
+<script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
+
 <script>
-    var data_off = document.getElementsByClassName('Off');
-    var data_pagi = document.getElementsByClassName('Pagi');
-    var data_siang = document.getElementsByClassName('Siang');
-    for (let index = 0; index < data_off.length; index++) {
-        var data = data_off[index].parentElement;
-        data.style.backgroundColor="rgba(255,0,0,0.75)";
-    }
-    for (let index = 0; index < data_pagi.length; index++) {
-        var data = data_pagi[index].parentElement;
-        data.style.backgroundColor="rgba(0,255,0,0.75)";
-    }
-    for (let index = 0; index < data_siang.length; index++) {
-        var data = data_siang[index].parentElement;
-        data.style.backgroundColor="rgba(0,0,255,0.75)";
-    }
-    var this_day = document.getElementById('td-'+new Date().getDate());
-    this_day.style.border="solid black 5px";
+    $(document).ready(function () {
+        $('#calendar-this-month').fullCalendar({
+            contentHeight:500,
+            fixedWeekCount: false,
+            header:{
+                left: 'prev,next',
+                center: 'title',
+                right: 'month,basicWeek'
+            },
+            defaultDate: '<?= $data_this_month[0]->year ?>-<?= switch_month($data_this_month[0]->month,false) ?>-01',
+            eventLimit: true,
+            events: [
+                <?php foreach ($data_this_month as $item) { 
+                    for ($i=1; $i <= $day; $i++) { ?>
+                        <?php 
+                            $shift = 'shift_'.$i;
+                        if($item->$shift == 'Pagi') $color = 'success';
+                        elseif($item->$shift == 'Siang') $color = 'info';
+                        else $color = 'danger';
+                        ?>
+                        {
+                            title: '<?= $item->user_name ?>',
+                            start: "<?= $data_this_month[0]->year ?>-<?= switch_month($data_this_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
+                            className: '<?= $color ?>'
+                        },
+                    <?php } ?>
+                <?php } ?>
+            ]
+        });
+        $('#calendar-next-month').fullCalendar({
+            defaultView:'basicWeek',
+            contentHeight: 130,
+            defaultDate: '<?= $data_next_month[0]->year ?>-<?= switch_month($data_next_month[0]->month,false) ?>-01',
+            eventLimit: true,
+            events: [
+                <?php foreach ($data_next_month as $item) { 
+                    for ($i=1; $i <= 7; $i++) { ?>
+                        <?php 
+                            $shift = 'shift_'.$i;
+                        if($item->$shift == 'Pagi') $color = 'success';
+                        elseif($item->$shift == 'Siang') $color = 'info';
+                        else $color = 'danger';
+                        ?>
+                        {
+                            title: '<?= $item->user_name ?>',
+                            start: "<?= $data_next_month[0]->year ?>-<?= switch_month($data_next_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
+                            className: '<?= $color ?>'
+                        },
+                    <?php } ?>
+                <?php } ?>
+            ]
+        });
+    })
 </script>
 @endsection

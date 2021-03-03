@@ -54,7 +54,7 @@ class MasterJobScheduleController extends Controller
         ]);
     }
 
-    public function staff_index()
+    public function staff_calendar()
     {
         $cal = CAL_GREGORIAN;
         $month = date('m');
@@ -65,23 +65,28 @@ class MasterJobScheduleController extends Controller
         $next_month = switch_month(intval($month) + 1);
 
         $user = Auth::user();
-        $data_this_month = DB::table('master_job_schedules')
+        $data_this_month = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('user_id', '=', $user->id)
         ->where('month', '=', $this_month)
         ->where('year', '=', $year)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )
         ->get();
-        $data_next_month = DB::table('master_job_schedules')
+        $data_next_month = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('user_id', '=', $user->id)
         ->where('month', '=', $next_month)
         ->where('year', '=', $year)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )
         ->get();
-
-
         return view('staff.schedule.list', [
             'data_this_month'=>$data_this_month,
             'data_next_month'=>$data_next_month,
-            'days'=>$days_in_month,
-            'month'=>$month,
+            'day'=>$days_in_month,            
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -251,71 +256,29 @@ class MasterJobScheduleController extends Controller
         Alert::success('Berhasil!', 'Jadwal staff baru berhasil ditambahkan!');
         return redirect('/admin/schedule');
     }
-    
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function admin_calendar(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->where('month', '=',$request->month)
+        ->where('year', '=', $request->year)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )->get();
+        $cal = CAL_GREGORIAN;
+        $month = switch_month($request->month, false);
+        $days_in_month = cal_days_in_month($cal, $month, date('Y'));
+        $user = Auth::user();
+        return view('masterData.schedule.calendar', [
+            'data'=>$data,
+            'day'=>$days_in_month,
+            'month'=>$month,
+            'year'=>$request->year,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 }

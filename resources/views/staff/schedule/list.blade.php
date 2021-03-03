@@ -25,8 +25,7 @@
             <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_this_month[0]->month.' - '.$data_this_month[0]->year}}</h3>
         </div>
         <div class="panel-body">
-            <div id='calendar-this-month'></div>
-            <br>
+            <div id='calendar-this-month'></div><br>
             <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur/Cuti</td></tr></table>
         </div>
 
@@ -35,8 +34,8 @@
                 <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_next_month[0]->month.' - '.$data_next_month[0]->year}}</h3>
             </div>
             <div class="panel-body">
-                <div id='calendar-next-month'></div>
-                <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur/Cuti</td></tr></table>
+                <div id='calendar-next-month'></div><br>
+                <table id="legend-next"><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur/Cuti</td></tr></table>
             </div>
         @endif
     </div>
@@ -80,28 +79,30 @@
             ]
         });
         $('#calendar-next-month').fullCalendar({
-            defaultView:'basicWeek',
-            contentHeight: 130,
-            defaultDate: '<?= $data_next_month[0]->year ?>-<?= switch_month($data_next_month[0]->month,false) ?>-01',
-            eventLimit: true,
-            events: [
-                <?php foreach ($data_next_month as $item) { 
-                    for ($i=1; $i <= 7; $i++) { ?>
-                        <?php 
-                            $shift = 'shift_'.$i;
-                        if($item->$shift == 'Pagi') $color = 'success';
-                        elseif($item->$shift == 'Siang') $color = 'info';
-                        else $color = 'danger';
-                        ?>
-                        {
-                            title: '<?= $item->user_name ?>',
-                            start: "<?= $data_next_month[0]->year ?>-<?= switch_month($data_next_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
-                            className: '<?= $color ?>'
-                        },
-                    <?php } ?>
+                defaultView:'basicWeek',
+                contentHeight: 103,
+                <?php foreach ($data_next_month as $item){ ?>
+                    defaultDate: '<?= $item->year ?>-<?= switch_month($item->month,false) ?>-01',
                 <?php } ?>
-            ]
-        });
+                eventLimit: true,
+                events: [
+                    <?php foreach ($data_next_month as $item) { 
+                        for ($i=1; $i <= 7; $i++) { ?>
+                            <?php 
+                                $shift = 'shift_'.$i;
+                            if($item->$shift == 'Pagi') $color = 'success';
+                            elseif($item->$shift == 'Siang') $color = 'info';
+                            else $color = 'danger';
+                            ?>
+                            {
+                                title: '<?= $item->user_name ?>',
+                                start: "<?= $data_next_month[0]->year ?>-<?= switch_month($data_next_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
+                                className: '<?= $color ?>'
+                            },
+                        <?php } ?>
+                    <?php } ?>
+                ]
+            });
     })
 </script>
 @endsection

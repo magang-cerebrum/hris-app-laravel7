@@ -1,113 +1,101 @@
 @extends('layouts/templateStaff')
 @section('title','Jadwal Kerja')
-@section('content-title','Jadwal Kerja')
+@section('content-title','Jadwal Kerja Divisi / Daftar Jadwal Kerja Divisi')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-
 @section('head')
-    <style>
-        table, h2.h3 {
-            color: black;
-        }
-    </style>
+<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+{{-- Sweetalert 2 --}}
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<style>
+    tbody {
+        color: black;
+    }
+</style>
 @endsection
-
 @section('content')
-    <?php
-        function check_name_day($check) {
-            switch ($check) {
-                case 'Monday': return 'Senin'; break;
-                case 'Tuesday': return 'Selasa'; break;
-                case 'Wednesday': return 'Rabu'; break;
-                case 'Thursday': return 'Kamis'; break;
-                case 'Friday': return "Jum'at"; break;
-                case 'Saturday': return 'Sabtu'; break;
-                case 'Sunday': return 'Minggu'; break;
-            }
-        }
-    ?>
-    <div class="panel panel-bordered panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_this_month[0]->month.' - '.$data_this_month[0]->year}}</h3>
-        </div>
-        <div class="panel-body">
-            <div class="table-responsive">
-                <table id="schedule-this-month"
-                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                cellspacing="0">
-                    @for ($i = 1; $i <= $days; $i++)
-                        @if ($i % 7 == 1)
-                            <tr>
-                        @endif
-                        <td id="{{'td-'.$i}}">
-                            <?php
-                                $data = 'shift_'.$i;
-                                $day=$data_this_month[0]->year.'/'.$month.'/'.$i;
-                                $name_day = check_name_day(date('l', strtotime($day)));
-                            ?>
-                            <p>{{$i}} - <span>{{$name_day}}</span></p>
-                            <h2 class="h3 text-center {{$data_this_month[0]->$data}}">{{$data_this_month[0]->$data}}</h2>
-                        </td>
-                        @if ($i % 7 == 0)
-                            </tr>
-                        @endif
-                    @endfor
-                </table>
-            </div>
-        </div>
 
-        @if (count($data_next_month) != 0) 
-            <div class="panel-heading">
-                <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$data_next_month[0]->month.' - '.$data_next_month[0]->year}}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table id="schedule-this-month"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                    role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                    cellspacing="0">
-                        @for ($i = 1; $i <= 7; $i++)
-                            @if ($i % 7 == 1)
-                                <tr>
-                            @endif
-                            <td>
-                                <?php
-                                    $data = 'shift_'.$i;
-                                    $day=$data_next_month[0]->year.'/'.$month.'/'.$i;
-                                    $name_day = check_name_day(date('l', strtotime($day)));
-                                ?>
-                                <p>{{$i}} - <span>{{$name_day}}</span></p>
-                                <h2 class="h3 text-center {{$data_next_month[0]->$data}}">{{$data_next_month[0]->$data}}</h2>
-                            </td>
-                            @if ($i % 7 == 0)
-                                </tr>
-                            @endif
-                        @endfor
-                    </table>
+<div class="panel panel-bordered panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Daftar Jadwal Kerja</h3>
+    </div>
+    <div class="panel-body">
+        <form action="/staff/schedule/search" method="post" id="schedule-search">
+            @csrf
+            {{-- <label class="col-sm-1 control-label">Bulan:</label> --}}
+            <div id="datepicker-input-cari">
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Bulan :</span>
+                        
+                        <select class="selectpicker" data-style="btn-info" 
+                        style="width: 100%" 
+                        id="filter-bulan"  name="month">
+                            <option value=" "></option>
+                            <option value="Januari">Januari</option>
+                            <option value="Februari">Februari</option>
+                            <option value="Maret">Maret</option>
+                            <option value="April">April</option>
+                            <option value="Mei">Mei</option>
+                            <option value="Juni">Juni</option>
+                            <option value="juli">juli</option>
+                            <option value="Agustus">Agustus</option>
+                            <option value="September">September</option>
+                            <option value="Oktober">Oktober</option>
+                            <option value="November">November</option>
+                            <option value="Desember">Desember</option>
+                        </select>
+                        <span class="input-group-addon">Tahun :</span>
+                        <input type="text" class="form-control @error('year') is-invalid @enderror"
+                            placeholder="Tahun" name="year" value="{{old('year')}}"  autocomplete="off">
+                    </div>
+                    {{-- @error('start') <div class="text-danger invalid-feedback mt-3">Mohon isi
+                        tanggal mulai.</div> @enderror
+                    @error('end') <div class="text-danger invalid-feedback mt-3">Mohon isi
+                    tanggal akhir.</div> @enderror --}}
                 </div>
             </div>
-        @endif
     </div>
+    <div class="panel-footer text-right">
+        {{-- <a href="/staff/presence/test" class="btn btn-warning float-right">Toogle presensi</a> --}}
+        <button type="submit" class="btn btn-mint float-right" >Cari Jadwal Kerja</button>
+    </div>
+    </form>
+</div>
+
+<div id="panel-output">
+
+</div>
 @endsection
 
+
 @section('script')
+<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+{{-- Sweetalert 2 --}}
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
-    var data_off = document.getElementsByClassName('Off');
-    var data_pagi = document.getElementsByClassName('Pagi');
-    var data_siang = document.getElementsByClassName('Siang');
-    for (let index = 0; index < data_off.length; index++) {
-        var data = data_off[index].parentElement;
-        data.style.backgroundColor="rgba(255,0,0,0.75)";
-    }
-    for (let index = 0; index < data_pagi.length; index++) {
-        var data = data_pagi[index].parentElement;
-        data.style.backgroundColor="rgba(0,255,0,0.75)";
-    }
-    for (let index = 0; index < data_siang.length; index++) {
-        var data = data_siang[index].parentElement;
-        data.style.backgroundColor="rgba(0,0,255,0.75)";
-    }
-    var this_day = document.getElementById('td-'+new Date().getDate());
-    this_day.style.border="solid black 5px";
+    
+        
+    $(document).ready(function () {
+        $('#schedule-search').on('submit', function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                // data: {  _token : <?php Session::token() ?>},
+                data: $(this).serialize(),
+                success: function (data) {
+                    $("#panel-output").html(data);
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Form belum diisi dengan benar / Tidak ada data jadwal untuk bulan terpilih",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+            });
+        });
+    });
 </script>
 @endsection

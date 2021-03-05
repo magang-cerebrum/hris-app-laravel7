@@ -1,6 +1,6 @@
-@extends('layouts/templateAdmin')
-@section('title','Jadwal Kerja')
-@section('content-title','Jadwal Kerja / Pilih Staff untuk Jadwal Kerja')
+@extends('layouts/templateStaff')
+@section('title','Jadwal Kerja Divisi')
+@section('content-title','Jadwal Kerja Divisi/ Pilih Staff untuk Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
 @section('head')
@@ -8,13 +8,13 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 @endsection
-<div class="panel panel-danger panel-bordered">
+<div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Pilih Staff untuk Jadwal Kerja</h3>
     </div>
     <div class="panel-body">
         <div class="table-responsive">
-            <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-chek-user-month">
+            <form action="{{ url('/staff/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-chek-user-month">
                 @csrf
                 <div class="row">
                     <div class="col-sm-12">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <table id="masterdata-filter-schedule"
+                <table id="staff-filter-schedule"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
                 cellspacing="0">
@@ -150,7 +150,7 @@
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("cari-divisi");
         filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-filter-schedule");
+        table = document.getElementById("staff-filter-schedule");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
             for (j = 2; j < 6; j++ ){

@@ -21,6 +21,208 @@
     .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
             width: 80px;
         }
+
+                 
+        #first .pos-rel{
+            background-color: #fedb37;
+            height: 250px;
+        }
+        #second .pos-rel{
+          background-color: #e6e8e9  
+        }
+        #third .pos-rel p{
+            color: white
+        }
+        #third .pos-rel{
+
+        background-color: #b1560f;
+        }
+        
+@keyframes shine{
+    10% {
+    opacity: 1;
+    top: -0%;
+    left: -25%;
+    transition-property: left, top, opacity;
+    transition-duration: 0.7s, 0.7s, 0.15s;
+    transition-timing-function: linear;
+  }
+  100% {
+    opacity: 0;
+    top: -0%;
+    left: -10%;
+    transition-property: left, top, opacity;
+  }
+}
+
+#second .pos-rel:after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: -210%;
+  width: 200%;
+  height: 100%;
+  opacity: 0;
+  /* transform: rotate(30deg); */
+
+animation: shine 2s linear  infinite;
+animation-fill-mode: forwards;      
+background: rgba(255, 255, 255, 0.13);
+background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.13) 77%,
+    rgba(255, 255, 255, 0.5) 95%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+}
+
+
+
+/* Active state */
+
+#second .pos-rel:active:after {
+  opacity: 0;
+}
+
+#first .pos-rel:after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: -210%;
+  width: 188%;
+  height: 100%;
+  opacity: 0;
+  animation: shine 2s linear infinite;
+  animation-fill-mode: forwards; 
+  
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.13) 77%,
+    rgba(255, 255, 255, 0.5) 92%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+}
+
+#first .pos-rel:active:after {
+  opacity: 0;
+} 
+
+
+#third .pos-rel:after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: -210%;
+  width: 188%;
+  height: 100%;
+  opacity: 0;
+  animation: shine 2s linear infinite;
+  animation-fill-mode: forwards; 
+  
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.13) 77%,
+    rgba(255, 255, 255, 0.5) 92%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+}
+
+#third .pos-rel:active:after {
+  opacity: 0;
+} 
+
+#first .ribbon span {
+    background: #fedb37;
+    color: black;
+}
+#first .ribbon span::before{
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 2px solid #fedb37;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #fedb37;
+}
+
+#first .ribbon span::after{
+    content: "";
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid #fedb37;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #fedb37;
+}
+
+#second .ribbon span {
+    background: #e6e8e9;
+    color: black;
+}
+#second .ribbon span::before{
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 2px solid #e6e8e9;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #e6e8e9;
+}
+
+#second .ribbon span::after{
+    content: "";
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid #e6e8e9;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #e6e8e9;
+}
+
+#third .ribbon span {
+    background: #b1560f;
+    color: black;
+}
+#third .ribbon span::before{
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 2px solid #b1560f;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #b1560f;
+}
+
+#third .ribbon span::after{
+    content: "";
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid #b1560f;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #b1560f;
+}
+
+
+
+       
 </style>
 @endsection
 @section('content')
@@ -36,7 +238,7 @@
                             
                         <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
                         <i></i>
-                    @else <i class="fa fa-trophy" id="eom_i_test"></i>
+                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold" title="Anda mendapatkan Employee of the month pada tahun ini"></i>
                     @endif
                     </h3>
                 </div>
@@ -58,13 +260,14 @@
                         @if ($sum_of_eom == 0)
                             <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
                         @else 
+                        <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
                         <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah {{$sum_of_eom}} yaitu bulan 
                             @foreach ($month_of_eom as $item)
                             
                             {{-- {{dd($loop->last)}} --}}
                             @if ($loop->last)
                             {{$item}}
-                            @else {{$item}}, 
+                            @else {{$item}},&nbsp;
                             @endif   
 
                             @endforeach
@@ -73,35 +276,183 @@
                         </div>
                     </div>
             </div>
-            {{-- <div class="table-responsive">
-                <table id="masterdata-division"
-                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                cellspacing="0">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting text-center" tabindex="0">No</th>
-                            <th class="sorting text-center" tabindex="0">Nama Staff</th>
-                            <th class="sorting text-center" tabindex="0">Divisi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($dataJob as $item)
-                            <tr>
-                                <td class="sorting text-center" tabindex="0">1</td>
-                                <td class="text-center">Data Entry</td>
-                                <td class="text-center">Dummy</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div> --}}
         </div>
-        
-        
     </div>
+
     <div class="row mt-10">
-        <div class="col-md-12"></div>
+        <div class="col-md-12">
+            @if ($count_current_month_ach == 0)
+            <div class="panel panel-bordered panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Top Scored Employee ({{$last_month_name}})</h3>
+                </div>
+                    
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-1 col-md-1"></div>
+                            <div class="col-sm-4 col-md-3">
+                    
+                    
+                                <div id="second">
+                                
+                                    <div class="panel pos-rel">
+                                        <div class="ribbon"><span>#2</span></div>
+                                        <div class="pad-all text-center">
+                                            
+                                           
+                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[1]->profile_photo)}}">
+                                                <p class="text-lg text-semibold mar-no text-main">{{$last_month[1]->name}}</p>
+                                                <p class="text-sm">{{$last_month[1]->division_name}}</p>
+                                                <p class="text-sm">Score : {{$last_month[1]->score}}</p>
+                                           
+                                            
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!---------------------------------->
+                    
+                    
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                    
+                                <div id="first">
+                                    <div class="panel pos-rel">
+                                        <div class="ribbon"><span>#1</span></div>
+                                        <div class="pad-all text-center">
+                                            
+                                            
+                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[0]->profile_photo)}}">
+                                                <p class="text-lg text-semibold mar-no text-main">{{$last_month[0]->name}}</p>
+                                                <p class="text-sm">{{$last_month[0]->division_name}}</p>
+                                                <p class="text-sm">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa.</p>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!---------------------------------->
+                    
+                    
+                            </div>
+                            <div class="col-sm-4 col-md-3">
+                    
+                    
+                                <div id="third">
+
+                                
+                                <div class="panel pos-rel">
+                                    <div class="ribbon"><span>#3</span></div>
+                                    <div class="pad-all text-center">
+                                        
+                                        <a href="#">
+                                            <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[2]->profile_photo)}}">
+                                            <p class="text-lg text-semibold mar-no text-main">{{$last_month[2]->name}}</p>
+                                            <p class="text-sm">{{$last_month[2]->division_name}}</p>
+                                            <p class="text-sm">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa.</p>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                                <!---------------------------------->
+                    
+                    
+                            </div>
+                            <div class="col-sm-1 col-md-1"></div>
+                        </div>
+                    </div>
+                    
+                
+            </div> 
+            @else
+            <div class="panel panel-bordered panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Top Scored Employee ({{$current_month_name}})</h3>
+                </div>
+                    
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-1 col-md-1"></div>
+                            <div class="col-sm-4 col-md-3">
+                    
+                    
+                                <div id="second">
+                                    
+                                    <div class="panel pos-rel">
+                                        <div class="ribbon"><span title="Top 2">#2</span></div>
+                                        <div class="pad-all text-center">
+                                            
+                                           
+                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$current_month[1]->profile_photo)}}">
+                                                <p class="text-lg text-semibold mar-no text-main">{{$current_month[1]->name}}</p>
+                                                <p class="text-sm">{{$current_month[1]->division_name}}</p>
+                                                <p class="text-sm">Score : {{$current_month[1]->score}}</p>
+                                           
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!---------------------------------->
+                    
+                    
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                    
+                                <div id="first">
+                                    <div class="panel pos-rel">
+                                        <div class="ribbon"><span title="Top 1">#1</span></div>
+                                        <div class="pad-all text-center">
+                                            
+                                            
+                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$current_month[0]->profile_photo)}}">
+                                                <p class="text-lg text-semibold mar-no text-main">{{$current_month[0]->name}}</p>
+                                                <p class="text-sm">{{$current_month[0]->division_name}}</p>
+                                                <p class="text-sm">Score : {{$current_month[0]->score}}</p>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!---------------------------------->
+                    
+                    
+                            </div>
+                            <div class="col-sm-4 col-md-3">
+                    
+                    
+                                <div id="third">
+
+                                
+                                <div class="panel pos-rel">
+                                    <div class="ribbon"><span title="Top 3">#3</span></div>
+                                    <div class="pad-all text-center">
+                                        
+                                       
+                                            <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$current_month[2]->profile_photo)}}">
+                                            <p class="text-lg text-semibold mar-no text-main">{{$current_month[2]->name}}</p>
+                                            <p class="text-sm">{{$current_month[2]->division_name}}</p>
+                                            <p class="text-sm">Score : {{$current_month[2]->score}}</p>
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                                <!---------------------------------->
+                    
+                    
+                            </div>
+                            <div class="col-sm-1 col-md-1"></div>
+                        </div>
+                    </div>
+                    
+                
+            </div> 
+            @endif
+            
+           
+            
+        </div>
     </div>
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
@@ -209,6 +560,7 @@
                 url:url_,
                 dataType:'json',
                 success:function(response){
+                    
                     var pageviews = [
                     [1, response.score[0] ?  response.score[0] : 0],
                     [2, response.score[1] ?  response.score[1] : 0],
@@ -227,11 +579,11 @@
                     document.getElementById('text_eom_0').innerHTML = "Anda Belum mendapatkan Employee of the Month pada Tahun ini";
                     document.getElementById('text_eom').innerHTML = " ";
                     document.getElementById('eom_i_test').className = " "
-                    // console.log("NOLLL")
                 }
                 else {
                     document.getElementById('text_eom_0').innerHTML =" "
                     document.getElementById('eom_i_test').className = "fa fa-trophy"
+                    document.getElementById('total_score').innerHTML = "Total Score : "+response.all_score; 
                     document.getElementById('text_eom').innerHTML = "Jumlah Employee of the month yang anda dapatkan adalah " +response.sum_of_eom+ " yaitu bulan " + response.month_of_eom;
                 }
                 console.log(response);

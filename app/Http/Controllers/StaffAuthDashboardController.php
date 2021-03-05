@@ -19,7 +19,83 @@ class StaffAuthDashboardController extends Controller
             $sum_of_eom= 0;
             $month_of_eom = array();
             $year = date('Y');
+            $current_month = switch_month(date('m'));
+            $before_current_month =switch_month(date('m',strtotime('-1 month')));
             $this_year = date('Y');
+            $sum_all_score = DB::table('master_achievements')
+                ->leftjoin('master_users',
+                    'master_achievements.achievement_user_id','=','master_users.id')
+                ->where('year',$year)
+                ->where('name',Auth::user()->name)
+                ->sum('score');
+            $current_month_achievement =DB::table('master_achievements')
+            ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+            ->where('month',$current_month)
+            ->leftJoin('master_divisions',
+            'master_users.division_id','=','master_divisions.id')
+            ->select([
+                'master_achievements.score',
+                'master_achievements.month',
+                'master_achievements.year',
+                'master_users.name',
+                'master_achievements.month',
+                'master_users.profile_photo',
+                'master_divisions.name as division_name'
+
+            ])
+            ->orderBy('score','desc')
+            ->take(3)->get();
+            // dd(count($current_month_achievement));
+            
+            $before_current_month_achievement =DB::table('master_achievements')
+            ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+            ->leftJoin('master_divisions',
+            'master_users.division_id','=','master_divisions.id')
+            ->select([
+                'master_achievements.score',
+                'master_achievements.month',
+                'master_achievements.year',
+                'master_users.name',
+                'master_achievements.month',
+                'master_users.profile_photo',
+                'master_divisions.name as division_name'
+
+            ])
+            ->where('month',$before_current_month)
+            ->where('year',$this_year)
+            ->orderBy('score','desc')
+            ->take(3)->get();
+
+            // dd($before_current_month_achievement);
+            
+            $positionLastMonth =DB::table('master_achievements')
+            ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+            ->where('month',$before_current_month)
+            ->where('year',$this_year)
+            ->orderBy('score','desc')
+            ->get();
+
+            
+            $datrankLastMonth = $positionLastMonth->where('achievement_user_id','=',Auth::user()->id);
+            $rankLastMonth = $datrankLastMonth->keys()->first()+1;
+            
+            $positionCurrentMonth= DB::table('master_achievements')
+            ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+            ->where('month',$current_month)
+            ->where('year',$this_year)
+            ->orderBy('score','desc')
+            ->get();
+            
+            $datrankCurrentMonth = $positionCurrentMonth->where('achievement_user_id','=',Auth::user()->id);
+            $rankCurrentMonth = $datrankCurrentMonth->keys()->first()+1;
+           
+            $count_current_month_achievement = count($current_month_achievement);
+            $count_before_current_month_achievement = count($before_current_month_achievement);
+            
             $user = Auth::user(); 
             for ($i = 1 ; $i<=12;$i++){
                 $max_score=0;
@@ -56,8 +132,13 @@ class StaffAuthDashboardController extends Controller
                     $score[$i-1] = 0;
                 }
             }
+            // dd($rankCurrentMonth);
             $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
             // dd($month_of_eom);
+            // dd($count_current_month_achievement);
+            // dd($current_month);
+            // dd($count_current_month_achievement);
+            // dd($current_month_achievement);
             return view('dashboard.staff',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -68,7 +149,15 @@ class StaffAuthDashboardController extends Controller
                 'year_list'=>$year_list,
                 'sum_of_eom'=>$sum_of_eom,
                 'month_of_eom'=>$month_of_eom,
-                
+                'last_month_name'=>$before_current_month,
+                'current_month_name'=>$current_month,
+                'last_month'=>$before_current_month_achievement,
+                'current_month'=>$current_month_achievement,
+                'count_last_month_ach'=>$count_before_current_month_achievement,
+                'count_current_month_ach'=>$count_current_month_achievement,
+                'rankCM'=>$rankCurrentMonth,
+                'rankLM'=>$rankLastMonth,
+                'all_score'=>$sum_all_score
             ]);
         }
     }
@@ -79,7 +168,12 @@ class StaffAuthDashboardController extends Controller
         $year = $request->input('year');
         $user =Auth::user()->name;
         $id = Auth::user()->id;
-
+        $sum_all_score = DB::table('master_achievements')
+        ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+        ->where('year',$year)
+        ->where('name',$user)
+        ->sum('score');
         for ($i = 1 ; $i<=12;$i++){
             $max_score=0;
             $data_month =DB::table('master_achievements')
@@ -121,9 +215,13 @@ class StaffAuthDashboardController extends Controller
             'year'=>$year,
             'sum_of_eom'=>$sum_of_eom,
             'month_of_eom'=>$month_of_eom,
-            'score' => $score
+            'score' => $score,
+            'all_score'=>$sum_all_score
         ]);
         }
+    public function summarize_score(){
+        
+    }
     
     public function profile()
     {

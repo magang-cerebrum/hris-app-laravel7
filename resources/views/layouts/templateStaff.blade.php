@@ -156,6 +156,9 @@
                                                 <p class="mnp-name">{{$name}}</p>
                                                 <span class="mnp-desc">{{$email}}</span>
                                             </a>
+                                            @if (Auth::user()->position_id != 11) 
+                                            <span class="label label-mint" style="font-size:9px;">Chief</span>
+                                            @endif
                                             <span class="label label-primary" style="font-size:9px;">Staff</span>
                                         </div>
                                         <div id="profile-nav" class="collapse list-group bg-trans">
@@ -195,11 +198,25 @@
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/schedule')}}">
-                                                <i class="demo-psi-checked-user"></i>
+                                                <i class="fa fa-calendar-check-o"></i>
                                                 <span class="menu-title">Jadwal Kerja</span>
                                             </a>
                                         </li>
-                            
+                                        @if(Auth::user()->position_id != 11)
+                                        <li>
+                                            <a href="{{ url('#')}}">
+                                                <i class="fa fa-calendar-o"></i>
+                                                <span class="menu-title">Jadwal Kerja Divisi</span>
+                                                <i class="arrow"></i>
+                                            </a>
+
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
+                                                <li><a href="{{ url('staff/schedule/division')}}"><i class="demo-psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
+                                            </ul>
+                                        </li>
+                                        @endif
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('#')}}">
@@ -211,7 +228,7 @@
                                             <!--Submenu-->
                                             <ul class="collapse">
                                                 <li><a href="{{ url('staff/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Pengajuan Cuti</a></li>
-                                                <li><a href="{{ url('staff/paid-leave/history')}}"><i class="demo-psi-calendar-4"></i>Riwayat Cuti</a></li>
+                                                <li><a href="{{ url('staff/paid-leave/history')}}"><i class="fa fa-history"></i>Riwayat Cuti</a></li>
                                             </ul>
                                         </li>
                                         

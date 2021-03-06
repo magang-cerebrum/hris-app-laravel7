@@ -9,6 +9,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\SalaryCutController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
@@ -53,7 +54,7 @@ Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprof
 Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
 
 //route landing dashboard, ganti password & profil ==ADMIN==
-Route::prefix('/admin')->group(function () {
+Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);
     Route::get('/password/{user}',[UserController::class,'edit']);
     Route::put('/password/{user}/saved',[UserController::class,'update']);
@@ -130,6 +131,16 @@ Route::prefix('/admin/holiday')->group(function() {
     Route::get('/{holiday}/edit',[HolidayController::class, 'edit']);
     Route::put('/{holiday}',[HolidayController::class, 'update']);
     Route::delete('/',[HolidayController::class, 'destroy']);
+});
+
+//route masterdata potongan gaji
+Route::prefix('/admin/salary-cut')->group(function(){
+    Route::get('/',[SalaryCutController::class,'index']);
+    Route::get('/add',[SalaryCutController::class,'create']);
+    Route::post('/', [SalaryCutController::class, 'store']);
+    Route::get('/{cut}/edit', [SalaryCutController::class, 'edit']);
+    Route::put('/{cut}', [SalaryCutController::class, 'update']);
+    Route::delete('/', [SalaryCutController::class, 'destroyAll']);
 });
 
 //route jadwal kerja admin & staff

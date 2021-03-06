@@ -44,7 +44,7 @@
                         ?>
                         {
                             title: '<?= $item->user_name ?>',
-                            start: '<?= $year ?>-<?= $month ?>-<?= $i ?>',
+                            start: "<?= $year ?>-<?= $month ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
                             className: '<?= $color ?>'
                         },
                     <?php } ?>

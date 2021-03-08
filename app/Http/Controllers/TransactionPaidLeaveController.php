@@ -108,6 +108,8 @@ class TransactionPaidLeaveController extends Controller
         $info = "-";
         $status = "Diajukan";
 
+        $user = Auth::user();
+
         $interval = (new DateTime($request->paid_leave_date_start))->diff(new DateTime($request->paid_leave_date_end));
         $paid_leave = ($interval->format('%a')) + 1;
 
@@ -117,11 +119,30 @@ class TransactionPaidLeaveController extends Controller
             $check_days = date('Y/m/d', strtotime('+1 days', strtotime($start)));
             $check_name_days = date('l', strtotime($check_days));
 
-            $check_holiday = DB::table('master_holidays')
-            ->where('date','=',$check_days)->get();
+            $table_schedule = DB::table('master_job_schedules')
+            ->where('user_id', '=', $request->user_id)
+            ->where('month', '=', switch_month(date('m', strtotime($check_days))))
+            ->where('year', '=', date('Y', strtotime($check_days)))->get();
 
-            if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
-                $days_paid_leave++;
+            if (count($table_schedule) == 0) {
+                if ($user->division_id == 5) {
+                    $days_paid_leave++;
+                }
+                else {
+                    $check_holiday = DB::table('master_holidays')
+                    ->where('date','=',$check_days)->get();
+
+                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
+                        $days_paid_leave++;
+                    }
+                }
+            }
+            else {
+                $name_for_get_shift = 'shift_' .date('j', strtotime($check_days));
+                $shift = $table_schedule->$name_for_get_shift;
+                if ($shift != 'Cuti' || $shift != 'Off') {
+                    $days_paid_leave++;
+                }
             }
 
             $start = $check_days;
@@ -196,9 +217,7 @@ class TransactionPaidLeaveController extends Controller
         foreach($ids as $check_id) {
             $data = TransactionPaidLeave::where("id",$check_id)->first();
             $data_user = MasterUser::where("id",$data->user_id)->first();
-            $remaining_days_off = $data_user->yearly_leave_remaining - $data->days;
             $data->update(['status' => 'Diterima']);
-            $data_user->update(['yearly_leave_remaining' => $remaining_days_off]);
 
             $interval = (new DateTime($data->paid_leave_date_start))->diff(new DateTime($data->paid_leave_date_end));
             $paid_leave = ($interval->format('%a')) + 1;
@@ -219,28 +238,64 @@ class TransactionPaidLeaveController extends Controller
                 ->where('year','=',$check_year)
                 ->get();
 
-                if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
-                    $temp_accept_leave = DB::table('accepted_paid_leaves')
-                    ->where('date', '=', $check_days)
-                    ->where('user_id', '=', $data->user_id)
-                    ->get();
-                    if(count($temp_accept_leave) == 0 ) {
-                        AcceptedPaidLeave::create([
-                            'paid_leave_id'=>$data->id,
-                            'user_id'=>$data->user_id,
-                            'date'=>$check_days
-                        ]);
+                if (count($data_schedule) == 0) {
+                    if ($data_user->division_id == 5) {
+                        $temp_accept_leave = DB::table('accepted_paid_leaves')
+                        ->where('date', '=', $check_days)
+                        ->where('user_id', '=', $data->user_id)
+                        ->get();
+                        if(count($temp_accept_leave) == 0 ) {
+                            AcceptedPaidLeave::create([
+                                'paid_leave_id'=>$data->id,
+                                'user_id'=>$data->user_id,
+                                'date'=>$check_days
+                            ]);
+                            $remaining_days_off = $data_user->yearly_leave_remaining - 1;
+                            $data_user->update(['yearly_leave_remaining' => $remaining_days_off]);
+                        }
                     }
+                    else {
+                        if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
+                            $temp_accept_leave = DB::table('accepted_paid_leaves')
+                            ->where('date', '=', $check_days)
+                            ->where('user_id', '=', $data->user_id)
+                            ->get();
+                            if(count($temp_accept_leave) == 0 ) {
+                                AcceptedPaidLeave::create([
+                                    'paid_leave_id'=>$data->id,
+                                    'user_id'=>$data->user_id,
+                                    'date'=>$check_days
+                                ]);
+                                $remaining_days_off = $data_user->yearly_leave_remaining - 1;
+                                $data_user->update(['yearly_leave_remaining' => $remaining_days_off]);
+                            }
+                        }
+                    }
+                }
+                else {
+                    $day = date('j', strtotime($check_days));
+                    $temp = 'shift_'.$day;
+                    $shift_day = $data_schedule[0]->$temp;
 
-                    if (count($data_schedule) != 0) {
-                        $day = date('j', strtotime($check_days));
-                        $temp = 'shift_'.$day;
-                        $shift_day = $data_schedule[0]->$temp;
+                    if($shift_day != 'Cuti' || $shift_day != 'Off') {
                         $total_hour = $data_schedule[0]->total_hour - check_hour_shift($shift_day);
-
                         DB::table('master_job_schedules')
                         ->where('id', '=', $data_schedule[0]->id)
-                        ->update([$temp => 'Off', 'total_hour' => $total_hour]);
+                        ->update([$temp => 'Cuti', 'total_hour' => $total_hour]);
+
+                        $temp_accept_leave = DB::table('accepted_paid_leaves')
+                        ->where('date', '=', $check_days)
+                        ->where('user_id', '=', $data->user_id)
+                        ->get();
+                        if(count($temp_accept_leave) == 0 ) {
+                            AcceptedPaidLeave::create([
+                                'paid_leave_id'=>$data->id,
+                                'user_id'=>$data->user_id,
+                                'date'=>$check_days
+                            ]);
+                            $remaining_days_off = $data_user->yearly_leave_remaining - 1;
+                            $data_user->update(['yearly_leave_remaining' => $remaining_days_off]);
+                        }
                     }
                 }
 

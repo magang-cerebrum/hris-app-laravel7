@@ -12,11 +12,11 @@
         .th-nip {
             width: 10px;
         }
-        .bootstrap-select.btn-group .dropdown-toggle[title="Off"] {
+        .bootstrap-select.btn-group .dropdown-toggle[title="Off"], .bootstrap-select.btn-group .dropdown-toggle[title="Cuti"] {
             background-color: #f55145;
             border-color: #f44336 !important;
         }
-        .bootstrap-select.btn-group .dropdown-toggle[title="Off"]:hover {
+        .bootstrap-select.btn-group .dropdown-toggle[title="Off"]:hover, .bootstrap-select.btn-group .dropdown-toggle[title="Cuti"]:hover {
             background-color: #f22314 !important;
             border-color: #f22314 !important;
         }
@@ -62,19 +62,8 @@
                             <th class="sorting text-center th-nip" tabindex="0">NIP</th>
                             <th class="sorting text-center th-name" tabindex="0">Nama</th>
                             @for ($i = 1; $i <= $count_day; $i++)
-                                <?php
-                                    $check_this_day = $year.'/'.$number_of_month.'/'.($i/10 < 1 ? '0'.$i : $i);
-                                    $check_name_days = date('l', strtotime($check_this_day));
-                                    $check_holiday = false;
-                                    foreach ($data_holiday as $data) {
-                                        if ($data->date == $year.'-'.$number_of_month.'-'.($i/10 < 1 ? '0'.$i : $i)){
-                                            $check_holiday = true;
-                                        }
-                                    }
-                                ?>
                                 <td class="sorting text-center" tabindex="0">
-                                    <input type="checkbox" id="{{'master_'.$i}}"
-                                    {{$check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false ? 'checked' : ''}}>
+                                    <input type="checkbox" id="{{'master_'.$i}}" checked>
                                 </td>
                             @endfor
                         </tr>
@@ -116,7 +105,23 @@
                                             @foreach ($data_shift as $item_shift)
                                             <option value="{{$item_shift->id}}"
                                                 class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
-                                                {{($check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false && $check_paid_leave == false ? ($loop->iteration == '2' ? 'selected' : '') : '()')}}>
+                                                {{($item_user->division_id == 5 ? 
+                                                    ($check_paid_leave == false ? 
+                                                        ($loop->iteration == '2' ? 'selected' : '')
+                                                        : 
+                                                        ($loop->iteration == '4' ? 'selected' : '')
+                                                    )
+                                                    :
+                                                    ($check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false ?
+                                                        ($loop->iteration == '2' ? 'selected' : '')
+                                                        :
+                                                        ($check_paid_leave == true ?
+                                                            ($loop->iteration == '4' ? 'selected' : '')
+                                                            :
+                                                            ''
+                                                        )
+                                                    )
+                                                )}}>
                                                 {{$item_shift->name}}
                                             </option>
                                             @endforeach

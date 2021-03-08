@@ -153,16 +153,51 @@ class MasterJobScheduleController extends Controller
 
     public function schedule_post(Request $request)
     {
-        function check($check, $request) {
+        function check($check_shift, $check_day, $request) {
             global $total_hour;
-            $id = $request->$check;
+            $shift_name;
+            $id = $request->$check_shift;
             $datas = MasterShift::All();
             foreach ($datas as $data) {
                 if($id == $data->id) {
                     $total_hour += $data->total_hour;
-                    return $data->name;
+                    $shift_name = $data->name;
                 }
             }
+
+            $check_accept_paid = DB::table('accepted_paid_leaves')
+            ->where('date', '=', $request->year.'.',switch_month($request->month, false).'-'.($check_day/10 < 1 ? '0'.$check_day : $check_day))
+            ->where('user_id', '=', $request->user_id)
+            ->get();
+
+            if (count($check_accept_paid) != 0 && $shift_name != 'Cuti') {
+                DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$request->user_id);
+                DB::statement('UPDATE master_users SET `yearly_leave_remaining` = `yearly_leave_remaining` + 1 WHERE `id` = '.$request->user_id);
+                DB::table('accepted_paid_leaves')->where('id', '=', $request->user_id)->delete();
+            }
+
+            $check_transaction_paid = DB::table('transaction_paid_leaves')
+            ->where('user_id', '=', $request->user_id)
+            ->whereIn('status', ['Diajukan', 'Pending'])
+            ->get();
+
+            if (count($check_accept_paid) != 0 && $shift_name != 'Cuti') {
+                foreach($check_transaction_paid as $item) {
+                    $transaction_interval = date_diff(date_create($item->paid_leave_date_start),date_create($item->paid_leave_date_end));
+                    $transaction_total_day = $transaction_interval->format('%a') + 1;
+
+                    $transaction_date_start = date('Y-m-d', strtotime('-1 days', strtotime($item->paid_leave_date_start)));
+                    for ($x = 0; $x <$transaction_total_day; $x++) {
+                        $check_transaction_days = date('Y-m-d', strtotime('+1 days', strtotime($transaction_date_start)));
+                        if ($check_transaction_days == $check_year.'-'.$month.'-'.$check_day) {
+                            DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$item->id);
+                        }
+                        $transaction_date_start = $check_transaction_days;
+                    }
+                }
+            }
+            
+            return $shift_name;
         }
 
         for ($i = 1; $i <= $request->count; $i++) {
@@ -170,37 +205,37 @@ class MasterJobScheduleController extends Controller
             $total_hour = 0;
             
             $user_id = 'id_user_'.$i;
-            $shift_1 = check('shift_1_'.$i, $request);
-            $shift_2 = check('shift_2_'.$i, $request);
-            $shift_3 = check('shift_3_'.$i, $request);
-            $shift_4 = check('shift_4_'.$i, $request);
-            $shift_5 = check('shift_5_'.$i, $request);
-            $shift_6 = check('shift_6_'.$i, $request);
-            $shift_7 = check('shift_7_'.$i, $request);
-            $shift_8 = check('shift_8_'.$i, $request);
-            $shift_9 = check('shift_9_'.$i, $request);
-            $shift_10 = check('shift_10_'.$i, $request);
-            $shift_11 = check('shift_11_'.$i, $request);
-            $shift_12 = check('shift_12_'.$i, $request);
-            $shift_13 = check('shift_13_'.$i, $request);
-            $shift_14 = check('shift_14_'.$i, $request);
-            $shift_15 = check('shift_15_'.$i, $request);
-            $shift_16 = check('shift_16_'.$i, $request);
-            $shift_17 = check('shift_17_'.$i, $request);
-            $shift_18 = check('shift_18_'.$i, $request);
-            $shift_19 = check('shift_19_'.$i, $request);
-            $shift_20 = check('shift_20_'.$i, $request);
-            $shift_21 = check('shift_21_'.$i, $request);
-            $shift_22 = check('shift_22_'.$i, $request);
-            $shift_23 = check('shift_23_'.$i, $request);
-            $shift_24 = check('shift_24_'.$i, $request);
-            $shift_25 = check('shift_25_'.$i, $request);
-            $shift_26 = check('shift_26_'.$i, $request);
-            $shift_27 = check('shift_27_'.$i, $request);
-            $shift_28 = check('shift_28_'.$i, $request);
-            $shift_29 = check('shift_29_'.$i, $request);
-            $shift_30 = check('shift_30_'.$i, $request);
-            $shift_31 = check('shift_31_'.$i, $request);
+            $shift_1 = check('shift_1_'.$i, $i, $request);
+            $shift_2 = check('shift_2_'.$i, $i, $request);
+            $shift_3 = check('shift_3_'.$i, $i, $request);
+            $shift_4 = check('shift_4_'.$i, $i, $request);
+            $shift_5 = check('shift_5_'.$i, $i, $request);
+            $shift_6 = check('shift_6_'.$i, $i, $request);
+            $shift_7 = check('shift_7_'.$i, $i, $request);
+            $shift_8 = check('shift_8_'.$i, $i, $request);
+            $shift_9 = check('shift_9_'.$i, $i, $request);
+            $shift_10 = check('shift_10_'.$i, $i, $request);
+            $shift_11 = check('shift_11_'.$i, $i, $request);
+            $shift_12 = check('shift_12_'.$i, $i, $request);
+            $shift_13 = check('shift_13_'.$i, $i, $request);
+            $shift_14 = check('shift_14_'.$i, $i, $request);
+            $shift_15 = check('shift_15_'.$i, $i, $request);
+            $shift_16 = check('shift_16_'.$i, $i, $request);
+            $shift_17 = check('shift_17_'.$i, $i, $request);
+            $shift_18 = check('shift_18_'.$i, $i, $request);
+            $shift_19 = check('shift_19_'.$i, $i, $request);
+            $shift_20 = check('shift_20_'.$i, $i, $request);
+            $shift_21 = check('shift_21_'.$i, $i, $request);
+            $shift_22 = check('shift_22_'.$i, $i, $request);
+            $shift_23 = check('shift_23_'.$i, $i, $request);
+            $shift_24 = check('shift_24_'.$i, $i, $request);
+            $shift_25 = check('shift_25_'.$i, $i, $request);
+            $shift_26 = check('shift_26_'.$i, $i, $request);
+            $shift_27 = check('shift_27_'.$i, $i, $request);
+            $shift_28 = check('shift_28_'.$i, $i, $request);
+            $shift_29 = check('shift_29_'.$i, $i, $request);
+            $shift_30 = check('shift_30_'.$i, $i, $request);
+            $shift_31 = check('shift_31_'.$i, $i, $request);
 
             $data_check = DB::table('master_job_schedules')
             ->where('user_id', '=', $request->$user_id)

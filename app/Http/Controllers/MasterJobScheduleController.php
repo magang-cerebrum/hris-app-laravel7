@@ -22,12 +22,21 @@ class MasterJobScheduleController extends Controller
     public function index_month()
     {
         $user = Auth::user();
-        return view('masterData.schedule.list', [
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        if($user->role_id == 1){
+            return view('masterData.schedule.list', [
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        } else {
+            return view('staff.schedule.list', [
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
     }
 
     public function index(Request $request)
@@ -54,7 +63,7 @@ class MasterJobScheduleController extends Controller
         ]);
     }
 
-    public function staff_index()
+    public function staff_calendar()
     {
         $cal = CAL_GREGORIAN;
         $month = date('m');
@@ -65,23 +74,28 @@ class MasterJobScheduleController extends Controller
         $next_month = switch_month(intval($month) + 1);
 
         $user = Auth::user();
-        $data_this_month = DB::table('master_job_schedules')
+        $data_this_month = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('user_id', '=', $user->id)
         ->where('month', '=', $this_month)
         ->where('year', '=', $year)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )
         ->get();
-        $data_next_month = DB::table('master_job_schedules')
+        $data_next_month = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('user_id', '=', $user->id)
         ->where('month', '=', $next_month)
         ->where('year', '=', $year)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )
         ->get();
-
-
-        return view('staff.schedule.list', [
+        return view('staff.schedule.calendar', [
             'data_this_month'=>$data_this_month,
             'data_next_month'=>$data_next_month,
-            'days'=>$days_in_month,
-            'month'=>$month,
+            'day'=>$days_in_month,            
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -89,25 +103,42 @@ class MasterJobScheduleController extends Controller
         ]);
     }
 
-    public function index_add()
+    public function filter()
     {
         $user = Auth::user();
+        $division = division_schedule($user->position_id);
         $data = DB::table('master_users')
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->where('master_users.status','=','Aktif')
+        ->whereIn('master_users.division_id',$division)
         ->select(
-            'master_users.*',
+            'master_users.id as user_id',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name',
+            'master_users.division_id',
+            'master_users.position_id',
             'master_divisions.name as division_name',
             'master_positions.name as position_name'
             )
         ->get();
-        return view('masterData.schedule.create', [
-            'data'=>$data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        if ($user->role_id == 1) {
+            return view('masterData.schedule.create', [
+                'data'=>$data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        } else {
+            return view('staff.schedule.create', [
+                'data'=>$data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
     }
 
     public function schedule_add(Request $request)
@@ -134,21 +165,37 @@ class MasterJobScheduleController extends Controller
         ->where('date', 'LIKE', $request->year.'-'.$month.'%')
         ->whereIn('user_id',$data_id)
         ->get();
-
-        return view('masterData.schedule.add', [
-            'data_user'=>$data_user,
-            'data_holiday'=>$data_holiday,
-            'data_paid_leave'=>$data_paid_leave,
-            'count_day'=>$days_in_month,
-            'number_of_month'=>$month,
-            'month'=>$request->month,
-            'year'=>$request->year,
-            'data_shift'=>$data_shift,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        if($user->role_id == 1){
+            return view('masterData.schedule.add', [
+                'data_user'=>$data_user,
+                'data_holiday'=>$data_holiday,
+                'data_paid_leave'=>$data_paid_leave,
+                'count_day'=>$days_in_month,
+                'number_of_month'=>$month,
+                'month'=>$request->month,
+                'year'=>$request->year,
+                'data_shift'=>$data_shift,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        } else {
+            return view('staff.schedule.add', [
+                'data_user'=>$data_user,
+                'data_holiday'=>$data_holiday,
+                'data_paid_leave'=>$data_paid_leave,
+                'count_day'=>$days_in_month,
+                'number_of_month'=>$month,
+                'month'=>$request->month,
+                'year'=>$request->year,
+                'data_shift'=>$data_shift,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
     }
 
     public function schedule_post(Request $request)
@@ -284,73 +331,60 @@ class MasterJobScheduleController extends Controller
             }
         }
         Alert::success('Berhasil!', 'Jadwal staff baru berhasil ditambahkan!');
-        return redirect('/admin/schedule');
-    }
-    
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if (Auth::user()->role_id == 1) {
+            return redirect('/admin/schedule');
+        } else {
+            return redirect('/staff/schedule/division');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function result_calendar(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $user = Auth::user();
+        $division = division_schedule($user->position_id);
+        $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->where('month', '=',$request->month)
+        ->where('year', '=', $request->year)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )->get();
+        $data_staff = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->where('month', '=',$request->month)
+        ->where('year', '=', $request->year)
+        ->whereIn('master_users.division_id',$division)
+        ->select(
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        )->get();
+        
+        $cal = CAL_GREGORIAN;
+        $month = switch_month($request->month, false);
+        $days_in_month = cal_days_in_month($cal, $month, date('Y'));
+        
+        if ($user->role_id == 1) {
+            return view('masterData.schedule.calendar', [
+                'data'=>$data,
+                'day'=>$days_in_month,
+                'month'=>$month,
+                'year'=>$request->year,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        } else {
+            return view('staff.schedule.result', [
+                'data'=>$data_staff,
+                'day'=>$days_in_month,
+                'month'=>$month,
+                'year'=>$request->year,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
+        
     }
 }

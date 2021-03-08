@@ -223,6 +223,7 @@
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
                                             <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Tanggal Merah</a></li>
+                                            <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
 						                </ul>
                                     </li>
 

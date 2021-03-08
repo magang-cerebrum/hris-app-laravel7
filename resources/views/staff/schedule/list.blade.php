@@ -16,7 +16,7 @@
 
 <div class="panel panel-bordered panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Daftar Jadwal Kerja</h3>
+        <h3 class="panel-title">Daftar Jadwal Kerja Divisi</h3>
     </div>
     <div class="panel-body">
         <form action="/staff/schedule/search" method="post" id="schedule-search">

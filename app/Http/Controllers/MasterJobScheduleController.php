@@ -202,7 +202,6 @@ class MasterJobScheduleController extends Controller
     {
         function check($check_shift, $check_day, $request, $id) {
             global $total_hour;
-            $shift_name;
             $id = $request->$check_shift;
             $datas = MasterShift::All();
             foreach ($datas as $data) {

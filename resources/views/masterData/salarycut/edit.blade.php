@@ -82,7 +82,7 @@
                 <div class="row">
                     <label class="col-sm-2 control-label" for="type">Staff :</label>
                     <div class="col-sm-6 mar-lft">
-                        <select class="selectpicker" data-style="btn-primary" name="user_id" id="choose_staff">
+                        <select class="selectpicker" data-style="btn-primary" name="user_id" id="choose_staff" data-live-search="true" data-live-search-placeholder="Cari Staff">
                             <option value=""></option>
                             @foreach ($staff as $item)
                             <option value="{{$item->id}}" {{$item->id == $cut->user_id ? 'selected' : ''}}>
@@ -110,9 +110,7 @@
 <script>
     $(document).ready(function () {
         $('#choose_staff').selectpicker({
-            dropupAuto: false,
-            liveSearch: true,
-            liveSearchPlaceholder: 'Cari Staff'
+            dropupAuto: false
         });
         $('#datepicker-edit-range .input-group.date').datepicker({
             format: 'mm-yyyy',

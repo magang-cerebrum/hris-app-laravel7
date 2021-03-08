@@ -104,7 +104,7 @@ class HolidayController extends Controller
             }
 
             $transaction_paid_leave = DB::table('transaction_paid_leaves')
-            ->whereIn('status', ['Diajukan', 'Pending'])
+            ->whereIn('transaction_paid_leaves.status', ['Diajukan', 'Pending'])
             ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
             ->select(
                 'transaction_paid_leaves.*',

@@ -139,7 +139,7 @@ class TransactionPaidLeaveController extends Controller
             }
             else {
                 $name_for_get_shift = 'shift_' .date('j', strtotime($check_days));
-                $shift = $table_schedule->$name_for_get_shift;
+                $shift = $table_schedule[0]->$name_for_get_shift;
                 if ($shift != 'Cuti' || $shift != 'Off') {
                     $days_paid_leave++;
                 }
@@ -191,17 +191,6 @@ class TransactionPaidLeaveController extends Controller
             'email'=>$user->email,
             'id'=>$user->id
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

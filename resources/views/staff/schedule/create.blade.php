@@ -30,8 +30,7 @@
                     <div class="col-sm-6 mar-btm">
                         <div class="input-group">
                             <span class="input-group-addon">Bulan :</span>
-                            {{-- <label class="col-sm-1 control-label" for="month">Bulan : </label> --}}
-                            <select class="selectpicker" data-style="btn-pink" style="width: 100%" name="month" >
+                            <select class="selectpicker" data-style="btn-pink" name="month" id="month">
                                 <option value="Januari">Januari</option>
                                 <option value="Februari">Februari</option>
                                 <option value="Maret">Maret</option>
@@ -106,6 +105,9 @@
             else {  
                 $(".sub_chk").prop('checked',false);  
             }  
+        });
+        $('#month').selectpicker({
+            dropupAuto: false
         });
     });
 

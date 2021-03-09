@@ -5,6 +5,7 @@
     td#green{background-color: #8bc34a; width: 20px; height: 20px;}
     td#blue{background-color: #00bcd4; width: 20px; height: 20px;}
     td#red{background-color: #ef5350; width: 20px; height: 20px;}
+    td#yellow{background-color: #FFA726; width: 20px; height: 20px;}
     td.break{width: 10px; height: 10px;}
 </style>
 
@@ -14,7 +15,7 @@
     </div>
     <div class="panel-body">
         <div id='calendar'></div><br>
-        <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur/Cuti</td></tr></table>
+        <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur</td><td class="break"></td><td id="yellow"></td><td class="break"></td><td>: Cuti</td></tr></table>
     </div>
 </div>
 
@@ -40,11 +41,12 @@
                             $shift = 'shift_'.$i;
                         if($item->$shift == 'Pagi') $color = 'success';
                         elseif($item->$shift == 'Siang') $color = 'info';
+                        elseif($item->$shift == 'Cuti') $color = 'warning';
                         else $color = 'danger';
                         ?>
                         {
                             title: '<?= $item->user_name ?>',
-                            start: '<?= $year ?>-<?= $month ?>-<?= $i ?>',
+                            start: "<?= $year ?>-<?= $month ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
                             className: '<?= $color ?>'
                         },
                     <?php } ?>

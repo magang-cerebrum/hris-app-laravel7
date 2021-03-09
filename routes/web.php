@@ -9,6 +9,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\SalaryCutController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
@@ -53,7 +54,7 @@ Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprof
 Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
 
 //route landing dashboard, ganti password & profil ==ADMIN==
-Route::prefix('/admin')->group(function () {
+Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);
     Route::get('/password/{user}',[UserController::class,'edit']);
     Route::put('/password/{user}/saved',[UserController::class,'update']);
@@ -132,6 +133,16 @@ Route::prefix('/admin/holiday')->group(function() {
     Route::delete('/',[HolidayController::class, 'destroy']);
 });
 
+//route masterdata potongan gaji
+Route::prefix('/admin/salary-cut')->group(function(){
+    Route::get('/',[SalaryCutController::class,'index']);
+    Route::get('/add',[SalaryCutController::class,'create']);
+    Route::post('/', [SalaryCutController::class, 'store']);
+    Route::get('/{cut}/edit', [SalaryCutController::class, 'edit']);
+    Route::put('/{cut}', [SalaryCutController::class, 'update']);
+    Route::delete('/', [SalaryCutController::class, 'destroyAll']);
+});
+
 //route jadwal kerja admin & staff
 Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
@@ -163,6 +174,7 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'create']);
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
+    Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
     Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });

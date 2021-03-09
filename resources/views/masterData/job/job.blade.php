@@ -70,7 +70,7 @@
                     </td>
                     <td class="text-center">{{$item->name}}</td>
                     <td class="text-center">{{$item->descript}}</td>
-                    <td class="text-center">{{$item->required}}</td>
+                    <td>{!!$item->required!!}</td>
                 </tr>
                 @endforeach
             </tbody>

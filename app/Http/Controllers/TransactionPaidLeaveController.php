@@ -85,35 +85,52 @@ class TransactionPaidLeaveController extends Controller
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
-            'id'=>$user->id
+            'id'=>$user->id,
+            'left'=>$user->yearly_leave_remaining
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id'=>'required',
-            'paid_leave_type_id'=>'required',
-            'paid_leave_date_start'=>'required',
-            'paid_leave_date_end'=>'required',
-            'needs'=>'required'
-        ]);
-        
+        if ($request->paid_leave_type_id == 1) {
+            $request->validate([
+                'user_id'=>'required',
+                'paid_leave_type_id'=>'required',
+                'paid_leave_date_start'=>'required',
+                'paid_leave_date_end'=>'required',
+                'needs'=>'required'
+            ]);
+        } else {
+            $request->validate([
+                'user_id'=>'required',
+                'paid_leave_type_id'=>'required',
+                'paid_leave_date_start_defaulted'=>'required',
+            ]);
+        };
+
         $info = "-";
         $status = "Diajukan";
-
         $user = Auth::user();
 
-        $interval = (new DateTime($request->paid_leave_date_start))->diff(new DateTime($request->paid_leave_date_end));
+        if($request->paid_leave_type_id == 1){
+            $date_start = date('Y/m/d',strtotime($request->paid_leave_date_start));
+            $date_end = date('Y/m/d',strtotime($request->paid_leave_date_end));
+            $needs = $request->needs;
+            $interval = (new DateTime($request->paid_leave_date_start))->diff(new DateTime($request->paid_leave_date_end));
+        } else {
+            $date_start = date('Y/m/d',strtotime($request->paid_leave_date_start_defaulted));
+            if ($request->paid_leave_type_id == 2) {
+                $date_end = date('Y/m/d',strtotime('+59 days',strtotime($date_start)));
+            } elseif ($request->paid_leave_type_id == 3) {
+                $date_end = date('Y/m/d',strtotime('+2 days',strtotime($date_start)));
+            }
+            $needs = "-";
+            $interval = (new DateTime($date_start))->diff(new DateTime($date_end));
+        }
         $paid_leave = ($interval->format('%a')) + 1;
-
-        $start = date('Y/m/d', strtotime('-1 days', strtotime($request->paid_leave_date_start)));
+        
+        $start = date('Y/m/d', strtotime('-1 days', strtotime($date_start)));
         $days_paid_leave = 0;
         for ($i = 0; $i < $paid_leave; $i++) {
             $check_days = date('Y/m/d', strtotime('+1 days', strtotime($start)));
@@ -150,12 +167,12 @@ class TransactionPaidLeaveController extends Controller
 
         TransactionPaidLeave::create([
             'user_id'=>$request->user_id,
-            'paid_leave_date_start'=>$request->paid_leave_date_start,
-            'paid_leave_date_end'=>$request->paid_leave_date_end,
+            'paid_leave_date_start'=>$date_start,
+            'paid_leave_date_end'=>$date_end,
             'days'=>$days_paid_leave,
             'status'=>$status,
             'paid_leave_type_id'=>$request->paid_leave_type_id,
-            'needs'=>$request->needs,
+            'needs'=>$needs,
             'informations'=>$info
 
         ]);
@@ -324,5 +341,33 @@ class TransactionPaidLeaveController extends Controller
         TransactionPaidLeave::where('id','=', $id->id)->update(['status' => 'Cancel']);
         Alert::info('Berhasil!', 'Pengajuan cuti telah di cancel!');
         return redirect('/staff/paid-leave/history');
+    }
+
+    public function calculate(Request $request){
+        if ($request->type == 1) {
+            $interval = (new DateTime($request->yearly_start))->diff(new DateTime($request->yearly_end));
+            $paid_leave_days = ($interval->format('%a')) + 1;
+            if($request->yearly_start == '') $paid_leave_days = 0;
+            
+            return response()->json([
+                'type' => $request->type,
+                'yearly_days'=>$paid_leave_days
+            ]);
+
+        } else {
+            $date_start = date('Y/m/d',strtotime($request->defaulted_start));
+            if ($request->type == 2) {
+                $date_end = date('Y/m/d',strtotime('+59 days',strtotime($date_start)));
+            } elseif ($request->type == 3) {
+                $date_end = date('Y/m/d',strtotime('+2 days',strtotime($date_start)));
+            }
+            $split = explode('/',$date_end);
+            $end_info = 'Cuti akan berakhir pada tanggal '. $split[2] . ' ' . switch_month($split[1]) . ' ' .$split[0];
+
+            return response()->json([
+                'type' => $request->type,
+                'info' => $end_info
+            ]);
+        }
     }
 }

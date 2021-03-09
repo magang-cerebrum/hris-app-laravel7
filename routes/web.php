@@ -174,6 +174,7 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'create']);
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
+    Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
     Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });

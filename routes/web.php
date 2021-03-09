@@ -231,3 +231,6 @@ Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+
+
+Route::view('/test', 'testing1');

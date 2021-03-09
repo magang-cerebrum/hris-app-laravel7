@@ -71,14 +71,14 @@ class MasterAchievementController extends Controller
         
     }
 
-   
-    public function scoring(Request $request , MasterAchievement $masterAchievement){
+    
+    public function scoring(){
         if(Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')){
             $user = Auth::user();
-             $data = DB::table('master_users')->get();
+            $data = DB::table('master_users')->whereNotIn('division_id',[7])->get();
             return view('masterData.achievement.scoring',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -94,22 +94,23 @@ class MasterAchievementController extends Controller
         }
         elseif(Gate::allows('is_admin')){
             global $datas;
-        $datas=$request;
-        for($i = 1; $i <=$request->count; $i++){
-            global $datas;
-            $user_id = 'user_id_'.$i;
-            $data_id = $datas->$user_id;
-            $score = 'score_'.$i;
-            $data = $datas->$score;
-            MasterAchievement::create([
-                'score' => $data,
-                'month'  =>$datas->month,
-                'year' =>$datas->year ,
-                'achievement_user_id'=>$data_id
-            ]);
-        }
-        Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
-        return redirect('/admin/achievement');
+            $datas=$request;
+            for($i = 1; $i <=$request->count; $i++){
+                global $datas;
+                $user_id = 'user_id_'.$i;
+                $data_id = $datas->$user_id;
+                $score = 'score_'.$i;
+                $data = $datas->$score;
+                if ($data == 0) {continue;}
+                MasterAchievement::create([
+                    'score' => $data,
+                    'month'  =>$datas->month,
+                    'year' =>$datas->year ,
+                    'achievement_user_id'=>$data_id
+                ]);
+            }
+            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
+            return redirect('/admin/achievement');
         }
         
     }
@@ -175,10 +176,6 @@ class MasterAchievementController extends Controller
                 $max_month = 0;
                 $min_month = 0;
             } else {
-                //insert score matches month
-                for ($j=0; $j < count($data_month); $j++) {
-                    $temp[$i][$j] = $data_month[$j]->score;
-                }
                 //find average
                 for ($j=0; $j < count($data_month); $j++) { 
                     $sum_month += $data_month[$j]->score;
@@ -198,18 +195,23 @@ class MasterAchievementController extends Controller
                         $min_month = $temp_score;
                     }
                 }
-            }
-            // dd($temp[$i-1]);
-            if (array_key_exists($i,$temp)) {
-                $score[$i-1] = $temp[$i];
-            } else {
-                $score[$i-1] = 0;
+                //insert score matches month
+                for ($j=0; $j < count($data_month); $j++) {                    
+                    $usernya = $data_month[$j]->achievement_user_id;
+                    $data_user = MasterAchievement::
+                    where('month','=',switch_month($i / 10 < 1 ? '0'. $i : $i))
+                    ->where('year','=',date('Y'))
+                    ->where('achievement_user_id','=',$usernya)
+                    ->get();
+                    foreach ($data_user as $item) {
+                        $score[$i-1][$item->achievement_user_id] = $item->score;
+                    }
+                }
             }
             $average[$i-1] = $avg_month;
             $max[$i-1] = $max_month;
             $min[$i-1] = $min_month;
         }
-        // dd($score,$average,$max,$min);
         $staff = DB::table('master_users')->select(['id','name'])->get();
         return view('masterdata.achievement.listchart',[
             'name'=>$user->name,

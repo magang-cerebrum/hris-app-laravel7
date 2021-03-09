@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Master Data / Divisi')
-@section('title','Master Data')
+@section('title','Pencapaian')
+@section('content-title','Pencapaian / Grafik Nilai')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
 @section('head')

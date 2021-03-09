@@ -120,8 +120,6 @@ class StaffAuthDashboardController extends Controller
             ->orderBy('score','desc')
             ->get();
             
-            $sess =$request->session();
-            // dd(Auth::viaRemember());
             $datrankLastMonth = $positionLastMonth->where('achievement_user_id','=',Auth::user()->id);
             $rankLastMonth = $datrankLastMonth->keys()->first()+1;
             
@@ -202,8 +200,7 @@ class StaffAuthDashboardController extends Controller
                 'rankLM'=>$rankLastMonth,
                 'all_score'=>$sum_all_score,
                 'user_lm'=>$userLMAch,
-                'user_cm'=>$userCMAch,
-                'sess'=>$sess
+                'user_cm'=>$userCMAch
             ]);
         }
     }

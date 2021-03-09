@@ -25,11 +25,12 @@
                  
         #first .pos-rel{
             background-color: #fedb37;
-            height: 250px;
+            /* height: 250px; */
         }
         #second .pos-rel{
           background-color: #e6e8e9  
         }
+        
         #third .pos-rel p{
             color: white
         }
@@ -230,6 +231,14 @@ background: linear-gradient(
 
     <div class="row mt-10">
         <div class="col-md-12">
+            @if (session('status'))
+                <div class="alert-success alert alert-dismissable">
+                    {{session('status')}}
+                    <button class="close" data-dismiss="alert">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            @endif
             <div class="panel panel-bordered panel-primary">
                 <div class="panel-heading">
                     {{-- <i class="fa"></i> --}}
@@ -259,7 +268,9 @@ background: linear-gradient(
                             <p id="text_eom_0" class="text-danger"></p>
                         @if ($sum_of_eom == 0)
                             <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
-                        @else 
+                            <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
+                            
+                            @else 
                         <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
                         <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah {{$sum_of_eom}} yaitu bulan 
                             @foreach ($month_of_eom as $item)
@@ -279,12 +290,15 @@ background: linear-gradient(
         </div>
     </div>
 
-    <div class="row mt-10">
+    @if ($last_month->isEmpty() && $current_month->isEmpty())
+        
+    @else
+     <div class="row mt-10">
         <div class="col-md-12">
             @if ($count_current_month_ach == 0)
             <div class="panel panel-bordered panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Top Scored Employee ({{$last_month_name}})</h3>
+                    <h3 class="panel-title">Top Scored Employee ({{$last_month_name}} {{$rankLM}})</h3>
                 </div>
                     
                     <div class="panel-body">
@@ -325,8 +339,10 @@ background: linear-gradient(
                                                 <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[0]->profile_photo)}}">
                                                 <p class="text-lg text-semibold mar-no text-main">{{$last_month[0]->name}}</p>
                                                 <p class="text-sm">{{$last_month[0]->division_name}}</p>
-                                                <p class="text-sm">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa.</p>
-                                            
+                                                <p class="text-sm">Score : {{$last_month[1]->score}}</p>
+                                                <br>
+                                                <br>
+                                                
                                             
                                         </div>
                                     </div>
@@ -346,12 +362,12 @@ background: linear-gradient(
                                     <div class="ribbon"><span>#3</span></div>
                                     <div class="pad-all text-center">
                                         
-                                        <a href="#">
+                                       
                                             <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[2]->profile_photo)}}">
                                             <p class="text-lg text-semibold mar-no text-main">{{$last_month[2]->name}}</p>
                                             <p class="text-sm">{{$last_month[2]->division_name}}</p>
-                                            <p class="text-sm">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa.</p>
-                                        </a>
+                                            <p class="text-sm">Score : {{$last_month[2]->score}}</p>                      
+                                        
                                         
                                     </div>
                                 </div>
@@ -361,6 +377,39 @@ background: linear-gradient(
                     
                             </div>
                             <div class="col-sm-1 col-md-1"></div>
+                        </div>
+                        <div class="pos row" id="pot">
+                            @if ($rankLM == 1 || $rankLM == 2 || $rankLM ==3)
+                                <p></p>
+                            @else
+                            @foreach ($user_lm as $item)
+                            <div class="col-sm-2 col-md-2"></div>
+                            <div class="col-sm-8 col-md-8">
+                            <div class="panel panel-primary panel-colorful ">
+                                
+                                <div class="pad-all">
+                                    <div class="media">
+                                       
+                                        <div class="media-left">
+                                            <img alt="Profile Picture" class="img-md img-circle" src="{{asset('img/profile-photos/'.$item->profile_photo)}}">
+                                        </div>
+                                        <div class="media-body pad-top">
+                                            <span class="text-lg text-semibold">{{$item->name}}</span> <span class="text-lg text-right" >#{{$rankLM}}</span>
+                                            <p class="text-sm">Score : {{$item->score}}/100</p>
+                                            @if (!csrf_token())
+                                                <p>Anda Login DiBrowserLain</p>
+                                            @endif
+                                            <p class="text-sm">{{csrf_token()}} {{$sess->getId()}}</p>
+                                        </div>
+                                    </div>
+                                     
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2"></div>
+
+                            @endforeach
+                            @endif
                         </div>
                     </div>
                     
@@ -438,14 +487,32 @@ background: linear-gradient(
                                     </div>
                                 </div>
                                 </div>
-                                <!---------------------------------->
-                    
-                    
                             </div>
+                            
                             <div class="col-sm-1 col-md-1"></div>
                         </div>
+                        <div class="pos" id="pot">
+                            @if ($rankCM == 1 || $rankCM == 2 || $rankCM ==3)
+                                <p></p>
+                            @else
+                            <div class="panel panel-success panel-colorful">
+                                <div class="pad-all">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img alt="Profile Picture" class="img-md img-circle" src="img/profile-photos/8.png">
+                                        </div>
+                                        <div class="media-body pad-top">
+                                            <span class="text-lg text-semibold">{{Auth::user()->name}}</span>
+                                            <p class="text-sm">{{$rankCM}}</p>
+                                        </div>
+                                    </div>
+                                     
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                     </div>
-                    
+    
                 
             </div> 
             @endif
@@ -453,7 +520,9 @@ background: linear-gradient(
            
             
         </div>
-    </div>
+    </div>  
+    @endif
+    
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>

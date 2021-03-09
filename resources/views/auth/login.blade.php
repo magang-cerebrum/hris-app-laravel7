@@ -53,7 +53,11 @@
                         <span onmousedown="mousedownPass();" onmouseup="mouseoutPass();" class="input-group-addon">
                             <i class="fa fa-eye" title="Lihat Password"></i>
                         </span>
+                        
                         </div>
+                        <input type="hidden" name="remember_me">
+                        <div class="message"></div>
+
                         <div class="invalid-feedback is-invalid" role="alert">
                             <strong>{{ session()->get('error')}}</strong>
                         </div>
@@ -73,7 +77,7 @@
         </div>
     </div>
 </body>
-{{-- @section('script') --}}
+
     <script>
         function mousedownPass(obj) {
   var obj = document.getElementById('pass-form');
@@ -83,6 +87,20 @@ function mouseoutPass(obj) {
   var obj = document.getElementById('pass-form');
   obj.type = "password";
 }
-    // console.log("Hello world")
+
+const password = document.querySelector('#pass-form');
+ const message = document.querySelector('.message');
+
+ password.addEventListener('keyup', function (e) {
+     if (e.getModifierState('CapsLock')) {
+         message.textContent = 'Capslock anda menyala';
+         message.className = "text-warning fa fa-warning"
+        //  document.getElementById('warning').className = "fa fa-warning"
+     } else {
+         message.textContent = '';
+         message.className = "message"
+
+     }
+ });
+   
     </script>
-{{-- @endsection --}}

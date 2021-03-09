@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+// use Illuminate\Contracts\Auth\Guard;
 class StaffAuthDashboardController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         
         if(Gate::denies('is_staff')){
             abort(403,'Staff must Login First');
@@ -17,6 +18,7 @@ class StaffAuthDashboardController extends Controller
         else if(Gate::allows('is_staff')){
             $score = array();
             $sum_of_eom= 0;
+            $user = Auth::user();
             $month_of_eom = array();
             $year = date('Y');
             $current_month = switch_month(date('m'));
@@ -32,6 +34,7 @@ class StaffAuthDashboardController extends Controller
             ->leftjoin('master_users',
             'master_achievements.achievement_user_id','=','master_users.id')
             ->where('month',$current_month)
+            ->where('year',$this_year)
             ->leftJoin('master_divisions',
             'master_users.division_id','=','master_divisions.id')
             ->select([
@@ -68,8 +71,47 @@ class StaffAuthDashboardController extends Controller
             ->orderBy('score','desc')
             ->take(3)->get();
 
+            $userCMAch = DB::table('master_achievements')
+            ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+            ->leftJoin('master_divisions',
+            'master_users.division_id','=','master_divisions.id')
+            ->select([
+                'master_achievements.score',
+                'master_achievements.month',
+                'master_achievements.year',
+                'master_users.name',
+                'master_achievements.month',
+                'master_users.profile_photo',
+                'master_divisions.name as division_name'
+
+            ])
+            ->where('master_users.name',$user->name)
+            ->where('year',$this_year)
+            ->where('month',$current_month)->get();
+            // dd($userCMAch);
             // dd($before_current_month_achievement);
             
+            $userLMAch = DB::table('master_achievements')
+            ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+            ->leftJoin('master_divisions',
+            'master_users.division_id','=','master_divisions.id')
+            ->select([
+                'master_achievements.score',
+                'master_achievements.month',
+                'master_achievements.year',
+                'master_users.name',
+                'master_achievements.month',
+                'master_users.profile_photo',
+                'master_divisions.name as division_name'
+
+            ])
+            ->where('master_users.name',$user->name)
+            ->where('year',$this_year)
+            ->where('month',$before_current_month)->get();
+
+
             $positionLastMonth =DB::table('master_achievements')
             ->leftjoin('master_users',
             'master_achievements.achievement_user_id','=','master_users.id')
@@ -77,8 +119,9 @@ class StaffAuthDashboardController extends Controller
             ->where('year',$this_year)
             ->orderBy('score','desc')
             ->get();
-
             
+            $sess =$request->session();
+            // dd(Auth::viaRemember());
             $datrankLastMonth = $positionLastMonth->where('achievement_user_id','=',Auth::user()->id);
             $rankLastMonth = $datrankLastMonth->keys()->first()+1;
             
@@ -96,7 +139,7 @@ class StaffAuthDashboardController extends Controller
             $count_current_month_achievement = count($current_month_achievement);
             $count_before_current_month_achievement = count($before_current_month_achievement);
             
-            $user = Auth::user(); 
+             
             for ($i = 1 ; $i<=12;$i++){
                 $max_score=0;
                 $data_month =DB::table('master_achievements')
@@ -157,7 +200,10 @@ class StaffAuthDashboardController extends Controller
                 'count_current_month_ach'=>$count_current_month_achievement,
                 'rankCM'=>$rankCurrentMonth,
                 'rankLM'=>$rankLastMonth,
-                'all_score'=>$sum_all_score
+                'all_score'=>$sum_all_score,
+                'user_lm'=>$userLMAch,
+                'user_cm'=>$userCMAch,
+                'sess'=>$sess
             ]);
         }
     }

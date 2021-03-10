@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
     <title>HRIS Cerebrum | @yield('title')</title>
 
@@ -156,7 +157,7 @@
                                             <div class="pad-btm image-area">
                                                 <form method="POST">
                                                     <label for="upload_image">
-                                                    <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
+                                                    <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile_photos/'.$profile_photo)}}" alt="Profile Picture">
                                                     <div class="overlay">
                                                         <div class="text">Click to Change Profile Image</div>
                                                     </div>
@@ -387,10 +388,15 @@
                     reader.readAsDataURL(blob);
                     reader.onloadend = function(){
                         var base64data = reader.result;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
                         $.ajax({
                             url:'/staff/foto',
                             method:'get',
-                            data:{image:base64data},
+                            data:{image:'base64data'},
                             success:function(data)
                             {
                                 console.log(response);

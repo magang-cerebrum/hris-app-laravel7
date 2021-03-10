@@ -166,6 +166,7 @@ Route::prefix('/admin/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'index']);
     Route::get('/history',[TransactionPaidLeaveController::class,'history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'update_approve']);
+    Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'reject']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy']);
 });
 

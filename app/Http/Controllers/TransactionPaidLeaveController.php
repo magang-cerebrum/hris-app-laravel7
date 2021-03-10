@@ -30,7 +30,7 @@ class TransactionPaidLeaveController extends Controller
             'transaction_paid_leaves.*',
             'master_users.name as user_name',
             'master_users.nip as user_nip',
-            'master_users.yearly_leave_remaining as user_laeve_remaining',
+            'master_users.yearly_leave_remaining as user_leave_remaining',
             'master_leave_types.name as type_name'
             )
         ->paginate(5);
@@ -369,5 +369,18 @@ class TransactionPaidLeaveController extends Controller
                 'info' => $end_info
             ]);
         }
+    }
+    
+    public function reject(TransactionPaidLeave $reject, Request $request){
+        $request->validate(['informations' => 'required']);
+        TransactionPaidLeave::where('id', $reject->id)
+            ->update(['informations' => $request->informations,'status' => 'Ditolak']);
+        $name = TransactionPaidLeave::where('transaction_paid_leaves.id',$reject->id)
+        ->join('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+        ->select('master_users.name as user_name')->get();
+        foreach ($name as $item) {
+            Alert::success('Berhasil!', 'Pengajuan Cuti atas nama '. $item->user_name . ' ditolak!');
+        }
+        return redirect('/admin/paid-leave');
     }
 }

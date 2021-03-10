@@ -24,7 +24,7 @@
 @endsection
 
 @section('content')
-<div class="panel panel-primary panel-bordered">
+<div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Form Tambah Jadwal Kerja Bulan '.$month.' - '.$year}}</h3>
     </div>

@@ -71,7 +71,7 @@ Route::prefix('/staff')->group(function(){
     Route::get('/profile', [StaffAuthDashboardController::class,'profile']);
     Route::get('/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
     Route::put('/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
-    Route::get('/foto', [StaffAuthDashboardController::class,'foto']);
+    Route::post('/foto', [StaffAuthDashboardController::class,'foto']);
 });
 
 //route masterdata staff

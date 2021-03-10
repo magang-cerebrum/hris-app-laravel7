@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Jenssegers\Agent\Agent;
 use Asset\img\profile_photos;
-use Illuminate\Contracts\Auth\Guard;
+// use Illuminate\Contracts\Auth\Guard;
 class StaffAuthDashboardController extends Controller
 {
     public function index(Request $request){
@@ -334,12 +334,15 @@ class StaffAuthDashboardController extends Controller
     }
     public function foto(Request $request)
     {
-        $cv = $request->file('image');
-        $cv_name = "pp." . $cv->getClientOriginalExtension();
-        $tujuan_upload = 'profile_photos';
-        $cv->move($tujuan_upload, $cv_name);
+        $image = $request->image;
+        $image_array_1 = explode(";", $image);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $data = base64_decode($image_array_2[1]);
+        $image_name = 'img/profile-photos/' . Auth::user()->name . '.png';
+        file_put_contents($image_name, $data);
 
-        return json(['request' => $request]);
+        $src = 'asset ' . $image_name;
+        return redirect('/staff/dashboard');
     }
     
 }

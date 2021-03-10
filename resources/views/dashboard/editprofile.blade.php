@@ -96,9 +96,9 @@
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label text-center">Foto Profil:</label>
-                            <div class="col-sm-4 text-center offset">
-                                <img src="{{asset('img/profile-photos/'.$data->profile_photo)}}" alt="Foto Profil Tidak Tersedia">
-                            </div>
+                    <div class="col-sm-4 text-center offset">
+                        <img src="{{asset('img/profile-photos/'.$data->profile_photo)}}" alt="Foto Profil Tidak Tersedia">
+                    </div>
                 </div>
             </div>
             @if ($data->role_id == 1)

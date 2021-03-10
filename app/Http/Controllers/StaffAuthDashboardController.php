@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Jenssegers\Agent\Agent;
+use Asset\img\profile_photos;
 class StaffAuthDashboardController extends Controller
 {
     public function index(){
@@ -21,6 +23,9 @@ class StaffAuthDashboardController extends Controller
             $year = date('Y');
             $this_year = date('Y');
             $user = Auth::user(); 
+            $device = new Agent();
+            $browser = $device->platform();
+            // dd($browser);
             for ($i = 1 ; $i<=12;$i++){
                 $max_score=0;
                 $data_month =DB::table('master_achievements')
@@ -184,6 +189,15 @@ class StaffAuthDashboardController extends Controller
             ]);
             Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/staff/profile');
+    }
+    public function foto(Request $request)
+    {
+        $cv = $request->file('image');
+        $cv_name = "pp_" . $name . "_" . date('Y-m-d H-i-s') . "." . $cv->getClientOriginalExtension();
+        $tujuan_upload = 'profile_photos/';
+        $cv->move($tujuan_upload, $cv_name);
+
+        return json(['request' => $request]);
     }
     
 }

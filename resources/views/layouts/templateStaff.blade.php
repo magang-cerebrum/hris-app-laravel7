@@ -340,11 +340,8 @@
         $(document).ready(function(){
 
             var $modal = $('#modal');
-        
             var image = document.getElementById('sample_image');
-        
             var cropper;
-        
             $('#upload_image').change(function(event){
                 var files = event.target.files;
         
@@ -367,7 +364,7 @@
             $modal.on('shown.bs.modal', function() {
                 cropper = new Cropper(image, {
                     aspectRatio: 1,
-                    viewMode: 1,
+                    viewMode: 3,
                     preview:'.preview'
                 });
             }).on('hidden.bs.modal', function(){
@@ -387,16 +384,17 @@
                     reader.readAsDataURL(blob);
                     reader.onloadend = function(){
                         var base64data = reader.result;
+                        var urlnya = "{{url('/staff/foto')}}";
                         $.ajax({
-                            url:'/staff/foto',
-                            method:'get',
+                            url:urlnya,
+                            method:'POST',
                             data:{image:base64data},
                             success:function(data)
                             {
-                                console.log(response);
                                 $modal.modal('hide');
                                 $('#uploaded_image').attr('src', data);
                             }
+                            
                         });
                     };
                 });

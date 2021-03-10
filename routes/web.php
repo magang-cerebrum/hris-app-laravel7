@@ -71,6 +71,7 @@ Route::prefix('/staff')->group(function(){
     Route::get('/profile', [StaffAuthDashboardController::class,'profile']);
     Route::get('/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
     Route::put('/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
+    Route::get('/foto', [StaffAuthDashboardController::class,'foto']);
 });
 
 //route masterdata staff
@@ -233,3 +234,6 @@ Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+
+
+Route::view('/test', 'testing1');

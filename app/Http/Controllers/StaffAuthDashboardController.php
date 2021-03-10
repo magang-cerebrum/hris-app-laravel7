@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+<<<<<<< HEAD
+use Jenssegers\Agent\Agent;
+use Asset\img\profile_photos;
+=======
 // use Illuminate\Contracts\Auth\Guard;
+>>>>>>> 3e42d7e980d5ecca201a1f66362a1fd3cb223c63
 class StaffAuthDashboardController extends Controller
 {
     public function index(Request $request){
@@ -24,6 +29,12 @@ class StaffAuthDashboardController extends Controller
             $current_month = switch_month(date('m'));
             $before_current_month =switch_month(date('m',strtotime('-1 month')));
             $this_year = date('Y');
+<<<<<<< HEAD
+            $user = Auth::user(); 
+            $device = new Agent();
+            $browser = $device->platform();
+            // dd($browser);
+=======
             $sum_all_score = DB::table('master_achievements')
                 ->leftjoin('master_users',
                     'master_achievements.achievement_user_id','=','master_users.id')
@@ -138,6 +149,7 @@ class StaffAuthDashboardController extends Controller
             $count_before_current_month_achievement = count($before_current_month_achievement);
             
              
+>>>>>>> 3e42d7e980d5ecca201a1f66362a1fd3cb223c63
             for ($i = 1 ; $i<=12;$i++){
                 $max_score=0;
                 $data_month =DB::table('master_achievements')
@@ -325,6 +337,15 @@ class StaffAuthDashboardController extends Controller
             ]);
             Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/staff/profile');
+    }
+    public function foto(Request $request)
+    {
+        $cv = $request->file('image');
+        $cv_name = "pp_" . $name . "_" . date('Y-m-d H-i-s') . "." . $cv->getClientOriginalExtension();
+        $tujuan_upload = 'profile_photos/';
+        $cv->move($tujuan_upload, $cv_name);
+
+        return json(['request' => $request]);
     }
     
 }

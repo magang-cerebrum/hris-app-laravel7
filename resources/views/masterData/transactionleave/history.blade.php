@@ -51,8 +51,8 @@
                                             <td class="text-center">{{$item->user_name}}</td>
                                             <td class="text-center">{{$item->type_name}}</td>
                                             <td class="text-center">{{$item->days .' hari'}}</td>
-                                            <td class="text-center">{{$item->paid_leave_date_start}}</td>
-                                            <td class="text-center">{{$item->paid_leave_date_end}}</td>
+                                            <td class="text-center">{{indonesian_date($item->paid_leave_date_start)}}</td>
+                                            <td class="text-center">{{indonesian_date($item->paid_leave_date_end)}}</td>
                                             <td class="text-center">{{$item->needs}}</td>
                                             <td class="text-center">{{$item->informations}}</td>
                                             <td class="text-center">{{$item->status}}</td>

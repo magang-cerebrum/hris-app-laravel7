@@ -38,7 +38,7 @@ Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->middleware('auth');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->name('staffed');
 Route::get('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
 Route::get('/staff/password',[UserController::class,'edit'])->middleware('auth');
 Route::put('/staff/password/saved',[UserController::class,'update'])->middleware('auth');
@@ -167,6 +167,7 @@ Route::prefix('/admin/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'index']);
     Route::get('/history',[TransactionPaidLeaveController::class,'history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'update_approve']);
+    Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'reject']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy']);
 });
 

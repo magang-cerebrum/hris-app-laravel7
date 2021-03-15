@@ -223,23 +223,27 @@ background: linear-gradient(
 </style>
 @endsection
 @section('content')
-<div class="row mt-10">
-    <div class="col-md-12">
-        @if (session('status'))
-        <div class="alert-success alert alert-dismissable">
-            {{session('status')}}
-            <button class="close" data-dismiss="alert">
-                <i class="fa fa-close"></i>
-            </button>
-        </div>
-        @endif
-        <div class="panel panel-bordered panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Grafik "{{$name}}" Tahun
-                    <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
-                    <i></i>
-                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
-                        title="Anda mendapatkan Employee of the month pada tahun ini"></i>
+
+
+    <div class="row mt-10">
+        <div class="col-md-12">
+            @if (session('status'))
+                <div class="flash-mess alert-success alert alert-dismissable">
+                    {{session('status')}}
+                    <button class="close" data-dismiss="alert">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            @endif
+            <div class="panel panel-bordered panel-primary">
+                <div class="panel-heading">
+                    {{-- <i class="fa"></i> --}}
+                        
+                        <h3 class="panel-title">Grafik "{{$name}}" Tahun  
+                            
+                        <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
+                        <i></i>
+                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold" title="Anda mendapatkan Employee of the month pada tahun ini"></i>
                     @endif
                 </h3>
             </div>
@@ -451,7 +455,10 @@ background: linear-gradient(
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
-    
+    $(".flash-mess").fadeTo(2000, 500).slideUp(500, function(){
+    $(".flash-mess").slideUp(500);
+});
+
     function showChange(){
         $('#year-finder').on('change',function(e){
         var optionSelected = $("option:selected", this);

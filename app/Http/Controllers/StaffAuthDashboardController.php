@@ -91,13 +91,10 @@ class StaffAuthDashboardController extends Controller
                 'master_achievements.month',
                 'master_users.profile_photo',
                 'master_divisions.name as division_name'
-
             ])
             ->where('master_users.name',$user->name)
             ->where('year',$this_year)
             ->where('month',$current_month)->get();
-            // dd($userCMAch);
-            // dd($before_current_month_achievement);
             
             $userLMAch = DB::table('master_achievements')
             ->leftjoin('master_users',

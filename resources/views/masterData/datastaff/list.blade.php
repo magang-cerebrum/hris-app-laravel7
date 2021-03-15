@@ -77,8 +77,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($staff as $row)
-                            @if ($row->status == 'Aktif')
+                            @foreach ($aktif as $row)
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">
@@ -122,11 +121,10 @@
                                 <td class="text-center">{{$row->name}}</td>
                                 <td class="text-center">{{$row->division_name}}</td>
                             </tr>
-                            @endif
                             @endforeach
                         </tbody>
                     </table>
-                    <span class="text-muted" id="count-active">Jumlah Staff Aktif : {{$aktif}}</span>
+                    <span class="text-muted" id="count-active">Jumlah Staff Aktif : {{$count_aktif}}</span>
                     <table id="masterdata-staff"
                         class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
                         aria-describedby="demo-basic_info" style="width: 100%;" width="100%" cellspacing="0">
@@ -149,7 +147,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($staff as $row)
+                            @foreach ($naktif as $row)
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">
@@ -191,16 +189,14 @@
                                 </td>
                                 <td class="text-center">{{$row->nip}}</td>
                                 <td class="text-center">{{$row->name}}
-                                    @if($row->status == 'Non-Aktif')
-                                        <div class="label label-danger">Non-Aktif</div>
-                                    @endif
+                                    <div class="label label-danger">Non-Aktif</div>
                                 </td>
                                 <td class="text-center">{{$row->division_name}}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <span class="text-muted" id="count-all">Jumlah Staff Keseluruhan : {{count($staff)}}</span>
+                    <span class="text-muted" id="count-all">Jumlah Staff Tidak Aktif : {{$count_naktif}}</span>
                 </form>
                 </div>
             </div>

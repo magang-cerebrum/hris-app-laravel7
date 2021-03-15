@@ -210,5 +210,52 @@
         }
     }
 
+    function reset_pass(id,name){
+        var url = "/admin/data-staff/:id/password".replace(':id', id);
+        Swal.fire({
+            width: 600,
+            title: 'Lakukan reset password untuk user ' + name + '?',
+            text: "Informasikan kepada staff agar mengganti passwordnya segera!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+            }
+        ).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {id : id, name: name},
+                    success: function(response) {
+                        Swal.fire({
+                            width: 600,
+                            title: 'Berhasil!',
+                            text: "Password untuk user dengan nama " + response.name + " berhasil direset! (password default : cerebrum)",
+                            icon: 'success',
+                        });
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Reset Password gagal!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+                });
+            } else {
+                return false;
+            }} 
+        );
+    }
+
 </script>
 @endsection

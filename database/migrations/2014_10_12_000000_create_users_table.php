@@ -25,35 +25,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::table('users')->insert([[
-            'id'=>1,
-            'name'=>'Muhammad Kemal Ilyasa Margana',
-            'email'=>'kemal48.ilyasa@gmail.com',
-            'role'=>'Admin',
-            'nip'=>'69420',
-            'password'=>Hash::make('CamelT'),
-            
-        ],
-        [
-            'id'=>2,
-            'name'=>'Altaiir Joseph Kemalson Margana',
-            'email'=>'Aljo@gmail.com',
-            'role'=>'Staff',
-            'nip'=>'69421',
-            'password'=>Hash::make('CamelT'),
-            
-        ]
-        ,
-        [
-            'id'=>3,
-            'name'=>'Ezio Killua Kemalson Margana',
-            'email'=>'EzKill@gmail.com',
-            'role'=>'Staff',
-            'nip'=>'69422',
-            'password'=>Hash::make('CamelT'),
-            
-        ]
-        ]);
     }
 
     /**

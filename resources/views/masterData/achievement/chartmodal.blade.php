@@ -175,7 +175,7 @@
                         },
                         shadowSize: 0
                     },
-                    colors: ['#bf0404', '#177bbb','#FFFF00','#6ECCF4'],
+                    colors: ['#bf0404', '#177bbb','#19e331','#ed7a07'],
                     legend: {
                         show: true,
                         position: 'ne',

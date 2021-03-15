@@ -134,7 +134,7 @@
                 </div>
                 <!--===================================================-->
                 <!--End page content-->
-            </div
+            </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->
 
@@ -155,6 +155,7 @@
                                         <div class="profile-wrap text-center">
                                             <div class="pad-btm image-area">
                                                 <form method="POST">
+                                                    @csrf
                                                     <label for="upload_image">
                                                     <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
                                                     <div class="overlay">
@@ -163,8 +164,7 @@
                                                     <input type="file" name="image" class="image" id="upload_image" style="display:none" />
                                                     </label>
                                                 </form>
-                                            </div>			
-                                      
+                                            </div>
                                             <a href="{{ url('#profile-nav')}}" class="box-block" data-toggle="collapse" aria-expanded="false">
                                                 <span class="pull-right dropdown-toggle">
                                                     <i class="dropdown-caret"></i>
@@ -392,9 +392,8 @@
                             success:function(data)
                             {
                                 $modal.modal('hide');
-                                $('#uploaded_image').attr('src', data);
+                                // $('#uploaded_image').attr('src', data);
                             }
-                            
                         });
                     };
                 });

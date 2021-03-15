@@ -9,11 +9,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ShiftController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = Auth::user();
@@ -27,11 +22,6 @@ class ShiftController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $user = Auth::user();
@@ -43,12 +33,6 @@ class ShiftController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {   
         $user = Auth::user()->name;
@@ -57,40 +41,22 @@ class ShiftController extends Controller
             'start_working_time' => 'required',
             'end_working_time' => 'required'
         ]);
-        
-        $jam_masuk = date_create($request->start_working_time); //diganti masuk kapan
-        $jam_keluar = date_create($request->end_working_time); //
-        $jumlah_jam = date_diff($jam_masuk, $jam_keluar);
-        $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
 
+        $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
+        $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
+        
         MasterShift::create([
             'name' => $request->name,
             'start_working_time' => $request->start_working_time,
             'end_working_time' => $request->end_working_time,
             'total_hour' => $interval
         ]);
+
         activity()->log('Data ' .$request->name.' baru telah ditambahkan oleh '.$user);
         Alert::success('Berhasil!', 'Shift baru telah ditambahkan!');
         return redirect('/admin/shift');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(MasterShift $shift)
     {
         $user = Auth::user();
@@ -103,13 +69,6 @@ class ShiftController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MasterShift $shift)
     {
         $user = Auth::user()->name;
@@ -120,9 +79,7 @@ class ShiftController extends Controller
             'end_working_time' => 'required'
         ]);
 
-        $jam_masuk = date_create($request->start_working_time); //diganti masuk kapan
-        $jam_keluar = date_create($request->end_working_time); //
-        $jumlah_jam = date_diff($jam_masuk, $jam_keluar);
+        $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
         $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
         
         MasterShift::where('id', $shift->id)
@@ -137,18 +94,7 @@ class ShiftController extends Controller
         return redirect('/admin/shift');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MasterShift $shift)
-    {
-        MasterShift::destroy($shift->id);
-        return redirect('/admin/shift');
-    }
-    public function destroyAll(Request $request){
+    public function destroySelected(Request $request){
         foreach ($request->selectid as $item) {
             MasterShift::where('id','=',$item)->delete();
         }

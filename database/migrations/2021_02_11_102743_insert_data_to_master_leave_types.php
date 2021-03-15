@@ -27,7 +27,7 @@ class InsertDataToMasterLeaveTypes extends Migration
             [
                 'id' => 2,
                 'name' => 'Cuti Melahirkan',
-                'default_day' => 45
+                'default_day' => 60
             ],
             [
                 'id' => 3,

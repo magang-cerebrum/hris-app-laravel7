@@ -6,6 +6,7 @@
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
@@ -111,6 +112,11 @@
                                         type="button">
                                         <i class="fa fa-pencil-square"></i>
                                     </a>
+                                    <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Reset Password Staff"
+                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="display: inline; margin: auto 5px">
+                                        <i class="fa fa-unlock-alt"></i>
+                                    </button>
                                 </td>
                                 <td class="text-center">{{$row->nip}}</td>
                                 <td class="text-center">{{$row->name}}</td>
@@ -177,6 +183,11 @@
                                         type="button">
                                         <i class="fa fa-pencil-square"></i>
                                     </a>
+                                    <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Reset Password Staff"
+                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="display: inline; margin: auto 5px">
+                                        <i class="fa fa-unlock-alt"></i>
+                                    </button>
                                 </td>
                                 <td class="text-center">{{$row->nip}}</td>
                                 <td class="text-center">{{$row->name}}

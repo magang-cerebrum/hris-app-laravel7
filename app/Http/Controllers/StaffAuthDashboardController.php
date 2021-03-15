@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\File;
 use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -335,6 +336,17 @@ class StaffAuthDashboardController extends Controller
     public function foto(Request $request)
     {
         $image = $request->image;
+
+        $image_default = Auth::user()->profile_photo;
+        if ($image_default != 'defaultL.jpg' || $image_default != 'defaultP.png') {
+            $path_profile = 'img/profile-photos/'.$image_default;
+            $file_path_profile = public_path($path_profile);
+            // unlink($file_path_profile);
+            DB::table('master_users')
+            ->where('id', '=', Auth::user()->id)
+            ->update(['profile_photo' => Auth::user()->name .'.png']);
+        }
+
         $image_array_1 = explode(";", $image);
         $image_array_2 = explode(",", $image_array_1[1]);
         $data = base64_decode($image_array_2[1]);
@@ -342,7 +354,6 @@ class StaffAuthDashboardController extends Controller
         file_put_contents($image_name, $data);
 
         $src = 'asset ' . $image_name;
-        return redirect('/staff/dashboard');
     }
     
 }

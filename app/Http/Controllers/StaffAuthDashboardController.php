@@ -341,7 +341,6 @@ class StaffAuthDashboardController extends Controller
         if ($image_default != 'defaultL.jpg' || $image_default != 'defaultP.png') {
             $path_profile = 'img/profile-photos/'.$image_default;
             $file_path_profile = public_path($path_profile);
-            // unlink($file_path_profile);
             DB::table('master_users')
             ->where('id', '=', Auth::user()->id)
             ->update(['profile_photo' => Auth::user()->name .'.png']);

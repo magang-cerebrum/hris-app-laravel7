@@ -182,7 +182,7 @@
                                             <a href="{{ url('staff/profile')}}" class="list-group-item">
                                                 <i class="demo-psi-male icon-lg icon-fw"></i> Profile
                                             </a>
-                                            <a href="{{ url('staff/password/'.$id)}}" class="list-group-item">
+                                            <a href="{{ url('staff/password/')}}" class="list-group-item">
                                                 <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                             </a>
                                             <a href="{{ url('logout')}}" class="list-group-item">

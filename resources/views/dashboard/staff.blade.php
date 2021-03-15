@@ -434,7 +434,7 @@ background: linear-gradient(
                         <div class="pad-all">
                             <div class="media">
                                 <div class="media-left">
-                                    <img alt="Profile Picture" class="img-md img-circle" src="img/profile-photos/8.png">
+                                    <img alt="Profile Picture" class="img-md img-circle img-responsive" src="{{asset('img/profile-photos/'.Auth::user()->profile_photo)}}">
                                 </div>
                                 <div class="media-body pad-top">
                                     <span class="text-lg text-semibold">{{Auth::user()->name}}</span>

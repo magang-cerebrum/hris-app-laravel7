@@ -35,7 +35,7 @@
                         <div class="input-group date">
                             <input id="timepicker-input-shift-masuk" type="text" class="form-control"
                                 name="start_working_time">
-                            <span class="input-group-addon"><i class="ti-timer"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                         </div>
                     </div>
                     <label class="col-sm-2 control-label">Jam Keluar:</label>
@@ -43,7 +43,7 @@
                         <div class="input-group date">
                             <input id="timepicker-input-shift-keluar" type="text" class="form-control"
                                 name="end_working_time">
-                            <span class="input-group-addon"><i class="ti-timer"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                         </div>
                     </div>
                 </div>
@@ -60,17 +60,18 @@
 <script>
     $(document).ready(function () {
         $('#timepicker-input-shift-masuk').timepicker({
-            showSeconds: true,
-            secondStep: 15,
             showMeridian: false
         });
-    });
-
-    $(document).ready(function () {
         $('#timepicker-input-shift-keluar').timepicker({
-            showSeconds: true,
-            secondStep: 15,
             showMeridian: false
+        });
+        $('#timepicker-input-shift-masuk').change(function (){
+            var get = document.getElementById('timepicker-input-shift-masuk').value;
+            document.getElementById('timepicker-input-shift-masuk').value = get + ':00';
+        });
+        $('#timepicker-input-shift-keluar').change(function (){
+            var get = document.getElementById('timepicker-input-shift-keluar').value;
+            document.getElementById('timepicker-input-shift-keluar').value = get + ':00';
         });
     });
 

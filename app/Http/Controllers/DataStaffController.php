@@ -6,15 +6,10 @@ use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
-
 class DataStaffController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = Auth::user();
@@ -40,11 +35,6 @@ class DataStaffController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {   
         $user = Auth::user();
@@ -64,12 +54,6 @@ class DataStaffController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -95,23 +79,6 @@ class DataStaffController extends Controller
         return redirect('/admin/data-staff');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\MasterUser  $masterUser
-     * @return \Illuminate\Http\Response
-     */
-    public function show(MasterUser $masterUser)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\MasterUser  $masterUser
-     * @return \Illuminate\Http\Response
-     */
     public function edit(MasterUser $staff)
     {
         $user = Auth::user();
@@ -131,13 +98,6 @@ class DataStaffController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\MasterUser  $masterUser
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MasterUser $staff)
     {
         $request->validate([
@@ -184,18 +144,7 @@ class DataStaffController extends Controller
         return redirect('/admin/data-staff');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\MasterUser  $masterUser
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MasterUser $staff)
-    {
-        MasterUser::destroy($staff->id);
-        return redirect('/admin/data-staff');
-    }
-    public function destroyAll(Request $request){
+    public function destroySelected(Request $request){
         if ($request->selectid[0] != '') {
             foreach ($request->selectid as $item) {
                 MasterUser::where('id','=',$item)->delete();
@@ -207,5 +156,10 @@ class DataStaffController extends Controller
         }
         Alert::success('Berhasil!', 'Staff yang dipilih berhasil dihapus!');
         return redirect('/admin/data-staff');
+    }
+
+    public function reset_pass(Request $request){
+        MasterUser::where('id', $request->id)->update(['password' => Hash::make('cerebrum')]);
+        return response()->json(['name'=> $request->name]);
     }
 }

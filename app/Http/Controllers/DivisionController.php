@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 class DivisionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {   
         $user = Auth::user();
@@ -26,11 +21,6 @@ class DivisionController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $user = Auth::user();
@@ -42,12 +32,6 @@ class DivisionController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate(['name' => 'required']);
@@ -58,23 +42,6 @@ class DivisionController extends Controller
         return redirect('/admin/division');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(MasterDivision $division)
     {
         $user = Auth::user();
@@ -87,39 +54,18 @@ class DivisionController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MasterDivision $division)
     {
         $request->validate(['name' => 'required']);
         $past = MasterDivision::where('id',$division->id)->get();
-        MasterDivision::where('id', $division->id)
-            ->update(['name' => $request->name]);
-            $user = Auth::user()->name;
-        // activity()->log('Divisi '. $request->name .' telah di-update oleh Admin '. $user);
+        $user = Auth::user()->name;
+        MasterDivision::where('id', $division->id)->update(['name' => $request->name]);
         activity()->log($user.' telah memperbarui Divisi ' .$past[0]->name .' menjadi '.$request->name );
-            Alert::success('Berhasil!', 'Divisi '. $division->name . ' telah diganti menjadi Divisi '. $request->name . '!');
+        Alert::success('Berhasil!', 'Divisi '. $division->name . ' telah diganti menjadi Divisi '. $request->name . '!');
         return redirect('/admin/division');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MasterDivision $division)
-    {
-        MasterDivision::destroy($division->id);
-        return redirect('/admin/division');
-    }
-
-    public function destroyAll(Request $request){
+    public function destroySelected(Request $request){
         $i = 0;
         $user = Auth::user()->name;
         foreach ($request->selectid as $item) {

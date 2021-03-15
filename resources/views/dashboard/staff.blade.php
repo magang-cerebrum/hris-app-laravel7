@@ -321,7 +321,7 @@ background: linear-gradient(
                                         src="{{asset('img/profile-photos/'.$last_month[0]->profile_photo)}}">
                                     <p class="text-lg text-semibold mar-no text-main">{{$last_month[0]->name}}</p>
                                     <p class="text-sm">{{$last_month[0]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$last_month[1]->score}}</p>
+                                    <p class="text-sm">Score : {{$last_month[0]->score}}</p>
                                     <br>
                                     <br>
                                 </div>
@@ -433,12 +433,14 @@ background: linear-gradient(
                     <div class="panel panel-success panel-colorful">
                         <div class="pad-all">
                             <div class="media">
-                                <div class="media-left">
-                                    <img alt="Profile Picture" class="img-md img-circle img-responsive" src="{{asset('img/profile-photos/'.Auth::user()->profile_photo)}}">
+                                <div class="media-left" style="width: 8%">
+                                    <img class="img-md img-circle img-responsive" src="{{asset('img/profile-photos/'.Auth::user()->profile_photo)}}" alt="Profile Picture">
                                 </div>
                                 <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{Auth::user()->name}}</span>
-                                    <p class="text-sm">{{$rankCM}}</p>
+                                    <span class="text-lg text-semibold">{{Auth::user()->name}} #{{$rankCM}}</span> 
+                                    @foreach ($user_cm as $item)
+                                    <p>Score : {{$item->score}}/100</p>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

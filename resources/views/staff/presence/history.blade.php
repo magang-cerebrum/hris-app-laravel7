@@ -70,7 +70,8 @@
             format: 'yyyy/mm/dd',
             todayBtn: "linked",
             autoclose: true,
-            todayHighlight: true
+            todayHighlight: true,
+            endDate: '0d'
         });
     });
 

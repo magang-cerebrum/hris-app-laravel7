@@ -13,25 +13,31 @@ class DataStaffController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $staff = MasterUser::
-        leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-        ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
+        $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->select(
-                'master_users.*',
-                'master_divisions.name as division_name',
-                'master_positions.name as position_name',
-                'master_roles.name as role_name'
+                'master_users.nip',
+                'master_users.name',
+                'master_divisions.name as division_name'
                 )
+        ->where('status','=','Aktif')
         ->get();
-        $aktif = MasterUser::where('status','=','Aktif')->select('nip')->get();
+        $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->select(
+                'master_users.nip',
+                'master_users.name',
+                'master_divisions.name as division_name'
+                )
+        ->where('status','=','Non-Aktif')
+        ->get();
         return view('masterdata.datastaff.list',[
-            'staff' => $staff,
+            'aktif' => $aktif,
+            'naktif' => $naktif,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id,
-            'aktif'=>count($aktif)
+            'count_aktif'=>count($aktif),
+            'count_naktif'=>count($naktif)
         ]);
     }
 

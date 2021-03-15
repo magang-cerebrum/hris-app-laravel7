@@ -16,7 +16,7 @@
 
     <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    
+
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
@@ -135,7 +135,7 @@
                 </div>
                 <!--===================================================-->
                 <!--End page content-->
-            </div
+            </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->
 
@@ -165,8 +165,7 @@
                                                     <input type="file" name="image" class="image" id="upload_image" style="display:none" />
                                                     </label>
                                                 </form>
-                                            </div>			
-                                      
+                                            </div>
                                             <a href="{{ url('#profile-nav')}}" class="box-block" data-toggle="collapse" aria-expanded="false">
                                                 <span class="pull-right dropdown-toggle">
                                                     <i class="dropdown-caret"></i>

@@ -82,7 +82,8 @@ Route::prefix('/admin/data-staff')->group(function(){
     Route::post('/', [DataStaffController::class, 'store']);
     Route::get('/{staff}/edit', [DataStaffController::class, 'edit']);
     Route::put('/{staff}', [DataStaffController::class, 'update']);
-    Route::delete('/', [DataStaffController::class, 'destroyAll']);
+    Route::put('/{staff}/password', [DataStaffController::class, 'reset_pass']);
+    Route::delete('/', [DataStaffController::class, 'destroySelected']);
 });
 
 //route masterdata divisi
@@ -92,7 +93,7 @@ Route::prefix('/admin/division')->group(function(){
     Route::post('/', [DivisionController::class, 'store']);
     Route::get('/{division}/edit', [DivisionController::class, 'edit']);
     Route::put('/{division}', [DivisionController::class, 'update']);
-    Route::delete('', [DivisionController::class, 'destroyAll']);
+    Route::delete('', [DivisionController::class, 'destroySelected']);
 });
 
 //route masterdata posisi
@@ -102,7 +103,7 @@ Route::prefix('/admin/position')->group(function(){
     Route::post('/', [PositionController::class, 'store']);
     Route::get('/{position}/edit', [PositionController::class, 'edit']);
     Route::put('/{position}', [PositionController::class, 'update']);
-    Route::delete('/', [PositionController::class, 'destroyAll']);
+    Route::delete('/', [PositionController::class, 'destroySelected']);
 });
 
 //route masterdata shift
@@ -112,7 +113,7 @@ Route::prefix('/admin/shift')->group(function(){
     Route::post('/', [ShiftController::class, 'store']);
     Route::get('/{shift}/edit', [ShiftController::class, 'edit']);
     Route::put('/{shift}', [ShiftController::class, 'update']);
-    Route::delete('/', [ShiftController::class, 'destroyAll']);
+    Route::delete('/', [ShiftController::class, 'destroySelected']);
 });
 
 //route masterdata tipe cuti

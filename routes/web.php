@@ -61,6 +61,7 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/profile', [AdminAuthDashboardController::class,'profile']);
     Route::get('/profile/edit', [AdminAuthDashboardController::class,'editprofile']);
     Route::put('/profile/{user}', [AdminAuthDashboardController::class,'updateprofile']);
+    Route::post('/foto', [StaffAuthDashboardController::class,'foto']);
 });
 
 //route landing dashboard, ganti password & profil ==STAFF==

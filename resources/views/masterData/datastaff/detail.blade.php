@@ -1,5 +1,5 @@
 <!-- modal -->
-<div class="modal fade" id="modal-detail-staff" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal-detail-staff" tabindex="-1" role="dialog" style="overflow-x: auto !important">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

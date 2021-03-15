@@ -220,10 +220,6 @@ background: linear-gradient(
     border-bottom: 3px solid transparent;
     border-top: 3px solid #b1560f;
 }
-
-
-
-       
 </style>
 @endsection
 @section('content')
@@ -249,280 +245,213 @@ background: linear-gradient(
                         <i></i>
                     @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold" title="Anda mendapatkan Employee of the month pada tahun ini"></i>
                     @endif
-                    </h3>
-                </div>
-                    <div class="panel-body" id="charts">
-                        <div id="years">
-                        <select name="select" id="year-finder" class="selectpicker" data-style="btn-primary" onchange="showChange()">
-                            @foreach ($year_list as $item)
-                                @if ($item->year == $current_year)
-                                <option value="{{$item->year}}" selected>{{$item->year}}</option> 
-                                @else <option value="{{$item->year}}">{{$item->year}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                        </div>
-                        <div id="staff-charts"></div>
-                        <br>
-                        <div id="eom_message">
-                            <p id="text_eom_0" class="text-danger"></p>
-                        @if ($sum_of_eom == 0)
-                            <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
-                            <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
-                            
-                            @else 
-                        <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
-                        <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah {{$sum_of_eom}} yaitu bulan 
-                            @foreach ($month_of_eom as $item)
-                            
-                            {{-- {{dd($loop->last)}} --}}
-                            @if ($loop->last)
-                            {{$item}}
-                            @else {{$item}},&nbsp;
-                            @endif   
-
-                            @endforeach
-                        </p>
+                </h3>
+            </div>
+            <div class="panel-body" id="charts">
+                <div id="years">
+                    <select name="select" id="year-finder" class="selectpicker" data-style="btn-primary"
+                        onchange="showChange()">
+                        @foreach ($year_list as $item)
+                        @if ($item->year == $current_year)
+                        <option value="{{$item->year}}" selected>{{$item->year}}</option>
+                        @else <option value="{{$item->year}}">{{$item->year}}</option>
                         @endif
-                        </div>
-                    </div>
+                        @endforeach
+                    </select>
+                </div>
+                <div id="staff-charts"></div>
+                <br>
+                <div id="eom_message">
+                    <p id="text_eom_0" class="text-danger"></p>
+                    @if ($sum_of_eom == 0)
+                    <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
+                    <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
+                    @else
+                    <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
+                    <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah
+                        {{$sum_of_eom}} yaitu bulan
+                        @foreach ($month_of_eom as $item)
+                        @if ($loop->last)
+                        {{$item}}
+                        @else {{$item}},&nbsp;
+                        @endif
+                        @endforeach
+                    </p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    @if ($last_month->isEmpty() && $current_month->isEmpty())
-        
-    @else
-     <div class="row mt-10">
-        <div class="col-md-12">
-            @if ($count_current_month_ach == 0)
-            <div class="panel panel-bordered panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Top Scored Employee ({{$last_month_name}} {{$rankLM}})</h3>
-                </div>
-                    
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-1 col-md-1"></div>
-                            <div class="col-sm-4 col-md-3">
-                    
-                    
-                                <div id="second">
-                                
-                                    <div class="panel pos-rel">
-                                        <div class="ribbon"><span>#2</span></div>
-                                        <div class="pad-all text-center">
-                                            
-                                           
-                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[1]->profile_photo)}}">
-                                                <p class="text-lg text-semibold mar-no text-main">{{$last_month[1]->name}}</p>
-                                                <p class="text-sm">{{$last_month[1]->division_name}}</p>
-                                                <p class="text-sm">Score : {{$last_month[1]->score}}</p>
-                                           
-                                            
-                                        </div>
-                                    </div>
+@if ($last_month->isEmpty() && $current_month->isEmpty())
 
+@else
+<div class="row mt-10">
+    <div class="col-md-12">
+        @if ($count_current_month_ach == 0)
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Top Scored Employee ({{$last_month_name}} {{$rankLM}})</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1"></div>
+                    <div class="col-sm-4 col-md-3">
+                        <div id="second">
+                            <div class="panel pos-rel">
+                                <div class="ribbon"><span>#2</span></div>
+                                <div class="pad-all text-center">
+                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
+                                        src="{{asset('img/profile-photos/'.$last_month[1]->profile_photo)}}">
+                                    <p class="text-lg text-semibold mar-no text-main">{{$last_month[1]->name}}</p>
+                                    <p class="text-sm">{{$last_month[1]->division_name}}</p>
+                                    <p class="text-sm">Score : {{$last_month[1]->score}}</p>
                                 </div>
-                                <!---------------------------------->
-                    
-                    
                             </div>
-                            <div class="col-sm-4 col-md-4">
-                    
-                                <div id="first">
-                                    <div class="panel pos-rel">
-                                        <div class="ribbon"><span>#1</span></div>
-                                        <div class="pad-all text-center">
-                                            
-                                            
-                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[0]->profile_photo)}}">
-                                                <p class="text-lg text-semibold mar-no text-main">{{$last_month[0]->name}}</p>
-                                                <p class="text-sm">{{$last_month[0]->division_name}}</p>
-                                                <p class="text-sm">Score : {{$last_month[1]->score}}</p>
-                                                <br>
-                                                <br>
-                                                
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!---------------------------------->
-                    
-                    
-                            </div>
-                            <div class="col-sm-4 col-md-3">
-                    
-                    
-                                <div id="third">
-
-                                
-                                <div class="panel pos-rel">
-                                    <div class="ribbon"><span>#3</span></div>
-                                    <div class="pad-all text-center">
-                                        
-                                       
-                                            <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$last_month[2]->profile_photo)}}">
-                                            <p class="text-lg text-semibold mar-no text-main">{{$last_month[2]->name}}</p>
-                                            <p class="text-sm">{{$last_month[2]->division_name}}</p>
-                                            <p class="text-sm">Score : {{$last_month[2]->score}}</p>                      
-                                        
-                                        
-                                    </div>
-                                </div>
-                                </div>
-                                <!---------------------------------->
-                    
-                    
-                            </div>
-                            <div class="col-sm-1 col-md-1"></div>
                         </div>
-                        <div class="pos row" id="pot">
-                            @if ($rankLM == 1 || $rankLM == 2 || $rankLM ==3)
-                                <p></p>
-                            @else
-                            @foreach ($user_lm as $item)
-                            <div class="col-sm-2 col-md-2"></div>
-                            <div class="col-sm-8 col-md-8">
-                            <div class="panel panel-primary panel-colorful ">
-                                
-                                <div class="pad-all">
-                                    <div class="media">
-                                       
-                                        <div class="media-left">
-                                            <img alt="Profile Picture" class="img-md img-circle" src="{{asset('img/profile-photos/'.$item->profile_photo)}}">
-                                        </div>
-                                        <div class="media-body pad-top">
-                                            <span class="text-lg text-semibold">{{$item->name}}</span> <span class="text-lg text-right" >#{{$rankLM}}</span>
-                                            <p class="text-sm">Score : {{$item->score}}/100</p>
-                                            @if (!csrf_token())
-                                                <p>Anda Login DiBrowserLain</p>
-                                            @endif
-                                            <p class="text-sm">{{csrf_token()}} {{$sess->getId()}}</p>
-                                        </div>
-                                    </div>
-                                     
+                        <!---------------------------------->
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <div id="first">
+                            <div class="panel pos-rel">
+                                <div class="ribbon"><span>#1</span></div>
+                                <div class="pad-all text-center">
+                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
+                                        src="{{asset('img/profile-photos/'.$last_month[0]->profile_photo)}}">
+                                    <p class="text-lg text-semibold mar-no text-main">{{$last_month[0]->name}}</p>
+                                    <p class="text-sm">{{$last_month[0]->division_name}}</p>
+                                    <p class="text-sm">Score : {{$last_month[1]->score}}</p>
+                                    <br>
+                                    <br>
                                 </div>
                             </div>
-                            </div>
-                            <div class="col-sm-2 col-md-2"></div>
-
-                            @endforeach
-                            @endif
                         </div>
                     </div>
-                    
-                
-            </div> 
-            @else
-            <div class="panel panel-bordered panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Top Scored Employee ({{$current_month_name}})</h3>
-                </div>
-                    
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-1 col-md-1"></div>
-                            <div class="col-sm-4 col-md-3">
-                    
-                    
-                                <div id="second">
-                                    
-                                    <div class="panel pos-rel">
-                                        <div class="ribbon"><span title="Top 2">#2</span></div>
-                                        <div class="pad-all text-center">
-                                            
-                                           
-                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$current_month[1]->profile_photo)}}">
-                                                <p class="text-lg text-semibold mar-no text-main">{{$current_month[1]->name}}</p>
-                                                <p class="text-sm">{{$current_month[1]->division_name}}</p>
-                                                <p class="text-sm">Score : {{$current_month[1]->score}}</p>
-                                           
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!---------------------------------->
-                    
-                    
-                            </div>
-                            <div class="col-sm-4 col-md-4">
-                    
-                                <div id="first">
-                                    <div class="panel pos-rel">
-                                        <div class="ribbon"><span title="Top 1">#1</span></div>
-                                        <div class="pad-all text-center">
-                                            
-                                            
-                                                <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$current_month[0]->profile_photo)}}">
-                                                <p class="text-lg text-semibold mar-no text-main">{{$current_month[0]->name}}</p>
-                                                <p class="text-sm">{{$current_month[0]->division_name}}</p>
-                                                <p class="text-sm">Score : {{$current_month[0]->score}}</p>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!---------------------------------->
-                    
-                    
-                            </div>
-                            <div class="col-sm-4 col-md-3">
-                    
-                    
-                                <div id="third">
-
-                                
-                                <div class="panel pos-rel">
-                                    <div class="ribbon"><span title="Top 3">#3</span></div>
-                                    <div class="pad-all text-center">
-                                        
-                                       
-                                            <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="{{asset('img/profile-photos/'.$current_month[2]->profile_photo)}}">
-                                            <p class="text-lg text-semibold mar-no text-main">{{$current_month[2]->name}}</p>
-                                            <p class="text-sm">{{$current_month[2]->division_name}}</p>
-                                            <p class="text-sm">Score : {{$current_month[2]->score}}</p>
-                                        
-                                    </div>
-                                </div>
+                    <div class="col-sm-4 col-md-3">
+                        <div id="third">
+                            <div class="panel pos-rel">
+                                <div class="ribbon"><span>#3</span></div>
+                                <div class="pad-all text-center">
+                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
+                                        src="{{asset('img/profile-photos/'.$last_month[2]->profile_photo)}}">
+                                    <p class="text-lg text-semibold mar-no text-main">{{$last_month[2]->name}}</p>
+                                    <p class="text-sm">{{$last_month[2]->division_name}}</p>
+                                    <p class="text-sm">Score : {{$last_month[2]->score}}</p>
                                 </div>
                             </div>
-                            
-                            <div class="col-sm-1 col-md-1"></div>
                         </div>
-                        <div class="pos" id="pot">
-                            @if ($rankCM == 1 || $rankCM == 2 || $rankCM ==3)
-                                <p></p>
-                            @else
-                            <div class="panel panel-success panel-colorful">
-                                <div class="pad-all">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <img alt="Profile Picture" class="img-md img-circle" src="img/profile-photos/8.png">
-                                        </div>
-                                        <div class="media-body pad-top">
-                                            <span class="text-lg text-semibold">{{Auth::user()->name}}</span>
-                                            <p class="text-sm">{{$rankCM}}</p>
-                                        </div>
+                        <!---------------------------------->
+                    </div>
+                    <div class="col-sm-1 col-md-1"></div>
+                </div>
+                <div class="pos row" id="pot">
+                    @if ($rankLM == 1 || $rankLM == 2 || $rankLM ==3)
+                    <p></p>
+                    @else
+                    @foreach ($user_lm as $item)
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-8 col-md-8">
+                        <div class="panel panel-primary panel-colorful ">
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img alt="Profile Picture" class="img-md img-circle"
+                                            src="{{asset('img/profile-photos/'.$item->profile_photo)}}">
                                     </div>
-                                     
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$item->name}}</span> <span
+                                            class="text-lg text-right">#{{$rankLM}}</span>
+                                        <p class="text-sm">Score : {{$item->score}}/100</p>
+                                    </div>
                                 </div>
                             </div>
-                            @endif
                         </div>
                     </div>
-    
-                
-            </div> 
-            @endif
-            
-           
-            
+                    <div class="col-sm-2 col-md-2"></div>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
-    </div>  
-    @endif
-    
+        @else
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Top Scored Employee ({{$current_month_name}})</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1"></div>
+                    <div class="col-sm-4 col-md-3">
+                        <div id="second">
+                            <div class="panel pos-rel">
+                                <div class="ribbon"><span title="Top 2">#2</span></div>
+                                <div class="pad-all text-center">
+                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
+                                        src="{{asset('img/profile-photos/'.$current_month[1]->profile_photo)}}">
+                                    <p class="text-lg text-semibold mar-no text-main">{{$current_month[1]->name}}</p>
+                                    <p class="text-sm">{{$current_month[1]->division_name}}</p>
+                                    <p class="text-sm">Score : {{$current_month[1]->score}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <div id="first">
+                            <div class="panel pos-rel">
+                                <div class="ribbon"><span title="Top 1">#1</span></div>
+                                <div class="pad-all text-center">
+                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
+                                        src="{{asset('img/profile-photos/'.$current_month[0]->profile_photo)}}">
+                                    <p class="text-lg text-semibold mar-no text-main">{{$current_month[0]->name}}</p>
+                                    <p class="text-sm">{{$current_month[0]->division_name}}</p>
+                                    <p class="text-sm">Score : {{$current_month[0]->score}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <div id="third">
+                            <div class="panel pos-rel">
+                                <div class="ribbon"><span title="Top 3">#3</span></div>
+                                <div class="pad-all text-center">
+                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
+                                        src="{{asset('img/profile-photos/'.$current_month[2]->profile_photo)}}">
+                                    <p class="text-lg text-semibold mar-no text-main">{{$current_month[2]->name}}</p>
+                                    <p class="text-sm">{{$current_month[2]->division_name}}</p>
+                                    <p class="text-sm">Score : {{$current_month[2]->score}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 col-md-1"></div>
+                </div>
+                <div class="pos" id="pot">
+                    @if ($rankCM == 1 || $rankCM == 2 || $rankCM ==3)
+                    <p></p>
+                    @else
+                    <div class="panel panel-success panel-colorful">
+                        <div class="pad-all">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img alt="Profile Picture" class="img-md img-circle" src="img/profile-photos/8.png">
+                                </div>
+                                <div class="media-body pad-top">
+                                    <span class="text-lg text-semibold">{{Auth::user()->name}}</span>
+                                    <p class="text-sm">{{$rankCM}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+    </div>
+</div>
+@endif
+@endsection
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
@@ -606,7 +535,7 @@ background: linear-gradient(
         },
         xaxis: {
 
-            ticks: [[1,' January'], [2,'February'], [3,'Maret'], [4,'April'], [5,'Mei'], [6,'Juni'], [7,'July'], [8,'Agustus'], [9,'September'], [10,'Oktober'], [11,'November'], [12,'Desember']],
+            ticks: [[1,' Januari'], [2,'Februari'], [3,'Maret'], [4,'April'], [5,'Mei'], [6,'Juni'], [7,'Juli'], [8,'Agustus'], [9,'September'], [10,'Oktober'], [11,'November'], [12,'Desember']],
             tickColor: 'transparent',
             tickSize : 14,
         },
@@ -732,5 +661,4 @@ background: linear-gradient(
             })
         })
 </script>
-@endsection
 @endsection

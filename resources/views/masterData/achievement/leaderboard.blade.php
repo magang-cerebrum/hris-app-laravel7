@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
-@section('title','Achievement')
-@section('content-title','Penghargaan / Leaderboard Staff')
+@section('title','Pencapaian')
+@section('content-title','Pencapaian / Leaderboard')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">

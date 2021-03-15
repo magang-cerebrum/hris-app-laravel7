@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Jenssegers\Agent\Agent;
+use Asset\img\profile_photos;
 // use Illuminate\Contracts\Auth\Guard;
 class StaffAuthDashboardController extends Controller
 {
@@ -24,6 +26,10 @@ class StaffAuthDashboardController extends Controller
             $current_month = switch_month(date('m'));
             $before_current_month =switch_month(date('m',strtotime('-1 month')));
             $this_year = date('Y');
+            $user = Auth::user(); 
+            $device = new Agent();
+            $browser = $device->platform();
+            // dd($browser);
             $sum_all_score = DB::table('master_achievements')
                 ->leftjoin('master_users',
                     'master_achievements.achievement_user_id','=','master_users.id')
@@ -120,8 +126,6 @@ class StaffAuthDashboardController extends Controller
             ->orderBy('score','desc')
             ->get();
             
-            $sess =$request->session();
-            // dd(Auth::viaRemember());
             $datrankLastMonth = $positionLastMonth->where('achievement_user_id','=',Auth::user()->id);
             $rankLastMonth = $datrankLastMonth->keys()->first()+1;
             
@@ -202,8 +206,7 @@ class StaffAuthDashboardController extends Controller
                 'rankLM'=>$rankLastMonth,
                 'all_score'=>$sum_all_score,
                 'user_lm'=>$userLMAch,
-                'user_cm'=>$userCMAch,
-                'sess'=>$sess
+                'user_cm'=>$userCMAch
             ]);
         }
     }
@@ -328,6 +331,18 @@ class StaffAuthDashboardController extends Controller
             ]);
             Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/staff/profile');
+    }
+    public function foto(Request $request)
+    {
+        $image = $request->image;
+        $image_array_1 = explode(";", $image);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $data = base64_decode($image_array_2[1]);
+        $image_name = 'img/profile-photos/' . Auth::user()->name . '.png';
+        file_put_contents($image_name, $data);
+
+        $src = 'asset ' . $image_name;
+        return redirect('/staff/dashboard');
     }
     
 }

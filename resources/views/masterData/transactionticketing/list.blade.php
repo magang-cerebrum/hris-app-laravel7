@@ -40,7 +40,7 @@
                     <div class="col-sm-3">
                         <div class="input-group mar-btm float-right">
                             <input type="text" id="cari-ticket" class="form-control"
-                                placeholder="Cari Ticket Pada Posisi ON" onkeyup="search_ticket()">
+                                placeholder="Cari Ticket" onkeyup="search_ticket()">
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         </div>
                     </div>

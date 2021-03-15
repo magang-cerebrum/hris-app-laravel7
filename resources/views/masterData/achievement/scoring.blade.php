@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
-@section('title','Achievement')
-@section('content-title','Penghargaan / Achievement Scoring')
+@section('title','Pencapaian')
+@section('content-title','Pencapaian / Penilaian')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')

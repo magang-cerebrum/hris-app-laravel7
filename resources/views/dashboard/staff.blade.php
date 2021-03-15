@@ -232,7 +232,7 @@ background: linear-gradient(
     <div class="row mt-10">
         <div class="col-md-12">
             @if (session('status'))
-                <div class="alert-success alert alert-dismissable">
+                <div class="flash-mess alert-success alert alert-dismissable">
                     {{session('status')}}
                     <button class="close" data-dismiss="alert">
                         <i class="fa fa-close"></i>
@@ -526,7 +526,10 @@ background: linear-gradient(
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
-    
+    $(".flash-mess").fadeTo(2000, 500).slideUp(500, function(){
+    $(".flash-mess").slideUp(500);
+});
+
     function showChange(){
         $('#year-finder').on('change',function(e){
         var optionSelected = $("option:selected", this);

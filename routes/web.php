@@ -61,6 +61,7 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/profile', [AdminAuthDashboardController::class,'profile']);
     Route::get('/profile/edit', [AdminAuthDashboardController::class,'editprofile']);
     Route::put('/profile/{user}', [AdminAuthDashboardController::class,'updateprofile']);
+    Route::post('/foto', [StaffAuthDashboardController::class,'foto']);
 });
 
 //route landing dashboard, ganti password & profil ==STAFF==
@@ -234,6 +235,3 @@ Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
-
-
-Route::view('/test', 'testing1');

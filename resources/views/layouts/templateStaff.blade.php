@@ -16,7 +16,7 @@
 
     <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    {{-- <link href="{{ asset('plugins/themify-icons/themify-icons.css')}}" rel="stylesheet"> --}}
+    
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
@@ -156,8 +156,9 @@
                                         <div class="profile-wrap text-center">
                                             <div class="pad-btm image-area">
                                                 <form method="POST">
+                                                    @csrf
                                                     <label for="upload_image">
-                                                    <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile_photos/'.$profile_photo)}}" alt="Profile Picture">
+                                                    <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
                                                     <div class="overlay">
                                                         <div class="text">Click to Change Profile Image</div>
                                                     </div>
@@ -365,7 +366,7 @@
             $modal.on('shown.bs.modal', function() {
                 cropper = new Cropper(image, {
                     aspectRatio: 1,
-                    viewMode: 3,
+                    viewMode: 1,
                     preview:'.preview'
                 });
             }).on('hidden.bs.modal', function(){
@@ -380,6 +381,11 @@
                 });
         
                 canvas.toBlob(function(blob){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
                     url = URL.createObjectURL(blob);
                     var reader = new FileReader();
                     reader.readAsDataURL(blob);
@@ -392,10 +398,10 @@
                             data:{image:base64data},
                             success:function(data)
                             {
+                                var url_pathname = window.location.href;
+                                window.location = url_pathname;
                                 $modal.modal('hide');
-                                $('#uploaded_image').attr('src', data);
                             }
-                            
                         });
                     };
                 });

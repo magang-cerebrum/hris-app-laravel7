@@ -91,13 +91,10 @@ class StaffAuthDashboardController extends Controller
                 'master_achievements.month',
                 'master_users.profile_photo',
                 'master_divisions.name as division_name'
-
             ])
             ->where('master_users.name',$user->name)
             ->where('year',$this_year)
             ->where('month',$current_month)->get();
-            // dd($userCMAch);
-            // dd($before_current_month_achievement);
             
             $userLMAch = DB::table('master_achievements')
             ->leftjoin('master_users',
@@ -341,7 +338,6 @@ class StaffAuthDashboardController extends Controller
         if ($image_default != 'defaultL.jpg' || $image_default != 'defaultP.png') {
             $path_profile = 'img/profile-photos/'.$image_default;
             $file_path_profile = public_path($path_profile);
-            // unlink($file_path_profile);
             DB::table('master_users')
             ->where('id', '=', Auth::user()->id)
             ->update(['profile_photo' => Auth::user()->name .'.png']);

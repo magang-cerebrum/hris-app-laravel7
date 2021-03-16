@@ -20,7 +20,8 @@ class CreateLogPresencesTable extends Migration
             $table->date('date');
             $table->time('time');
             $table->foreign('user_id')->on('master_users')->references('id')->onUpdate('cascade')->onDelete('set null');
-        });
+            $table->boolean('status')->default(false);
+         });
         DB::table('log_presences')->insert([
         [
             'id'=>1,
@@ -81,7 +82,44 @@ class CreateLogPresencesTable extends Migration
             'user_id'=>5,
             'date'=>'2021/03/15',
             'time'=>'20:00:00'
-        ]
+        ],
+        [
+            'id'=>11,
+            'user_id'=>6,
+            'date'=>'2021/03/15',
+            'time'=>'10:30:00'
+        ],
+        [
+            'id'=>12,
+            'user_id'=>6,
+            'date'=>'2021/03/15',
+            'time'=>'10:35:00'
+        ],
+        [
+            'id'=>13,
+            'user_id'=>6,
+            'date'=>'2021/03/15',
+            'time'=>'20:00:00'
+        ],
+        
+        [
+            'id'=>14,
+            'user_id'=>6,
+            'date'=>'2021/03/15',
+            'time'=>'20:05:00'
+        ],
+        [
+            'id'=>15,
+            'user_id'=>7,
+            'date'=>'2021/03/16',
+            'time'=>'07:05:00'
+        ],
+        [
+            'id'=>16,
+            'user_id'=>7,
+            'date'=>'2021/03/16',
+            'time'=>'17:05:00'
+        ],
     
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

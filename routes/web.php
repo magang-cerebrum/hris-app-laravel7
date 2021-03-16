@@ -52,7 +52,6 @@ Route::put('/admin/profile/{user}', [AdminAuthDashboardController::class,'update
 Route::get('/staff/profile', [StaffAuthDashboardController::class,'profile']);
 Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
 Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
-
 //route landing dashboard, ganti password & profil ==ADMIN==
 Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);
@@ -236,3 +235,9 @@ Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+
+
+Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
+Route::POST('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
+Route::POST('/admin/presence/reset', [PresenceController::class,'resetStats']);
+

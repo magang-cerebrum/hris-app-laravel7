@@ -21,12 +21,11 @@
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" />
-    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
-    <script src="https://unpkg.com/dropzone"></script>
-    <script src="https://unpkg.com/cropperjs"></script>
-
+    <link href="{{ asset('plugins/cropper/dropzone.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('plugins/cropper/cropper.min.css')}}" rel="stylesheet">
+    <script src="{{ asset('plugins/cropper/dropzone.min.js')}}"></script>
+    <script src="{{ asset('plugins/cropper/cropper.min.js')}}"></script>
+    
     @yield('head')
 </head>
 <body>
@@ -240,7 +239,7 @@
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
-                                            <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Tanggal Merah</a></li>
+                                            <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
                                             <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
 						                </ul>
                                     </li>

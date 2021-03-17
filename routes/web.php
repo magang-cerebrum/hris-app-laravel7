@@ -31,14 +31,14 @@ use App\Http\Controllers\MasterRecruitmentController;
 */
 
 
-//route autentikasi
-Route::get('/', 'Auth\AuthController@login')->name('login');
+//route Auth
+Route::get('/', 'Auth\AuthController@redirect')->name('login');
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->name('staffed');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->middleware('auth');
 Route::get('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
 Route::get('/staff/password',[UserController::class,'edit'])->middleware('auth');
 Route::put('/staff/password/saved',[UserController::class,'update'])->middleware('auth');
@@ -52,6 +52,7 @@ Route::put('/admin/profile/{user}', [AdminAuthDashboardController::class,'update
 Route::get('/staff/profile', [StaffAuthDashboardController::class,'profile']);
 Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
 Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
+
 //route landing dashboard, ganti password & profil ==ADMIN==
 Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);

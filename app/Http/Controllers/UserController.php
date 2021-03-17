@@ -7,6 +7,7 @@ use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -73,6 +74,27 @@ class UserController extends Controller
            }
            else return redirect('/staff/dashboard');
             
+    }
+
+    public function change_photo_profile(Request $request){
+        $image = $request->image;
+
+        $image_default = Auth::user()->profile_photo;
+        if ($image_default != 'defaultL.jpg' || $image_default != 'defaultP.png') {
+            $path_profile = 'img/profile-photos/'.$image_default;
+            $file_path_profile = public_path($path_profile);
+            DB::table('master_users')
+            ->where('id', '=', Auth::user()->id)
+            ->update(['profile_photo' => Auth::user()->name .'.png']);
+        }
+
+        $image_array_1 = explode(";", $image);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $data = base64_decode($image_array_2[1]);
+        $image_name = 'img/profile-photos/' . Auth::user()->name . '.png';
+        file_put_contents($image_name, $data);
+
+        $src = 'asset ' . $image_name;
     }
 
 }

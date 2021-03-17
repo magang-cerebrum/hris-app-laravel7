@@ -61,7 +61,7 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/profile', [AdminAuthDashboardController::class,'profile']);
     Route::get('/profile/edit', [AdminAuthDashboardController::class,'editprofile']);
     Route::put('/profile/{user}', [AdminAuthDashboardController::class,'updateprofile']);
-    Route::post('/foto', [StaffAuthDashboardController::class,'foto']);
+    Route::post('/foto', [UserController::class,'change_photo_profile']);
 });
 
 //route landing dashboard, ganti password & profil ==STAFF==
@@ -72,7 +72,7 @@ Route::prefix('/staff')->group(function(){
     Route::get('/profile', [StaffAuthDashboardController::class,'profile']);
     Route::get('/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
     Route::put('/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
-    Route::post('/foto', [StaffAuthDashboardController::class,'foto']);
+    Route::post('/foto', [UserController::class,'change_photo_profile']);
 });
 
 //route masterdata staff

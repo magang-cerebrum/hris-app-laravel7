@@ -106,12 +106,14 @@
             orientation:'bottom',
             autoclose: true,
             todayHighlight: true,
+            startDate: '0d'
         });
         $('#datepicker-input-date-defaulted .input-group.date').datepicker({
             format: 'yyyy/mm/dd',
             orientation:'bottom',
             autoclose: true,
             todayHighlight: true,
+            startDate: '0d'
         });
     });
 

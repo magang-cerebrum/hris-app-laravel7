@@ -87,7 +87,20 @@
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
+    $(window).load(function(){
+        $.ajax({
+                url: "/admin/log/autodelete",
+                type: 'GET',
+                success: function () {
+                    console.log("Auto Delete Success")
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    console.log("Auto Delete Log Failed")
+                }
+            });
+    })
     $(document).ready(function () {
+        
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked", true);

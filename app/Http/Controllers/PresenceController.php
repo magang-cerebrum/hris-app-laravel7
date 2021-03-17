@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\MasterPresence;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Illuminate\Support\Facades\DB;
 class PresenceController extends Controller
 {
     public function staff_view(){
@@ -70,5 +70,76 @@ class PresenceController extends Controller
             'start' => $start,
             'end' => $end
         ]);
+    }
+    public function getProcessedPresenceView(){
+        return view('masterdata.presence.views');
+    }
+    public function viewProcessedPresence(){
+        $count =   count( DB::table('log_presences')->where('status','=',0)->get());
+        while($count>0){
+            
+            $checkFirstData = DB::table('log_presences')->where('status','=',0)->first();
+            $data = DB::table('log_presences')->where('user_id',$checkFirstData->user_id)->where('date',$checkFirstData->date)->get();
+            $entryTime = $data->first()->time;
+            $exitTime = $data->last()->time;
+            $interval = date_diff(date_create($entryTime),date_create($exitTime));
+            $inadayTime = $interval->format('%h:%i:%s');
+            $month = switch_month(date('m', strtotime($checkFirstData->date)));
+            $year = date('Y',strtotime($checkFirstData->date));
+            $day = date('j',strtotime($checkFirstData->date));
+            $schedules =DB::table('master_job_schedules')->where('user_id','=',$checkFirstData->user_id)->where('year',$year)->where('month',$month)->get();
+            $nameShift = "shift_".$day;
+            $shiftTake = $schedules[0]->$nameShift;
+            $masterShifts=  DB::table('master_shifts')->get();
+            $shiftDefaultHour = 0;
+            $defaultInTime= 0;
+            foreach ($masterShifts as $itemShifts){
+                if($itemShifts->name == $shiftTake){
+                    $shiftDefaultHour = $itemShifts->total_hour;
+                    $defaultInTime = $itemShifts->start_working_time;
+                }
+            }
+            // dd($defaultInTime);
+            $intervalLate = date_diff(date_create($defaultInTime),date_create($entryTime));
+            $inTimeLateHour = $intervalLate->format('%h');
+            $inTimeLateMinute = $intervalLate->format('%i');
+            $late = ($inTimeLateHour * 60) + $inTimeLateMinute; 
+            $invertedLate = $intervalLate->invert;
+            if($invertedLate == 1 ){
+                $late = 0;
+            }
+            $fine = (intval($late/9))*20000;
+            // dd($fine,$defaultInTime,$entryTime,$intervalLate,$inTimeLateHour,$inTimeLateMinute,$late,$invertedLate);
+            DB::table('master_presences')
+            ->insert(
+                [
+                    'user_id'=>$checkFirstData->user_id,
+                    'presence_date'=>$checkFirstData->date,
+                    'in_time'=>$entryTime,
+                    'out_time'=>$exitTime,
+                    'inaday_time'=>$inadayTime,
+                    'late_time'=>$late,
+                    'fine'=>$fine,
+                    'shift_name'=>$shiftTake,
+                    'shift_default_hour'=>$shiftDefaultHour
+                    
+                ]
+            );
+                // dump($nameShift);
+                // die;
+            foreach($data as $itemsData){
+                 DB::table('log_presences')->where('id','=',$itemsData->id)->update(['status'=>1]);
+            }
+            
+            $count = count( DB::table('log_presences')->where('status','=',0)->get());  
+        }
+        
+        
+    }
+    public function resetStats(){
+        DB::table('log_presences')
+        ->whereIn('id',range(1,16))
+        ->update(['status'=>0]);
+        return redirect()->back();
     }
 }

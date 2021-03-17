@@ -20,7 +20,8 @@ class MasterJobController extends Controller
     public function index()
     {
         $data = MasterJobRecruitment::all();
-        return view('recruitment.recruitment', ['data' => $data]);
+        // return view('recruitment.recruitment', ['data' => $data]);
+        return response()->json($data, 200);
     }
 
     public function indexJob()
@@ -74,46 +75,7 @@ class MasterJobController extends Controller
         return redirect('/admin/job');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Request $request)
     {
         $ids = $request->input('check');

@@ -50,7 +50,7 @@ class MasterRecruitmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|alpha',
+            'name'=>'required|string',
             'born_in'=>'required',
             'dob'=>'required',
             'live_at'=>'required',
@@ -59,8 +59,8 @@ class MasterRecruitmentController extends Controller
             'gender'=>'required',
             'last_education'=>'required',
             'position'=>'required',
-            'file_cv'=>'required',
-            'file_portofolio'=>'required'
+            'file_cv'=>'file|required',
+            'file_portofolio'=>'file|required'
         ]);
 
         $dob = $request->born_in . ', ' .$request->dob;
@@ -77,24 +77,42 @@ class MasterRecruitmentController extends Controller
         $tujuan_upload = 'upload_recruitment/portofolio_upload';
         $portofolio->move($tujuan_upload, $portofolio_name);
 
+        $insert_data = new MasterRecruitment;
+        $insert_data->name = $request->name;
+        $insert_data->dob = $dob;
+        $insert_data->live_at = $request->live_at;
+        $insert_data->phone_number = $request->phone_number;
+        $insert_data->email = $request->email;
+        $insert_data->gender = $request->gender;
+        $insert_data->last_education = $request->last_education;
+        $insert_data->position = $request->position;
+        $insert_data->file_cv = $cv_name;
+        $insert_data->file_portofolio = $portofolio_name;
+        $insert_data->save();
 
-        MasterRecruitment::create([
-            'name'=>$request->name,
-            'dob'=>$dob,
-            'live_at'=>$request->live_at,
-            'phone_number'=>$request->phone_number,
-            'email'=>$request->email,
-            'gender'=>$request->gender,
-            'last_education'=>$request->last_education,
-            'position'=>$request->position,
-            'file_cv'=>$cv_name,
-            'file_portofolio'=>$portofolio_name
-        ]);
+        return response()->json([
+            'status' => 'success',
+            'data' => $insert_data
+        ], 200);
+
+        activity()->log('Seorang pelamar telah mengisi form rekruitasi untuk posisi' .' '. $request->position);
+
+        // MasterRecruitment::create([
+        //     'name'=>$request->name,
+        //     'dob'=>$dob,
+        //     'live_at'=>$request->live_at,
+        //     'phone_number'=>$request->phone_number,
+        //     'email'=>$request->email,
+        //     'gender'=>$request->gender,
+        //     'last_education'=>$request->last_education,
+        //     'position'=>$request->position,
+        //     'file_cv'=>$cv_name,
+        //     'file_portofolio'=>$portofolio_name
+        // ]);
 
         // $user = Auth::user()->name;
-        activity()->log('Seorang pelamar telah mengisi form rekruitasi untuk posisi' .' '. $request->position);
         // return redirect('/success');
-        return view('recruitment.recruitmentSucces');
+        // return view('recruitment.recruitmentSucces');
     }
 
     /**

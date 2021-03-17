@@ -177,13 +177,9 @@ class StaffAuthDashboardController extends Controller
                     $score[$i-1] = 0;
                 }
             }
-            // dd($rankCurrentMonth);
+      
             $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
-            // dd($month_of_eom);
-            // dd($count_current_month_achievement);
-            // dd($current_month);
-            // dd($count_current_month_achievement);
-            // dd($current_month_achievement);
+            
             return view('dashboard.staff',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

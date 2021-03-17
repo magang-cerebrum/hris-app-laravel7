@@ -242,3 +242,4 @@ Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceVi
 Route::POST('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
 Route::POST('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
+Route::view('/test', 'kamera');

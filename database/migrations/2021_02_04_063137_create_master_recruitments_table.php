@@ -23,8 +23,8 @@ class CreateMasterRecruitmentsTable extends Migration
             $table->enum('gender', ['Laki - laki', 'Perempuan']);
             $table->enum('last_education', ['SMA/SMK Sederajat', 'D3', 'Sarjana', 'Magister']);
             $table->string('position', 50);
-            $table->string('file_cv', 50);
-            $table->string('file_portofolio', 50);
+            $table->string('file_cv', 50)->nullable();
+            $table->string('file_portofolio', 50)->nullable();
             $table->timestamps();
         });
     }

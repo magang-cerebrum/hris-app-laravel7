@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
     <title>HRIS Cerebrum | @yield('title')</title>
 
-    <link href="{{ url('https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700')}}" rel='stylesheet' type='text/css'>
+    <link href="{{ asset('css/fonts.css')}}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('css/nifty.min.css')}}" rel="stylesheet">
 

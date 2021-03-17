@@ -42,7 +42,6 @@
                             <i class="btn-label fa fa-plus"></i>
                             Tambah Potongan Gaji Baru
                         </a>
-                    
                         <form action="{{url('/admin/salary-cut')}}" method="POST" id="form-mul-delete" style="display:inline;">
                             @csrf
                             @method('delete')
@@ -53,7 +52,7 @@
                             </button>
                             @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
                                 Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
-                            </div>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="masterdata-salary-cut"
@@ -76,7 +75,7 @@
                         <tbody>
                             @foreach ($salarycut as $row)
                             <tr>
-                                <td tabindex="0" class="sorting_1 text-center"> {{($salarycut->currentPage() * 10) - 10 + $loop->iteration}}</td>
+                                <td tabindex="0" class="sorting_1 text-center">{{($salarycut->currentPage() * 10) - 10 + $loop->iteration}}</td>
                                 <td class="text-center">
                                     <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
                                 </td>
@@ -99,7 +98,12 @@
                     </table>
                 </div>
                 </form>
-                <div class="text-center">{{ $salarycut->links() }}</div>
+                <div class="text-center">{{ $salarycut->withQueryString()->links() }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <a href="{{url('/admin/salary-cut')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Potongan Gaji</a>
+                </div>
             </div>
         </div>
     </div>

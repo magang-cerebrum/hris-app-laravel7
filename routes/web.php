@@ -84,6 +84,7 @@ Route::prefix('/admin/data-staff')->group(function(){
     Route::put('/{staff}', [DataStaffController::class, 'update']);
     Route::put('/{staff}/password', [DataStaffController::class, 'reset_pass']);
     Route::delete('/', [DataStaffController::class, 'destroySelected']);
+    Route::get('/search', [DataStaffController::class, 'search']);
 });
 
 //route masterdata divisi
@@ -134,6 +135,7 @@ Route::prefix('/admin/holiday')->group(function() {
     Route::get('/{holiday}/edit',[HolidayController::class, 'edit']);
     Route::put('/{holiday}',[HolidayController::class, 'update']);
     Route::delete('/',[HolidayController::class, 'destroy']);
+    Route::get('/search',[HolidayController::class, 'search']);
 });
 
 //route masterdata potongan gaji
@@ -144,6 +146,7 @@ Route::prefix('/admin/salary-cut')->group(function(){
     Route::get('/{cut}/edit', [SalaryCutController::class, 'edit']);
     Route::put('/{cut}', [SalaryCutController::class, 'update']);
     Route::delete('/', [SalaryCutController::class, 'destroyAll']);
+    Route::get('/search',[SalaryCutController::class, 'search']);
 });
 
 //route jadwal kerja admin & staff
@@ -203,6 +206,7 @@ Route::prefix('/staff/ticketing')->group(function (){
 Route::prefix('/admin/achievement')->group(function () {
     Route::get('/', [App\Http\Controllers\MasterAchievementController::class,'index']);
     Route::get('/scoring',[MasterAchievementController::class,'scoring']);
+    Route::get('/searchlist',[MasterAchievementController::class,'searchlist']);
     Route::post('/scoring',[MasterAchievementController::class,'scored']);
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
@@ -220,6 +224,7 @@ Route::prefix('/staff/presence')->group(function () {
 //route sistem log
 Route::prefix('/admin/log')->group(function(){
     Route::get('/',[LogController::class,'index']);
+    Route::get('/search',[LogController::class,'search']);
     Route::delete('/',[LogController::class,'destroyselected']);
 });
 

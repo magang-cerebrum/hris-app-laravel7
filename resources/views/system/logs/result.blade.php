@@ -5,6 +5,8 @@
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
+<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
 @section('content')
 <div class="panel panel-danger panel-bordered">
@@ -14,8 +16,28 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-2">
+                <div class="row mar-btm" style="margin-top:-48px">
+                    <div class="col-sm-4">
+                        <form action="{{url('/admin/log/search')}}" method="get"
+                            style="position: relative;right:-710px;bottom:-48px">
+                            <div id="pickadate">
+                                <div class="input-group date">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-mint" type="button" style="z-index: 2">
+                                            <i class="fa fa-calendar"></i></button>
+                                    </span>
+                                    <input type="text" name="query" placeholder="Cari (bulan/aktivitas)"
+                                        class="form-control" autocomplete="off">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mar-btm">
+                    <div class="col-sm-12">
                         <form action="/admin/log" method="post" id="form-mul-delete">
                             @csrf
                             @method('delete')
@@ -28,17 +50,10 @@
                             @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
                                 Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
                     </div>
-                    <div class="col-sm-7"></div>
-                    <div class="col-sm-3">
-                        <div class="form-group float-right">
-                            <input type="text" id="cari-log" class="form-control" placeholder="Cari Log"
-                                onkeyup="search_log()">
-                        </div>
-                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="masterdata-log"
-                        class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
+                        class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                         aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                         <thead>
                             <tr role="row">
@@ -50,9 +65,9 @@
                                     All <input type="checkbox" id="check-all">
                                 </th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1"
-                                    colspan="1" aria-label="Position: activate to sort column ascending">Aktifitas</th>
+                                    colspan="1" aria-label="Position: activate to sort column ascending">Aktivitas</th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1"
-                                    colspan="1" aria-label="Position: activate to sort column ascending">Waktu Terekam
+                                    colspan="1" aria-label="Position: activate to sort column ascending">Waktu Tercatat
                                 </th>
                             </tr>
                         </thead>
@@ -71,14 +86,11 @@
                     </table>
                 </div>
                 </form>
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10 text-center">
-                        <ul class="pagination">
-                            {{ $data->links() }}
-                        </ul>
-                    </div>
-                    <div class="col-sm-1"></div>
+                <div class="text-center">{{ $data->withQueryString()->links() }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <a href="{{url('/admin/log')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Log</a>
                 </div>
             </div>
         </div>
@@ -86,8 +98,19 @@
 </div>
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script>
     $(document).ready(function () {
+        $('#pickadate .input-group.date').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            minViewMode: 'months',
+            maxViewMode: 'years',
+            startView: 'months',
+            orientation: 'bottom',
+            forceParse: false,
+        });
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked", true);
@@ -121,28 +144,6 @@
                 text: "Tidak ada data yang dipilih untuk dihapus!",
                 icon: 'error',
             })
-        }
-    }
-    // live search
-    function search_log() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("cari-log");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-log");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 4; j++) {
-                td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
         }
     }
 

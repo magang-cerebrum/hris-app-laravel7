@@ -84,11 +84,15 @@
                 document.getElementById('masterdata-staff-active').style.display = '';
                 document.getElementById('count-all').style.display = 'none';
                 document.getElementById('count-active').style.display = '';
+                document.getElementById('nactive-pagination').style.display = 'none';
+                document.getElementById('active-pagination').style.display = '';
             } else {
                 document.getElementById('masterdata-staff').style.display = '';
                 document.getElementById('masterdata-staff-active').style.display = 'none';
                 document.getElementById('count-all').style.display = '';
                 document.getElementById('count-active').style.display = 'none';
+                document.getElementById('nactive-pagination').style.display = '';
+                document.getElementById('active-pagination').style.display = 'none';
             }
         };
 
@@ -185,30 +189,6 @@
         }
     }
 
-    // live search
-    function search_staff() {
-        var input, filter, active, table, tr, td, i, txtValue;
-        input = document.getElementById("cari-staff");
-        filter = input.value.toUpperCase();
-        active = $('#masterdata-staff').is(":visible");
-        if (active) table = document.getElementById("masterdata-staff");
-        else table = document.getElementById("masterdata-staff-active");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 3; j < 6; j++ ){
-                    td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    }
 
     function reset_pass(id,name){
         var url = "/admin/data-staff/:id/password".replace(':id', id);

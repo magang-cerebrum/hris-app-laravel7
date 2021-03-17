@@ -4,13 +4,12 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
 @section('head')
-{{-- Sweetalert 2 --}}
-<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <style>
     #charts-achievement {
         width: 870px;
-        height:450px;
+        height: 450px;
     }
+
 </style>
 @endsection
 <div class="panel panel-danger panel-bordered">
@@ -20,15 +19,18 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-2"></div>
+                <div class="row mar-btm">
+                    <div class="col-sm-8"></div>
                     <div class="col-sm-4">
-                        <div class="form-group float-right">
-                            <input type="text" id="cari-staff" class="form-control"
-                                placeholder="Cari Staff" onkeyup="search_staff()">
-                        </div>
+                        <form action="{{url('/admin/achievement/searchlist')}}" method="get">
+                            <div class="input-group">
+                                <input type="text" name="query" placeholder="Cari Staff" class="form-control"
+                                    autocomplete="off">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -37,10 +39,12 @@
                         aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                         <thead>
                             <tr role="row">
-                                <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"colspan="1" 
-                                    aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 5%">No</th>
+                                <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
+                                    colspan="1" aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending" style="width: 5%">No</th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
-                                    colspan="1" aria-label="Position: activate to sort column ascending" style="width: 5%">Aksi</th>
+                                    colspan="1" aria-label="Position: activate to sort column ascending"
+                                    style="width: 5%">Aksi</th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
                                     colspan="1" aria-label="Position: activate to sort column ascending">Nama Staff</th>
                             </tr>
@@ -50,11 +54,13 @@
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">
-                                    <span id="detail_staff_chart" data-toggle="modal" data-target="#modal-detail-staff-chart"
-                                        style="display: inline; margin: auto 5px" data-name="{{$row->name}}" data-userid="{{$row->id}}">
+                                    <span id="detail_staff_chart" data-toggle="modal"
+                                        data-target="#modal-detail-staff-chart"
+                                        style="display: inline; margin: auto 5px" data-name="{{$row->name}}"
+                                        data-userid="{{$row->id}}">
                                         <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Detail Staff Chart"
-                                            type="button">
+                                            data-container="body" data-placement="top"
+                                            data-original-title="Detail Staff Chart" type="button">
                                             <i class="fa fa-bar-chart"></i>
                                         </a>
                                     </span>
@@ -70,31 +76,4 @@
     </div>
 </div>
 @include('masterdata/achievement/chartmodal')
-@section('script')
-<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<script>
-    // live search
-    function search_staff() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("cari-staff");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-chart-staff");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 3; j++ ){
-                    td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    }
-</script>
-@endsection
 @endsection

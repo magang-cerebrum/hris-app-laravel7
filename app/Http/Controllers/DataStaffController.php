@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+
 class DataStaffController extends Controller
 {
     public function index()
@@ -15,12 +16,12 @@ class DataStaffController extends Controller
         $user = Auth::user();
         $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->select(
-                'master_users.nip',
-                'master_users.name',
-                'master_divisions.name as division_name'
-                )
+            'master_users.nip',
+            'master_users.name',
+            'master_divisions.name as division_name'
+        )
         ->where('status','=','Aktif')
-        ->get();
+        ->paginate(10);
         $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->select(
                 'master_users.nip',
@@ -28,16 +29,18 @@ class DataStaffController extends Controller
                 'master_divisions.name as division_name'
                 )
         ->where('status','=','Non-Aktif')
-        ->get();
+        ->paginate(10);
+        $count_aktif = MasterUser::where('status','=','Aktif')->count();
+        $count_naktif = MasterUser::where('status','=','Non-Aktif')->count();
         return view('masterdata.datastaff.list',[
             'aktif' => $aktif,
             'naktif' => $naktif,
+            'count_aktif' => $count_aktif,
+            'count_naktif' => $count_naktif,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
-            'id'=>$user->id,
-            'count_aktif'=>count($aktif),
-            'count_naktif'=>count($naktif)
+            'id'=>$user->id
         ]);
     }
 
@@ -56,8 +59,7 @@ class DataStaffController extends Controller
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id
-            ]
-        );
+        ]);
     }
 
     public function store(Request $request)
@@ -146,7 +148,7 @@ class DataStaffController extends Controller
                 'position_id' => $request->position_id,
                 'role_id' => $request->role_id
             ]);
-            Alert::success('Berhasil!', 'Staff dengan nama '. $request->name . ' berhasil diperbaharui!');
+        Alert::success('Berhasil!', 'Staff dengan nama '. $request->name . ' berhasil diperbaharui!');
         return redirect('/admin/data-staff');
     }
 
@@ -167,5 +169,50 @@ class DataStaffController extends Controller
     public function reset_pass(Request $request){
         MasterUser::where('id', $request->id)->update(['password' => Hash::make('cerebrum')]);
         return response()->json(['name'=> $request->name]);
+    }
+
+    public function search(Request $request){
+        if ($request->get('query') == null) {return redirect('/admin/data-staff');}
+        $user = Auth::user();
+        $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
+        ->select(
+            'master_users.*',
+            'master_divisions.name as division_name',
+            'master_positions.name as position_name',
+            'master_roles.name as role_name'
+        )
+        ->where('master_users.status','=','Aktif')
+        ->where(function ($query) use ($request){
+            $query->whereRaw("master_users.nip LIKE '%" . $request->get('query') . "%'")
+                ->orWhereRaw("master_users.name LIKE '%" . $request->get('query') . "%'")
+                ->orWhereRaw("master_divisions.name LIKE '%" . $request->get('query') . "%'");
+        })
+        ->paginate(10);
+        $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
+        ->select(
+            'master_users.*',
+            'master_divisions.name as division_name',
+            'master_positions.name as position_name',
+            'master_roles.name as role_name'
+        )
+        ->where('master_users.status','=','Non-Aktif')
+        ->where(function ($query) use ($request){
+            $query->whereRaw("master_users.nip LIKE '%" . $request->get('query') . "%'")
+                ->orWhereRaw("master_users.name LIKE '%" . $request->get('query') . "%'")
+                ->orWhereRaw("master_divisions.name LIKE '%" . $request->get('query') . "%'");
+        })
+        ->paginate(10);
+        return view('masterdata.datastaff.result',[
+            'aktif' => $aktif,
+            'naktif' => $naktif,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 }

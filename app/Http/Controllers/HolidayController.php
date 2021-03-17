@@ -12,18 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class HolidayController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         if(Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')) {
-        $data = MasterHoliday::All();
+        $data = MasterHoliday::paginate(10);
         $user = Auth::user();
 
         return view('masterData.holiday.list', [
@@ -35,11 +30,6 @@ class HolidayController extends Controller
         ]);}
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         if(Gate::denies('is_admin')){
@@ -56,12 +46,6 @@ class HolidayController extends Controller
         ]);}
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {   
         if(Gate::denies('is_admin')){
@@ -183,13 +167,6 @@ class HolidayController extends Controller
         ]);}
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(MasterHoliday $holiday, Request $request)
     {
         if(Gate::denies('is_admin')){
@@ -210,12 +187,6 @@ class HolidayController extends Controller
         return redirect('/admin/holiday');}
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         if(Gate::denies('is_admin')){
@@ -227,5 +198,26 @@ class HolidayController extends Controller
         }
         Alert::success('Berhasil!', 'Hari libur yang dipilih berhasil dihapus!');
         return redirect('/admin/holiday');}
+    }
+
+    public function search(Request $request){
+        if ($request->get('query') == null) {return redirect('/admin/holiday');}
+        if (strpos($request->get('query'),'/')) {
+            $split = explode('/',$request->get('query'));
+            $data = MasterHoliday::whereRaw("date LIKE '".$split[1]."-".$split[0]."%'")
+            ->paginate(10);
+        } else {
+            $data = MasterHoliday::whereRaw("information LIKE '%" . $request->get('query') . "%'")
+            ->paginate(10);
+        }
+        $user =  Auth::user();
+
+        return view('masterData.holiday.result', [
+            'data' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->idate
+        ]);
     }
 }

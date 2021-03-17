@@ -71,7 +71,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="text-center">{{ $staff->links() }}</div>
+                <div class="text-center">{{ $staff->withQueryString()->links() }}</div>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <a href="{{url('/admin/achievement/charts')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Staff</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

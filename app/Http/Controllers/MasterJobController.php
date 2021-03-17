@@ -20,7 +20,8 @@ class MasterJobController extends Controller
     public function index()
     {
         $data = MasterJobRecruitment::all();
-        return view('recruitment.recruitment', ['data' => $data]);
+        // return view('recruitment.recruitment', ['data' => $data]);
+        return response()->json($data, 200);
     }
 
     public function indexJob()

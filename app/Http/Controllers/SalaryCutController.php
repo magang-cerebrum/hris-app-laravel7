@@ -12,11 +12,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class SalaryCutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = Auth::user();
@@ -26,7 +21,7 @@ class SalaryCutController extends Controller
             'master_users.name as user_name',
             'master_salary_cuts.*'
         ])
-        ->get();
+        ->paginate(10);
         return view('masterdata.salarycut.list',[
             'salarycut' => $salarycut,
             'name'=>$user->name,
@@ -36,11 +31,6 @@ class SalaryCutController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $user = Auth::user();
@@ -54,12 +44,6 @@ class SalaryCutController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if ($request->type == 'Semua') {
@@ -102,13 +86,6 @@ class SalaryCutController extends Controller
         return redirect('/admin/salary-cut');
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(MasterSalaryCut $cut)
     {
         $user = Auth::user();
@@ -123,13 +100,6 @@ class SalaryCutController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MasterSalaryCut $cut)
     {
         if ($cut->type == 'Semua') {
@@ -165,12 +135,6 @@ class SalaryCutController extends Controller
         return redirect('/admin/salary-cut');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroyAll(Request $request)
     {
         foreach ($request->selectid as $item) {
@@ -178,5 +142,54 @@ class SalaryCutController extends Controller
         }
         Alert::success('Berhasil!', 'Potongan gaji yang dipilih berhasil dihapus!');
         return redirect('/admin/salary-cut');
+    }
+
+    public function search(Request $request){
+        if ($request->get('query') == null) {return redirect('/admin/salary-cut');}
+        if (strpos($request->get('query'),'/')) {
+            $split = explode('/',$request->get('query'));
+            $data = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+            ->where("month",switch_month($split[0]))
+            ->where("year",$split[1])
+            ->select([
+                'master_users.id as user_id',
+                'master_users.name as user_name',
+                'master_salary_cuts.*'
+            ])
+            ->paginate(10);
+        } else {
+            $check_user = DB::table('master_users')->select(['id','name'])
+            ->whereRaw("name LIKE '%" . $request->get('query') . "%'")
+            ->get();
+            if (count($check_user) != 0) {
+                foreach ($check_user as $item){$ids[] = $item->id;}
+                $data = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+                ->whereIn("user_id",$ids)
+                ->select([
+                    'master_users.id as user_id',
+                    'master_users.name as user_name',
+                    'master_salary_cuts.*'
+                ])->paginate(10);
+            } else {
+                $data = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+                ->whereRaw("information LIKE '%" . $request->get('query') . "%'")
+                ->orWhereRaw("nominal LIKE '%" . $request->get('query') . "%'")
+                ->select([
+                    'master_users.id as user_id',
+                    'master_users.name as user_name',
+                    'master_salary_cuts.*'
+                ])
+                ->paginate(10);
+            }
+        }
+        $user =  Auth::user();
+
+        return view('masterData.salarycut.result', [
+            'salarycut' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->idate
+        ]);
     }
 }

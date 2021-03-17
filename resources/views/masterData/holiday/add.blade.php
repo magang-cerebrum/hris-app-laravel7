@@ -3,7 +3,7 @@
 @section('content-title', 'Master Data / Tambah Hari Libur')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
 
@@ -51,7 +51,7 @@
 </div>
 @endsection
 @section('script')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script>
     $(document).ready(function () {

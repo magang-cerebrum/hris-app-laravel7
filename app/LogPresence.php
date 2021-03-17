@@ -10,7 +10,7 @@ class LogPresence extends Model
     public $timestamps = false;
     use Notifiable;
     protected $fillable = [
-        'user_id','date','time'
+        'user_id','date','time','status'
     ];
     protected $nullable = [
         'user_id'

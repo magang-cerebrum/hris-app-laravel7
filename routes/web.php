@@ -31,14 +31,14 @@ use App\Http\Controllers\MasterRecruitmentController;
 */
 
 
-//route autentikasi
-Route::get('/', 'Auth\AuthController@login')->name('login');
+//route Auth
+Route::get('/', 'Auth\AuthController@redirect')->name('login');
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@authenticate');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::get('/admin/dashboard', [AdminAuthDashboardController::class,'index'])->middleware('auth');
-Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->name('staffed');
+Route::get('/staff/dashboard', [StaffAuthDashboardController::class,'index'])->middleware('auth');
 Route::get('/staff/charts/ajax', [StaffAuthDashboardController::class,'ajx'])->name('ajx');
 Route::get('/staff/password',[UserController::class,'edit'])->middleware('auth');
 Route::put('/staff/password/saved',[UserController::class,'update'])->middleware('auth');
@@ -236,5 +236,10 @@ Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+
+
+Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
+Route::POST('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
+Route::POST('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
 Route::view('/test', 'kamera');

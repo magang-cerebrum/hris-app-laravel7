@@ -17,7 +17,7 @@ class CreateMasterSalaryCutsTable extends Migration
             $table->id();
             $table->string('information',100);
             $table->enum('type',['Semua','Perorangan']);
-            $table->double('nominal');
+            $table->bigInteger('nominal');
             $table->string('month',10)->nullable();
             $table->string('year',4)->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

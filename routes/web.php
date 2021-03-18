@@ -10,6 +10,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\SalaryCutController;
+use App\Http\Controllers\SalaryAllowanceController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
@@ -147,6 +148,17 @@ Route::prefix('/admin/salary-cut')->group(function(){
     Route::put('/{cut}', [SalaryCutController::class, 'update']);
     Route::delete('/', [SalaryCutController::class, 'destroyAll']);
     Route::get('/search',[SalaryCutController::class, 'search']);
+});
+
+//route masterdata tunjangan gaji
+Route::prefix('/admin/salary-allowance')->group(function(){
+    Route::get('/',[SalaryAllowanceController::class,'index']);
+    Route::get('/add',[SalaryAllowanceController::class,'create']);
+    Route::post('/', [SalaryAllowanceController::class, 'store']);
+    Route::get('/{allowance}/edit', [SalaryAllowanceController::class, 'edit']);
+    Route::put('/{allowance}', [SalaryAllowanceController::class, 'update']);
+    Route::delete('/', [SalaryAllowanceController::class, 'destroyAll']);
+    Route::get('/search',[SalaryAllowanceController::class, 'search']);
 });
 
 //route jadwal kerja admin & staff

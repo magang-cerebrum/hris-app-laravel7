@@ -163,7 +163,6 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
 });
 
-
 //route transaksi cuti ==ADMIN==
 Route::prefix('/admin/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'index']);
@@ -213,8 +212,8 @@ Route::prefix('/admin/achievement')->group(function () {
 //route staff presence
 Route::prefix('/staff/presence')->group(function () {
     Route::get('/',[PresenceController::class,'staff_view']);
-    Route::get('/test',[PresenceController::class,'test_presence']);
     Route::post('/search',[PresenceController::class,'search']);
+    Route::post('/add',[PresenceController::class,'add_presence']);
 });
 
 //route sistem log
@@ -232,8 +231,6 @@ Route::prefix('/admin/job')->group(function (){
 });
 
 //route recruitment
-Route::get('/recruitment',[ MasterJobController::class,'index']);
-Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
 Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
 

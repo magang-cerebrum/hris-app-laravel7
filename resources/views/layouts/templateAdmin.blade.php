@@ -150,7 +150,7 @@
                                             <form method="POST">
                                                 @csrf
                                                 <label for="upload_image">
-                                                <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
+                                                <img id='uploaded_image' class="img-circle img-md img-responsive img-border" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
                                                 <div class="overlay">
                                                     <div class="text_change">Click to Change Profile Image</div>
                                                 </div>

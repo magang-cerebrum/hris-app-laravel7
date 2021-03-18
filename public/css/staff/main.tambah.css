@@ -51,6 +51,10 @@
     border-radius: 3px;
 }
 
+.img-border {
+    box-shadow: 0 0 0 4px rgb(255 255 255);
+}
+
 /* Content */
 #page-head {
     background: linear-gradient(90deg, #05032D 12.29%, #27257C 100%);

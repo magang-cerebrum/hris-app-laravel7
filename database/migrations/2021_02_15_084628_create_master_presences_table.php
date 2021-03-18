@@ -21,7 +21,7 @@ class CreateMasterPresencesTable extends Migration
             $table->timeTz('in_time')->nullable();
             $table->timeTz('out_time')->nullable();
             $table->timeTz('inaday_time')->nullable();
-            $table->integer('late_time')->nullable();
+            $table->timeTz('late_time')->nullable();
             $table->bigInteger('fine')->nullable();
             $table->string('shift_name',10)->nullable();
             $table->float('shift_default_hour')->nullable();

@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Data Staff / Data')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Data Staff')
+@section('title','Master Data / Data Staff')
 @section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
@@ -53,7 +53,6 @@
                             <input id="toogle-nonaktif-radio-2" class="magic-radio" type="radio" name="lihat_selesai"
                                 value="Off" checked onclick="toogle_nonaktif()">
                             <label for="toogle-nonaktif-radio-2">Off</label>
-                        
                         </div>
                     </div>
                 </div>
@@ -82,7 +81,7 @@
                         <tbody>
                             @foreach ($aktif as $row)
                             <tr>
-                                <td tabindex="0" class="sorting_1 text-center">{{($aktif->currentPage() * 10) - 10 + $loop->iteration}}</td>
+                                <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">
                                     <input type="checkbox" class="check-item-active @error('selectid_active') is-invalid @enderror"
                                         name="selectid_active[]" value="{{$row->id}}">
@@ -127,8 +126,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <span class="text-muted" id="count-active">Jumlah Staff Aktif : {{$count_aktif}}</span>
-                    <div id="active-pagination" class="text-center">{{ $aktif->links() }}</div>
+                    <span class="text-muted" id="count-active">Jumlah Staff Aktif dalam pencarian ({{$search}}) : {{count($aktif)}}</span>
+                    <div id="active-pagination" class="text-center">{{ $aktif->withQueryString()->links() }}</div>
                     <table id="masterdata-staff"
                         class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
                         aria-describedby="demo-basic_info" style="width: 100%;" width="100%" cellspacing="0">
@@ -200,9 +199,14 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <span class="text-muted" id="count-all">Jumlah Staff Tidak Aktif : {{$count_naktif}}</span>
-                    <div id="nactive-pagination" class="text-center">{{ $naktif->links() }}</div>
+                    <span class="text-muted" id="count-all">Jumlah Staff Tidak Aktif dalam pencarian ({{$search}}) : {{count($naktif)}}</span>
+                    <div id="nactive-pagination" class="text-center">{{ $naktif->withQueryString()->links() }}</div>
                 </form>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <a href="{{url('/admin/data-staff')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Staff</a>
+                    </div>
                 </div>
             </div>
         </div>

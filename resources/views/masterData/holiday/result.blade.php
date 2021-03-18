@@ -1,5 +1,5 @@
 @extends('layouts/templateAdmin')
-@section('title', 'Master Data')
+@section('title', 'Master Data / Hari Libur')
 @section('content-title', 'Master Data / Daftar Hari Libur')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
@@ -53,7 +53,7 @@
         </div>
         <div class="table-responsive">
             <table id="masterdata-holiday" class="table table-striped table-bordered no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                style="width: 100%;" width="100%">
                 <thead>
                     <tr role="row">
                         <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
@@ -87,7 +87,12 @@
                 </tbody>
             </table>
             </form>
-            <div class="text-center">{{ $data->links() }}</div>
+            <div class="text-center">{{ $data->withQueryString()->links() }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a href="{{url('/admin/holiday')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Hari Libur</a>
+            </div>
         </div>
     </div>
     <!--===================================================-->

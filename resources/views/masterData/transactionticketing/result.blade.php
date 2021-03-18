@@ -138,7 +138,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div id="done-pagination" class="text-center">{{ $done->links() }}</div>
+                <div id="done-pagination" class="text-center">{{ $done->withQueryString()->links() }}</div>
                 <table id="masterdata-ticketing"
                     class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                     style="width: 100%;" width="100%" cellspacing="0">
@@ -217,8 +217,13 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div id="onprog-pagination" class="text-center">{{ $ticketing->links() }}</div>
+                <div id="onprog-pagination" class="text-center">{{ $ticketing->withQueryString()->links() }}</div>
                 </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a href="{{url('/admin/ticketing')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Ticket</a>
             </div>
         </div>
     </div>

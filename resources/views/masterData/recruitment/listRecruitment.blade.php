@@ -12,42 +12,47 @@
         <h3 class="panel-title">Daftar Rekruitasi</h3>
     </div>
     <div class="panel-body">
-        <div class="table-responsive">
-            @if (count($data) == 0)
-            <div class="text-center">
-                <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
-                <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
-            </div>
-            @else
-            <div class="row">
-                <div class="col-sm-3">
-                    <form action="{{ url('/admin/recruitment/delete-all')}}" method="POST" id="form-mul-delete"
-                        style="display: inline">
-                        @method('delete')
-                        @csrf
-                        <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip"
-                            style="margin-bottom: 10px" type="submit" data-toggle="tooltip" data-container="body"
-                            data-placement="top" data-original-title="Hapus Data Pelamar" onclick="submit_delete()">
-                            <i class="btn-label fa fa-trash"></i>
-                            Hapus Data Terpilih
-                        </button>
-                </div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-3">
-                    <div class="form-group float-right">
-                        <input type="text" id="cari-pelamar" class="form-control" placeholder="Cari Pelamar"
-                            onkeyup="search_applicant()">
+        @if (count($data) == 0)
+        <div class="text-center">
+            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+        </div>
+        @else
+        <div class="row mar-btm" style="margin-top:-60px">
+            <div class="col-sm-4">
+                <form action="{{url('/admin/recruitment/search')}}" method="get"
+                    style="position: relative;right:-710px;bottom:-48px">
+                    <div class="input-group">
+                        <input type="text" name="query" placeholder="Cari Pelamar (Nama / Posisi / Pendidikan)"
+                            class="form-control" autocomplete="off">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
-                </div>
+                </form>
             </div>
-            <table id="masterdata-recruitment"
-                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
-                aria-describedby="demo-dt-basic_info" style="width: 98%;" cellspacing="0">
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <form action="{{ url('/admin/recruitment/delete')}}" method="POST" id="form-mul-delete"
+                    style="display: inline">
+                    @method('delete')
+                    @csrf
+                    <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" style="margin-bottom: 10px"
+                        type="submit" data-toggle="tooltip" data-container="body" data-placement="top"
+                        data-original-title="Hapus Data Pelamar" onclick="submit_delete()">
+                        <i class="btn-label fa fa-trash"></i>
+                        Hapus Data Terpilih
+                    </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="masterdata-recruitment" class="table table-striped table-bordered no-footer dtr-inline collapsed"
+                role="grid" aria-describedby="demo-dt-basic_info" style="width: 98%;" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="sorting text-center" tabindex="0" style="width: 4%">No</th>
-                        <th class="sorting text-center" tabindex="0" style="width: 5%">All <input type="checkbox"
-                                id="master"></th>
+                        <th class="sorting text-center" tabindex="0" style="width: 5%">All <input type="checkbox"  id="master"></th>
                         <th class="sorting text-center" tabindex="0">Nama Lengkap</th>
                         <th class="sorting text-center" tabindex="0">Tempat Tanggal Lahir</th>
                         <th class="sorting text-center" tabindex="0">Domisili</th>
@@ -56,13 +61,13 @@
                         <th class="sorting text-center" tabindex="0">Jenis Kelamin</th>
                         <th class="sorting text-center" tabindex="0">Pendidikan Terakhir</th>
                         <th class="sorting text-center" tabindex="0">Posisi</th>
-                        <th class="sorting text-center" tabindex="0">File</th>
+                        <th class="sorting text-center" tabindex="0" style="width: 10%">File</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                     <tr class="sorting text-center" tabindex="0">
-                        <td class="sorting text-center" tabindex="0">{{$data->currentpage() * 5 - 5 + $loop->iteration}}
+                        <td class="sorting text-center" tabindex="0">{{$data->currentpage() * 10 - 10 + $loop->iteration}}
                         </td>
                         <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]"
                                 value="{{$item->id}}"></td>
@@ -77,7 +82,7 @@
                         <td class="text-center">
                             <a href="{{ asset('/upload_recruitment/cv_upload/'.$item->file_cv)}}" target="blank">
                                 <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip"
-                                    data-toggle="tooltip" data-container="body" data-placement="left"
+                                    data-toggle="tooltip" data-container="body" data-placement="top"
                                     data-original-title="Buka CV">
                                     <i class="fa fa-file icon-lg"></i>
                                 </button>
@@ -85,9 +90,9 @@
                             <a href="{{ asset('/upload_recruitment/portofolio_upload/'.$item->file_portofolio)}}"
                                 target="blank">
                                 <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip"
-                                    data-toggle="tooltip" data-container="body" data-placement="left"
+                                    data-toggle="tooltip" data-container="body" data-placement="top"
                                     data-original-title="Buka Portofolio">
-                                    <i class="fa fa-file icon-lg"></i>
+                                    <i class="fa fa-file-pdf-o"></i>
                                 </button>
                             </a>
                         </td>
@@ -96,22 +101,10 @@
                 </tbody>
             </table>
             </form>
-            <div class="row" style="margin-top: -50px">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10 text-center">
-                    <ul class="pagination">
-                        {{ $data->links() }}
-                    </ul>
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
+            <div class="text-center">{{ $data->links() }}</div>
             @endif
-
-
         </div>
     </div>
-    <!--===================================================-->
-    <!-- End Striped Table -->
 </div>
 @endsection
 
@@ -153,29 +146,6 @@
                 text: "Tidak ada data yang dipilih untuk dihapus!",
                 icon: 'error',
             })
-        }
-    }
-
-    // live search
-    function search_applicant() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("cari-pelamar");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("masterdata-recruitment");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 10; j++) {
-                td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
         }
     }
 

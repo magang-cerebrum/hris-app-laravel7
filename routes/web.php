@@ -193,6 +193,7 @@ Route::prefix('/admin/ticketing')->group(function (){
     Route::put('/on-progress',[TransactionTicketingController::class,'make_on_progress']);
     Route::put('/{ticket}',[TransactionTicketingController::class,'admin_response']);
     Route::delete('/',[TransactionTicketingController::class,'admin_delete']);
+    Route::get('/search',[TransactionTicketingController::class,'admin_search']);
 });
 
 //route transaction ticketing ==STAFF==
@@ -233,6 +234,7 @@ Route::prefix('/admin/job')->group(function (){
     Route::get('/',[ MasterJobController::class,'indexJob']);
     Route::post('/',[ MasterJobController::class,'store']);
     Route::get('/add',[ MasterJobController::class,'create']);
+    Route::get('/search',[ MasterJobController::class,'search']);
     Route::delete('/delete',[ MasterJobController::class,'destroy']);
 });
 
@@ -240,7 +242,8 @@ Route::prefix('/admin/job')->group(function (){
 Route::get('/recruitment',[ MasterJobController::class,'index']);
 Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
-Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+Route::get('/admin/recruitment/search', [MasterRecruitmentController::class,'search']);
+Route::delete('/admin/recruitment/delete', [MasterRecruitmentController::class,'destroySelected']);
 
 
 Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);

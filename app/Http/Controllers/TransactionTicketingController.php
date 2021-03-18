@@ -18,11 +18,17 @@ class TransactionTicketingController extends Controller
         $user = Auth::user();
         $ticketing = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
             ->select(['transaction_ticketings.*','master_users.name'])
+            ->whereIn('transaction_ticketings.status',['Dikirimkan','On Progress'])
             ->orderByDesc('created_at')
-            ->get();
-        
+            ->paginate(10);
+        $ticketing_done = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
+        ->select(['transaction_ticketings.*','master_users.name'])
+        ->where('transaction_ticketings.status','=','Selesai')
+        ->orderByDesc('created_at')
+        ->paginate(10);
         return view('masterdata.transactionticketing.list',[
             'ticketing' => $ticketing,
+            'done' => $ticketing_done,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -88,10 +94,62 @@ class TransactionTicketingController extends Controller
                 }
             }
         
-        Alert::success('Berhasil!', 'Ticket dengan ID terpilih sekarang berstatus On Progress');
-        return redirect('/admin/ticketing');
+            Alert::success('Berhasil!', 'Ticket dengan ID terpilih sekarang berstatus On Progress');
+            return redirect('/admin/ticketing');
+        }
     }
+
+    public function admin_search(Request $request){
+        if ($request->get('query') == null) {return redirect('/admin/ticketing');}
+        if (strpos($request->get('query'),'/')) {
+            $split = explode('/',$request->get('query'));
+            $ticketing = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
+            ->select(['transaction_ticketings.*','master_users.name'])
+            ->whereIn('transaction_ticketings.status',['Dikirimkan','On Progress'])
+            ->whereRaw("transaction_ticketings.created_at LIKE '".$split[1]."-".$split[0]."%'")
+            ->orderByDesc('transaction_ticketings.created_at')
+            ->paginate(10);
+
+            $ticketing_done = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
+            ->select(['transaction_ticketings.*','master_users.name'])
+            ->where('transaction_ticketings.status','=','Selesai')
+            ->whereRaw("transaction_ticketings.created_at LIKE '".$split[1]."-".$split[0]."%'")
+            ->orderByDesc('transaction_ticketings.created_at')
+            ->paginate(10);
+        } else {
+            $ticketing = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
+            ->select(['transaction_ticketings.*','master_users.name'])
+            ->whereIn('transaction_ticketings.status',['Dikirimkan','On Progress'])
+            ->where(function ($query) use ($request){
+                $query->whereRaw("master_users.name LIKE '%" . $request->get('query') . "%'")
+                    ->orWhereRaw("transaction_ticketings.category LIKE '%" . $request->get('query') . "%'")
+                    ->orWhereRaw("transaction_ticketings.status LIKE '%" . $request->get('query') . "%'");
+            })
+            ->orderByDesc('transaction_ticketings.created_at')
+            ->paginate(10);
+
+            $ticketing_done = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
+            ->select(['transaction_ticketings.*','master_users.name'])
+            ->where('transaction_ticketings.status','=','Selesai')
+            ->where(function ($query) use ($request){
+                $query->whereRaw("master_users.name LIKE '%" . $request->get('query') . "%'")
+                    ->orWhereRaw("transaction_ticketings.category LIKE '%" . $request->get('query') . "%'")
+                    ->orWhereRaw("transaction_ticketings.status LIKE '%" . $request->get('query') . "%'");
+            })
+            ->orderByDesc('transaction_ticketings.created_at')
+            ->paginate(10);
+        }
+        $user =  Auth::user();
+        return view('masterData.transactionticketing.result', [
+            'ticketing' => $ticketing,
+            'done' => $ticketing_done,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->idate
+        ]);
     }
+
     public function staff_index(){
         if(Gate::denies('is_staff')){
             return abort(403,'Access Denied, Only Staff Can Access');

@@ -24,13 +24,13 @@ class MasterAchievementController extends Controller
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')){
-            $user = Auth::user();
+        
+        $user = Auth::user();
         $count = MasterAchievement::count();
         $max = MasterAchievement::max('score');
         $data = DB::table('master_achievements')->
         leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')->get();
-        // dd($data);
         return view('masterData.achievement.leaderboard',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -52,15 +52,15 @@ class MasterAchievementController extends Controller
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')){
-
-            $data = MasterAchievement::where(['month'=>$request->month,
-        'year'=>$request->year])->
+            $splitter = explode('/',$request->get('query'));
+            $data = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        'year'=>$splitter[1]])->
         leftjoin('master_users',
         'master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')
         ->get();
-        $is_champ = MasterAchievement::where(['month'=>$request->month,
-        'year'=>$request->year])->max('score');
+        $is_champ = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        'year'=>$splitter[1]])->max('score');
         // dd($is_champ);
         $count = count($data);
         return view('masterData.achievement.result',['data'=>$data,
@@ -78,7 +78,14 @@ class MasterAchievementController extends Controller
         }
         elseif(Gate::allows('is_admin')){
             $user = Auth::user();
-            $data = DB::table('master_users')->whereNotIn('division_id',[7])->get();
+            $data = DB::table('master_users')
+            ->where('status','=','Aktif')
+            ->where('division_id','!=',7)
+            ->where('position_id','!=',[11,3])
+            ->get();
+           
+            
+            // dd(DB::table('master_achievements')->whereNotNull('score')->get());
             return view('masterData.achievement.scoring',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -101,19 +108,81 @@ class MasterAchievementController extends Controller
                 $data_id = $datas->$user_id;
                 $score = 'score_'.$i;
                 $data = $datas->$score;
+                $check = DB::table('master_achievements')
+                ->where('year','=',$datas->year)
+                ->where('month','=',$datas->month)
+                ->where('achievement_user_id',$data_id)
+                ->get();
                 if ($data == 0) {continue;}
-                MasterAchievement::create([
+                if(count($check) > 0){
+                    foreach($check as $items){
+                    MasterAchievement::where('id','=',$items->id)->update([
+                        'score' => $data
+                    ]); }
+                }
+                else {MasterAchievement::create([
                     'score' => $data,
                     'month'  =>$datas->month,
                     'year' =>$datas->year ,
                     'achievement_user_id'=>$data_id
                 ]);
+                }
             }
             Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
             return redirect('/admin/achievement');
         }
         
     }
+
+    public function chiefScoring(){
+            $user = Auth::user();
+            // dd($user->division_id);
+            $data = DB::table('master_users')
+            ->where('status','=','Aktif')
+            ->whereIn('division_id',division_members($user->division_id))
+            ->where('position_id','=',11)
+            ->get();
+            return view('masterData.achievement.Chiefscoring',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data
+        ]);
+    }
+    public function chiefScored(Request $request){
+            global $datas;
+            $datas=$request;
+            for($i = 1; $i <=$request->count; $i++){
+                global $datas;
+                $user_id = 'user_id_'.$i;
+                $data_id = $datas->$user_id;
+                $score = 'score_'.$i;
+                $data = $datas->$score;
+                $check = DB::table('master_achievements')
+                ->where('year','=',$datas->year)
+                ->where('month','=',$datas->month)
+                ->where('achievement_user_id',$data_id)
+                ->get();
+                if ($data == 0) {continue;}
+                if(count($check) > 0){
+                    foreach($check as $items){
+                    MasterAchievement::where('id','=',$items->id)->update([
+                        'score' => $data
+                    ]); }
+                }
+                else {MasterAchievement::create([
+                    'score' => $data,
+                    'month'  =>$datas->month,
+                    'year' =>$datas->year ,
+                    'achievement_user_id'=>$data_id
+                ]);
+                }
+            }
+            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
+            return redirect('/staff/achievement/scoring');
+    }
+
     public function admin_charts (){
         if (Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');

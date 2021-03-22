@@ -3,8 +3,8 @@
 @section('content-title','Pencapaian / Leaderboard')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
-<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
-{{-- Sweetalert 2 --}}
+<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
+
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
@@ -14,40 +14,33 @@
         <h3 class="panel-title">LeaderBoard Achievement</h3>
     </div>
     <div class="panel-body">
-        <form action="/admin/achievement/search" method="post" id="cari-achievement">
-            @csrf
-            {{-- <label class="col-sm-1 control-label">Bulan:</label> --}}
-            <div>
-                <div class="col-sm-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Bulan :</span>
-                        
-                        <select class="selectpicker" data-style="btn-info" style="width: 100%"  id="filter-bulan"  name="month">
-                            <option value=" "></option>
-                            <option value="Januari">Januari</option>
-                            <option value="Februari">Februari</option>
-                            <option value="Maret">Maret</option>
-                            <option value="April">April</option>
-                            <option value="Mei">Mei</option>
-                            <option value="Juni">Juni</option>
-                            <option value="juli">juli</option>
-                            <option value="Agustus">Agustus</option>
-                            <option value="September">September</option>
-                            <option value="Oktober">Oktober</option>
-                            <option value="November">November</option>
-                            <option value="Desember">Desember</option>
-                        </select>
-                        <span class="input-group-addon">Tahun :</span>
-                        <input type="text" class="form-control @error('year') is-invalid @enderror"
-                            placeholder="Tahun" name="year" value="{{old('year')}}"  autocomplete="off">
+        <div class="row mar-btm" >
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form action="{{url('/admin/achievement/search')}}" method="POST" id="cari-achievement">
+                    @csrf
+                    <div id="pickadate">
+                        <div class="input-group date">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" style="z-index: 2"><i
+                                        class="fa fa-calendar"></i></button>
+                            </span>
+                            <input type="text" name="query" placeholder="Cari Leaderboard"
+                                class="form-control" autocomplete="off" readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
+            <div class="col-sm-4"></div>
+        </div>
     </div>
-    <div class="panel-footer text-right">
+    {{-- <div class="panel-footer text-right">
         <button type="submit" class="btn btn-success float-right" >Cari Achievement</button>
-    </div>
-    </form>
+    </div> --}}
+   
 </div>
 
 <div id="panel-output">
@@ -57,13 +50,23 @@
 
 
 @section('script')
-<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
+
 {{-- Sweetalert 2 --}}
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
     
         
     $(document).ready(function () {
+        $('#pickadate .input-group.date').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            minViewMode: 'months',
+            maxViewMode: 'years',
+            startView: 'months',
+            orientation: 'bottom',
+            forceParse: false,
+        });
         $('#cari-achievement').on('submit', function (event) {
             event.preventDefault();
             $.ajax({

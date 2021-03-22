@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Carbon\Carbon;
 class LogController extends Controller
 {    
     public function index()
@@ -31,7 +31,14 @@ class LogController extends Controller
         return redirect('/admin/log');
 
     }
-
+    public function AutoDeleteLogs(){
+        $limitDate = Carbon::now()->subDay(45)->isoFormat('YYYY-MM-DD');
+        $logse = DB::table('activity_log')
+        ->orderBy('created_at','asc')
+        ->where('created_at','<=',$limitDate)
+        ->delete();
+        
+    }
     public function search(Request $request){
         if ($request->get('query') == null) {return redirect('/admin/log');}
         if (strpos($request->get('query'),'/')) {

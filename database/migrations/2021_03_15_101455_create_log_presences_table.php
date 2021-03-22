@@ -110,13 +110,13 @@ class CreateLogPresencesTable extends Migration
         ],
         [
             'id'=>15,
-            'user_id'=>7,
+            'user_id'=>1,
             'date'=>'2021/03/16',
             'time'=>'07:05:00'
         ],
         [
             'id'=>16,
-            'user_id'=>7,
+            'user_id'=>1,
             'date'=>'2021/03/16',
             'time'=>'17:05:00'
         ],

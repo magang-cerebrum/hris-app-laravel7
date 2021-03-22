@@ -46,21 +46,21 @@ class SalaryController extends Controller
                 $total_fine += $item_user->fine;
             }
 
-            DB::table('master_salaries')->insert([
-                'user_id'=>$data_presences_by_user_id->user_id,
-                'month'=>$month,
-                'year'=>$year,
-                'total_default_hour',
-                'total_work_time'=>$total_work_time,
-                'total_late_time'=>$total_late_time,
-                'total_fine'$total_fine,
-                'default_salary',
-                'total_salary_cut',
-                'total_salary_allowance',
-                'total_salary',
-                'file_salary',
-                'status'
-            ]);
+            // DB::table('master_salaries')->insert([
+            //     'user_id'=>$data_presences_by_user_id->user_id,
+            //     'month'=>$month,
+            //     'year'=>$year,
+            //     'total_default_hour',
+            //     'total_work_time'=>$total_work_time,
+            //     'total_late_time'=>$total_late_time,
+            //     'total_fine'=>$total_fine,
+            //     'default_salary',
+            //     'total_salary_cut',
+            //     'total_salary_allowance',
+            //     'total_salary',
+            //     'file_salary',
+            //     'status'
+            // ]);
 
             $data_presences = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
         }

@@ -50,6 +50,7 @@ return array(
     'App\\MasterRecruitment' => $baseDir . '/app/MasterRecruitment.php',
     'App\\MasterRole' => $baseDir . '/app/MasterRole.php',
     'App\\MasterSalary' => $baseDir . '/app/MasterSalary.php',
+    'App\\MasterSalaryAllowance' => $baseDir . '/app/MasterSalaryAllowance.php',
     'App\\MasterSalaryCut' => $baseDir . '/app/MasterSalaryCut.php',
     'App\\MasterShift' => $baseDir . '/app/MasterShift.php',
     'App\\MasterUser' => $baseDir . '/app/MasterUser.php',

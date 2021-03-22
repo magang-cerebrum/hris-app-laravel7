@@ -14,7 +14,7 @@
         <h3 class="panel-title">Daftar Hari Libur</h3>
     </div>
     <div class="panel-body">
-        <div class="row mar-btm" style="margin-top:-48px">
+        <div class="row mar-btm" style="margin-top:-60px">
             <div class="col-sm-4">
                 <form action="{{url('/admin/holiday/search')}}" method="get"
                     style="position: relative;right:-710px;bottom:-48px">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\MasterJobRecruitment;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +19,6 @@ class MasterJobController extends Controller
     public function index()
     {
         $data = MasterJobRecruitment::all();
-        // return view('recruitment.recruitment', ['data' => $data]);
         return response()->json($data, 200);
     }
 
@@ -29,7 +27,7 @@ class MasterJobController extends Controller
         $dataJob = MasterJobRecruitment::paginate(5);
         $user = Auth::user();
 
-        return view('masterData.job.job', [
+        return view('masterData.job.list', [
             'dataJob' => $dataJob,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -46,7 +44,7 @@ class MasterJobController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('masterData.job.jobAdd', [
+        return view('masterData.job.create', [
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -63,7 +61,7 @@ class MasterJobController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|alpha',
+            'name'=>'required',
             'descript'=>'required',
             'required'=>'required'
         ]);
@@ -87,5 +85,21 @@ class MasterJobController extends Controller
         activity()->log('Admin ' .$user.' Telah menghapus Lowongan ' . $data->name  . " bagian " . $data->descript);
         Alert::success('Berhasil!', 'Lowongan yang dipilih berhasil dihapus!');
         return redirect('/admin/job');
+    }
+
+    public function search(Request $request){
+        if ($request->get('query') == null) {return redirect('/admin/job');}
+        $user = Auth::user();
+        $data = MasterJobRecruitment::whereRaw("name LIKE '%" . $request->get('query') . "%'")
+        ->orWhereRaw("descript LIKE '%" . $request->get('query') . "%'")
+        ->orWhereRaw("required LIKE '%" . $request->get('query') . "%'")
+        ->paginate(5);
+        return view('masterdata.job.result',[
+            'dataJob' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 }

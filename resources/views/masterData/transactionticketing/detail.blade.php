@@ -59,19 +59,37 @@
 </div>
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script type="text/javascript">
-    function toogle_selesai() {
-        if (document.getElementById('lihat_selesai_radio-2').checked) {
-            document.getElementById('masterdata-ticketing').style.display = '';
-            document.getElementById('masterdata-ticketing-full').style.display = 'none';
-        } else {
-            document.getElementById('masterdata-ticketing').style.display = 'none';
-            document.getElementById('masterdata-ticketing-full').style.display = '';
-        }
-    };
-
     $(document).ready(function () {
         $("#masterdata-ticketing-full").hide();
+        $("#done-pagination").hide();
+        $("#masterdata-ticketing").hide();
+        $("#onprog-pagination").hide();
+        $('.toogle_selesai').on('change',function () {
+            if (document.getElementById('lihat_selesai_radio-2').checked) {
+                document.getElementById('masterdata-ticketing').style.display = '';
+                document.getElementById('masterdata-ticketing-full').style.display = 'none';
+                document.getElementById('onprog-pagination').style.display = '';
+                document.getElementById('done-pagination').style.display = 'none';
+            } else {
+                document.getElementById('masterdata-ticketing').style.display = 'none';
+                document.getElementById('masterdata-ticketing-full').style.display = '';
+                document.getElementById('onprog-pagination').style.display = 'none';
+                document.getElementById('done-pagination').style.display = '';
+            }
+        })
+        $('#pickadate .input-group.date').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            minViewMode: 'months',
+            maxViewMode: 'years',
+            startView: 'months',
+            orientation: 'bottom',
+            forceParse: false,
+        });
+        
         $(document).on('click', '#detail_ticket', function () {
             var id = $(this).data('id');
             var name = $(this).data('name');
@@ -149,31 +167,6 @@
                 text: "Tidak ada data yang dipilih untuk diubah!",
                 icon: 'error',
             })
-        }
-    }
-
-    // live search
-    function search_ticket() {
-        var input, filter, active, table, tr, td, i, j, txtValue;
-        input = document.getElementById("cari-ticket");
-        filter = input.value.toUpperCase();
-        active = $('#masterdata-ticketing').is(":visible");
-        if (active) table = document.getElementById("masterdata-ticketing");
-        else table = document.getElementById("masterdata-ticketing-full");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 7; j++ ){
-                    td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
         }
     }
 

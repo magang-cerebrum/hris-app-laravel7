@@ -4,25 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\MasterSalaryCut;
+use App\MasterSalaryAllowance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class SalaryCutController extends Controller
+class SalaryAllowanceController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        $salarycut = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+        $salaryallowance = MasterSalaryAllowance::leftjoin('master_users','master_salary_allowances.user_id','=','master_users.id')
         ->select([
             'master_users.id as user_id',
             'master_users.name as user_name',
-            'master_salary_cuts.*'
+            'master_salary_allowances.*'
         ])
         ->paginate(10);
-        return view('masterdata.salarycut.list',[
-            'salarycut' => $salarycut,
+        return view('masterdata.salaryallowance.list',[
+            'salaryallowance' => $salaryallowance,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -34,7 +34,7 @@ class SalaryCutController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
-        return view('masterdata.salarycut.create', [
+        return view('masterdata.salaryallowance.create', [
             'staff'=>$staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -51,7 +51,7 @@ class SalaryCutController extends Controller
                 'nominal' => 'required'
             ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
-            MasterSalaryCut::create([
+            MasterSalaryAllowance::create([
                 'information' => $request->information,
                 'type' => $request->type,
                 'nominal' => $nominal
@@ -67,7 +67,7 @@ class SalaryCutController extends Controller
             $month = date('m');
             $year = date('Y');
             for ($i=0; $i < $request->range_month; $i++) {
-                MasterSalaryCut::create([
+                MasterSalaryAllowance::create([
                     'information' => $request->information,
                     'type' => $request->type,
                     'nominal' => $nominal,
@@ -81,16 +81,16 @@ class SalaryCutController extends Controller
                 } else $month++;
             }
         }
-        Alert::success('Berhasil!', 'Potongan gaji baru telah ditambahkan!');
-        return redirect('/admin/salary-cut');
+        Alert::success('Berhasil!', 'Tunjangan gaji baru telah ditambahkan!');
+        return redirect('/admin/salary-allowance');
     }
 
-    public function edit(MasterSalaryCut $cut)
+    public function edit(MasterSalaryAllowance $allowance)
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
-        return view('masterdata.salarycut.edit',[
-            'cut' => $cut,
+        return view('masterdata.salaryallowance.edit',[
+            'allowance' => $allowance,
             'staff' => $staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -99,15 +99,15 @@ class SalaryCutController extends Controller
         ]);
     }
 
-    public function update(Request $request, MasterSalaryCut $cut)
+    public function update(Request $request, MasterSalaryAllowance $allowance)
     {
-        if ($cut->type == 'Semua') {
+        if ($allowance->type == 'Semua') {
             $request->validate([
                 'information' => 'required',
                 'nominal' => 'required'
             ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
-            MasterSalaryCut::where('id','=',$cut->id)
+            MasterSalaryAllowance::where('id','=',$allowance->id)
             ->update([
                 'information' => $request->information,
                 'nominal' => $nominal
@@ -121,7 +121,7 @@ class SalaryCutController extends Controller
             ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
             $split = explode('-',$request->month);
-            MasterSalaryCut::where('id','=',$cut->id)
+            MasterSalaryAllowance::where('id','=',$allowance->id)
             ->update([
                 'information' => $request->information,
                 'nominal' => $nominal,
@@ -130,30 +130,30 @@ class SalaryCutController extends Controller
                 'user_id' => $request->user_id
             ]);
         }
-        Alert::success('Berhasil!', 'Potongan gaji '.$cut->information.' berhasil diperbaharui!');
-        return redirect('/admin/salary-cut');
+        Alert::success('Berhasil!', 'Tunjangan gaji '.$allowance->information.' berhasil diperbaharui!');
+        return redirect('/admin/salary-allowance');
     }
 
     public function destroyAll(Request $request)
     {
         foreach ($request->selectid as $item) {
-            MasterSalaryCut::where('id','=',$item)->delete();
+            MasterSalaryAllowance::where('id','=',$item)->delete();
         }
-        Alert::success('Berhasil!', 'Potongan gaji yang dipilih berhasil dihapus!');
-        return redirect('/admin/salary-cut');
+        Alert::success('Berhasil!', 'Tunjangan gaji yang dipilih berhasil dihapus!');
+        return redirect('/admin/salary-allowance');
     }
 
     public function search(Request $request){
         if ($request->get('query') == null) {return redirect('/admin/salary-cut');}
         if (strpos($request->get('query'),'/')) {
             $split = explode('/',$request->get('query'));
-            $data = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+            $data = MasterSalaryAllowance::leftjoin('master_users','master_salary_allowances.user_id','=','master_users.id')
             ->where("month",switch_month($split[0]))
             ->where("year",$split[1])
             ->select([
                 'master_users.id as user_id',
                 'master_users.name as user_name',
-                'master_salary_cuts.*'
+                'master_salary_allowances.*'
             ])
             ->paginate(10);
         } else {
@@ -162,29 +162,29 @@ class SalaryCutController extends Controller
             ->get();
             if (count($check_user) != 0) {
                 foreach ($check_user as $item){$ids[] = $item->id;}
-                $data = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+                $data = MasterSalaryAllowance::leftjoin('master_users','master_salary_allowances.user_id','=','master_users.id')
                 ->whereIn("user_id",$ids)
                 ->select([
                     'master_users.id as user_id',
                     'master_users.name as user_name',
-                    'master_salary_cuts.*'
+                    'master_salary_allowances.*'
                 ])->paginate(10);
             } else {
-                $data = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
+                $data = MasterSalaryAllowance::leftjoin('master_users','master_salary_allowances.user_id','=','master_users.id')
                 ->whereRaw("information LIKE '%" . $request->get('query') . "%'")
                 ->orWhereRaw("nominal LIKE '%" . $request->get('query') . "%'")
                 ->select([
                     'master_users.id as user_id',
                     'master_users.name as user_name',
-                    'master_salary_cuts.*'
+                    'master_salary_allowances.*'
                 ])
                 ->paginate(10);
             }
         }
         $user =  Auth::user();
 
-        return view('masterData.salarycut.result', [
-            'salarycut' => $data,
+        return view('masterData.salaryallowance.result', [
+            'salaryallowance' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,

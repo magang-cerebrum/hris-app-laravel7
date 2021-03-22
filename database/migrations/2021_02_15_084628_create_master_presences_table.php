@@ -24,7 +24,9 @@ class CreateMasterPresencesTable extends Migration
             $table->timeTz('late_time')->nullable();
             $table->bigInteger('fine')->nullable();
             $table->string('shift_name',10)->nullable();
-            $table->float('shift_default_hour')->nullable();
+            $table->timeTz('shift_default_hour')->nullable();
+            $table->boolean('status')->default(false);
+            
             $table->foreign('user_id')->references('id')->on('master_users')->onUpdate('cascade')->onDelete('set null');
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

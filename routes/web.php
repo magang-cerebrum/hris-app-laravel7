@@ -10,6 +10,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\SalaryCutController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
@@ -147,6 +148,12 @@ Route::prefix('/admin/salary-cut')->group(function(){
     Route::put('/{cut}', [SalaryCutController::class, 'update']);
     Route::delete('/', [SalaryCutController::class, 'destroyAll']);
     Route::get('/search',[SalaryCutController::class, 'search']);
+});
+
+//route gaji admin & staff
+Route::prefix('/admin/salary')->group(function(){
+    Route::get('/',[SalaryController::class,'index']);
+    Route::post('/processed',[SalaryController::class,'get_salary']);
 });
 
 //route jadwal kerja admin & staff

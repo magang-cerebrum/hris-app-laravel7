@@ -90,6 +90,7 @@ class PresenceController extends Controller
             $invertedLate = $intervalLate->invert;
             if($invertedLate == 1 ){
                 $lateInMinute = 0;
+                $late = '0:0:0';
             }
             $fine = (intval($lateInMinute/5))*20000;
 
@@ -128,7 +129,7 @@ class PresenceController extends Controller
         while($count>0){
             
             $checkFirstData = DB::table('log_presences')->where('status','=',0)->first();
-            $data = DB::table('log_presences')->where('user_id',$checkFirstData->user_id)->where('date',$checkFirstData->date)->get();
+            $data = DB::table('log_presences')->where('user_id',$checkFirstData->user_id)->where('date',$checkFirstData->date)->where('status','=',0)->get();
             $entryTime = $data->first()->time;
             $exitTime = $data->last()->time;
             $interval = date_diff(date_create($entryTime),date_create($exitTime));
@@ -157,6 +158,7 @@ class PresenceController extends Controller
             $invertedLate = $intervalLate->invert;
             if($invertedLate == 1 ){
                 $lateInMinute = 0;
+                $late = '0:0:0';
             }
             $fine = (intval($lateInMinute/5))*20000;
             // dd($fine,$defaultInTime,$entryTime,$intervalLate,$inTimeLateHour,$inTimeLateMinute,$late,$invertedLate);
@@ -181,9 +183,10 @@ class PresenceController extends Controller
                  DB::table('log_presences')->where('id','=',$itemsData->id)->update(['status'=>1]);
             }
             
-            $count = count( DB::table('log_presences')->where('status','=',0)->get());  
+            $count = count( DB::table('log_presences')->where('status','=',0)->get());
+            
         }
-        
+        return redirect()->back(); 
         
     }
     public function resetStats(){

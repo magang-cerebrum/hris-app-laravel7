@@ -101,11 +101,12 @@ class MasterAchievementController extends Controller
                 $data_id = $datas->$user_id;
                 $score = 'score_'.$i;
                 $data = $datas->$score;
+                $split = explode('/',$datas->get('query'));
                 if ($data == 0) {continue;}
                 MasterAchievement::create([
                     'score' => $data,
-                    'month'  =>$datas->month,
-                    'year' =>$datas->year ,
+                    'month'  =>switch_month($split[0]),
+                    'year' =>$split[1] ,
                     'achievement_user_id'=>$data_id
                 ]);
             }

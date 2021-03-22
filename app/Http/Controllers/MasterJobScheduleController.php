@@ -112,6 +112,7 @@ class MasterJobScheduleController extends Controller
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->where('master_users.status','=','Aktif')
         ->whereIn('master_users.division_id',$division)
+        ->whereNotIn('master_users.division_id',[7])
         ->select(
             'master_users.id as user_id',
             'master_users.nip as user_nip',
@@ -153,16 +154,16 @@ class MasterJobScheduleController extends Controller
             array_push($data_id, $data->id);
         }
         $data_shift = MasterShift::all();
-
+        $split = explode('/',$request->periode);
         $cal = CAL_GREGORIAN;
-        $month = switch_month($request->month, false);
-        $days_in_month = cal_days_in_month($cal, $month, $request->year);
+        $month = switch_month($split[0], false);
+        $days_in_month = cal_days_in_month($cal, $month, $split[1]);
 
         $data_holiday = DB::table('master_holidays')
-        ->where('date', 'LIKE', $request->year.'-'.$month.'%')->get();
+        ->where('date', 'LIKE', $split[1].'-'.$month.'%')->get();
 
         $data_paid_leave = DB::table('accepted_paid_leaves')
-        ->where('date', 'LIKE', $request->year.'-'.$month.'%')
+        ->where('date', 'LIKE', $split[1].'-'.$month.'%')
         ->whereIn('user_id',$data_id)
         ->get();
         if($user->role_id == 1){
@@ -172,8 +173,8 @@ class MasterJobScheduleController extends Controller
                 'data_paid_leave'=>$data_paid_leave,
                 'count_day'=>$days_in_month,
                 'number_of_month'=>$month,
-                'month'=>$request->month,
-                'year'=>$request->year,
+                'month'=>$split[0],
+                'year'=>$split[1],
                 'data_shift'=>$data_shift,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -187,8 +188,8 @@ class MasterJobScheduleController extends Controller
                 'data_paid_leave'=>$data_paid_leave,
                 'count_day'=>$days_in_month,
                 'number_of_month'=>$month,
-                'month'=>$request->month,
-                'year'=>$request->year,
+                'month'=>$split[0],
+                'year'=>$split[1],
                 'data_shift'=>$data_shift,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -342,16 +343,17 @@ class MasterJobScheduleController extends Controller
     {
         $user = Auth::user();
         $division = division_members($user->position_id);
+        $split = explode('/', $request->periode);
         $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-        ->where('month', '=',$request->month)
-        ->where('year', '=', $request->year)
+        ->where('month', '=',switch_month($split[0]))
+        ->where('year', '=', $split[1])
         ->select(
             'master_job_schedules.*',
             'master_users.name as user_name'
         )->get();
         $data_staff = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-        ->where('month', '=',$request->month)
-        ->where('year', '=', $request->year)
+        ->where('month', '=',switch_month($split[0]))
+        ->where('year', '=', $split[1])
         ->whereIn('master_users.division_id',$division)
         ->select(
             'master_job_schedules.*',
@@ -359,15 +361,15 @@ class MasterJobScheduleController extends Controller
         )->get();
         
         $cal = CAL_GREGORIAN;
-        $month = switch_month($request->month, false);
-        $days_in_month = cal_days_in_month($cal, $month, date('Y'));
+        $month = switch_month($split[0], false);
+        $days_in_month = cal_days_in_month($cal, $month , date('Y'));
         
         if ($user->role_id == 1) {
             return view('masterData.schedule.calendar', [
                 'data'=>$data,
                 'day'=>$days_in_month,
                 'month'=>$month,
-                'year'=>$request->year,
+                'year'=>$split[1],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -378,7 +380,7 @@ class MasterJobScheduleController extends Controller
                 'data'=>$data_staff,
                 'day'=>$days_in_month,
                 'month'=>$month,
-                'year'=>$request->year,
+                'year'=>$split[1],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

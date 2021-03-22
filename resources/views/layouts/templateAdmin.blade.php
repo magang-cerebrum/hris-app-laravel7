@@ -149,12 +149,12 @@
                                         <div class="pad-btm image-area">
                                             <form method="POST">
                                                 @csrf
-                                                <label for="upload_image">
-                                                <img id='uploaded_image' class="img-circle img-md img-responsive" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
-                                                <div class="overlay">
-                                                    <div class="text_change">Click to Change Profile Image</div>
-                                                </div>
-                                                <input type="file" name="image" class="image" id="upload_image" style="display:none" />
+                                                <label for="upload_image" id="overlay-img">
+                                                    <img id='uploaded_image' class="img-circle img-md img-responsive img-border" src="{{ asset('img/profile-photos/'.$profile_photo)}}" alt="Profile Picture">
+                                                    <div class="overlay">
+                                                        <div class="text_change"><i class="fa fa-camera icon-fw"></i></div>
+                                                    </div>
+                                                    <input type="file" name="image" class="image" id="upload_image" style="display:none" />
                                                 </label>
                                             </form>
                                         </div>
@@ -241,6 +241,7 @@
 											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
                                             <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
                                             <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
+                                            <li><a href="{{ url('admin/salary-allowance')}}"><i class="demo-psi-wallet-2"></i>Tunjangan Gaji</a></li>
 						                </ul>
                                     </li>
 

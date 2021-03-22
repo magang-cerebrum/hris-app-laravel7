@@ -4,7 +4,6 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
@@ -37,10 +36,6 @@
             <div class="col-sm-4"></div>
         </div>
     </div>
-    {{-- <div class="panel-footer text-right">
-        <button type="submit" class="btn btn-success float-right" >Cari Achievement</button>
-    </div> --}}
-   
 </div>
 
 <div id="panel-output">

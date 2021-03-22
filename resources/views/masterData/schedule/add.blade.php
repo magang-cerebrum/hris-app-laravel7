@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="table-responsive">
-            <table id="masterdata-division"
+            <table id="schedule-add"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
                 cellspacing="0">

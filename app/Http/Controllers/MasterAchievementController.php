@@ -108,11 +108,14 @@ class MasterAchievementController extends Controller
                 $data_id = $datas->$user_id;
                 $score = 'score_'.$i;
                 $data = $datas->$score;
+                $split = explode('/',$datas->get('query'));
+
                 $check = DB::table('master_achievements')
-                ->where('year','=',$datas->year)
-                ->where('month','=',$datas->month)
+                ->where('year','=',$split[1])
+                ->where('month','=',switch_month($split[0]))
                 ->where('achievement_user_id',$data_id)
                 ->get();
+
                 if ($data == 0) {continue;}
                 if(count($check) > 0){
                     foreach($check as $items){
@@ -122,8 +125,8 @@ class MasterAchievementController extends Controller
                 }
                 else {MasterAchievement::create([
                     'score' => $data,
-                    'month'  =>$datas->month,
-                    'year' =>$datas->year ,
+                    'month'  =>switch_month($split[0]),
+                    'year' =>$split[1] ,
                     'achievement_user_id'=>$data_id
                 ]);
                 }

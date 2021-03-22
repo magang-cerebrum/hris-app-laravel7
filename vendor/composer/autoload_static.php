@@ -545,6 +545,8 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\MasterPresence' => __DIR__ . '/../..' . '/app/MasterPresence.php',
         'App\\MasterRecruitment' => __DIR__ . '/../..' . '/app/MasterRecruitment.php',
         'App\\MasterRole' => __DIR__ . '/../..' . '/app/MasterRole.php',
+        'App\\MasterSalary' => __DIR__ . '/../..' . '/app/MasterSalary.php',
+        'App\\MasterSalaryAllowance' => __DIR__ . '/../..' . '/app/MasterSalaryAllowance.php',
         'App\\MasterSalaryCut' => __DIR__ . '/../..' . '/app/MasterSalaryCut.php',
         'App\\MasterShift' => __DIR__ . '/../..' . '/app/MasterShift.php',
         'App\\MasterUser' => __DIR__ . '/../..' . '/app/MasterUser.php',

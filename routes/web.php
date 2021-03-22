@@ -10,6 +10,8 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\SalaryCutController;
+use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\SalaryAllowanceController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
@@ -149,6 +151,24 @@ Route::prefix('/admin/salary-cut')->group(function(){
     Route::get('/search',[SalaryCutController::class, 'search']);
 });
 
+//route gaji admin & staff
+Route::prefix('/admin/salary')->group(function(){
+    Route::get('/',[SalaryController::class,'index']);
+    Route::post('/processed',[SalaryController::class,'get_salary']);
+    Route::post('/reset',[SalaryController::class,'reset_salary']);
+});
+
+//route masterdata tunjangan gaji
+Route::prefix('/admin/salary-allowance')->group(function(){
+    Route::get('/',[SalaryAllowanceController::class,'index']);
+    Route::get('/add',[SalaryAllowanceController::class,'create']);
+    Route::post('/', [SalaryAllowanceController::class, 'store']);
+    Route::get('/{allowance}/edit', [SalaryAllowanceController::class, 'edit']);
+    Route::put('/{allowance}', [SalaryAllowanceController::class, 'update']);
+    Route::delete('/', [SalaryAllowanceController::class, 'destroyAll']);
+    Route::get('/search',[SalaryAllowanceController::class, 'search']);
+});
+
 //route jadwal kerja admin & staff
 Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
@@ -165,7 +185,6 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
 });
-
 
 //route transaksi cuti ==ADMIN==
 Route::prefix('/admin/paid-leave')->group(function(){
@@ -193,6 +212,7 @@ Route::prefix('/admin/ticketing')->group(function (){
     Route::put('/on-progress',[TransactionTicketingController::class,'make_on_progress']);
     Route::put('/{ticket}',[TransactionTicketingController::class,'admin_response']);
     Route::delete('/',[TransactionTicketingController::class,'admin_delete']);
+    Route::get('/search',[TransactionTicketingController::class,'admin_search']);
 });
 
 //route transaction ticketing ==STAFF==
@@ -226,8 +246,8 @@ Route::prefix('/staff/achievement')->group(function () {
 //route staff presence
 Route::prefix('/staff/presence')->group(function () {
     Route::get('/',[PresenceController::class,'staff_view']);
-    Route::get('/test',[PresenceController::class,'test_presence']);
     Route::post('/search',[PresenceController::class,'search']);
+    Route::post('/add',[PresenceController::class,'add_presence']);
 });
 
 //route sistem log
@@ -243,14 +263,14 @@ Route::prefix('/admin/job')->group(function (){
     Route::get('/',[ MasterJobController::class,'indexJob']);
     Route::post('/',[ MasterJobController::class,'store']);
     Route::get('/add',[ MasterJobController::class,'create']);
+    Route::get('/search',[ MasterJobController::class,'search']);
     Route::delete('/delete',[ MasterJobController::class,'destroy']);
 });
 
 //route recruitment
-Route::get('/recruitment',[ MasterJobController::class,'index']);
-Route::post('/recruitment/add',[ MasterRecruitmentController::class,'store']);
 Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
-Route::delete('/admin/recruitment/delete-all', [MasterRecruitmentController::class,'destroyAll']);
+Route::get('/admin/recruitment/search', [MasterRecruitmentController::class,'search']);
+Route::delete('/admin/recruitment/delete', [MasterRecruitmentController::class,'destroySelected']);
 
 
 Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);

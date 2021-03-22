@@ -21,8 +21,8 @@ class MasterRecruitmentController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = MasterRecruitment::paginate(5);
-        return view('masterData.recruitment.adminRecruitment', [
+        $data = MasterRecruitment::paginate(10);
+        return view('masterData.recruitment.listRecruitment', [
             'data' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -96,71 +96,9 @@ class MasterRecruitmentController extends Controller
         ], 200);
 
         activity()->log('Seorang pelamar telah mengisi form rekruitasi untuk posisi' .' '. $request->position);
-
-        // MasterRecruitment::create([
-        //     'name'=>$request->name,
-        //     'dob'=>$dob,
-        //     'live_at'=>$request->live_at,
-        //     'phone_number'=>$request->phone_number,
-        //     'email'=>$request->email,
-        //     'gender'=>$request->gender,
-        //     'last_education'=>$request->last_education,
-        //     'position'=>$request->position,
-        //     'file_cv'=>$cv_name,
-        //     'file_portofolio'=>$portofolio_name
-        // ]);
-
-        // $user = Auth::user()->name;
-        // return redirect('/success');
-        // return view('recruitment.recruitmentSucces');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MasterRecruitment $recruitment)
-    {
-        //
-    }
-
-    public function destroyAll(Request $request)
+    public function destroySelected(Request $request)
     {
         $ids = $request->input('check');
         
@@ -179,5 +117,20 @@ class MasterRecruitmentController extends Controller
         }
         Alert::success('Berhasil!', 'Data pelamar terpilih berhasil dihapus!');
         return redirect('/admin/recruitment');
+    }
+    public function search(Request $request){
+        if ($request->get('query') == null) {return redirect('/admin/recruitment');}
+        $user = Auth::user();
+        $data = MasterRecruitment::whereRaw("name LIKE '%" . $request->get('query') . "%'")
+        ->orWhereRaw("position LIKE '%" . $request->get('query') . "%'")
+        ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
+        ->paginate(10);
+        return view('masterdata.recruitment.resultRecruitment',[
+            'data' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 }

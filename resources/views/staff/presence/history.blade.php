@@ -31,49 +31,14 @@
             </div>
     </div>
     <div class="panel-footer text-right">
-        <a href="/staff/presence/test" class="btn btn-warning float-right">Toogle presensi</a>
+        <button type="button" data-toggle="modal" data-target="#modal-input-presence" class="btn btn-warning float-right" id="input-presence">Absensi</button>
         <button type="submit" class="btn btn-pink float-right">Cari Presensi</button>
     </div>
     </form>
 </div>
 
-<div id="panel-output">
+<div id="panel-output"></div>
 
-</div>
+@include('staff/presence/modal')
 @endsection
-@section('script')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
-<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-{{-- Sweetalert 2 --}}
-<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<script>
-    $(document).ready(function () {
-        $('#cari-presensi').on('submit', function (event) {
-            event.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                type: $(this).attr('method'),
-                data: $(this).serialize(),
-                success: function (data) {
-                    $("#panel-output").html(data);
-                },
-                error: function (jXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        title: errorThrown,
-                        text: "Mohon isi dulu form dengan benar...",
-                        icon: 'error',
-                    });
-                }
-            });
-        });
-        $('#datepicker-input-cari .input-daterange').datepicker({
-            format: 'yyyy/mm/dd',
-            todayBtn: "linked",
-            autoclose: true,
-            todayHighlight: true,
-            endDate: '0d'
-        });
-    });
 
-</script>
-@endsection

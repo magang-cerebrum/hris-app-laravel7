@@ -54,7 +54,6 @@ function switch_month($value, $initial = true) {
             case '10': return 'Oktober'; break;
             case '11': return 'November'; break;
             case '12': return 'Desember'; break;
-            default: return $value; break;
         }
     }
     else {
@@ -71,7 +70,6 @@ function switch_month($value, $initial = true) {
             case 'Oktober': return '10'; break;
             case 'November': return '11'; break;
             case 'Desember': return '12'; break;
-            default: return $value; break;
         }
     }
 }

@@ -122,7 +122,13 @@ class PresenceController extends Controller
         ]);
     }
     public function getProcessedPresenceView(){
-        return view('masterdata.presence.views');
+        $user = Auth::user();
+        return view('masterdata.presence.views',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
     public function viewProcessedPresence(){
         $count =   count( DB::table('log_presences')->where('status','=',0)->get());

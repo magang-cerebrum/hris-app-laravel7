@@ -20,9 +20,9 @@ class CreateMasterSalariesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('month', 20);
             $table->string('year', 5);
-            $table->timeTz('total_default_hour')->nullable();
-            $table->timeTz('total_work_time')->nullable();
-            $table->timeTz('total_late_time')->nullable();
+            $table->integer('total_default_hour')->nullable();
+            $table->string('total_work_time',25)->nullable();
+            $table->string('total_late_time',25)->nullable();
             $table->bigInteger('total_fine')->nullable();
             $table->bigInteger('default_salary')->nullable();
             $table->bigInteger('total_salary_cut')->nullable();

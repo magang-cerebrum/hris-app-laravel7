@@ -155,6 +155,7 @@ Route::prefix('/admin/salary-cut')->group(function(){
 Route::prefix('/admin/salary')->group(function(){
     Route::get('/',[SalaryController::class,'index']);
     Route::post('/processed',[SalaryController::class,'get_salary']);
+    Route::post('/reset',[SalaryController::class,'reset_salary']);
 });
 
 //route masterdata tunjangan gaji

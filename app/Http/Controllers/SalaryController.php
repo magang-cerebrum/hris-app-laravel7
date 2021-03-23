@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PDF;
+use Asset\img;
 
 class SalaryController extends Controller
 {
@@ -125,6 +127,9 @@ class SalaryController extends Controller
             }
 
             $total_salary = $master_user->salary - $total_cut_salary + $total_allowance_salary - $total_fine;
+
+            $pdf = PDF::loadView('/pdf.salary');
+            return $pdf->stream();
 
             DB::table('master_salaries')->insert([
                 'user_id'=>$user_id,

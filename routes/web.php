@@ -245,11 +245,12 @@ Route::prefix('/admin/achievement')->group(function () {
 
 //Route Achievement ==Chief==
 Route::prefix('/staff/achievement')->group(function () {
-    Route::get('/', [MasterAchievementController::class,'index']);
+    Route::get('/', [MasterAchievementController::class,'indexChief']);
     Route::get('/scoring',[MasterAchievementController::class,'chiefScoring']);
-    Route::get('/searchlist',[MasterAchievementController::class,'searchlist']);
+    Route::get('/searchlist',[MasterAchievementController::class,'Chiefsearchlist']);
     Route::post('/scoring',[MasterAchievementController::class,'chiefScored']);
-    Route::post('/search',[MasterAchievementController::class,'search']);
+    Route::post('/search',[MasterAchievementController::class,'ChiefSearch']);
+    Route::get('/Charts', [MasterAchievementController::class,'chief_chart_index']);
 });
 //route achievement ==STAFF==
 

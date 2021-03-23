@@ -155,7 +155,10 @@ class StaffAuthDashboardController extends Controller
                     $temp[$i] = 0;
                 } else {
                     // //insert score matches month
-                    $temp[$i] = $data_month_user[0]->score;
+                    foreach($data_month_user as $dmu){
+                        $temp[$i] = $dmu->score;
+                    }
+                    
                     
                     //search max
                     for($j=0;$j<count($data_month);$j++){
@@ -165,10 +168,14 @@ class StaffAuthDashboardController extends Controller
                         }
                     }
                     // if max score matches user score on that month
-                    if($max_score == $data_month_user[0]->score){
-                        $month_of_eom[] = $data_month_user[0]->month;
-                        $sum_of_eom++;
-                    }                
+                    foreach($data_month_user as $dmu){
+                        if($max_score == $dmu->score){
+                            $month_of_eom[] = $dmu->month;
+                            $sum_of_eom++;
+                        }  
+
+                    }
+                                  
                 }
                 // if score on a month exists, insert too score array
                 if (array_key_exists($i,$temp)) {

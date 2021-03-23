@@ -255,6 +255,23 @@
                                                 <span class="menu-title">Gaji</span>
                                             </a>
                                         </li>
+                                        @if (Auth::user()->position_id != 11)
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-trophy"></i>
+                                                <span class="menu-title">Pencapaian</span>
+                                                <i class="arrow"></i>
+                                            </a>
+                                            
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a href="/staff/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
+                                                <li><a href="/staff/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
+                                            </ul>
+                    
+                                        </li>
+                                        @endif
+                                       
                                         
                                         <!--Menu list item-->
                                         <li>

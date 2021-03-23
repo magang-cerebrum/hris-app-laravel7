@@ -74,7 +74,7 @@ function switch_month($value, $initial = true) {
     }
 }
 
-function division_schedule($position_id){
+function division_members($position_id){
     switch ($position_id) {
         case 3:
             return [1,2,3,4,5,6,7,8];

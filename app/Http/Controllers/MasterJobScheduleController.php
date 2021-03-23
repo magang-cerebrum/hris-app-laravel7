@@ -106,7 +106,7 @@ class MasterJobScheduleController extends Controller
     public function filter()
     {
         $user = Auth::user();
-        $division = division_schedule($user->position_id);
+        $division = division_members($user->position_id);
         $data = DB::table('master_users')
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
@@ -342,8 +342,8 @@ class MasterJobScheduleController extends Controller
     public function result_calendar(Request $request)
     {
         $user = Auth::user();
+        $division = division_members($user->position_id);
         $split = explode('/', $request->periode);
-        $division = division_schedule($user->position_id);
         $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('month', '=',switch_month($split[0]))
         ->where('year', '=', $split[1])

@@ -232,6 +232,15 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
 });
 
+
+//Route Achievement ==Chief==
+Route::prefix('/staff/achievement')->group(function () {
+    Route::get('/', [MasterAchievementController::class,'index']);
+    Route::get('/scoring',[MasterAchievementController::class,'chiefScoring']);
+    Route::get('/searchlist',[MasterAchievementController::class,'searchlist']);
+    Route::post('/scoring',[MasterAchievementController::class,'chiefScored']);
+    Route::post('/search',[MasterAchievementController::class,'search']);
+});
 //route achievement ==STAFF==
 
 //route staff presence

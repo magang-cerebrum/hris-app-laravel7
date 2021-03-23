@@ -30,7 +30,7 @@
                     <div class="col-sm-4">
                         <input type="text" placeholder="Nama Potongan" name="information"
                             class="form-control @error('information') is-invalid @enderror"
-                            value="{{$cut->information}}">
+                            value="{{$cut->information}}" readonly>
                         @error('information') <div class="text-danger invalid-feedback mt-3">
                             Nama potongan tidak boleh kosong.
                         </div> @enderror

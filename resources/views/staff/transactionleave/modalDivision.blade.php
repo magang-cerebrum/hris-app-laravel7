@@ -81,9 +81,9 @@
             var dateend = $(this).data('dateend');
             var needs = $(this).data('needs');
             
-            var join = `{{ url('/admin/paid-leave/` + id + `/reject')}}`;
+            var join = `{{ url('/staff/paid-leave/division/` + id + `/reject')}}`;
             $('#form-reject').attr('action', join);
-
+            
             $('#nip').text(nip);
             $('#name').text(name);
             $('#paidleaveleft').text(paidleaveleft);
@@ -109,7 +109,7 @@
                 width: 600
             }).then((result) => {
                 if (result.value == true) {
-                    $('#form-approve-pending').attr('action', '/admin/paid-leave/approve');
+                    $('#form-approve-pending').attr('action', '/staff/paid-leave/division/approve');
                     $("#form-approve-pending").submit();
                 }}
             );
@@ -137,7 +137,7 @@
                 width: 600
             }).then((result) => {
                 if (result.value == true) {
-                    $('#form-approve-pending').attr('action', '/admin/paid-leave/pending');
+                    $('#form-approve-pending').attr('action', '/staff/paid-leave/division/pending');
                     $("#form-approve-pending").submit();
                 }}
             );

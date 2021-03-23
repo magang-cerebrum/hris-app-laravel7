@@ -56,9 +56,8 @@ class MasterAchievementController extends Controller
         elseif(Gate::allows('is_admin')){
             $splitter = explode('/',$request->get('query'));
             $data = MasterAchievement::where(['month'=>switch_month($splitter[0]),
-        'year'=>$splitter[1]])->
-        leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
+        'year'=>$splitter[1]])
+        ->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')
         ->get();
         $is_champ = MasterAchievement::where(['month'=>switch_month($splitter[0]),
@@ -107,7 +106,7 @@ class MasterAchievementController extends Controller
             ->where('division_id','!=',7)
             ->where('position_id','!=',[11,3])
             ->get();
-           
+            
             
             // dd(DB::table('master_achievements')->whereNotNull('score')->get());
             return view('masterData.achievement.scoring',[
@@ -166,7 +165,7 @@ class MasterAchievementController extends Controller
             // dd($user->division_id);
             $data = DB::table('master_users')
             ->where('status','=','Aktif')
-            ->whereIn('division_id',division_members($user->division_id))
+            ->whereIn('division_id',division_members($user->position_id))
             ->where('position_id','=',11)
             ->get();
             return view('masterData.achievement.Chiefscoring',[

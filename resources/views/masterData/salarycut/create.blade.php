@@ -32,16 +32,16 @@
                     </div>
                 </div>
             </div>
+            <div class="all">
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="information">Nama Potongan :</label>
                 <div class="col-sm-4">
                     <input type="text" placeholder="Nama Potongan" name="information"
-                        class="form-control @error('information') is-invalid @enderror" value="{{old('information')}}">
+                        class="form-control @error('information') is-invalid @enderror" value="BMT (Potongan Wajib & Pokok)" readonly>
                     @error('information') <div class="text-danger invalid-feedback mt-3">
                         Nama potongan tidak boleh kosong.
                     </div> @enderror
                 </div>
-                <div class="all">
                     <label class="col-sm-2 control-label" for="nominal">Nominal :</label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal"
@@ -54,6 +54,16 @@
                 </div>
             </div>
             <div class="form-group hidden individual">
+                <div class="row">
+                <label class="col-sm-2 control-label" for="type">Nama Potongan Perorangan:</label>
+                    <div class="col-sm-4 mar-lft">
+                        <select class="selectpicker" data-style="btn-pink" name="information_individual">
+                            <option value=""></option>
+                            <option value="Pinjaman ke Cerebrum">Pinjaman ke Cerebrum</option>
+                            <option value="BMT (Pinjaman)">BMT (Pinjaman)</option>
+                        </select>
+                    </div>
+                </div>
                 <label class="col-sm-2 control-label" for="range">Jangka Potongan:</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control @error('range_month') is-invalid @enderror"
@@ -102,11 +112,11 @@
     function showIndividualCuts() {
         var type = document.getElementById("type-changer").value;
         if (type == 'Semua') {
-            $(".individual").addClass("hidden");
-            $(".all").removeClass("hidden");
+            $(".individual").addClass("hidden disabled");
+            $(".all").removeClass("hidden disabled");
         } else {
-            $(".individual").removeClass("hidden");
-            $(".all").addClass("hidden");
+            $(".individual").removeClass("hidden disabled");
+            $(".all").addClass("hidden disabled");
         }
     }
 

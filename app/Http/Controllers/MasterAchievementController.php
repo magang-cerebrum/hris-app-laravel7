@@ -131,7 +131,7 @@ class MasterAchievementController extends Controller
                 ]);
                 }
             }
-            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
+            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
             return redirect('/admin/achievement');
         }
         
@@ -162,9 +162,11 @@ class MasterAchievementController extends Controller
                 $data_id = $datas->$user_id;
                 $score = 'score_'.$i;
                 $data = $datas->$score;
+                $split = explode('/',$datas->get('query'));
+
                 $check = DB::table('master_achievements')
-                ->where('year','=',$datas->year)
-                ->where('month','=',$datas->month)
+                ->where('year','=',$split[1])
+                ->where('month','=',switch_month($split[0]))
                 ->where('achievement_user_id',$data_id)
                 ->get();
                 if ($data == 0) {continue;}
@@ -176,13 +178,13 @@ class MasterAchievementController extends Controller
                 }
                 else {MasterAchievement::create([
                     'score' => $data,
-                    'month'  =>$datas->month,
-                    'year' =>$datas->year ,
+                    'month'  =>switch_month($split[0]),
+                    'year' =>$split[1] ,
                     'achievement_user_id'=>$data_id
                 ]);
                 }
             }
-            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
+            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
             return redirect('/staff/achievement/scoring');
     }
 

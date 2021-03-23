@@ -4,7 +4,8 @@
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
-    
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 
     <style>
         input[type=range] {
@@ -107,39 +108,24 @@ input[type=range]:focus::-ms-fill-upper {
         <h3 class="panel-title">Pemberian Nilai Penghargaan Karyawan</h3>
     </div>
     <div class="panel-body">
-        <div class="row mar-btm">
-          <div class="col-sm-6">
-              <form action="/staff/achievement/scoring" method="post" style="display: inline">
+      <div class="row mar-btm">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <form action="{{url('/staff/achievement/scoring')}}" method="POST" id="submit-achievement">
                 @csrf
-                {{-- <label class="col-sm-1 control-label">Bulan:</label> --}}
-                <div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Bulan :</span>
-                            
-                            <select class="selectpicker" data-style="btn-info" 
-                            style="width: 100%" 
-                            id="filter-bulan"  name="month">
-                                <option value=" "></option>
-                                <option value="Januari">Januari</option>
-                                <option value="Februari">Februari</option>
-                                <option value="Maret">Maret</option>
-                                <option value="April">April</option>
-                                <option value="Mei">Mei</option>
-                                <option value="Juni">Juni</option>
-                                <option value="Juli">Juli</option>
-                                <option value="Agustus">Agustus</option>
-                                <option value="September">September</option>
-                                <option value="Oktober">Oktober</option>
-                                <option value="November">November</option>
-                                <option value="Desember">Desember</option>
-                            </select>
-                            <span class="input-group-addon">Tahun :</span>
-                            <input type="text" class="form-control @error('year') is-invalid @enderror"
-                                placeholder="Tahun" name="year" value="{{old('year')}}"  autocomplete="off">
-                        </div>
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                        </span>
+                        <input type="text" name="query" placeholder="Masukan Periode Penilian" class="form-control"
+                            autocomplete="off" id="query" readonly>
                     </div>
                 </div>
+            
         </div>
+        <div class="col-sm-4"></div>
+    </div>
                 <table id="scoring"
                     class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
                     aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
@@ -167,7 +153,6 @@ input[type=range]:focus::-ms-fill-upper {
                         <tr>
                             <input type="hidden" name="user_id_{{$loop->iteration}}" value="{{$item->id}}">
                             <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
-                            {{-- <td tabindex="0" class="sorting_1 text-center">{{$row->id}}</td> --}}
                             <td class="text-center">{{$item->name}}</td>
                             
 
@@ -189,14 +174,15 @@ input[type=range]:focus::-ms-fill-upper {
         
     </div>
     <div class="panel-footer text-right">
-        <button class="btn btn-mint" type="submit">Tambah</button>
+        <button class="btn btn-mint" type="submit" id="button-submit">Tambah</button>
     </div>
 </form>
 </div>
 
 @section('script')
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 
-<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 
 <script>   
    console.log("{{$item->name}}")
@@ -212,6 +198,32 @@ input[type=range]:focus::-ms-fill-upper {
              
          
      }
+
+     $(document).ready(function () {
+        $('#pickadate .input-group.date').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            minViewMode: 'months',
+            maxViewMode: 'years',
+            startView: 'months',
+            orientation: 'bottom',
+            forceParse: false,
+        });
+        $('#button-submit').on('click', function (event) {
+            event.preventDefault();
+            var check_year = document.getElementById('query').value;
+            if (check_year == '') {
+                Swal.fire({
+                    title: 'Sepertinya ada kesalahan...',
+                    text: "Mohon isi periode terlebih dahulu...",
+                    icon: 'error',
+                });
+                return false;
+            } else{
+              $('#submit-achievement').submit();
+            }
+        });
+    });
  //    </script>
 @endsection
    

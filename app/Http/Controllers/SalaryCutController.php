@@ -58,7 +58,7 @@ class SalaryCutController extends Controller
             ]);
         } else {
             $request->validate([
-                'information' => 'required',
+                'information_individual' => 'required',
                 'range_month' => 'required',
                 's_nominal' => 'required',
                 'user_id' => 'required'
@@ -68,7 +68,7 @@ class SalaryCutController extends Controller
             $year = date('Y');
             for ($i=0; $i < $request->range_month; $i++) {
                 MasterSalaryCut::create([
-                    'information' => $request->information,
+                    'information' => $request->information_individual,
                     'type' => $request->type,
                     'nominal' => $nominal,
                     'month' => switch_month($month),

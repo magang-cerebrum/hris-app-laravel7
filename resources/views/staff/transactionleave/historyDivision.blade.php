@@ -1,9 +1,9 @@
-@extends('layouts/templateAdmin')
-@section('title','Data Staff')
-@section('content-title','Data Staff / Riwayat Pengajuan Cuti')
+@extends('layouts/templateStaff')
+@section('title','Cuti Anggota Divisi')
+@section('content-title','Cuti Anggota Divisi / Riwayat Pengajuan Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
-<div class="panel panel-danger panel-bordered">
+<div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Riwayat Pengajuan Cuti Staff</h3>
     </div>
@@ -14,15 +14,6 @@
             <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
         </div>
         @else
-        <form action="{{ url('/admin/paid-leave/delete')}}" method="POST" style="display: inline">
-            @method('delete')
-            @csrf
-            <button id="btn-delete" class="btn btn-danger add-tooltip" style="margin-bottom: 10px" type="submit"
-                data-toggle="tooltip" data-container="body" data-placement="top"
-                data-original-title="Hapus Riwayat Pengajuan Cuti">
-                <i class="btn-label fa fa-trash"></i>
-                Hapus Data Terpilih
-            </button>
             <div class="table-responsive">
                 <table id="masterdata-history-cuti"
                     class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
@@ -30,7 +21,6 @@
                     <thead>
                         <tr>
                             <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                            <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master"></th>
                             <th class="sorting text-center" tabindex="0">NIP</th>
                             <th class="sorting text-center" tabindex="0">Nama</th>
                             <th class="sorting text-center" tabindex="0">Tipe Cuti</th>
@@ -47,8 +37,6 @@
                         <tr class="sorting text-center" tabindex="0">
                             <td class="sorting text-center" tabindex="0">
                                 {{$data->currentpage() * 5 - 5 + $loop->iteration}}</td>
-                            <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]"
-                                    value="{{$item->id}}"></td>
                             <td class="text-center">{{$item->user_nip}}</td>
                             <td class="text-center">{{$item->user_name}}</td>
                             <td class="text-center">{{$item->type_name}}</td>
@@ -63,7 +51,6 @@
                     </tbody>
                 </table>
             </div>
-        </form>
         <div class="row" style="margin-top: -50px">
             <div class="col-sm-5"></div>
             <div class="col-sm-2">
@@ -78,17 +65,3 @@
 </div>
 @endsection
 
-@section('script')
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#master').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".sub_chk").prop('checked', true);
-            } else {
-                $(".sub_chk").prop('checked', false);
-            }
-        });
-    });
-
-</script>
-@endsection

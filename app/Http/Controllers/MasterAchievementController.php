@@ -24,27 +24,29 @@ class MasterAchievementController extends Controller
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')){
-            $user = Auth::user();
-        $count = MasterAchievement::count();
-        $max = MasterAchievement::max('score');
-        $data = DB::table('master_achievements')->
-        leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
-        ->orderBy('score','desc')->get();
-        // dd($data);
+        
+        $user = Auth::user();
+       
         return view('masterData.achievement.leaderboard',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id,
-
-            'data'=>$data,
-            'count'=>$count,
-            'max'=>$max
-            
             ]);
         }
         
         
+    }
+
+    public function indexChief(){
+        $user = Auth::user();
+        return view('masterData.achievement.chiefLeaderboard',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+ 
+            ]);
     }
 
     public function search(Request $request){
@@ -52,22 +54,43 @@ class MasterAchievementController extends Controller
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')){
-
-            $data = MasterAchievement::where(['month'=>$request->month,
-        'year'=>$request->year])->
-        leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
+            $splitter = explode('/',$request->get('query'));
+            $data = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        'year'=>$splitter[1]])
+        ->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')
         ->get();
-        $is_champ = MasterAchievement::where(['month'=>$request->month,
-        'year'=>$request->year])->max('score');
-        // dd($is_champ);
+        $is_champ = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        'year'=>$splitter[1]])->max('score');
+        // dd(count($is_champ));
         $count = count($data);
         return view('masterData.achievement.result',['data'=>$data,
         'count'=>$count,
         'employee_of_the_month' =>$is_champ
         ]);
         }
+        
+    }
+
+    public function ChiefSearch(Request $request){
+       $user = Auth::user();
+        $splitter = explode('/',$request->get('query'));
+        $data = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        'year'=>$splitter[1]])->
+        leftjoin('master_users',
+        'master_achievements.achievement_user_id','=','master_users.id')
+        ->orderBy('score','desc')
+        ->where('division_id',division_members($user->position_id))
+        ->get();
+        $is_champ = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        'year'=>$splitter[1]])->max('score');
+        // dd(count($is_champ));
+        $count = count($data);
+        return view('masterData.achievement.ChiefSearchResult',['data'=>$data,
+        'count'=>$count,
+        'employee_of_the_month' =>$is_champ
+        ]);
+        
         
     }
 
@@ -78,7 +101,14 @@ class MasterAchievementController extends Controller
         }
         elseif(Gate::allows('is_admin')){
             $user = Auth::user();
-            $data = DB::table('master_users')->whereNotIn('division_id',[7])->get();
+            $data = DB::table('master_users')
+            ->where('status','=','Aktif')
+            ->where('division_id','!=',7)
+            ->where('position_id','!=',[11,3])
+            ->get();
+            
+            
+            // dd(DB::table('master_achievements')->whereNotNull('score')->get());
             return view('masterData.achievement.scoring',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -102,19 +132,85 @@ class MasterAchievementController extends Controller
                 $score = 'score_'.$i;
                 $data = $datas->$score;
                 $split = explode('/',$datas->get('query'));
+
+                $check = DB::table('master_achievements')
+                ->where('year','=',$split[1])
+                ->where('month','=',switch_month($split[0]))
+                ->where('achievement_user_id',$data_id)
+                ->get();
+
                 if ($data == 0) {continue;}
-                MasterAchievement::create([
+                if(count($check) > 0){
+                    foreach($check as $items){
+                    MasterAchievement::where('id','=',$items->id)->update([
+                        'score' => $data
+                    ]); }
+                }
+                else {MasterAchievement::create([
                     'score' => $data,
                     'month'  =>switch_month($split[0]),
                     'year' =>$split[1] ,
                     'achievement_user_id'=>$data_id
                 ]);
+                }
             }
-            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . $request->month . ' tahun ' . $request->year . ' berhasil ditambahkan!');
+            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
             return redirect('/admin/achievement');
         }
         
     }
+
+    public function chiefScoring(){
+            $user = Auth::user();
+            // dd($user->division_id);
+            $data = DB::table('master_users')
+            ->where('status','=','Aktif')
+            ->whereIn('division_id',division_members($user->position_id))
+            ->where('position_id','=',11)
+            ->get();
+            return view('masterData.achievement.Chiefscoring',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data
+        ]);
+    }
+    public function chiefScored(Request $request){
+            global $datas;
+            $datas=$request;
+            for($i = 1; $i <=$request->count; $i++){
+                global $datas;
+                $user_id = 'user_id_'.$i;
+                $data_id = $datas->$user_id;
+                $score = 'score_'.$i;
+                $data = $datas->$score;
+                $split = explode('/',$datas->get('query'));
+
+                $check = DB::table('master_achievements')
+                ->where('year','=',$split[1])
+                ->where('month','=',switch_month($split[0]))
+                ->where('achievement_user_id',$data_id)
+                ->get();
+                if ($data == 0) {continue;}
+                if(count($check) > 0){
+                    foreach($check as $items){
+                    MasterAchievement::where('id','=',$items->id)->update([
+                        'score' => $data
+                    ]); }
+                }
+                else {MasterAchievement::create([
+                    'score' => $data,
+                    'month'  =>switch_month($split[0]),
+                    'year' =>$split[1] ,
+                    'achievement_user_id'=>$data_id
+                ]);
+                }
+            }
+            Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
+            return redirect('/staff/achievement/scoring');
+    }
+
     public function admin_charts (){
         if (Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');
@@ -219,6 +315,82 @@ class MasterAchievementController extends Controller
         ]);
     }
 
+    public function chief_chart_index(){
+        $score = array();
+        $average = array();
+        $max = array();
+        $min = array();
+
+        $user = Auth::user();
+
+        for ($i=1; $i <= 12; $i++) {
+            $sum_month = 0;
+            $avg_month = 0;
+            $max_month = 0;
+            $min_month = 100;
+            $data_month = MasterAchievement::
+            where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
+            ->where('year','=',date('Y'))
+            ->get();
+            if (count($data_month) == 0) {
+                $sum_month = 0;
+                $avg_month = 0;
+                $max_month = 0;
+                $min_month = 0;
+            } else {
+                //find average
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $sum_month += $data_month[$j]->score;
+                }
+                $avg_month = $sum_month / count($data_month);
+                //find max
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $temp_score = $data_month[$j]->score;
+                    if ($temp_score > $max_month) {
+                        $max_month = $temp_score;
+                    }
+                }
+                //find min
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $temp_score = $data_month[$j]->score;
+                    if ($temp_score < $min_month) {
+                        $min_month = $temp_score;
+                    }
+                }
+                //insert score matches month
+                for ($j=0; $j < count($data_month); $j++) {                    
+                    $usernya = $data_month[$j]->achievement_user_id;
+                    $data_user = MasterAchievement::
+                    where('month','=',switch_month($i / 10 < 1 ? '0'. $i : $i))
+                    ->where('year','=',date('Y'))
+                    ->where('achievement_user_id','=',$usernya)
+                    ->get();
+                    foreach ($data_user as $item) {
+                        $score[$i-1][$item->achievement_user_id] = $item->score;
+                    }
+                }
+            }
+            $average[$i-1] = $avg_month;
+            $max[$i-1] = $max_month;
+            $min[$i-1] = $min_month;
+        }
+        $staff = DB::table('master_users')->where('status','Aktif')
+        ->whereIn('division_id',division_members($user->position_id))
+        ->whereNotIn('position_id',[1,2,3])
+        ->select(['id','name'])->paginate(10);
+        return view('masterdata.achievement.Chieflistchart',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'staff' => $staff,
+            'score' => $score,
+            'average' => $average,
+            'max' => $max,
+            'min' => $min
+        ]);
+    }
+
     public function searchlist(Request $request){
         if ($request->get('query') == null) {return redirect('/admin/achievement/charts');}
         
@@ -292,6 +464,93 @@ class MasterAchievementController extends Controller
         ->whereNotIn('position_id',[1,2,3])
         ->select(['id','name'])->paginate(10);
         return view('masterdata.achievement.resultlist',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'staff' => $staff,
+            'score' => $score,
+            'average' => $average,
+            'max' => $max,
+            'min' => $min
+        ]);
+    }
+
+    public function Chiefsearchlist (Request $request){
+        if ($request->get('query') == null) {return redirect('/staff/achievement/charts');}
+        $user = Auth::user();
+        $check_user = DB::table('master_users')->select(['id','name'])
+        ->whereRaw("name LIKE '%" . $request->get('query') . "%'")
+        ->where('status','Aktif')
+        ->whereIn('division_id',division_members($user->position_id))
+        ->get();
+        foreach ($check_user as $item){
+            $ids[] = $item->id;
+        }
+
+        $score = array();
+        $average = array();
+        $max = array();
+        $min = array();
+
+        for ($i=1; $i <= 12; $i++) {
+            $sum_month = 0;
+            $avg_month = 0;
+            $max_month = 0;
+            $min_month = 100;
+            $data_month = MasterAchievement::
+            where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
+            ->where('year','=',date('Y'))
+            ->get();
+            if (count($data_month) == 0) {
+                $sum_month = 0;
+                $avg_month = 0;
+                $max_month = 0;
+                $min_month = 0;
+            } else {
+                //find average
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $sum_month += $data_month[$j]->score;
+                }
+                $avg_month = $sum_month / count($data_month);
+                //find max
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $temp_score = $data_month[$j]->score;
+                    if ($temp_score > $max_month) {
+                        $max_month = $temp_score;
+                    }
+                }
+                //find min
+                for ($j=0; $j < count($data_month); $j++) { 
+                    $temp_score = $data_month[$j]->score;
+                    if ($temp_score < $min_month) {
+                        $min_month = $temp_score;
+                    }
+                }
+                //insert score matches month
+                for ($j=0; $j < count($data_month); $j++) {
+                    for ($k=0; $k < count($ids); $k++) { 
+                        $data_user = MasterAchievement::
+                        where('month','=',switch_month($i / 10 < 1 ? '0'. $i : $i))
+                        ->where('year','=',date('Y'))
+                        ->where('achievement_user_id','=',$ids[$k])
+                        ->get();
+                        foreach ($data_user as $item) {
+                            $score[$i-1][$item->achievement_user_id] = $item->score;
+                        }
+                    } 
+                }
+            }
+            $average[$i-1] = $avg_month;
+            $max[$i-1] = $max_month;
+            $min[$i-1] = $min_month;
+        }
+        
+        $staff = DB::table('master_users')->where('status','Aktif')
+        ->whereIn('id',$ids)
+        ->whereNotIn('position_id',[1,2,3])
+        ->select(['id','name'])->paginate(10);
+        return view('masterdata.achievement.ChiefResultList',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,

@@ -8,16 +8,16 @@
         <h3 class="panel-title">Riwayat Pengajuan Cuti</h3>
     </div>
     <div class="panel-body">
+        @if (count($data) == 0)
+        <div class="text-center">
+            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+        </div>
+        @else
         <div class="table-responsive">
-            @if (count($data) == 0)
-            <div class="text-center">
-                <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
-                <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
-            </div>
-            @else
             <table id="transaction-paid-leave-staff"
                 class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
-                aria-describedby="dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                aria-describedby="dt-basic_info" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
@@ -44,8 +44,9 @@
                         <td class="text-center">{{$item->informations}}</td>
                         <td class="text-center">{{$item->status}}</td>
                         <td class="text-center">
-                            @if ($item->status == 'Diajukan' || $item->status == 'Pending')
-                            <a href="/staff/paid-leave/{{$item->id}}/cancel" class="cancel-paid-leave btn btn-sm btn-danger btn-icon btn-circle add-tooltip"
+                            @if ($item->status == 'Diajukan' || $item->status == 'Pending-Chief')
+                            <a href="/staff/paid-leave/{{$item->id}}/chief-approve"
+                                class="cancel-paid-leave btn btn-sm btn-danger btn-icon btn-circle add-tooltip"
                                 data-toggle="tooltip" data-container="body" data-placement="left"
                                 data-original-title="Cancel Pengajuan Cuti" type="button">
                                 <i class="fa fa-times"></i>
@@ -60,18 +61,17 @@
                     @endforeach
                 </tbody>
             </table>
-
-            <div class="row" style="margin-top: -50px">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-2">
-                    <ul class="pagination">
-                        {{ $data->links() }}
-                    </ul>
-                </div>
-                <div class="col-sm-5"></div>
-            </div>
-            @endif
         </div>
+        <div class="row" style="margin-top: -50px">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2">
+                <ul class="pagination">
+                    {{ $data->links() }}
+                </ul>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

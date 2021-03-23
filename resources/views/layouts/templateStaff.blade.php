@@ -247,7 +247,15 @@
                                                 <li><a href="{{ url('staff/paid-leave/history')}}"><i class="fa fa-history"></i>Riwayat Cuti</a></li>
                                             </ul>
                                         </li>
-                                        
+                                        <!--Menu list item-->
+                                        @if(Auth::user()->position_id != 11)
+                                        <li>
+                                            <a href="{{ url('staff/paid-leave/division')}}">
+                                                <i class="fa fa-users"></i>
+                                                <span class="menu-title">Cuti Anggota Divisi</span>
+                                            </a>
+                                        </li>
+                                        @endif
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/salary')}}">
@@ -255,6 +263,24 @@
                                                 <span class="menu-title">Gaji</span>
                                             </a>
                                         </li>
+                                        @if (Auth::user()->position_id != 11)
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-trophy"></i>
+                                                <span class="menu-title">Pencapaian Divisi</span>
+                                                <i class="arrow"></i>
+                                            </a>
+                                            
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a href="/staff/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
+                                                <li><a href="/staff/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
+                                                <li><a href="/staff/achievement/Charts"><i class="fa fa-bar-chart"></i>Charts</a></li>                                
+                                            </ul>
+                    
+                                        </li>
+                                        @endif
+                                       
                                         
                                         <!--Menu list item-->
                                         <li>

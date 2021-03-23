@@ -15,15 +15,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionPaidLeaveController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $data = DB::table('transaction_paid_leaves')
-        ->where('transaction_paid_leaves.status', '=', 'Diajukan')
+        $data = TransactionPaidLeave::whereIn('transaction_paid_leaves.status', ['Diterima-Chief','Pending'])
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->select(
@@ -48,15 +42,14 @@ class TransactionPaidLeaveController extends Controller
     public function history()
     {
         $data = DB::table('transaction_paid_leaves')
-        ->where('transaction_paid_leaves.status', '!=', 'Diajukan')
+        ->whereNotIn('transaction_paid_leaves.status',['Diajukan', 'Pending-Chief','Diterima-Chief'])
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->select(
             'transaction_paid_leaves.*',
-            
             'master_users.name as user_name',
             'master_users.nip as user_nip',
-            'master_users.yearly_leave_remaining as user_laeve_remaining',
+            'master_users.yearly_leave_remaining as user_leave_remaining',
             'master_leave_types.name as type_name'
             )
         ->paginate(5);
@@ -71,11 +64,6 @@ class TransactionPaidLeaveController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $data = MasterLeaveType::all();
@@ -180,23 +168,17 @@ class TransactionPaidLeaveController extends Controller
         return redirect('/staff/paid-leave/history');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show()
     {
         $user = Auth::user();
-
         $data = DB::table('transaction_paid_leaves')
         ->where('user_id', '=', $user->id)
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->select(
             'transaction_paid_leaves.*',
-            'master_users.yearly_leave_remaining as user_laeve_remaining',
+            'master_users.yearly_leave_remaining as user_leave_remaining',
             'master_leave_types.name as type_name'
             )
         ->paginate(5);
@@ -210,13 +192,7 @@ class TransactionPaidLeaveController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update_approve(Request $request)
     {
         $ids = $request->input('check');
@@ -308,15 +284,19 @@ class TransactionPaidLeaveController extends Controller
                 $start = $check_days;
             }
         }
+        Alert::success('Berhasil!', 'Pengajuan cuti terpilih berhasil di setujui!');
         return redirect('/admin/paid-leave');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function update_pending(Request $request){
+        $ids = $request->input('check');
+        foreach($ids as $check_id) {
+            TransactionPaidLeave::where("id",$check_id)->update(['status' => 'Pending']);
+        }
+        Alert::success('Berhasil!', 'Pengajuan cuti terpilih berhasil di pending!');
+        return redirect('/admin/paid-leave');
+    }
+    
     public function destroy(Request $request)
     {
         $ids = $request->input('check');
@@ -334,6 +314,7 @@ class TransactionPaidLeaveController extends Controller
             $data = TransactionPaidLeave::where("id",$deletes)->first();
             $data->delete();
         }
+        Alert::info('Berhasil!', 'Pengajuan cuti terpilih berhasil di cancel!');
         return redirect('/staff/paid-leave/history');
     }
 
@@ -382,5 +363,83 @@ class TransactionPaidLeaveController extends Controller
             Alert::success('Berhasil!', 'Pengajuan Cuti atas nama '. $item->user_name . ' ditolak!');
         }
         return redirect('/admin/paid-leave');
+    }
+
+    public function division(){
+        $user = Auth::user();
+
+        $data = TransactionPaidLeave::leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+        ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
+        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->whereNotIn('transaction_paid_leaves.status',['Cancel','Ditolak'])
+        ->select(
+            'transaction_paid_leaves.*',
+            'master_users.yearly_leave_remaining as user_leave_remaining',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name',
+            'master_leave_types.name as type_name'
+        )
+        ->paginate(5);
+        return view('staff.transactionleave.listDivision',[
+            'data'=>$data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
+    }
+    public function division_history(){
+        $user = Auth::user();
+        $data = DB::table('transaction_paid_leaves')
+        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+        ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
+        ->select(
+            'transaction_paid_leaves.*',
+            'master_users.yearly_leave_remaining as user_leave_remaining',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name',
+            'master_leave_types.name as type_name'
+            )
+        ->paginate(5);
+        
+        return view('staff.transactionleave.historyDivision',[
+            'data'=>$data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
+    }
+
+    public function division_approve(Request $request){
+        $ids = $request->input('check');
+        foreach($ids as $check_id) {
+            TransactionPaidLeave::where("id",$check_id)->update(['status' => 'Diterima-Chief']);
+        }
+        Alert::success('Berhasil!', 'Pengajuan cuti terpilih berhasil diterima!');
+        return redirect('/staff/paid-leave/division');
+    }
+
+    public function division_pending(Request $request){
+        $ids = $request->input('check');
+        foreach($ids as $check_id) {
+            TransactionPaidLeave::where("id",$check_id)->update(['status' => 'Pending-Chief']);
+        }
+        Alert::success('Berhasil!', 'Pengajuan cuti terpilih berhasil di-pending!');
+        return redirect('/staff/paid-leave/division');
+    }
+
+    public function division_reject(TransactionPaidLeave $reject, Request $request){
+        $request->validate(['informations' => 'required']);
+        TransactionPaidLeave::where('id', $reject->id)
+            ->update(['informations' => $request->informations,'status' => 'Ditolak-Chief']);
+        $name = TransactionPaidLeave::where('transaction_paid_leaves.id',$reject->id)
+        ->join('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+        ->select('master_users.name as user_name')->get();
+        foreach ($name as $item) {
+            Alert::success('Berhasil!', 'Pengajuan Cuti atas nama '. $item->user_name . ' ditolak!');
+        }
+        return redirect('/staff/paid-leave/division');
     }
 }

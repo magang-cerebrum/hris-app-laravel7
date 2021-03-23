@@ -96,18 +96,7 @@
 <!--Bootstrap Datepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script>
-    $(window).load(function(){
-        $.ajax({
-                url: "/admin/log/autodelete",
-                type: 'GET',
-                success: function () {
-                    console.log("Auto Delete Success")
-                },
-                error: function (jXHR, textStatus, errorThrown) {
-                    console.log("Auto Delete Log Failed")
-                }
-            });
-    })
+    
     $(document).ready(function () {
         $('#pickadate .input-group.date').datepicker({
             format: 'mm/yyyy',
@@ -153,7 +142,7 @@
             })
         }
     }
-
+        
 </script>
 @endsection
 @endsection

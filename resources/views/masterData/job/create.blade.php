@@ -48,7 +48,7 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace( 'require' );
     </script>

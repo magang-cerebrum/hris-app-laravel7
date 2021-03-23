@@ -191,6 +191,7 @@ Route::prefix('/admin/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'index']);
     Route::get('/history',[TransactionPaidLeaveController::class,'history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'update_approve']);
+    Route::put('/pending',[TransactionPaidLeaveController::class,'update_pending']);
     Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'reject']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy']);
 });
@@ -203,6 +204,15 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
     Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
+});
+
+//route transakasi cuti DIVISI ==CHIEF==
+Route::prefix('/staff/paid-leave/division')->group(function(){
+    Route::get('/',[TransactionPaidLeaveController::class,'division']);
+    Route::get('/history',[TransactionPaidLeaveController::class,'division_history']);
+    Route::put('/approve',[TransactionPaidLeaveController::class,'division_approve']);
+    Route::put('/pending',[TransactionPaidLeaveController::class,'division_pending']);
+    Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'division_reject']);
 });
 
 //route transaction ticketing ==ADMIN==
@@ -232,6 +242,16 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
 });
 
+
+//Route Achievement ==Chief==
+Route::prefix('/staff/achievement')->group(function () {
+    Route::get('/', [MasterAchievementController::class,'indexChief']);
+    Route::get('/scoring',[MasterAchievementController::class,'chiefScoring']);
+    Route::get('/searchlist',[MasterAchievementController::class,'Chiefsearchlist']);
+    Route::post('/scoring',[MasterAchievementController::class,'chiefScored']);
+    Route::post('/search',[MasterAchievementController::class,'ChiefSearch']);
+    Route::get('/Charts', [MasterAchievementController::class,'chief_chart_index']);
+});
 //route achievement ==STAFF==
 
 //route staff presence

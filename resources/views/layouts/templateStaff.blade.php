@@ -267,6 +267,7 @@
                                             <ul class="collapse">
                                                 <li><a href="/staff/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
                                                 <li><a href="/staff/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
+                                                <li><a href="/staff/achievement/Charts"><i class="fa fa-bar-chart"></i>Charts</a></li>                                
                                             </ul>
                     
                                         </li>

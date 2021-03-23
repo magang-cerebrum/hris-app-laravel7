@@ -1,4 +1,4 @@
-@extends('layouts/templateAdmin')
+@extends('layouts/templateStaff')
 @section('title','Pencapaian')
 @section('content-title','Pencapaian / Leaderboard')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
@@ -8,7 +8,7 @@
 @endsection
 @section('content')
 
-<div class="panel panel-bordered panel-danger">
+<div class="panel panel-bordered panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">LeaderBoard Achievement</h3>
     </div>
@@ -16,18 +16,18 @@
         <div class="row mar-btm" >
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <form action="{{url('/admin/achievement/search')}}" method="POST" id="cari-achievement">
+                <form action="{{url('/staff/achievement/search')}}" method="POST" id="cari-achievement">
                     @csrf
                     <div id="pickadate">
                         <div class="input-group date">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" style="z-index: 2"><i
+                                <button class="btn btn-primary" type="button" style="z-index: 2"><i
                                         class="fa fa-calendar"></i></button>
                             </span>
                             <input type="text" name="query" placeholder="Cari Leaderboard"
                                 class="form-control" autocomplete="off" readonly>
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </div>

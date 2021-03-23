@@ -116,7 +116,7 @@ input[type=range]:focus::-ms-fill-upper {
                 <div id="pickadate">
                     <div class="input-group date">
                         <span class="input-group-btn">
-                            <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                            <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
                         </span>
                         <input type="text" name="query" placeholder="Masukan Periode Penilian" class="form-control"
                             autocomplete="off" id="query" readonly>

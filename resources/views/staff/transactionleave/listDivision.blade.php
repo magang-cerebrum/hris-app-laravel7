@@ -1,20 +1,20 @@
-@extends('layouts/templateAdmin')
-@section('title','Data Staff')
-@section('content-title','Data Staff / Daftar Pengajuan Cuti')
+@extends('layouts/templateStaff')
+@section('title','Cuti Anggota Divisi')
+@section('content-title','Cuti Anggota Divisi')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
-<div class="panel panel-danger panel-bordered">
+@section('content')
+<div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title">Daftar Pengajuan Cuti Staff</h3>
+        <h3 class="panel-title">Riwayat Pengajuan Cuti Divisi</h3>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-sm-6">
-                <a href="{{url('/admin/paid-leave/history')}}" class="btn btn-pink btn-labeled add-tooltip"
+            <div class="col-sm-12">
+                <a href="{{url('/staff/paid-leave/division/history')}}" class="btn btn-pink btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top"
                     data-original-title="Lihat Riwayat Pengajuan Cuti" style="margin-bottom: 15px">
                     <i class="fa fa-history"></i>
@@ -46,21 +46,21 @@
     </div>
 </div>
 <div class="table-responsive">
-    <table id="transaction-paid-leave" class="table table-striped table-bordered no-footer dtr-inline collapsed"
-        role="grid" style="width: 100%;" width="100%" cellspacing="0">
+    <table id="transaction-paid-leave-staff" class="table table-striped table-bordered no-footer dtr-inline collapsed"
+        role="grid" aria-describedby="dt-basic_info" cellspacing="0">
         <thead>
             <tr>
                 <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
                 <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master">
                 </th>
                 <th class="sorting text-center" tabindex="0" style="width: 5%">Aksi</th>
-                <th class="sorting text-center" tabindex="0">NIP</th>
-                <th class="sorting text-center" tabindex="0">Nama</th>
+                <th class="sorting text-center" tabindex="0">Nama Staff</th>
                 <th class="sorting text-center" tabindex="0">Tipe Cuti</th>
-                <th class="sorting text-center" tabindex="0">Sisa Cuti</th>
                 <th class="sorting text-center" tabindex="0">Mulai Cuti</th>
                 <th class="sorting text-center" tabindex="0">Akhir Cuti</th>
-                <th class="sorting text-center" tabindex="0">Keterangan Keperluan</th>
+                <th class="sorting text-center" tabindex="0">Jumlah Hari Cuti</th>
+                <th class="sorting text-center" tabindex="0">Keperluan</th>
+                <th class="sorting text-center" tabindex="0">Keterangan</th>
                 <th class="sorting text-center" tabindex="0">Status</th>
             </tr>
         </thead>
@@ -68,8 +68,7 @@
             @foreach ($data as $item)
             <tr class="sorting text-center" tabindex="0">
                 <td class="sorting text-center" tabindex="0">{{$data->currentpage() * 5 - 5 + $loop->iteration}}</td>
-                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}">
-                </td>
+                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}"></td>
                 <td class="text-center">
                     <span id="reject" data-toggle="modal" data-target="#modal-reject"
                         style="display: inline; margin: auto 5px" data-id="{{$item->id}}" data-nip="{{$item->user_nip}}"
@@ -83,13 +82,13 @@
                         </a>
                     </span>
                 </td>
-                <td class="text-center">{{$item->user_nip}}</td>
                 <td class="text-center">{{$item->user_name}}</td>
                 <td class="text-center">{{$item->type_name}}</td>
-                <td class="text-center">{{$item->user_leave_remaining.' ('.$item->days.') hari'}}</td>
                 <td class="text-center">{{indonesian_date($item->paid_leave_date_start)}}</td>
                 <td class="text-center">{{indonesian_date($item->paid_leave_date_end)}}</td>
+                <td class="text-center">{{$item->days.' hari'}}</td>
                 <td class="text-center">{{$item->needs}}</td>
+                <td class="text-center">{{$item->informations}}</td>
                 <td class="text-center">{{$item->status}}</td>
             </tr>
             @endforeach
@@ -109,5 +108,5 @@
 @endif
 </div>
 </div>
-@include('masterData/transactionleave/modal')
+@include('staff/transactionleave/modaldivision')
 @endsection

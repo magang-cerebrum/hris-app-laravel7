@@ -247,7 +247,15 @@
                                                 <li><a href="{{ url('staff/paid-leave/history')}}"><i class="fa fa-history"></i>Riwayat Cuti</a></li>
                                             </ul>
                                         </li>
-                                        
+                                        <!--Menu list item-->
+                                        @if(Auth::user()->position_id != 11)
+                                        <li>
+                                            <a href="{{ url('staff/paid-leave/division')}}">
+                                                <i class="fa fa-users"></i>
+                                                <span class="menu-title">Cuti Anggota Divisi</span>
+                                            </a>
+                                        </li>
+                                        @endif
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/salary')}}">
@@ -259,7 +267,7 @@
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-trophy"></i>
-                                                <span class="menu-title">Pencapaian</span>
+                                                <span class="menu-title">Pencapaian Divisi</span>
                                                 <i class="arrow"></i>
                                             </a>
                                             

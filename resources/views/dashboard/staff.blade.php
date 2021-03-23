@@ -383,6 +383,7 @@ background: linear-gradient(
                 <div class="row">
                     <div class="col-sm-1 col-md-1"></div>
                     <div class="col-sm-4 col-md-3">
+                        @if (array_key_exists(1,$current_month))
                         <div id="second">
                             <div class="panel pos-rel">
                                 <div class="ribbon"><span title="Top 2">#2</span></div>
@@ -395,6 +396,7 @@ background: linear-gradient(
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="col-sm-4 col-md-4">
                         <div id="first">
@@ -411,6 +413,7 @@ background: linear-gradient(
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-3">
+                        @if (array_key_exists(2,$current_month))
                         <div id="third">
                             <div class="panel pos-rel">
                                 <div class="ribbon"><span title="Top 3">#3</span></div>
@@ -423,6 +426,7 @@ background: linear-gradient(
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="col-sm-1 col-md-1"></div>
                 </div>

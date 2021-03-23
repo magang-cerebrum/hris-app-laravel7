@@ -32,7 +32,7 @@ class InsertDataToMasterPositions extends Migration
             [
                 'id' => 3,
                 'abbreviation' => 'CDO',
-                'name' => 'Chief Data Officer'
+                'name' => 'Chief Development Officer'
             ],
             [
                 'id' => 4,

@@ -191,6 +191,7 @@ Route::prefix('/admin/paid-leave')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'index']);
     Route::get('/history',[TransactionPaidLeaveController::class,'history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'update_approve']);
+    Route::put('/pending',[TransactionPaidLeaveController::class,'update_pending']);
     Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'reject']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy']);
 });
@@ -203,6 +204,15 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
     Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
     Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
+});
+
+//route transakasi cuti DIVISI ==CHIEF==
+Route::prefix('/staff/paid-leave/division')->group(function(){
+    Route::get('/',[TransactionPaidLeaveController::class,'division']);
+    Route::get('/history',[TransactionPaidLeaveController::class,'division_history']);
+    Route::put('/approve',[TransactionPaidLeaveController::class,'division_approve']);
+    Route::put('/pending',[TransactionPaidLeaveController::class,'division_pending']);
+    Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'division_reject']);
 });
 
 //route transaction ticketing ==ADMIN==

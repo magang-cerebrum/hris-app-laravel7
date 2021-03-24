@@ -37,7 +37,7 @@
             <div class="row mar-btm">
                 <div class="col-sm-2">
                     <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                        data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal" onclick="submit_add()">
+                        data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal">
                         <i class="btn-label fa fa-send-o"></i>
                         Kirim Jadwal
                     </button>

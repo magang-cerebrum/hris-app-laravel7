@@ -18,7 +18,7 @@ class CreateMasterShiftsTable extends Migration
             $table->string('name',50);
             $table->timeTz('start_working_time');
             $table->timeTz('end_working_time');
-            $table->timeTz('total_hour');
+            $table->integer('total_hour');
             $table->timestamps();
         });
     }

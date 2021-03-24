@@ -156,9 +156,8 @@ class MasterJobScheduleController extends Controller
         $data_shift = MasterShift::all();
         $split = explode('/',$request->periode);
         $cal = CAL_GREGORIAN;
-        $month = switch_month($split[0], false);
-        $days_in_month = cal_days_in_month($cal, $month, $split[1]);
-
+        $month = switch_month($split[0]);
+        $days_in_month = cal_days_in_month($cal, $split[0], $split[1]);
         $data_holiday = DB::table('master_holidays')
         ->where('date', 'LIKE', $split[1].'-'.$month.'%')->get();
 
@@ -172,8 +171,8 @@ class MasterJobScheduleController extends Controller
                 'data_holiday'=>$data_holiday,
                 'data_paid_leave'=>$data_paid_leave,
                 'count_day'=>$days_in_month,
-                'number_of_month'=>$month,
-                'month'=>$split[0],
+                'number_of_month'=>$split[0],
+                'month'=>$month,
                 'year'=>$split[1],
                 'data_shift'=>$data_shift,
                 'name'=>$user->name,
@@ -187,8 +186,8 @@ class MasterJobScheduleController extends Controller
                 'data_holiday'=>$data_holiday,
                 'data_paid_leave'=>$data_paid_leave,
                 'count_day'=>$days_in_month,
-                'number_of_month'=>$month,
-                'month'=>$split[0],
+                'number_of_month'=>$split[0],
+                'month'=>$month,
                 'year'=>$split[1],
                 'data_shift'=>$data_shift,
                 'name'=>$user->name,
@@ -361,14 +360,14 @@ class MasterJobScheduleController extends Controller
         )->get();
         
         $cal = CAL_GREGORIAN;
-        $month = switch_month($split[0], false);
-        $days_in_month = cal_days_in_month($cal, $month , date('Y'));
+        $month = switch_month($split[0]);
+        $days_in_month = cal_days_in_month($cal, $split[0] , date('Y'));
         
         if ($user->role_id == 1) {
             return view('masterData.schedule.calendar', [
                 'data'=>$data,
                 'day'=>$days_in_month,
-                'month'=>$month,
+                'month'=>$split[0],
                 'year'=>$split[1],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

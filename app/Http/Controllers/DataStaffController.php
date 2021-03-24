@@ -15,19 +15,26 @@ class DataStaffController extends Controller
     {
         $user = Auth::user();
         $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
         ->select(
-            'master_users.nip',
-            'master_users.name',
-            'master_divisions.name as division_name'
+            'master_users.*',
+            'master_divisions.name as division_name',
+            'master_positions.name as position_name',
+            'master_roles.name as role_name'
         )
         ->where('status','=','Aktif')
         ->paginate(10);
+        
         $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
         ->select(
-                'master_users.nip',
-                'master_users.name',
-                'master_divisions.name as division_name'
-                )
+            'master_users.*',
+            'master_divisions.name as division_name',
+            'master_positions.name as position_name',
+            'master_roles.name as role_name'
+        )
         ->where('status','=','Non-Aktif')
         ->paginate(10);
         $count_aktif = MasterUser::where('status','=','Aktif')->count();

@@ -101,7 +101,10 @@
                                         data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
                                         data-division_name="{{$row->division_name}}"
                                         data-position_name="{{$row->position_name}}"
-                                        data-role_name="{{$row->role_name}}">
+                                        data-role_name="{{$row->role_name}}"
+                                        data-cc_bank="{{$row->credit_card_bank}}"
+                                        data-cc_number="{{$row->credit_card_number}}"
+                                        data-salary="{{$row->salary}}">
                                         <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                             data-container="body" data-placement="top" data-original-title="Detail Staff"
                                             type="button">

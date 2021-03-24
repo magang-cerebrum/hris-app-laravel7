@@ -19,7 +19,7 @@
                         <tr>
                             <td><label for="dob">Tanggal Lahir: </label></td>
                             <td><span id="dob"></span></td>
-                            <td rowspan="10"></td>        
+                            <td rowspan="11"></td>        
                             <td rowspan="4" colspan="2" class="text-center">
                                 <img id="img-modal" src="" alt="Tidak ada foto profil." style="width:128px;">
                             </td>
@@ -65,6 +65,16 @@
                             <td><span id="division_name"></span></td>
                             <td><label for="position_name">Jabatan: </label></td>
                             <td><span id="position_name"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="cc_bank">Bank: </label></td>
+                            <td><span id="cc_bank"></span></td>
+                            <td><label for="cc_number">No. Rekening: </label></td>
+                            <td><span id="cc_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="salary">Gaji Pokok: </label></td>
+                            <td><span id="salary"></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -119,10 +129,24 @@
             var division_name = $(this).data('division_name');
             var position_name = $(this).data('position_name');
             var role_name = $(this).data('role_name');
+            var cc_bank = $(this).data('cc_bank');
+            var cc_number = $(this).data('cc_number');
+            var salary = $(this).data('salary');
 
             var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
             $("#img-modal").attr("src", join);
+            
+            //convert rupiah
+            var	number_string = salary.toString(),
+                sisa 	= number_string.length % 3,
+                rupiah 	= number_string.substr(0, sisa),
+                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                    
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
 
             $('#nip').text(nip);
             $('#name').text(name);
@@ -141,6 +165,9 @@
             $('#division_name').text(division_name);
             $('#position_name').text(position_name);
             $('#role_name').text(role_name);
+            $('#cc_bank').text(cc_bank);
+            $('#cc_number').text(cc_number);
+            $('#salary').text('Rp. ' + rupiah);
         });
 
         // check all

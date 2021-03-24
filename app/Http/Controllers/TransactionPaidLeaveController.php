@@ -371,7 +371,7 @@ class TransactionPaidLeaveController extends Controller
         $data = TransactionPaidLeave::leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->whereIn('master_users.division_id',division_members($user->position_id))
-        ->whereNotIn('transaction_paid_leaves.status',['Cancel','Ditolak'])
+        ->whereIn('transaction_paid_leaves.status',['Diajukan','Pending-Chief'])
         ->select(
             'transaction_paid_leaves.*',
             'master_users.yearly_leave_remaining as user_leave_remaining',

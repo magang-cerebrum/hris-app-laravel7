@@ -84,11 +84,6 @@ class SalaryController extends Controller
                 $total_late_time[1] = intval($total_late_time[1]%60);
             }
 
-            
-            if ($total_fine > 100000) {
-                $total_fine = 100000;
-            }
-
             $default_schedule = DB::table('master_job_schedules')->where('month',switch_month($month))->where('year',$year)->where('user_id',$user_id)->first();
             $master_user = DB::table('master_users')->where('id',$user_id)->first();
 
@@ -128,8 +123,8 @@ class SalaryController extends Controller
 
             $total_salary = $master_user->salary - $total_cut_salary + $total_allowance_salary - $total_fine;
 
-            $pdf = PDF::loadView('/pdf.salary');
-            return $pdf->stream();
+            // $pdf = PDF::loadView('/pdf.salary');
+            // return $pdf->stream();
 
             DB::table('master_salaries')->insert([
                 'user_id'=>$user_id,

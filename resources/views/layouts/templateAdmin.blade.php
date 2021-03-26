@@ -287,6 +287,7 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
+                                            <li><a href="{{ url('admin/poster')}}"><i class="fa fa-university"></i>Poster</a></li>
                                             <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Ticketing</a></li>
 											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log</a></li>
 						                </ul>

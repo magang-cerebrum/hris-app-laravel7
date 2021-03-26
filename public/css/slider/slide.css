@@ -1,0 +1,9 @@
+.carousel-inner>.item {
+    padding-top: 0;
+}
+.carousel-inner img {
+    width: 100%;
+}
+.carousel-control span {
+    font-size: 40px;
+}

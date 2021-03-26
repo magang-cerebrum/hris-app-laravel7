@@ -1,9 +1,4 @@
-{{-- <link href="{{ asset('css/fonts.css')}}" rel="stylesheet"> --}}
-{{-- <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet"> --}}
-{{-- <link href="public/css/nifty.min.css" rel="stylesheet"> --}}
-{{-- <link href="../public/css/pdf/salary.css" rel="stylesheet"> --}}
 <link href="{{ asset('css/pdf/salary.css')}}" rel="stylesheet">
-{{-- <link href="../public/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"> --}}
 
 <div id="pdf-salary">
     <div class="head-salary">

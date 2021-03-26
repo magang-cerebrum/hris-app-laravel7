@@ -184,10 +184,11 @@ class StaffAuthDashboardController extends Controller
                     $score[$i-1] = 0;
                 }
             }
-      
+            $data_poster = DB::table('sliders')->get();
             $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
             
             return view('dashboard.staff',[
+                'data_poster'=>$data_poster,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

@@ -21,6 +21,7 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\TransactionTicketingController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
+use App\Http\Controllers\SliderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -259,6 +260,16 @@ Route::prefix('/staff/presence')->group(function () {
     Route::get('/',[PresenceController::class,'staff_view']);
     Route::post('/search',[PresenceController::class,'search']);
     Route::post('/add',[PresenceController::class,'add_presence']);
+});
+
+//route sistem poster
+Route::prefix('/admin/poster')->group(function(){
+    Route::get('/',[SliderController::class,'index']);
+    Route::get('/add',[SliderController::class,'create']);
+    Route::post('/add',[SliderController::class,'store']);
+    Route::delete('/',[SliderController::class,'destroySelected']);
+    Route::get('/{poster}/edit', [SliderController::class, 'edit']);
+    Route::put('/{poster}', [SliderController::class, 'update']);
 });
 
 //route sistem log

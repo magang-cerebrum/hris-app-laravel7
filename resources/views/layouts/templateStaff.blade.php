@@ -14,7 +14,8 @@
 
     <link href="{{ asset('css/staff/main.tambah.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/icons/premium-solid-icons.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/icons/premium-line-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
@@ -60,7 +61,7 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li class="tgl-menu-btn">
                             <a class="mainnav-toggle" href="{{ url('#')}}">
-                                <i class="demo-pli-list-view"></i>
+                                <i class="pli-list-view"></i>
                             </a>
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -74,7 +75,7 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li class="mega-dropdown">
                             <a href="{{ url('staff/dashboard')}}">
-                                <i class="demo-psi-layout-grid"></i>
+                                <i class="psi-layout-grid"></i>
                             </a>
                         </li>
                         <!--User dropdown-->
@@ -82,7 +83,7 @@
                         <li id="dropdown-user" class="dropdown">
                             <a href="{{ url('#')}}" data-toggle="dropdown" class="dropdown-toggle text-right">
                                 <span class="ic-user pull-right">
-                                    <i class="demo-psi-male"></i>
+                                    <i class="psi-male"></i>
                                 </span>
                             </a>
 
@@ -90,13 +91,13 @@
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
                                 <ul class="head-list">
                                     <li>
-                                        <a href="{{ url('staff/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
+                                        <a href="{{ url('staff/profile')}}"><i class="psi-male icon-lg icon-fw"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('staff/password/')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
+                                        <a href="{{ url('staff/password/')}}"><i class="psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
+                                        <a href="{{ url('logout')}}"><i class="psi-unlock icon-lg icon-fw"></i> Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -179,13 +180,13 @@
                                         </div>
                                         <div id="profile-nav" class="collapse list-group bg-trans">
                                             <a href="{{ url('staff/profile')}}" class="list-group-item">
-                                                <i class="demo-psi-male icon-lg icon-fw"></i> Profile
+                                                <i class="psi-male icon-lg icon-fw"></i> Profile
                                             </a>
                                             <a href="{{ url('staff/password/')}}" class="list-group-item">
-                                                <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
+                                                <i class="psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                             </a>
                                             <a href="{{ url('logout')}}" class="list-group-item">
-                                                <i class="demo-psi-unlock icon-lg icon-fw"></i> Logout
+                                                <i class="psi-unlock icon-lg icon-fw"></i> Logout
                                             </a>
                                         </div>
                                     </div>
@@ -198,7 +199,7 @@
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/dashboard')}}">
-                                                <i class="demo-psi-home"></i>
+                                                <i class="psi-home"></i>
                                                 <span class="menu-title">Dashboard</span>
                                             </a>
                                         </li>
@@ -206,7 +207,7 @@
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/presence')}}">
-                                                <i class="demo-psi-checked-user"></i>
+                                                <i class="psi-checked-user"></i>
                                                 <span class="menu-title">Presensi</span>
                                             </a>
                                         </li>
@@ -229,7 +230,7 @@
                                             <!--Submenu-->
                                             <ul class="collapse">
                                                 <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
-                                                <li><a href="{{ url('staff/schedule/division')}}"><i class="demo-psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
+                                                <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
                                             </ul>
                                         </li>
                                         @endif
@@ -285,7 +286,7 @@
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/ticketing')}}">
-                                                <i class="demo-psi-support"></i>
+                                                <i class="psi-support"></i>
                                                 <span class="menu-title">Ticketing</span>
                                             </a>
                                         </li>

@@ -86,10 +86,15 @@ Route::prefix('/admin/data-staff')->group(function(){
     Route::get('/{staff}/edit', [DataStaffController::class, 'edit']);
     Route::put('/{staff}', [DataStaffController::class, 'update']);
     Route::put('/{staff}/password', [DataStaffController::class, 'reset_pass']);
+    Route::put('/{staff}/status', [DataStaffController::class, 'toogle_status']);
     Route::delete('/', [DataStaffController::class, 'destroySelected']);
     Route::get('/search', [DataStaffController::class, 'search']);
 });
-
+//route promotion staff 
+Route::prefix('/admin/data-staff/promote')->group(function(){
+    Route::get('/{staff}',[DataStaffController::class,'promotion']);
+    Route::post('/approved', [DataStaffController::class, 'promotion_approved']);
+});
 //route masterdata divisi
 Route::prefix('/admin/division')->group(function(){
     Route::get('/',[DivisionController::class,'index']);

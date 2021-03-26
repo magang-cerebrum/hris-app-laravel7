@@ -14,7 +14,8 @@
 
     <link href="{{ asset('css/admin/main.tambah.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/icons/premium-solid-icons.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/icons/premium-line-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
@@ -59,7 +60,7 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li class="tgl-menu-btn">
                             <a class="mainnav-toggle" href="{{ url('#')}}">
-                                <i class="demo-pli-list-view"></i>
+                                <i class="pli-list-view"></i>
                             </a>
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -73,7 +74,7 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li class="mega-dropdown">
                             <a href="{{ url('admin/dashboard')}}">
-                                <i class="demo-psi-layout-grid"></i>
+                                <i class="psi-layout-grid"></i>
                             </a>
                         </li>
                         <!--User dropdown-->
@@ -81,19 +82,19 @@
                         <li id="dropdown-user" class="dropdown">
                             <a href="{{ url('#')}}" data-toggle="dropdown" class="dropdown-toggle text-right">
                                 <span class="ic-user pull-right">
-                                    <i class="demo-psi-male"></i>
+                                    <i class="psi-male"></i>
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
                                 <ul class="head-list">
                                     <li>
-                                        <a href="{{ url('admin/profile')}}"><i class="demo-psi-male icon-lg icon-fw"></i> Profile</a>
+                                        <a href="{{ url('admin/profile')}}"><i class="psi-male icon-lg icon-fw"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin/password/')}}"><i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
+                                        <a href="{{ url('admin/password/')}}"><i class="psi-lock-user icon-lg icon-fw"></i> Ganti Password</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('logout')}}"><i class="demo-psi-unlock icon-lg icon-fw"></i> Logout</a>
+                                        <a href="{{ url('logout')}}"><i class="psi-unlock icon-lg icon-fw"></i> Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -170,13 +171,13 @@
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">
                                         <a href="{{ url('admin/profile')}}" class="list-group-item">
-                                            <i class="demo-psi-male icon-lg icon-fw"></i> Profile
+                                            <i class="psi-male icon-lg icon-fw"></i> Profile
                                         </a>
                                         <a href="{{ url('admin/password/')}}" class="list-group-item">
-                                            <i class="demo-psi-lock-user icon-lg icon-fw"></i> Ganti Password
+                                            <i class="psi-lock-user icon-lg icon-fw"></i> Ganti Password
                                         </a>
                                         <a href="{{ url('logout')}}" class="list-group-item">
-                                            <i class="demo-psi-unlock icon-lg icon-fw"></i> Logout
+                                            <i class="psi-unlock icon-lg icon-fw"></i> Logout
                                         </a>
                                     </div>
                                 </div>
@@ -189,7 +190,7 @@
 						            <!--Menu list item-->
 						            <li>
 						                <a href="{{ url('admin/dashboard')}}">
-						                    <i class="demo-psi-home"></i>
+						                    <i class="psi-home"></i>
 						                    <span class="menu-title">Dashboard</span>
 						                </a>
 						            </li>
@@ -205,7 +206,7 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
-                                            <li><a href="{{ url('admin/presence')}}"><i class="demo-psi-checked-user"></i>Presensi</a></li>
+                                            <li><a href="{{ url('admin/presence')}}"><i class="psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
 						                </ul>
@@ -213,15 +214,15 @@
 
                                     <li>
 						                <a href="{{ url('#')}}">
-						                    <i class="demo-psi-checked-user"></i>
+						                    <i class="psi-checked-user"></i>
 						                    <span class="menu-title">Jadwal Kerja</span>
 											<i class="arrow"></i>
 						                </a>
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/schedule')}}"><i class="demo-psi-calendar-4"></i>Daftar Jadwal</a></li>
-											<li><a href="{{ url('admin/schedule/add')}}"><i class="demo-psi-checked-user"></i>Tambah Jadwal</a></li>
+                                            <li><a href="{{ url('admin/schedule')}}"><i class="psi-calendar-4"></i>Daftar Jadwal</a></li>
+											<li><a href="{{ url('admin/schedule/add')}}"><i class="psi-checked-user"></i>Tambah Jadwal</a></li>
 						                </ul>
 						            </li>
                                     
@@ -235,13 +236,13 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="demo-psi-calendar-4"></i>Tipe Cuti</a></li>
+                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="psi-calendar-4"></i>Tipe Cuti</a></li>
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
-											<li><a href="{{ url('admin/shift')}}"><i class="demo-psi-clock"></i>Shift</a></li>
+											<li><a href="{{ url('admin/shift')}}"><i class="psi-clock"></i>Shift</a></li>
                                             <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
                                             <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
-                                            <li><a href="{{ url('admin/salary-allowance')}}"><i class="demo-psi-wallet-2"></i>Tunjangan Gaji</a></li>
+                                            <li><a href="{{ url('admin/salary-allowance')}}"><i class="psi-wallet-2"></i>Tunjangan Gaji</a></li>
 						                </ul>
                                     </li>
 
@@ -272,7 +273,7 @@
 
                                         <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/job')}}"><i class="demo-psi-idea-2"></i>Lowongan Tersedia</a></li>
+                                            <li><a href="{{ url('admin/job')}}"><i class="psi-idea-2"></i>Lowongan Tersedia</a></li>
                                             <li><a href="{{ url('admin/recruitment')}}"><i class="fa fa-handshake-o"></i>Daftar Rekruitasi</a></li>
 						                </ul>
                                     </li>
@@ -280,15 +281,15 @@
                                     <!--Menu list item-->
 						            <li>
 						                <a href="{{ url('#')}}">
-						                    <i class="demo-psi-gear"></i>
+						                    <i class="psi-gear"></i>
                                             <span class="menu-title">Sistem</span>
                                             <i class="arrow"></i>
 						                </a>
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Ticketing</a></li>
-											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log</a></li>
+                                            <li><a href="{{ url('admin/ticketing')}}"><i class="psi-support"></i>Ticketing</a></li>
+											<li><a href="{{ url('admin/log')}}"><i class="psi-paperclip"></i>Log</a></li>
 						                </ul>
                                     </li>
                                 </ul>

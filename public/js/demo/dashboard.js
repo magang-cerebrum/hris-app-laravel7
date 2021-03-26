@@ -203,7 +203,7 @@ $(document).on('nifty.ready', function() {
     // http://www.themeon.net
     // =================================================================
     $('#demo-panel-network-refresh').niftyOverlay({
-        iconClass : 'demo-psi-repeat-2 spin-anim icon-2x'
+        iconClass : 'psi-repeat-2 spin-anim icon-2x'
     }).on('click', function(){
         var $el = $(this), relTime;
 

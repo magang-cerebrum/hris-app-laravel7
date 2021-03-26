@@ -12,7 +12,7 @@ class MasterUser extends Authenticatable
     protected $fillable = [
         'nip','name','dob','live_at','phone_number','gender','email','password','profile_photo',
         'employee_status','employee_type','status,','contract_duration','start_work_date','end_work_date',
-        'yearly_leave_remaining','division_id','position_id','role_id','shift_id'
+        'yearly_leave_remaining','division_id','position_id','role_id','shift_id','credit_card_bank','credit_card_number','salary'
     ];
 
     protected $nullable = [

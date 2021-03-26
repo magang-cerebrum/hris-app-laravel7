@@ -37,7 +37,7 @@
                             <td><span id="email"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="employee_status">Tipe Staff: </label></td>
+                            <td><label for="employee_status">Status Staff: </label></td>
                             <td><span id="employee_status"></span></td>
                             <td><label for="contract_duration">Durasi Kontrak: </label></td>
                             <td><span id="contract_duration"></span></td>
@@ -45,7 +45,7 @@
                         <tr>
                             <td><label for="status">Status Kerja: </label></td>
                             <td><span id="status"></span></td>
-                            <td><label for="employee_type">Status Staff: </label></td>
+                            <td><label for="employee_type">Tipe Staff: </label></td>
                             <td><span id="employee_type"></span></td>
                         </tr>
                         <tr>
@@ -87,6 +87,7 @@
 </div>
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+<script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     function toogle_nonaktif() {
             if (document.getElementById('toogle-nonaktif-radio-2').checked) {
@@ -135,22 +136,21 @@
 
             var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
-            $("#img-modal").attr("src", join);
-            
-            //convert rupiah
-            var	number_string = salary.toString(),
-                sisa 	= number_string.length % 3,
-                rupiah 	= number_string.substr(0, sisa),
-                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-                    
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
+            //format durasi kontrak
+            if (contract_duration == '') {
+                contract_duration = '-'
+            } else {
+                contract_duration = contract_duration + ' bulan'
             }
 
+            
+            //show image
+            $("#img-modal").attr("src", join);
+
+            //show data to html
             $('#nip').text(nip);
             $('#name').text(name);
-            $('#dob').text(dob);
+            $('#dob').text(indonesian_date(dob));
             $('#live_at').text(live_at);
             $('#gender').text(gender);
             $('#email').text(email);
@@ -159,17 +159,17 @@
             $('#employee_type').text(employee_type);
             $('#status').text(status);
             $('#contract_duration').text(contract_duration);
-            $('#start_work_date').text(start_work_date);
-            $('#end_work_date').text(end_work_date);
+            $('#start_work_date').text(indonesian_date(start_work_date));
+            $('#end_work_date').text(indonesian_date(end_work_date));
             $('#yearly_leave_remaining').text(yearly_leave_remaining);
             $('#division_name').text(division_name);
             $('#position_name').text(position_name);
             $('#role_name').text(role_name);
             $('#cc_bank').text(cc_bank);
             $('#cc_number').text(cc_number);
-            $('#salary').text('Rp. ' + rupiah);
+            $('#salary').text(format_rupiah(salary));
         });
-
+        
         // check all
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
@@ -201,8 +201,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Hapus',
                 cancelButtonText: 'Tidak'
-                }
-            ).then((result) => {
+                }).then((result) => {
                 if (result.value == true) {
                     $("#form-mul-delete").submit();
                 }}
@@ -216,7 +215,6 @@
         }
     }
 
-
     function reset_pass(id,name){
         var url = "/admin/data-staff/:id/password".replace(':id', id);
         Swal.fire({
@@ -229,8 +227,7 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya',
             cancelButtonText: 'Tidak'
-            }
-        ).then((result) => {
+            }).then((result) => {
             if (result.value == true) {
                 $.ajaxSetup({
                     headers: {
@@ -264,5 +261,54 @@
         );
     }
 
+    function toogle_status(id,name,status){
+        var url = "/admin/data-staff/:id/status".replace(':id', id);
+        if (status == 'Aktif') { var word = 'menonaktifkan'}
+        else { var word = 'mengaktifkan'}
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin ' + word + ' staff dengan nama '+ name + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {id : id, name: name, status:status},
+                    success: function(response) {
+                        Swal.fire({
+                            width: 600,
+                            title: 'Berhasil!',
+                            text: "User dengan nama " + response.name + " saat ini berstatus " + response.status,
+                            icon: 'success',
+                            timer: 2000
+                        });
+                        window.location.reload();
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Penggantian status gagal!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+                });
+            } else {
+                return false;
+            }} 
+        );
+    }
 </script>
 @endsection

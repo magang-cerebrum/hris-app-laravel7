@@ -26,7 +26,7 @@ class CreateMasterUsersTable extends Migration
             $table->string('email',60);
             $table->string('password',100);
             $table->string('profile_photo', 100)->default('default.jpg');
-            $table->enum('employee_status',['Tetap','Kontrak']);
+            $table->enum('employee_status',['Tetap','Kontrak','Probation']);
             $table->enum('employee_type',['Fulltime','Freelance','Magang']);
             $table->enum('status',['Aktif','Non-Aktif']);
             $table->integer('contract_duration')->nullable();

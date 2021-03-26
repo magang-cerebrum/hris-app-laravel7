@@ -8,7 +8,7 @@
             <div class="panel panel-warning panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
-                        <i class="demo-pli-checked-user icon-3x"></i>
+                        <i class="pli-checked-user icon-3x"></i>
                     </div>
                 </div>
                 <div class="media-body">
@@ -21,7 +21,7 @@
             <div class="panel panel-info panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
-                        <i class="demo-pli-remove-user icon-3x"></i>
+                        <i class="pli-remove-user icon-3x"></i>
                     </div>
                 </div>
                 <div class="media-body">
@@ -34,7 +34,7 @@
             <div class="panel panel-mint panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
-                        <i class="demo-pli-inbox-into icon-3x"></i>
+                        <i class="pli-inbox-into icon-3x"></i>
                     </div>
                 </div>
                 <div class="media-body">

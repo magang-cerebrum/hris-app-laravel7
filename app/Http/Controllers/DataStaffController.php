@@ -82,8 +82,7 @@ class DataStaffController extends Controller
             'employee_status' => 'required',
             'employee_type' => 'required',
             'status' => 'required',
-            'contract_duration'=> 'numeric|nullable',
-            'start_work_date' => 'required',
+            'contract_duration'=> 'required_if:employee_status,Kontrak,Probation',
             'yearly_leave_remaining' => 'numeric',
             'division_id' => 'numeric',
             'position_id' => 'numeric',
@@ -94,6 +93,16 @@ class DataStaffController extends Controller
         ]);
 
         $salary = preg_replace('/[Rp. ]/','',$request->salary);
+        
+        if ($request->employee_status == 'Tetap') {
+            $duration = null;
+            $end_work_date = null;
+        } else {
+            if ($request->contract_duration != '') {
+                $duration = $request->contract_duration;
+                $end_work_date = date_add(date_create(date('Y/m/d')),date_interval_create_from_date_string($duration . ' months'));
+            }
+        }
 
         MasterUser::create([
             'nip' => $request->nip,
@@ -108,9 +117,9 @@ class DataStaffController extends Controller
             'employee_status' => $request->employee_status,
             'employee_type' => $request->employee_type,
             'status' => $request->status,
-            'contract_duration'=> $request->contract_duration,
-            'start_work_date' => $request->start_work_date,
-            'end_work_date' => $request->end_work_date,
+            'contract_duration'=> $duration,
+            'start_work_date' => date('Y/m/d'),
+            'end_work_date' => $end_work_date,
             'yearly_leave_remaining' => $request->yearly_leave_remaining,
             'salary' => $salary,
             'credit_card_bank' => $request->credit_card_bank,
@@ -154,8 +163,7 @@ class DataStaffController extends Controller
             'employee_status' => 'required',
             'employee_type' => 'required',
             'status' => 'required',
-            'contract_duration'=> 'numeric|nullable',
-            'start_work_date' => 'required',
+            'contract_duration'=> 'required_if:employee_status,Kontrak,Probation',
             'yearly_leave_remaining' => 'numeric',
             'division_id' => 'numeric',
             'position_id' => 'numeric',
@@ -165,6 +173,17 @@ class DataStaffController extends Controller
             'salary' => 'required'
         ]);
         $salary = preg_replace('/[Rp. ]/','',$request->salary);
+        
+        if ($request->employee_status == 'Tetap') {
+            $duration = null;
+            $end_work_date = null;
+        } else {
+            if ($request->contract_duration != '') {
+                $duration = $request->contract_duration;
+                $end_work_date = date_add(date_create(date('Y/m/d')),date_interval_create_from_date_string($duration . ' months'));
+            }
+        }
+        
         MasterUser::where('id', $staff->id)
             ->update([
                 'nip' => $request->nip,
@@ -177,16 +196,15 @@ class DataStaffController extends Controller
                 'employee_status' => $request->employee_status,
                 'employee_type' => $request->employee_type,
                 'status' => $request->status,
-                'contract_duration'=> $request->contract_duration,
-                'start_work_date' => $request->start_work_date,
-                'end_work_date' => $request->end_work_date,
+                'contract_duration'=> $duration,
+                'end_work_date' => $end_work_date,
                 'yearly_leave_remaining' => $request->yearly_leave_remaining,
-                'division_id' => $request->division_id,
-                'position_id' => $request->position_id,
-                'role_id' => $request->role_id,
                 'salary' => $salary,
                 'credit_card_bank' => $request->credit_card_bank,
                 'credit_card_number' => $request->credit_card_number,
+                'division_id' => $request->division_id,
+                'position_id' => $request->position_id,
+                'role_id' => $request->role_id,
             ]);
         Alert::success('Berhasil!', 'Staff dengan nama '. $request->name . ' berhasil diperbaharui!');
         return redirect('/admin/data-staff');
@@ -255,5 +273,12 @@ class DataStaffController extends Controller
             'email'=>$user->email,
             'id'=>$user->id
         ]);
+        
+    }
+    public function toogle_status(Request $request){
+        if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+        else {$change = 'Aktif';}
+        MasterUser::where('id', $request->id)->update(['status' => $change]);
+        return response()->json(['name'=> $request->name, 'status' => $change]);
     }
 }

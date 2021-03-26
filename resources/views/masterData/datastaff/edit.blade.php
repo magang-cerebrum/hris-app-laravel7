@@ -8,6 +8,17 @@
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <!--Bootstrap Select [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 @endsection
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
@@ -21,7 +32,7 @@
                 <div class="row">
                     <label class="col-sm-2 control-label">NIP:</label>
                     <div class="col-sm-4">
-                        <input type="text" placeholder="NIP" name="nip"
+                        <input type="number" placeholder="NIP" name="nip"
                             class="form-control @error('nip') is-invalid @enderror" value="{{$staff->nip}}">
                         @error('nip') <div class="text-danger invalid-feedback mt-3">
                             Mohon isi NIP.
@@ -78,7 +89,7 @@
                 <div class="row">
                     <label class="col-sm-2 control-label">No Handphone:</label>
                     <div class="col-sm-4">
-                        <input type="text" placeholder="Nomor Handphone" name="phone_number"
+                        <input type="number" placeholder="Nomor Handphone" name="phone_number"
                             class="form-control @error('phone_number') is-invalid @enderror"
                             value="{{$staff->phone_number}}">
                         @error('phone_number') <div class="text-danger invalid-feedback mt-3">
@@ -109,20 +120,20 @@
                                 name="employee_status" value="Kontrak" onclick="showContractOption()"
                                 {{$staff->employee_status == 'Kontrak' ? 'checked' : ''}}>
                             <label for="employee_status_radio-2">Kontrak</label>
+                            <input id="employee_status_radio-3" class="magic-radio" type="radio"
+                                name="employee_status" value="Probation" onclick="showContractOption()" checked>
+                            <label for="employee_status_radio-3">Probation</label>
                         </div>
                     </div>
                     <span id="input-contract_duration">
                         <label class="col-sm-2 control-label">Durasi Kontrak:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Lama kontrak dalam satuan bulan"
-                                name="contract_duration"
-                                class="form-control @error('contract_duration') is-invalid @enderror"
-                                value="{{$staff->contract_duration}}">
+                            <input type="number" placeholder="Lama kontrak dalam satuan bulan"
+                                name="contract_duration" id="contract_duration"
+                                class="form-control @error('contract_duration') is-invalid @enderror" readonly>
                             @error('contract_duration') <div class="text-danger invalid-feedback mt-3">
-                                Mohon hanya isi durasi kontrak dengan angka daalam hitungan perbulan.
+                                Durasi kontrak harus diisi ketika "Status Karyawan" diisi "Kontrak".
                             </div> @enderror
-                            <small class="text-muted">Tidak perlu diisi jika staff berstatus
-                                tetap.</small>
                         </div>
                     </span>
                 </div>
@@ -155,39 +166,6 @@
                         <input id="status_radio-2" class="magic-radio" type="radio" name="status" value="Non-Aktif"
                             {{$staff->status == 'Non-Aktif' ? 'checked' : ''}}>
                         <label for="status_radio-2">Non-Aktif</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Tanggal Mulai Bekerja:</label>
-                    <div id="datepicker-edit-mulai-kerja">
-                        <div class="col-sm-4">
-                            <div class="input-group date">
-                                <input type="text"
-                                    class="form-control @error('start_work_date') is-invalid @enderror"
-                                    placeholder="Tanggal Mulai Bekerja" name="start_work_date"
-                                    value="{{$staff->start_work_date}}">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
-                            @error('start_work_date') <div class="text-danger invalid-feedback mt-3">
-                                Mohon isi tanggal mulai bekerja.</div> @enderror
-                        </div>
-                    </div>
-                    <label class="col-sm-2 control-label">Tanggal Akhir Bekerja:</label>
-                    <div id="datepicker-edit-selesai-kerja">
-                        <div class="col-sm-4">
-                            <div class="input-group date">
-                                <input type="text" class="form-control @error('end_work_date') is-invalid @enderror"
-                                    placeholder="Tanggal Akhir Bekerja" name="end_work_date"
-                                    value="{{$staff->end_work_date}}">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
-                            @error('end_work_date') <div class="text-danger invalid-feedback mt-3">
-                                {{$message}}</div> @enderror
-                            <small class="text-muted">Tidak perlu diisi jika staff masih
-                                bekerja.</small>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -232,7 +210,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
                 <div class="col-sm-4">
-                    <input type="text" placeholder="Sisa cuti diisi hanya dengan angka"
+                    <input type="number" placeholder="Sisa cuti diisi hanya dengan angka"
                         name="yearly_leave_remaining"
                         class="form-control @error('yearly_leave_remaining') is-invalid @enderror"
                         value="{{$staff->yearly_leave_remaining}}">
@@ -251,6 +229,8 @@
                             <option value="BRI" {{$staff->credit_card_bank == 'BRI' ? 'selected' : ''}}>BRI</option>
                             <option value="BJB" {{$staff->credit_card_bank == 'BJB' ? 'selected' : ''}}>BJB</option>
                             <option value="Mandiri" {{$staff->credit_card_bank == 'Mandiri' ? 'selected' : ''}}>Mandiri</option>
+                            <option value="Mandiri Syariah" {{$staff->credit_card_bank == 'Mandiri Syariah' ? 'selected' : ''}}>Mandiri Syariah</option>
+                            <option value="BJB Syariah" {{$staff->credit_card_bank == 'BJB Syariah' ? 'selected' : ''}}>BJB Syariah</option>
                             @error('credit_card_bank') <div class="text-danger invalid-feedback mt-3">
                                 Mohon pilih bank.
                             </div> @enderror
@@ -258,7 +238,7 @@
                     </div>
                     <label class="col-sm-2 control-label" for="credit_card_number">No. Rekening:</label>
                     <div class="col-sm-4">
-                        <input type="text" placeholder="Nomor Rekening tanpa Kode Bank"
+                        <input type="number" placeholder="Nomor Rekening tanpa Kode Bank"
                         name="credit_card_number"
                         class="form-control @error('credit_card_number') is-invalid @enderror"
                         value="{{$staff->credit_card_number}}">
@@ -295,8 +275,14 @@
     function showContractOption() {
         if (document.getElementById('employee_status_radio-1').checked) {
             document.getElementById('input-contract_duration').style.display = 'none';
+            document.getElementById('contract_duration').value = '';
         } else {
             document.getElementById('input-contract_duration').style.display = 'block';
+            if (document.getElementById('employee_status_radio-2').checked){
+                document.getElementById('contract_duration').value = '12';
+            } else {
+                document.getElementById('contract_duration').value = '3';
+            }
         }
     };
 
@@ -324,19 +310,9 @@
             orientation: 'bottom',
             endDate: '0d'
         });
-        $('#datepicker-edit-mulai-kerja .input-group.date').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true,
-            orientation: 'bottom',
-            todayBtn: true
-        });
-        $('#datepicker-edit-selesai-kerja .input-group.date').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true,
-            orientation: 'bottom',
-        });
     });
 
+    window.onload = showContractOption();
 </script>
 @endsection
 @endsection

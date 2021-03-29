@@ -219,21 +219,7 @@
                                                 <span class="menu-title">Jadwal Kerja</span>
                                             </a>
                                         </li>
-                                        @if(Auth::user()->position_id != 11)
-                                        <li>
-                                            <a href="{{ url('#')}}">
-                                                <i class="fa fa-calendar-o"></i>
-                                                <span class="menu-title">Jadwal Kerja Divisi</span>
-                                                <i class="arrow"></i>
-                                            </a>
-
-                                            <!--Submenu-->
-                                            <ul class="collapse">
-                                                <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
-                                                <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
-                                            </ul>
-                                        </li>
-                                        @endif
+                                       
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('#')}}">
@@ -248,23 +234,70 @@
                                                 <li><a href="{{ url('staff/paid-leave/history')}}"><i class="fa fa-history"></i>Riwayat Cuti</a></li>
                                             </ul>
                                         </li>
+
                                         <!--Menu list item-->
-                                        @if(Auth::user()->position_id != 11)
                                         <li>
-                                            <a href="{{ url('staff/paid-leave/division')}}">
-                                                <i class="fa fa-users"></i>
-                                                <span class="menu-title">Cuti Anggota Divisi</span>
+                                            <a href="{{ url('#')}}">
+                                                <i class="psi-monitor-laptop"></i>
+                                                <span class="menu-title">Work From Home</span>
+                                                <i class="arrow"></i>
                                             </a>
+
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a href="{{ url('staff/wfh')}}"><i class="psi-monitor-laptop"></i>Pengajuan WFH</a></li>
+                                                <li><a href="{{ url('staff/wfh/history')}}"><i class="fa fa-history"></i>Riwayat WFH</a></li>
+                                            </ul>
                                         </li>
-                                        @endif
+                                        
                                         <!--Menu list item-->
                                         <li>
                                             <a href="{{ url('staff/salary')}}">
                                                 <i class="fa fa-money"></i>
                                                 <span class="menu-title">Gaji</span>
                                             </a>
+                                        </li>                                       
+                                        
+                                        <!--Menu list item-->
+                                        <li>
+                                            <a href="{{ url('staff/ticketing')}}">
+                                                <i class="psi-support"></i>
+                                                <span class="menu-title">Ticketing</span>
+                                            </a>
                                         </li>
+
                                         @if (Auth::user()->position_id != 11)
+                                        <!--Category name-->
+                                        <li class="list-header">Division</li>
+
+                                        <li>
+                                            <a href="{{ url('#')}}">
+                                                <i class="fa fa-calendar-o"></i>
+                                                <span class="menu-title">Jadwal Kerja Divisi</span>
+                                                <i class="arrow"></i>
+                                            </a>
+
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
+                                                <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ url('staff/paid-leave/division')}}">
+                                                <i class="fa fa-users"></i>
+                                                <span class="menu-title">Cuti Anggota Divisi</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ url('staff/wfh/division')}}">
+                                                <i class="psi-monitor-2"></i>
+                                                <span class="menu-title">WFH Anggota Divisi</span>
+                                            </a>
+                                        </li>
+
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-trophy"></i>
@@ -281,15 +314,6 @@
                     
                                         </li>
                                         @endif
-                                       
-                                        
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a href="{{ url('staff/ticketing')}}">
-                                                <i class="psi-support"></i>
-                                                <span class="menu-title">Ticketing</span>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>

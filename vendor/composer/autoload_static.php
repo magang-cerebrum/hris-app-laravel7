@@ -530,6 +530,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
 
     public static $classMap = array (
         'App\\AcceptedPaidLeave' => __DIR__ . '/../..' . '/app/AcceptedPaidLeave.php',
+        'App\\AcceptedWorkFromHome' => __DIR__ . '/../..' . '/app/AcceptedWorkFromHome.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminAuthDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminAuthDashboardController.php',
@@ -555,6 +556,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Http\\Controllers\\TransactionPaidLeaveController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionPaidLeaveController.php',
         'App\\Http\\Controllers\\TransactionTicketingController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionTicketingController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\WorkFromHomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/WorkFromHomeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -588,6 +590,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\TransactionPaidLeave' => __DIR__ . '/../..' . '/app/TransactionPaidLeave.php',
         'App\\TransactionTicketing' => __DIR__ . '/../..' . '/app/TransactionTicketing.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\WorkFromHome' => __DIR__ . '/../..' . '/app/WorkFromHome.php',
         'App\\slider' => __DIR__ . '/../..' . '/app/slider.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',

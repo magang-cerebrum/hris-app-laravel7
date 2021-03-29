@@ -98,8 +98,15 @@ class TransactionPaidLeaveController extends Controller
         };
 
         $info = "-";
-        $status = "Diajukan";
+        
         $user = Auth::user();
+
+        if ( $user->position_id != 11 ){
+            $status = "Diterima-Chief";
+        }
+        else {
+            $status = "Diajukan";
+        }
 
         if($request->paid_leave_type_id == 1){
             $date_start = date('Y/m/d',strtotime($request->paid_leave_date_start));
@@ -305,17 +312,6 @@ class TransactionPaidLeaveController extends Controller
             $data->delete();
         }
         return redirect('/admin/paid-leave');
-    }
-
-    public function destroy_staff(Request $request)
-    {
-        $ids = $request->input('check');
-        foreach($ids as $deletes) {
-            $data = TransactionPaidLeave::where("id",$deletes)->first();
-            $data->delete();
-        }
-        Alert::info('Berhasil!', 'Pengajuan cuti terpilih berhasil di cancel!');
-        return redirect('/staff/paid-leave/history');
     }
 
     public function cancel_staff(TransactionPaidLeave $id){

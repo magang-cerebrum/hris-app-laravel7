@@ -208,10 +208,10 @@
                                             <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
-                                            <li><a href="{{ url('admin/wfh')}}"><i class="fa fa-calendar-minus-o"></i>Work From Home</a></li>
+                                            <li><a href="{{ url('admin/wfh')}}"><i class="psi-monitor-laptop"></i>Work From Home</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
                                             <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
-                                            <li><a href="{{ url('admin/salary-allowance')}}"><i class="demo-psi-wallet-2"></i>Tunjangan Gaji</a></li>
+                                            <li><a href="{{ url('admin/salary-allowance')}}"><i class="psi-wallet-2"></i>Tunjangan Gaji</a></li>
 						                </ul>
 						            </li>
 
@@ -290,8 +290,8 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/poster')}}"><i class="fa fa-university"></i>Poster</a></li>
-                                            <li><a href="{{ url('admin/ticketing')}}"><i class="demo-psi-support"></i>Ticketing</a></li>
-											<li><a href="{{ url('admin/log')}}"><i class="demo-psi-paperclip"></i>Log</a></li>
+                                            <li><a href="{{ url('admin/ticketing')}}"><i class="psi-support"></i>Ticketing</a></li>
+											<li><a href="{{ url('admin/log')}}"><i class="psi-paperclip"></i>Log</a></li>
 						                </ul>
                                     </li>
                                 </ul>

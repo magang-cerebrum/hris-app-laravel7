@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\AcceptedPaidLeave' => $baseDir . '/app/AcceptedPaidLeave.php',
+    'App\\AcceptedWorkFromHome' => $baseDir . '/app/AcceptedWorkFromHome.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminAuthDashboardController' => $baseDir . '/app/Http/Controllers/AdminAuthDashboardController.php',
@@ -32,6 +33,7 @@ return array(
     'App\\Http\\Controllers\\TransactionPaidLeaveController' => $baseDir . '/app/Http/Controllers/TransactionPaidLeaveController.php',
     'App\\Http\\Controllers\\TransactionTicketingController' => $baseDir . '/app/Http/Controllers/TransactionTicketingController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
+    'App\\Http\\Controllers\\WorkFromHomeController' => $baseDir . '/app/Http/Controllers/WorkFromHomeController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -65,6 +67,7 @@ return array(
     'App\\TransactionPaidLeave' => $baseDir . '/app/TransactionPaidLeave.php',
     'App\\TransactionTicketing' => $baseDir . '/app/TransactionTicketing.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\WorkFromHome' => $baseDir . '/app/WorkFromHome.php',
     'App\\slider' => $baseDir . '/app/slider.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/CorsService.php',

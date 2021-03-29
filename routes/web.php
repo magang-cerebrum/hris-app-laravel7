@@ -22,6 +22,7 @@ use App\Http\Controllers\TransactionTicketingController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\WorkFromHomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -208,17 +209,44 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
     Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
-    Route::delete('/delete',[TransactionPaidLeaveController::class,'destroy_staff']);
     Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });
 
-//route transakasi cuti DIVISI ==CHIEF==
+//route transaksi cuti ==STAFF==
 Route::prefix('/staff/paid-leave/division')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'division']);
     Route::get('/history',[TransactionPaidLeaveController::class,'division_history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'division_approve']);
     Route::put('/pending',[TransactionPaidLeaveController::class,'division_pending']);
     Route::put('/{reject}/reject',[TransactionPaidLeaveController::class,'division_reject']);
+});
+
+//route transaksi wfh ==ADMIN==
+Route::prefix('/admin/wfh')->group(function(){
+    Route::get('/',[WorkFromHomeController::class,'index']);
+    Route::get('/history',[WorkFromHomeController::class,'history']);
+    Route::put('/approve',[WorkFromHomeController::class,'update_approve']);
+    Route::put('/pending',[WorkFromHomeController::class,'update_pending']);
+    Route::put('/{reject}/reject',[WorkFromHomeController::class,'reject']);
+    Route::delete('/delete',[WorkFromHomeController::class,'destroy']);
+});
+
+//route transaksi wfh ==STAFF==
+Route::prefix('/staff/wfh')->group(function(){
+    Route::get('/',[WorkFromHomeController::class,'create']);
+    Route::post('/',[WorkFromHomeController::class,'store']);
+    Route::get('/history',[WorkFromHomeController::class,'show']);
+    Route::get('/calculate',[WorkFromHomeController::class,'calculate']);
+    Route::get('/{id}/cancel',[WorkFromHomeController::class,'cancel_staff']);
+});
+
+//route transaksi wfh ==STAFF==
+Route::prefix('/staff/wfh/division')->group(function(){
+    Route::get('/',[WorkFromHomeController::class,'division']);
+    Route::get('/history',[WorkFromHomeController::class,'division_history']);
+    Route::put('/approve',[WorkFromHomeController::class,'division_approve']);
+    Route::put('/pending',[WorkFromHomeController::class,'division_pending']);
+    Route::put('/{reject}/reject',[WorkFromHomeController::class,'division_reject']);
 });
 
 //route transaction ticketing ==ADMIN==

@@ -1,11 +1,11 @@
 @extends('layouts/templateStaff')
-@section('title','Cuti')
-@section('content-title','Cuti / Riwayat Pengajuan Cuti')
+@section('title','WFH')
+@section('content-title','Work From Home / Riwayat Pengajuan WFH')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
 <div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title">Riwayat Pengajuan Cuti</h3>
+        <h3 class="panel-title">Riwayat Pengajuan WFH</h3>
     </div>
     <div class="panel-body">
         @if (count($data) == 0)
@@ -21,10 +21,9 @@
                 <thead>
                     <tr>
                         <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                        <th class="sorting text-center" tabindex="0">Tipe Cuti</th>
-                        <th class="sorting text-center" tabindex="0">Mulai Cuti</th>
-                        <th class="sorting text-center" tabindex="0">Akhir Cuti</th>
-                        <th class="sorting text-center" tabindex="0">Jumlah Hari Cuti</th>
+                        <th class="sorting text-center" tabindex="0">Mulai WFH</th>
+                        <th class="sorting text-center" tabindex="0">Akhir WFH</th>
+                        <th class="sorting text-center" tabindex="0">Jumlah Hari WFH</th>
                         <th class="sorting text-center" tabindex="0">Keperluan</th>
                         <th class="sorting text-center" tabindex="0">Keterangan</th>
                         <th class="sorting text-center" tabindex="0">Status</th>
@@ -36,9 +35,8 @@
                     <tr class="sorting text-center" tabindex="0">
                         <td class="sorting text-center" tabindex="0">
                             {{$data->currentpage() * 5 - 5 + $loop->iteration}}</td>
-                        <td class="text-center">{{$item->type_name}}</td>
-                        <td class="text-center">{{indonesian_date($item->paid_leave_date_start)}}</td>
-                        <td class="text-center">{{indonesian_date($item->paid_leave_date_end)}}</td>
+                        <td class="text-center">{{indonesian_date($item->wfh_date_start)}}</td>
+                        <td class="text-center">{{indonesian_date($item->wfh_date_end)}}</td>
                         <td class="text-center">{{$item->days.' hari'}}</td>
                         <td class="text-center">{{$item->needs}}</td>
                         <td class="text-center">{{$item->informations}}</td>
@@ -49,7 +47,7 @@
                                 <i class="fa fa-times"></i>
                             </button>
                             @else
-                            <a href="/staff/paid-leave/{{$item->id}}/cancel"
+                            <a href="/staff/wfh/{{$item->id}}/cancel"
                                 class="cancel-paid-leave btn btn-sm btn-danger btn-icon btn-circle add-tooltip"
                                 data-toggle="tooltip" data-container="body" data-placement="left"
                                 data-original-title="Cancel Pengajuan Cuti" type="button">

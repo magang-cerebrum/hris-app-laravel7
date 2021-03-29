@@ -1,0 +1,89 @@
+* {
+    /* border: black 1px solid; */
+}
+#pdf-salary {
+    width: 700px;
+    margin: auto;
+    padding: 20px;
+    border: black 1px solid;
+}
+.border {
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.500);
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* Header */
+.head-salary table {
+    width: 90%;
+    margin: auto;
+}
+.head-salary table tr td.head-image {
+    width: 30%;
+    text-align: center;
+}
+.head-salary img {
+    width: 120px;
+}
+.head-salary h3, h5, p {
+    margin: 0 0 6px;
+}
+.head-salary table tr td.empty {
+    height: 10px;
+}
+.head-salary table tr td.sub-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.body-salary table {
+    font-size: 15px;
+}
+/* body identitas */
+.body-salary table.body-identity {
+    width: 100%;
+}
+.body-salary table.body-identity tr td.identit-head {
+    width: 15%;
+}
+.body-salary table.body-identity tr td.identity-empty {
+    width: 8%;
+}
+.body-salary table.body-identity tr td.value-identity {
+    width: 37%;
+}
+
+/* body count */
+.body-salary table.body-count {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.body-salary table.body-count tr td.title-count {
+    text-align: center;
+}
+.body-salary table.body-count tr td.empty-count {
+    width: 8%;
+}
+.body-salary table.body-count tr td.value-count {
+    width: 13%;
+    text-align: right;
+}
+.body-salary table.body-count tr td.empty-row {
+    height: 13px;
+}
+
+/* tanda tangan */
+.signature table {
+    width: 100%;
+}
+.signature table tr td.empty {
+    width: 20%;
+}
+.signature table tr td.name {
+    width: 40%;
+}
+.signature table tr td.col-signature {
+    height: 70px;
+}

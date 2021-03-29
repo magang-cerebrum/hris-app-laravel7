@@ -19,6 +19,7 @@ class CreateMasterShiftsTable extends Migration
             $table->timeTz('start_working_time');
             $table->timeTz('end_working_time');
             $table->integer('total_hour');
+            $table->string('calendar_color', 7);
             $table->timestamps();
         });
     }

@@ -24,28 +24,48 @@ class InsertDataToMasterShifts extends Migration
                 'name' => 'Off',
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
-                'total_hour' => 0
+                'total_hour' => 0,
+                'calendar_color' => '#00FF00'
             ],
             [
                 'id' => 2,
-                'name' => 'Pagi',
-                'start_working_time' => '08:00:00',
-                'end_working_time' => '17:00:00',
-                'total_hour' => 9
-            ],
-            [
-                'id' => 3,
-                'name' => 'Siang',
-                'start_working_time' => '13:00:00',
-                'end_working_time' => '21:00:00',
-                'total_hour' => 8
-            ],
-            [
-                'id' => 4,
                 'name' => 'Cuti',
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
-                'total_hour' => 0
+                'total_hour' => 0,
+                'calendar_color' => '#0000FF'
+            ],
+            [
+                'id' => 3,
+                'name' => 'Sakit',
+                'start_working_time' => '00:00:00',
+                'end_working_time' => '00:00:00',
+                'total_hour' => 0,
+                'calendar_color' => '#FFFF00'
+            ],
+            [
+                'id' => 4,
+                'name' => 'WFH',
+                'start_working_time' => '08:00:00',
+                'end_working_time' => '17:00:00',
+                'total_hour' => 9,
+                'calendar_color' => '#FF00FF'
+            ],
+            [
+                'id' => 5,
+                'name' => 'Pagi',
+                'start_working_time' => '08:00:00',
+                'end_working_time' => '17:00:00',
+                'total_hour' => 9,
+                'calendar_color' => '#00FFFF'
+            ],
+            [
+                'id' => 6,
+                'name' => 'Siang',
+                'start_working_time' => '13:00:00',
+                'end_working_time' => '21:00:00',
+                'total_hour' => 8,
+                'calendar_color' => '#FFFFFF'
             ],
             
             ]);

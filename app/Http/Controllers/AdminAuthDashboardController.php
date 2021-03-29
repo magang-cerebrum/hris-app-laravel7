@@ -37,8 +37,10 @@ class AdminAuthDashboardController extends Controller
                 ->where('status','=','Dikirimkan')
                 ->orWhere('status','=','On Progress')
                 ->get();
+            $data_poster = DB::table('sliders')->get();
             $data_rect = MasterRecruitment::paginate(5);
             return view('dashboard.admin',[
+                'data_poster'=>$data_poster,
                 'data_recruitment'=>$data_rect,
                 'data_paid_leave'=>$data_paid,
                 'data_user_active'=>$user_act,

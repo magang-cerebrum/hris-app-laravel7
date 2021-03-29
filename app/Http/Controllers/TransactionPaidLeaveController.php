@@ -98,8 +98,15 @@ class TransactionPaidLeaveController extends Controller
         };
 
         $info = "-";
-        $status = "Diajukan";
+        
         $user = Auth::user();
+
+        if ( $user->position_id != 11 ){
+            $status = "Diterima-Chief";
+        }
+        else {
+            $status = "Diajukan";
+        }
 
         if($request->paid_leave_type_id == 1){
             $date_start = date('Y/m/d',strtotime($request->paid_leave_date_start));
@@ -307,17 +314,6 @@ class TransactionPaidLeaveController extends Controller
         return redirect('/admin/paid-leave');
     }
 
-    public function destroy_staff(Request $request)
-    {
-        $ids = $request->input('check');
-        foreach($ids as $deletes) {
-            $data = TransactionPaidLeave::where("id",$deletes)->first();
-            $data->delete();
-        }
-        Alert::info('Berhasil!', 'Pengajuan cuti terpilih berhasil di cancel!');
-        return redirect('/staff/paid-leave/history');
-    }
-
     public function cancel_staff(TransactionPaidLeave $id){
         TransactionPaidLeave::where('id','=', $id->id)->update(['status' => 'Cancel']);
         Alert::info('Berhasil!', 'Pengajuan cuti telah di cancel!');
@@ -371,7 +367,7 @@ class TransactionPaidLeaveController extends Controller
         $data = TransactionPaidLeave::leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->whereIn('master_users.division_id',division_members($user->position_id))
-        ->whereNotIn('transaction_paid_leaves.status',['Cancel','Ditolak'])
+        ->whereIn('transaction_paid_leaves.status',['Diajukan','Pending-Chief'])
         ->select(
             'transaction_paid_leaves.*',
             'master_users.yearly_leave_remaining as user_leave_remaining',

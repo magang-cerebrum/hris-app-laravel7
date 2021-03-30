@@ -44,17 +44,17 @@
                         <td class="text-center">{{$item->informations}}</td>
                         <td class="text-center">{{$item->status}}</td>
                         <td class="text-center">
-                            @if ($item->status == 'Diajukan' || $item->status == 'Pending-Chief')
-                            <a href="/staff/paid-leave/{{$item->id}}/chief-approve"
+                            @if ($item->status == 'Diterima' || $item->status == 'Cancel')
+                            <button class="btn btn-sm btn-icon btn-circle" type="submit" disabled>
+                                <i class="fa fa-times"></i>
+                            </button>
+                            @else
+                            <a href="/staff/paid-leave/{{$item->id}}/cancel"
                                 class="cancel-paid-leave btn btn-sm btn-danger btn-icon btn-circle add-tooltip"
                                 data-toggle="tooltip" data-container="body" data-placement="left"
                                 data-original-title="Cancel Pengajuan Cuti" type="button">
                                 <i class="fa fa-times"></i>
                             </a>
-                            @else
-                            <button class="btn btn-sm btn-icon btn-circle" type="submit" disabled>
-                                <i class="fa fa-times"></i>
-                            </button>
                             @endif
                         </td>
                     </tr>

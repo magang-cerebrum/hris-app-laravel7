@@ -157,7 +157,7 @@
                         document.getElementById("yearly_info").innerHTML = '';
                         document.getElementById("yearly_info-2").innerHTML = '';                        
                     } else {
-                        document.getElementById("yearly_info").innerHTML = 'Pengajuan Cuti sebanyak ' + response.yearly_days + ' hari (belum termasuk hari libur dan cuti)';
+                        document.getElementById("yearly_info").innerHTML = 'Pengajuan Cuti sebanyak ' + response.yearly_days + ' hari (belum termasuk hari libur)';
                         document.getElementById("yearly_info-2").innerHTML = 'Jumlah pengajuan cuti sebaiknya tidak melebihi dari sisa cuti tahunan!';
                     }
                 } else {

@@ -20,6 +20,22 @@
             background-color: #f22314 !important;
             border-color: #f22314 !important;
         }
+        .bootstrap-select.btn-group .dropdown-toggle[title="WFH"] {
+            background-color: #294f75;
+            border-color: #25476a !important;
+        }
+        .bootstrap-select.btn-group .dropdown-toggle[title="WFH"]:hover {
+            background-color: #1c3550 !important;
+            border-color: ##1c3550 !important;
+        }
+        .bootstrap-select.btn-group .dropdown-toggle[title="Sakit"] {
+            background-color: #0ab1fc;
+            border-color: #03a9f4 !important;
+        }
+        .bootstrap-select.btn-group .dropdown-toggle[title="Sakit"]:hover {
+            background-color: #269abc !important;
+            border-color: #1b6d85 !important;
+        }
     </style>
 @endsection
 
@@ -43,10 +59,10 @@
                     </button>
                 </div>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive" style="padding-bottom: 150px">
             <table id="schedule-add"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
+                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%" width="100%"
                 cellspacing="0">
                 <thead>
                     <tr>
@@ -75,6 +91,12 @@
                                     array_push($temp_paid_leave, $item_paid_leave->date);
                                 }
                             }
+                            $temp_wfh = array();
+                            foreach ($data_wfh as $item_wfh) {
+                                if($item_wfh->user_id == $item_user->id) {
+                                    array_push($temp_wfh, $item_wfh->date);
+                                }
+                            }
                         ?>
                         <tr class="sorting text-center" tabindex="0">
                             <td class="sorting text-center" tabindex="0">
@@ -89,6 +111,7 @@
                                     $check_name_days = date('l', strtotime($check_this_day));
                                     $check_holiday = false;
                                     $check_paid_leave = false;
+                                    $check_wfh = false;
                                     foreach ($data_holiday as $data) {
                                         if ($data->date == $year.'-'.$number_of_month.'-'.($i/10 < 1 ? '0'.$i : $i)){
                                             $check_holiday = true;
@@ -99,32 +122,44 @@
                                             $check_paid_leave = true;
                                         }
                                     }
+                                    foreach ($temp_wfh as $item_wfh) {
+                                        if ($item_wfh == $year.'-'.$number_of_month.'-'.($i/10 < 1 ? '0'.$i : $i)){
+                                            $check_wfh = true;
+                                        }
+                                    }
                                 ?>
                                 <td class="text-center">
-                                    <select class="selectpicker {{'sub-master_'.$i}}" data-style="btn-success" style="width: 100%" name="{{'shift_'.$i.'_'.$loop->iteration}}">
-                                        @for ($j = 0; $j < ($check_paid_leave == false ? 3 : 4); $j++)
-                                        <option value="{{$data_shift[$j]->id}}"
+                                    <select class="selectpicker {{'sub-master_'.$i}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}">
+                                        @foreach ($data_shift as $shift)
+                                        <option value="{{$shift->id}}"
                                             class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
+                                            style="{{
+                                                (
+                                                    $loop->iteration == 2 ? ($check_paid_leave == false ? "display: none" : "") :
+                                                    ($loop->iteration == 3 ? "display: none" : 
+                                                    ($loop->iteration == 4 ? ($check_wfh == false ? "display: none" : "") : ""))
+                                                )
+                                            }}"
                                             {{($item_user->division_id == 5 ? 
-                                                ($check_paid_leave == false ? 
-                                                    ($j == 2-1 ? 'selected' : '')
-                                                    : 
-                                                    ($j == 4-1 ? 'selected' : '')
+                                                ($check_paid_leave == true ? 
+                                                    ($loop->iteration == 2 ? 'selected' : '')
+                                                    :
+                                                    ($check_wfh == true ? ($loop->iteration == 4 ? 'selected' : '') : '')
                                                 )
                                                 :
                                                 ($check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false ?
-                                                    ($j == 2-1 ? 'selected' : '')
-                                                    :
-                                                    ($check_paid_leave == true ?
-                                                        ($j == 4-1 ? 'selected' : '')
-                                                        :
-                                                        ''
+                                                    ($check_paid_leave == true ? 
+                                                    ($loop->iteration == 2 ? 'selected' : '') : ($check_wfh == true ? 
+                                                    ($loop->iteration == 4 ? 'selected' : '') : ($loop->iteration == 5 ? 'selected' : ''))
                                                     )
+                                                    :
+                                                    ($loop->iteration == 1 ? 'selected' : '')
                                                 )
-                                            )}}>
-                                            {{$data_shift[$j]->name}}
+                                            )}}
+                                            >
+                                            {{$shift->name}}
                                         </option>
-                                        @endfor
+                                        @endforeach
                                     </select>
                                 </td>
                             @endfor
@@ -153,6 +188,8 @@
                     $(".sub-master_" + index).selectpicker('refresh');   
                 });
             }
+
+            
         });
     </script>
 @endsection

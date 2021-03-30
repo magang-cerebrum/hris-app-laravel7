@@ -165,11 +165,19 @@ class MasterJobScheduleController extends Controller
         ->where('date', 'LIKE', $split[1].'-'.$month.'%')
         ->whereIn('user_id',$data_id)
         ->get();
+
+        $data_wfh = DB::table('accepted_work_from_homes')
+        ->where('date', 'LIKE', $split[1].'-'.$month.'%')
+        ->whereIn('user_id',$data_id)
+        ->get();
+
         if($user->role_id == 1){
             return view('masterData.schedule.add', [
                 'data_user'=>$data_user,
                 'data_holiday'=>$data_holiday,
                 'data_paid_leave'=>$data_paid_leave,
+                'data_wfh'=>$data_wfh,
+                'warna'=>'#00ff00',
                 'count_day'=>$days_in_month,
                 'number_of_month'=>$split[0],
                 'month'=>$month,
@@ -185,6 +193,7 @@ class MasterJobScheduleController extends Controller
                 'data_user'=>$data_user,
                 'data_holiday'=>$data_holiday,
                 'data_paid_leave'=>$data_paid_leave,
+                'data_wfh'=>$data_wfh,
                 'count_day'=>$days_in_month,
                 'number_of_month'=>$split[0],
                 'month'=>$month,

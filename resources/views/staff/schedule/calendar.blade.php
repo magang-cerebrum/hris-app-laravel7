@@ -114,7 +114,7 @@
                             {
                                 title: '<?= $item->user_name ?>',
                                 start: "<?= $data_next_month[0]->year ?>-<?= switch_month($data_next_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
-                                className: '<?= $color ?>'
+                                color: '<?= $color ?>'
                             },
                         <?php } ?>
                     <?php } ?>

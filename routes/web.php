@@ -149,6 +149,16 @@ Route::prefix('/admin/holiday')->group(function() {
     Route::get('/search',[HolidayController::class, 'search']);
 });
 
+Route::prefix('/admin/cuts-allowances')->group(function(){
+    Route::get('/',[SalaryCutController::class,'index']);
+    Route::get('/add',[SalaryCutController::class,'create']);
+    Route::post('/', [SalaryCutController::class, 'store']);
+    Route::get('/{cut}/edit', [SalaryCutController::class, 'edit']);
+    Route::put('/{cut}', [SalaryCutController::class, 'update']);
+    Route::delete('/', [SalaryCutController::class, 'destroyAll']);
+    Route::get('/search',[SalaryCutController::class, 'search']);
+});
+
 //route masterdata potongan gaji
 Route::prefix('/admin/salary-cut')->group(function(){
     Route::get('/',[SalaryCutController::class,'index']);

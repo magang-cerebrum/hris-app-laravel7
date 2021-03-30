@@ -388,4 +388,62 @@ class MasterJobScheduleController extends Controller
         }
         
     }
+
+
+    public function CopySchedule(Request $request){
+        $data = DB::table('master_job_schedules')
+        ->where('month', '=', switch_month(date('m')))
+        ->orWhere('month','=',switch_month(date('m'),strtotime('+1 month')))
+        ->where('year', '=',date('Y'))
+        ->whereNotIn('division_id',[7])
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->select(
+            'master_job_schedules.*',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name'
+        )->get();
+        
+        $data2=DB::table('master_job_schedules')
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')->get();
+        // dd($data2);
+        $user = Auth::user();
+        return view('masterData.schedule.copy',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data
+        ]);
+    }
+
+    public function ajaxCal(Request $request){
+        $radio_id = $request->chosen;
+        $checkBoxes = $request->queue;
+        $firstPeriode = $request->first_periode;
+        $splitedFirstPeriod = explode('/',$firstPeriode);
+        $secondPeriode = $request->second_periode;
+        $splitedSecondPeriod = explode('/',$secondPeriode);
+        $dataRadio = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->select(['master_job_schedules.*','master_users.name'])
+            ->where('user_id',$radio_id)
+            ->where('month',switch_month($splitedFirstPeriod[0]))
+            ->where('year',$splitedFirstPeriod[1])
+            ->get();
+        $dataCheckBox= DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->select(['master_job_schedules.*','master_users.name'])
+            ->whereIn('user_id',$checkBoxes)
+            ->get();
+        // foreach($checkBoxes as $itemChecks){
+           
+        // }
+        
+        // $dataTo = DB::table('master_job_schedules')->where('user_id','=',$checkBoxes)->get();
+        return response()->json([
+            'dataRadio'=>$dataRadio,
+            'dataCheckBox'=>$dataCheckBox,
+            'secondPeriode'=>$secondPeriode
+        ]);
+    }
 }

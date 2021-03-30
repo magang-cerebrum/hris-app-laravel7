@@ -21,6 +21,8 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\TransactionTicketingController;
 use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
+use App\MasterJobSchedule;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -174,6 +176,8 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
+    Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
+    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
 });

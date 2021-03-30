@@ -7,6 +7,7 @@
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
 <div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
@@ -26,30 +27,17 @@
                         <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6 mar-btm">
-                        <div class="input-group">
-                            <span class="input-group-addon">Bulan :</span>
-                            <select class="selectpicker" data-style="btn-pink" name="month" id="month">
-                                <option value="Januari">Januari</option>
-                                <option value="Februari">Februari</option>
-                                <option value="Maret">Maret</option>
-                                <option value="April">April</option>
-                                <option value="Mei">Mei</option>
-                                <option value="Juni">Juni</option>
-                                <option value="juli">juli</option>
-                                <option value="Agustus">Agustus</option>
-                                <option value="September">September</option>
-                                <option value="Oktober">Oktober</option>
-                                <option value="November">November</option>
-                                <option value="Desember">Desember</option>
-                            </select>
-                            <span class="input-group-addon">Tahun :</span>
-                            {{-- <label class="col-sm-1 control-label" for="year">Tahun : </label> --}}
-                            <input id="year-input" type="text" class="form-control @error('year') is-invalid @enderror" placeholder="Tahun" name="year">
-                            @error('year') <div class="text-danger invalid-feedback mt-3">
-                                Tahun tidak boleh kosong.
-                            </div> @enderror
+                <div class="row mar-btm">
+                    <label class="col-sm-1 control-label" for="query">Periode : </label>
+                    <div class="col-sm-4">
+                        <div id="pickadate">
+                            <div class="input-group date">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
+                                    autocomplete="off" id="periode" readonly>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-2"></div>
@@ -95,6 +83,7 @@
 
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -106,7 +95,16 @@
                 $(".sub_chk").prop('checked',false);  
             }  
         });
-        $('#month').selectpicker({
+        $('#pickadate .input-group.date').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            minViewMode: 'months',
+            maxViewMode: 'years',
+            startView: 'months',
+            orientation: 'bottom',
+            forceParse: false,
+        });
+        $('#filter').selectpicker({
             dropupAuto: false
         });
     });
@@ -116,14 +114,14 @@
 
         event.preventDefault();
         var check_user = document.querySelector('.sub_chk:checked');
-        var check_year = document.getElementById('year-input').value;
+        var check_year = document.getElementById('periode').value;
         if (check_year != '' && check_user != null){
                 $('#form-chek-user-month').submit();
         }
         else if (check_year == '' && check_user == null) {
             Swal.fire({
                     title: 'Sepertinya ada kesalahan...',
-                    text: "Mohon isi tahun dan pilih staff terlebih dahulu...",
+                    text: "Mohon isi periode dan pilih staff terlebih dahulu...",
                     icon: 'error',
             });
             return false;
@@ -131,7 +129,7 @@
         else if (check_year == '') {
             Swal.fire({
                     title: 'Sepertinya ada kesalahan...',
-                    text: "Mohon isi tahun terlebih dahulu...",
+                    text: "Mohon isi periode terlebih dahulu...",
                     icon: 'error',
             });
             return false;

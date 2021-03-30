@@ -72,15 +72,20 @@
                     for ($i=1; $i <= $day; $i++) { ?>
                         <?php 
                             $shift = 'shift_'.$i;
-                        if($item->$shift == 'Pagi') $color = 'success';
-                        elseif($item->$shift == 'Siang') $color = 'info';
-                        elseif($item->$shift == 'Cuti') $color = 'warning';
-                        else $color = 'danger';
+                            if($item->$shift == 'Pagi') $color = 'success';
+                            elseif($item->$shift == 'Siang') $color = 'info';
+                            elseif($item->$shift == 'Cuti') $color = 'warning';
+                            else $color = 'danger';
+                            foreach($datashift as $bla){
+                                if bla-name == item-shift
+                                colorr = bla-color
+                            }
                         ?>
                         {
                             title: '<?= $item->$shift ?>',
                             start: "<?= $data_this_month[0]->year ?>-<?= switch_month($data_this_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
-                            className: '<?= $color ?>'
+                            // className: '<?= $color ?>'
+                            "color": "#EAEAEA"
                         },
                     <?php } ?>
                 <?php } ?>

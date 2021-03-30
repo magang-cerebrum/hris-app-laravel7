@@ -19,7 +19,7 @@
                         <tr>
                             <td><label for="dob">Tanggal Lahir: </label></td>
                             <td><span id="dob"></span></td>
-                            <td rowspan="10"></td>        
+                            <td rowspan="11"></td>        
                             <td rowspan="4" colspan="2" class="text-center">
                                 <img id="img-modal" src="" alt="Tidak ada foto profil." style="width:128px;">
                             </td>
@@ -37,7 +37,7 @@
                             <td><span id="email"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="employee_status">Tipe Staff: </label></td>
+                            <td><label for="employee_status">Status Staff: </label></td>
                             <td><span id="employee_status"></span></td>
                             <td><label for="contract_duration">Durasi Kontrak: </label></td>
                             <td><span id="contract_duration"></span></td>
@@ -45,7 +45,7 @@
                         <tr>
                             <td><label for="status">Status Kerja: </label></td>
                             <td><span id="status"></span></td>
-                            <td><label for="employee_type">Status Staff: </label></td>
+                            <td><label for="employee_type">Tipe Staff: </label></td>
                             <td><span id="employee_type"></span></td>
                         </tr>
                         <tr>
@@ -66,6 +66,16 @@
                             <td><label for="position_name">Jabatan: </label></td>
                             <td><span id="position_name"></span></td>
                         </tr>
+                        <tr>
+                            <td><label for="cc_bank">Bank: </label></td>
+                            <td><span id="cc_bank"></span></td>
+                            <td><label for="cc_number">No. Rekening: </label></td>
+                            <td><span id="cc_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="salary">Gaji Pokok: </label></td>
+                            <td><span id="salary"></span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -77,6 +87,7 @@
 </div>
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+<script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     function toogle_nonaktif() {
             if (document.getElementById('toogle-nonaktif-radio-2').checked) {
@@ -99,6 +110,7 @@
     $(document).ready(function () {
         $("#masterdata-staff").hide();
         $("#count-all").hide();
+        $("#nactive-pagination").hide();
         // modal
         $(document).on('click', '#detail_staff', function () {
             var nip = $(this).data('nip');
@@ -119,14 +131,27 @@
             var division_name = $(this).data('division_name');
             var position_name = $(this).data('position_name');
             var role_name = $(this).data('role_name');
+            var cc_bank = $(this).data('cc_bank');
+            var cc_number = $(this).data('cc_number');
+            var salary = $(this).data('salary');
 
             var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
+            //format durasi kontrak
+            if (contract_duration == '') {
+                contract_duration = '-'
+            } else {
+                contract_duration = contract_duration + ' bulan'
+            }
+
+            
+            //show image
             $("#img-modal").attr("src", join);
 
+            //show data to html
             $('#nip').text(nip);
             $('#name').text(name);
-            $('#dob').text(dob);
+            $('#dob').text(indonesian_date(dob));
             $('#live_at').text(live_at);
             $('#gender').text(gender);
             $('#email').text(email);
@@ -135,14 +160,17 @@
             $('#employee_type').text(employee_type);
             $('#status').text(status);
             $('#contract_duration').text(contract_duration);
-            $('#start_work_date').text(start_work_date);
-            $('#end_work_date').text(end_work_date);
+            $('#start_work_date').text(indonesian_date(start_work_date));
+            $('#end_work_date').text(indonesian_date(end_work_date));
             $('#yearly_leave_remaining').text(yearly_leave_remaining);
             $('#division_name').text(division_name);
             $('#position_name').text(position_name);
             $('#role_name').text(role_name);
+            $('#cc_bank').text(cc_bank);
+            $('#cc_number').text(cc_number);
+            $('#salary').text(format_rupiah(salary));
         });
-
+        
         // check all
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
@@ -174,8 +202,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Hapus',
                 cancelButtonText: 'Tidak'
-                }
-            ).then((result) => {
+                }).then((result) => {
                 if (result.value == true) {
                     $("#form-mul-delete").submit();
                 }}
@@ -189,7 +216,6 @@
         }
     }
 
-
     function reset_pass(id,name){
         var url = "/admin/data-staff/:id/password".replace(':id', id);
         Swal.fire({
@@ -202,8 +228,7 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya',
             cancelButtonText: 'Tidak'
-            }
-        ).then((result) => {
+            }).then((result) => {
             if (result.value == true) {
                 $.ajaxSetup({
                     headers: {
@@ -236,6 +261,81 @@
             }} 
         );
     }
+
+    function toogle_status(id,name,status){
+        var url = "/admin/data-staff/:id/status".replace(':id', id);
+        if (status == 'Aktif') { var word = 'menonaktifkan'}
+        else { var word = 'mengaktifkan'}
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Perubahan Status ',
+            text: 'Anda yakin ingin ' + word + ' staff dengan nama '+ name + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {id : id, name: name, status:status},
+                    success: function(response) {
+                        Swal.fire({
+                            width: 600,
+                            title: 'Berhasil!',
+                            text: "User dengan nama " + response.name + " saat ini berstatus " + response.status,
+                            icon: 'success',
+                            timer: 2000
+                        });
+                        window.location.reload();
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Penggantian status gagal!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+                });
+            } else {
+                return false;
+            }} 
+        );
+    }
+
+    function promote(id,name,employee_status){
+        var url = "/admin/data-staff/promote/:id".replace(':id', id);
+        if (employee_status == 'Probation') { var word = 'Kontrak'}
+        else { var word = 'Tetap'}
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Promosi Staff',
+            text: 'Anda yakin ingin mempromosikan staff "'+ name + '" dari status karyawan ' + employee_status + ' menjadi ' + word + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                window.location.href = url;
+            } else {
+                return false;
+            }} 
+        );
+    }
+
+    // function salary_increase(id,name,employee_status)
 
 </script>
 @endsection

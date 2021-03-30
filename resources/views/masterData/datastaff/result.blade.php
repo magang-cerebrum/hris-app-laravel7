@@ -88,7 +88,7 @@
                                 </td>
                                 <td class="text-center">
                                     <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
-                                        style="display: inline; margin: auto 5px" data-nip="{{$row->nip}}"
+                                        style="display: inline;" data-nip="{{$row->nip}}"
                                         data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-live_at="{{$row->live_at}}"
                                         data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
                                         data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
@@ -100,7 +100,10 @@
                                         data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
                                         data-division_name="{{$row->division_name}}"
                                         data-position_name="{{$row->position_name}}"
-                                        data-role_name="{{$row->role_name}}">
+                                        data-role_name="{{$row->role_name}}"
+                                        data-cc_bank="{{$row->credit_card_bank}}"
+                                        data-cc_number="{{$row->credit_card_number}}"
+                                        data-salary="{{$row->salary}}">
                                         <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                             data-container="body" data-placement="top" data-original-title="Detail Staff"
                                             type="button">
@@ -113,9 +116,19 @@
                                         type="button">
                                         <i class="fa fa-pencil-square"></i>
                                     </a>
+                                    <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Nonaktifkan Staff"
+                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
+                                        <i class="pli-close"></i>
+                                    </button>
+                                    <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Promosikan Staff"
+                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
+                                        <i class="psi-arrow-up-2"></i>
+                                    </button>
                                     <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Reset Password Staff"
-                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="display: inline; margin: auto 5px">
+                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')">
                                         <i class="fa fa-unlock-alt"></i>
                                     </button>
                                 </td>
@@ -159,7 +172,7 @@
                                 </td>
                                 <td class="text-center">
                                     <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
-                                        style="display: inline; margin: auto 5px" data-nip="{{$row->nip}}"
+                                        style="display: inline;" data-nip="{{$row->nip}}"
                                         data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-live_at="{{$row->live_at}}"
                                         data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
                                         data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
@@ -171,7 +184,10 @@
                                         data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
                                         data-division_name="{{$row->division_name}}"
                                         data-position_name="{{$row->position_name}}"
-                                        data-role_name="{{$row->role_name}}">
+                                        data-role_name="{{$row->role_name}}"
+                                        data-cc_bank="{{$row->credit_card_bank}}"
+                                        data-cc_number="{{$row->credit_card_number}}"
+                                        data-salary="{{$row->salary}}">
                                         <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                             data-container="body" data-placement="top" data-original-title="Detail Staff"
                                             type="button">
@@ -184,9 +200,19 @@
                                         type="button">
                                         <i class="fa fa-pencil-square"></i>
                                     </a>
+                                    <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Aktifkan Staff"
+                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
+                                        <i class="pli-yes"></i>
+                                    </button>
+                                    <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Promosikan Staff"
+                                        type="button" disabled>
+                                        <i class="psi-arrow-up-2"></i>
+                                    </button>
                                     <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Reset Password Staff"
-                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="display: inline; margin: auto 5px">
+                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')">
                                         <i class="fa fa-unlock-alt"></i>
                                     </button>
                                 </td>

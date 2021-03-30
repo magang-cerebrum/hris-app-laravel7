@@ -80,7 +80,7 @@
         var position_longitude_2 = position.coords.longitude;
         var jarak = getDistanceFromLatLonInKm(position_latitude_1,position_longitude_1,position_latitude_2,position_longitude_2)
         console.log(jarak);
-        if (jarak <= 1000000 ) {
+        if (jarak <= 10000000 ) {
             $('#take_presence').submit();
         }
     }

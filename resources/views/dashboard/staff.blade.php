@@ -4,6 +4,7 @@
 @section('content-subtitle', '(Human Resource Information System)')
 @section('head')
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+<link href="{{asset("css/slider/slide.css")}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     #staff-charts {
@@ -223,8 +224,41 @@ background: linear-gradient(
 </style>
 @endsection
 @section('content')
-
-
+    @if (count($data_poster) > 0)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-carousel">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            @foreach ($data_poster as $item_poster)   
+                                <li data-target="#myCarousel" data-slide-to="{{$loop->iteration}}" class="{{$loop->iteration  == 1 ? "active" : ""}}"></li>
+                            @endforeach
+                        </ol>
+            
+                        <!-- deklarasi carousel -->
+                        <div class="carousel-inner" role="listbox">
+                            @foreach ($data_poster as $item_poster)
+                                <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
+                                    <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
+                                </div>
+                            @endforeach
+                        </div>
+            
+                        <!-- membuat panah next dan previous -->
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="row mt-10">
         <div class="col-md-12">
             @if (session('status'))

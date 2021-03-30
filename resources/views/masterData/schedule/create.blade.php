@@ -41,15 +41,15 @@
                     </div>
                     <label class="col-sm-1 control-label" for="query">Periode : </label>
                     <div class="col-sm-4">
-                            <div id="pickadate">
-                                <div class="input-group date">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                    <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
-                                        autocomplete="off" id="periode" readonly>
-                                </div>
+                        <div id="pickadate">
+                            <div class="input-group date">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
+                                    autocomplete="off" id="periode" readonly>
                             </div>
+                        </div>
                     </div>
                     <div class="col-sm-3"></div>
                 </div>

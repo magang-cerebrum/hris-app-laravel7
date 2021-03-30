@@ -92,9 +92,11 @@ class MasterJobScheduleController extends Controller
             'master_users.name as user_name'
         )
         ->get();
+        $data_shift = DB::table('master_shifts')->get();
         return view('staff.schedule.calendar', [
             'data_this_month'=>$data_this_month,
             'data_next_month'=>$data_next_month,
+            'data_shift'=>$data_shift,
             'day'=>$days_in_month,            
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -371,10 +373,11 @@ class MasterJobScheduleController extends Controller
         $cal = CAL_GREGORIAN;
         $month = switch_month($split[0]);
         $days_in_month = cal_days_in_month($cal, $split[0] , date('Y'));
-        
+        $data_shift = DB::table('master_shifts')->get();
         if ($user->role_id == 1) {
             return view('masterData.schedule.calendar', [
                 'data'=>$data,
+                'data_shift'=>$data_shift,
                 'day'=>$days_in_month,
                 'month'=>$split[0],
                 'year'=>$split[1],
@@ -386,6 +389,7 @@ class MasterJobScheduleController extends Controller
         } else {
             return view('staff.schedule.result', [
                 'data'=>$data_staff,
+                'data_shift'=>$data_shift,
                 'day'=>$days_in_month,
                 'month'=>$month,
                 'year'=>$split[1],

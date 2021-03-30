@@ -11,10 +11,6 @@
         .fc-toolbar{display: none;}
         .fc-event{height: 60px;}
         .fc-content{text-align: center;padding-top: 22px}
-        td#green{background-color: #8bc34a; width: 20px; height: 20px;}
-        td#blue{background-color: #00bcd4; width: 20px; height: 20px;}
-        td#red{background-color: #ef5350; width: 20px; height: 20px;}
-        td#yellow{background-color: #FFA726; width: 20px; height: 20px;}
         td.break{width: 10px; height: 10px;}
     </style>
 @endsection
@@ -29,7 +25,11 @@
         </div>
         <div class="panel-body">
             <div id='calendar-this-month'></div><br>
-            <table><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur</td><td class="break"></td><td id="yellow"></td><td class="break"></td><td>: Cuti</td></tr></table>
+            <table><tr>
+                @foreach ($data_shift as $item)
+                    <td style="width: 20px;height:20px;background-color:{{$item->calendar_color}}"></td><td class="break"></td><td>: {{$item->name}}</td><td class="break">
+                @endforeach
+            <tr></table>
         </div>
 
         @if (count($data_next_month) != 0) 
@@ -40,7 +40,11 @@
             </div>
             <div class="panel-body">
                 <div id='calendar-next-month'></div><br>
-                <table id="legend-next"><tr><td id="green"></td><td class="break"></td><td>: Shift Pagi</td><td class="break"></td><td id="blue"></td><td class="break"></td><td>: Shift Siang</td><td class="break"></td><td id="red"></td><td class="break"></td><td>: Off/Libur</td><td class="break"></td><td id="yellow"></td><td class="break"></td><td>: Cuti</td></tr></table>
+                <table id="legend-next-month"><tr>
+                    @foreach ($data_shift as $item)
+                        <td style="width: 20px;height:20px;background-color:{{$item->calendar_color}}"></td><td class="break"></td><td>: {{$item->name}}</td><td class="break">
+                    @endforeach
+                <tr></table>
             </div>
         @endif
     </div>
@@ -72,20 +76,17 @@
                     for ($i=1; $i <= $day; $i++) { ?>
                         <?php 
                             $shift = 'shift_'.$i;
-                            if($item->$shift == 'Pagi') $color = 'success';
-                            elseif($item->$shift == 'Siang') $color = 'info';
-                            elseif($item->$shift == 'Cuti') $color = 'warning';
-                            else $color = 'danger';
-                            foreach($datashift as $bla){
-                                if bla-name == item-shift
-                                colorr = bla-color
+                            foreach($data_shift as $shifts){
+                                if($item->$shift == $shifts->name) {
+                                    $color = $shifts->calendar_color;
+                                    break;
+                                }
                             }
                         ?>
                         {
                             title: '<?= $item->$shift ?>',
                             start: "<?= $data_this_month[0]->year ?>-<?= switch_month($data_this_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
-                            // className: '<?= $color ?>'
-                            "color": "#EAEAEA"
+                            color: '<?= $color ?>'
                         },
                     <?php } ?>
                 <?php } ?>
@@ -103,9 +104,12 @@
                         for ($i=1; $i <= 7; $i++) { ?>
                             <?php 
                                 $shift = 'shift_'.$i;
-                            if($item->$shift == 'Pagi') $color = 'success';
-                            elseif($item->$shift == 'Siang') $color = 'info';
-                            else $color = 'danger';
+                                foreach($data_shift as $shifts){
+                                    if($item->$shift == $shifts->name) {
+                                        $color = $shifts->calendar_color;
+                                        break;
+                                    }
+                                }
                             ?>
                             {
                                 title: '<?= $item->user_name ?>',

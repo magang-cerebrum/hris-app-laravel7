@@ -25,7 +25,7 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
                 'total_hour' => 0,
-                'calendar_color' => '#00FF00'
+                'calendar_color' => '#EF5350'
             ],
             [
                 'id' => 2,
@@ -33,7 +33,7 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
                 'total_hour' => 0,
-                'calendar_color' => '#0000FF'
+                'calendar_color' => '#FFA726'
             ],
             [
                 'id' => 3,
@@ -41,7 +41,7 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
                 'total_hour' => 0,
-                'calendar_color' => '#FFFF00'
+                'calendar_color' => '#ED417B'
             ],
             [
                 'id' => 4,
@@ -49,7 +49,7 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '08:00:00',
                 'end_working_time' => '17:00:00',
                 'total_hour' => 9,
-                'calendar_color' => '#FF00FF'
+                'calendar_color' => '#9778BB'
             ],
             [
                 'id' => 5,
@@ -57,7 +57,7 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '08:00:00',
                 'end_working_time' => '17:00:00',
                 'total_hour' => 9,
-                'calendar_color' => '#00FFFF'
+                'calendar_color' => '#8BC34A'
             ],
             [
                 'id' => 6,
@@ -65,7 +65,7 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '13:00:00',
                 'end_working_time' => '21:00:00',
                 'total_hour' => 8,
-                'calendar_color' => '#FFFFFF'
+                'calendar_color' => '#00BCD4'
             ],
             
             ]);

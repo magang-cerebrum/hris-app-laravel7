@@ -123,7 +123,7 @@
                                     </button>
                                     <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Promosikan Staff"
-                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}')">
+                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
                                         <i class="psi-arrow-up-2"></i>
                                     </button>
                                     <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
@@ -207,7 +207,7 @@
                                     </button>
                                     <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Promosikan Staff"
-                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}')" disabled>
+                                        type="button" disabled>
                                         <i class="psi-arrow-up-2"></i>
                                     </button>
                                     <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"

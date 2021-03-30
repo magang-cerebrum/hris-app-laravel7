@@ -195,6 +195,7 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
+    Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
 });
@@ -202,6 +203,7 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'staff_calendar']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
+    Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);

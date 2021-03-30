@@ -144,6 +144,98 @@ class MasterJobScheduleController extends Controller
         }
     }
 
+    public function filter_edit()
+    {
+        $user = Auth::user();
+        $division = division_members($user->position_id);
+        // $data = DB::table('master_users')
+        // ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        // ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        // ->where('master_users.status','=','Aktif')
+        // ->whereIn('master_users.division_id',$division)
+        // ->whereNotIn('master_users.division_id',[7])
+        // ->select(
+        //     'master_users.id as user_id',
+        //     'master_users.nip as user_nip',
+        //     'master_users.name as user_name',
+        //     'master_users.division_id',
+        //     'master_users.position_id',
+        //     'master_divisions.name as division_name',
+        //     'master_positions.name as position_name'
+        //     )
+        // ->get();
+        $current_month = date('m');
+        $current_year = date('Y');
+        $month = array();
+        $year = array();
+
+        array_push($month, switch_month($current_month));
+        array_push($year, $current_year);
+
+        if($current_month - 1 == 0) {
+            $temp_month = 12;
+            $temp_year = $current_year - 1;
+
+            array_push($month, switch_month($temp_month));
+            array_push($year, $temp_year);
+        }
+        else {
+            $temp_month = $current_month - 1;
+
+            array_push($month, switch_month($temp_month));
+        }
+
+        if($current_month + 1 == 13) {
+            $temp_month = 1;
+            $temp_year = $current_year + 1;
+
+            array_push($month, switch_month($temp_month));
+            array_push($year, $temp_year);
+        }
+        else {
+            $temp_month = $current_month + 1;
+
+            array_push($month, switch_month($temp_month));
+        }
+
+        dd($month, $year);
+        
+        $data = DB::table('master_job_schedules')
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->where('master_users.status','=','Aktif')
+        ->whereIn('master_users.division_id',$division)
+        ->whereNotIn('master_users.division_id',[7])
+        ->select(
+            'master_users.id as user_id',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name',
+            'master_users.division_id',
+            'master_users.position_id',
+            'master_divisions.name as division_name',
+            'master_positions.name as position_name'
+            )
+        ->get();
+        if ($user->role_id == 1) {
+            return view('masterData.schedule.editCreate', [
+                'data'=>$data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        } else {
+            return view('staff.schedule.create', [
+                'data'=>$data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
+    }
+
     public function schedule_add(Request $request)
     {
         $user = Auth::user();
@@ -215,13 +307,16 @@ class MasterJobScheduleController extends Controller
             global $total_hour;
             $id = $request->$check_shift;
             $datas = MasterShift::All();
+            $shift_name = '';
             foreach ($datas as $data) {
                 if($id == $data->id) {
                     $total_hour += $data->total_hour;
                     $shift_name = $data->name;
+                    
                 }
             }
             // dd($request);
+            // dd($shift_name);
 
             $check_accept_paid = DB::table('accepted_paid_leaves')
             ->where('date', '=', $request->year.'.'.switch_month($request->month, false).'-'.($check_day/10 < 1 ? '0'.$check_day : $check_day))

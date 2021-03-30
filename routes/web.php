@@ -9,9 +9,10 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\HolidayController;
-use App\Http\Controllers\SalaryCutController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\SalaryCutController;
 use App\Http\Controllers\SalaryAllowanceController;
+use App\Http\Controllers\CutAllowanceTypeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
@@ -149,14 +150,15 @@ Route::prefix('/admin/holiday')->group(function() {
     Route::get('/search',[HolidayController::class, 'search']);
 });
 
+//route masterdata tipe potongan dan tunjangan
 Route::prefix('/admin/cuts-allowances')->group(function(){
-    Route::get('/',[SalaryCutController::class,'index']);
-    Route::get('/add',[SalaryCutController::class,'create']);
-    Route::post('/', [SalaryCutController::class, 'store']);
-    Route::get('/{cut}/edit', [SalaryCutController::class, 'edit']);
-    Route::put('/{cut}', [SalaryCutController::class, 'update']);
-    Route::delete('/', [SalaryCutController::class, 'destroyAll']);
-    Route::get('/search',[SalaryCutController::class, 'search']);
+    Route::get('/',[CutAllowanceTypeController::class,'index']);
+    Route::get('/add',[CutAllowanceTypeController::class,'create']);
+    Route::post('/', [CutAllowanceTypeController::class, 'store']);
+    Route::get('/{type}/edit', [CutAllowanceTypeController::class, 'edit']);
+    Route::put('/{type}', [CutAllowanceTypeController::class, 'update']);
+    Route::delete('/', [CutAllowanceTypeController::class, 'destroy']);
+    Route::get('/search',[CutAllowanceTypeController::class, 'search']);
 });
 
 //route masterdata potongan gaji

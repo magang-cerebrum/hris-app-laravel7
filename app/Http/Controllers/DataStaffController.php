@@ -275,10 +275,62 @@ class DataStaffController extends Controller
         ]);
         
     }
+
     public function toogle_status(Request $request){
         if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
         else {$change = 'Aktif';}
         MasterUser::where('id', $request->id)->update(['status' => $change]);
         return response()->json(['name'=> $request->name, 'status' => $change]);
+    }
+
+    public function promotion(MasterUser $staff){
+        
+        $user = Auth::user();
+        return view('masterdata.datastaff.promote',[
+            
+            'staff' => $staff,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
+    }
+
+    public function promotion_calculate(Request $request){
+        if($request->type == 'Persentase'){
+            $salary_after = $request->salary_before + (($request->salary_before * $request->percentage) / 100);
+        } elseif($request->type == 'Penambahan'){
+            $salary_after = $request->salary_before + $request->direct_add;
+        }
+        $info = 'Perhitungan gaji setelah promosi didapat dari gaji sebelumnya (<b>' . rupiah($request->salary_before) . '</b>) ditambah dengan <b>' . $request->type . '</b> sebesar (<b>' . ($request->type == 'Persentase' ? $request->percentage . '%' : rupiah($request->direct_add)) . '</b>)';
+        
+        return response()->json([
+            'info' => $info,
+            'type' => $request->type,
+            'salary_after' => rupiah($salary_after),
+            'percentage' => $request->percentage,
+            'direct_add' => rupiah($request->direct_add)
+        ]);
+    }
+
+    public function promotion_approved(Request $request){
+        $request->validate([
+            'nip' => 'required',
+            'new_employee_status' => 'required',
+            'percentage' => 'required_if:salary_raise_type,Persentase',
+            'direct_add' => 'required_if:salary_raise_type,Penambahan',
+            'salary_after' => 'required'
+        ]);
+        $salary_after = preg_replace('/[Rp. ]/','',$request->salary_after);
+        $end_work_date = date_add(date_create(date('Y/m/d')),date_interval_create_from_date_string('12 months'));
+        
+        MasterUser::where('nip',$request->nip)->update([
+            'employee_status' => $request->new_employee_status,
+            'contract_duration' => ($request->new_employee_status == 'Kontrak' ? 12 : null),
+            'end_work_date' => ($request->new_employee_status == 'Kontrak' ? $end_work_date : null),
+            'salary' => $salary_after
+        ]);
+        Alert::success('Berhasil!', 'Staff ' . $request->name . ' berhasil dipromosikan!');
+        return redirect('/admin/data-staff');
     }
 }

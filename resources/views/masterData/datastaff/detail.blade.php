@@ -110,6 +110,7 @@
     $(document).ready(function () {
         $("#masterdata-staff").hide();
         $("#count-all").hide();
+        $("#nactive-pagination").hide();
         // modal
         $(document).on('click', '#detail_staff', function () {
             var nip = $(this).data('nip');
@@ -267,7 +268,7 @@
         else { var word = 'mengaktifkan'}
         Swal.fire({
             width: 600,
-            title: 'Konfirmasi',
+            title: 'Konfirmasi Perubahan Status ',
             text: 'Anda yakin ingin ' + word + ' staff dengan nama '+ name + '?',
             icon: 'warning',
             showCancelButton: true,
@@ -310,5 +311,31 @@
             }} 
         );
     }
+
+    function promote(id,name,employee_status){
+        var url = "/admin/data-staff/promote/:id".replace(':id', id);
+        if (employee_status == 'Probation') { var word = 'Kontrak'}
+        else { var word = 'Tetap'}
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Promosi Staff',
+            text: 'Anda yakin ingin mempromosikan staff "'+ name + '" dari status karyawan ' + employee_status + ' menjadi ' + word + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                window.location.href = url;
+            } else {
+                return false;
+            }} 
+        );
+    }
+
+    // function salary_increase(id,name,employee_status)
+
 </script>
 @endsection

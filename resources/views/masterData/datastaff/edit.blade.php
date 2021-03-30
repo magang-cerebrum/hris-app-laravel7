@@ -121,7 +121,8 @@
                                 {{$staff->employee_status == 'Kontrak' ? 'checked' : ''}}>
                             <label for="employee_status_radio-2">Kontrak</label>
                             <input id="employee_status_radio-3" class="magic-radio" type="radio"
-                                name="employee_status" value="Probation" onclick="showContractOption()" checked>
+                                name="employee_status" value="Probation" onclick="showContractOption()"
+                                {{$staff->employee_status == 'Probation' ? 'checked' : ''}}>
                             <label for="employee_status_radio-3">Probation</label>
                         </div>
                     </div>

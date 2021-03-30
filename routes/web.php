@@ -92,7 +92,9 @@ Route::prefix('/admin/data-staff')->group(function(){
 //route promotion staff 
 Route::prefix('/admin/data-staff/promote')->group(function(){
     Route::get('/{staff}',[DataStaffController::class,'promotion']);
+    Route::post('/calculate',[DataStaffController::class,'promotion_calculate']);
     Route::post('/approved', [DataStaffController::class, 'promotion_approved']);
+
 });
 //route masterdata divisi
 Route::prefix('/admin/division')->group(function(){

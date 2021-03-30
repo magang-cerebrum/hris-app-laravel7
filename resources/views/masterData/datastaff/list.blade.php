@@ -132,11 +132,19 @@
                                         type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
                                         <i class="pli-close"></i>
                                     </button>
+                                    @if ($row->employee_status == 'Tetap')
+                                    <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Naikan Gaji Staff"
+                                        type="button" onclick="salary_increase({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
+                                        <i class="pli-money-2"></i>
+                                    </button>
+                                    @else
                                     <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Promosikan Staff"
-                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}')">
+                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
                                         <i class="psi-arrow-up-2"></i>
                                     </button>
+                                    @endif
                                     <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Reset Password Staff"
                                         type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="display: inline;">
@@ -218,7 +226,7 @@
                                     </button>
                                     <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Promosikan Staff"
-                                        type="button" onclick="promote({{$row->id}},'{{$row->name}}')" disabled>
+                                        type="button" disabled>
                                         <i class="psi-arrow-up-2"></i>
                                     </button>
                                     <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"

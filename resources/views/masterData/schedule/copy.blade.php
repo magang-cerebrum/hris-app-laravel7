@@ -74,7 +74,9 @@
                                     </div>
                                 </div>
                                 <div class="table-responsive">
+                                    <div class="shown" id="showns" hidden>
                                     <table class="table table-striped">
+                                        
                                         <thead>
                                             <tr>
                                                 <th>Nama : <small id="val"></small></th>
@@ -91,6 +93,7 @@
                                         @endforeach
                                         
                                     </table>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -126,9 +129,7 @@
                                 <div class="timeline">
 					
                                     <!-- Timeline header -->
-                                    {{-- <div class="timeline-header">
-                                        <div class="timeline-header-title bg-purple">Now</div>
-                                    </div> --}}
+                                   
                                     <div class="timeline-entry">
                                         <div class="timeline-stat">
                                             <div class="timeline-icon bg-warning"><i class="fa fa-check-circle"></i></div>
@@ -136,7 +137,6 @@
                                         </div>
                                         <div class="timeline-label">
                                             <p class="mar-no pad-btm" id="firstSum"></p>
-                                            {{-- <blockquote class="bq-sm bq-open mar-no">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</blockquote> --}}
                                         </div>
                                     </div>
                                     <div class="timeline-entry">
@@ -144,9 +144,7 @@
                                             <div class="timeline-icon bg-info"><i class="demo-psi-mail icon-lg"></i></div>
                                         </div>
                                         <div class="timeline-label">
-                                            <p class="mar-no pad-btm" >Kepada Staff : <span id="secondSum"></span> Periode <span id="periodesc"></span></p>
-                                            
-                                            {{-- <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</span> --}}
+                                            <p class="mar-no pad-btm" >Kepada Staff : <span id="secondSum"></span> Periode <span id="periodesc"></span></p>    
                                         </div>
                                     </div>
                                     
@@ -195,20 +193,11 @@
             orientation: 'bottom',
             forceParse: false,
             startDate:'0d',
-            endDate:'2m'
+            endDate:'+1m'
         });
         var chosen_input = document.querySelectorAll('input[name="chosen"]')
         let chosen ;
-        $('.chosen-radio').on('change', function(){
-
-           
-            for(chosen_inputs of chosen_input){
-                if(chosen_inputs.checked){
-                    chosen = chosen_inputs.value
-                    break;
-                }
-            };
-        })
+        
         $('#demo-bv-wz').bootstrapWizard({
         tabClass		    : 'wz-steps',
         nextSelector	    : '.next',
@@ -230,23 +219,36 @@
 
             $('#demo-bv-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
             
-            if($current == 2){
-                var queue = new Array();
-                queue.splice(0,queue.length);
-                var queueFilter = new Array();
-                $('.next').attr('id','ajax')
-                var first_periode = document.getElementById('first_periode').value 
-                $('.chosen-checkbox').on('click',function(){
+            if($current == 1){
 
-                    var valueRowsName = $(this).val();
-                    if($(this).is(':checked',true)) {
-                        queue.push(valueRowsName);
-                    } else {
-                        queue.splice(queue.indexOf(valueRowsName), 1);
+                $('#first_periode').on('change',function(){
+                    $('#showns').show()
+                })
+
+                $('.chosen-radio').on('change', function(){
+                for(chosen_inputs of chosen_input){
+                    if(chosen_inputs.checked){
+                        chosen = chosen_inputs.value
+                        break;
                     }
-                    // console.log(getQueue);
-                });
-                // console.log(navigation)
+                }; console.log(chosen)
+                })
+
+                // var queue = new Array();
+                // queue.splice(0,queue.length);
+                // var queueFilter = new Array();
+                // $('.next').attr('id','ajax')
+                // $('.chosen-checkbox').on('click',function(){
+
+                //     var valueRowsName = $(this).val();
+                //     if($(this).is(':checked',true)) {
+                //         queue.push(valueRowsName);
+                //     } else {
+                //         queue.splice(queue.indexOf(valueRowsName), 1);
+                //     }
+                //     console.log(queue);
+                // });
+               
                 
                 let url = '/admin/schedule/copyschedule/calculate'
                 $('#ajax').on('click',function(){

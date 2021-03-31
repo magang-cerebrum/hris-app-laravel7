@@ -183,12 +183,9 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
-<<<<<<< HEAD
     Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
     Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
-=======
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
->>>>>>> e371ddbcb025e292821d7d5ed24e80d314e274d5
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
 });

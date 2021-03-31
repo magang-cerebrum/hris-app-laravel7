@@ -495,9 +495,10 @@ class MasterJobScheduleController extends Controller
 
 
     public function CopySchedule(Request $request){
+        $cm = date('m');
         $data = DB::table('master_job_schedules')
-        ->where('month', '=', switch_month(date('m')))
-        ->orWhere('month','=',switch_month(date('m'),strtotime('+1 month')))
+        // ->where('month', '=', switch_month(date('m')))
+        ->Where('month','=',switch_month(date('m',strtotime('+1 month',strtotime('')))))
         ->where('year', '=',date('Y'))
         ->whereNotIn('division_id',[7])
         ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
@@ -506,10 +507,8 @@ class MasterJobScheduleController extends Controller
             'master_users.nip as user_nip',
             'master_users.name as user_name'
         )->get();
-        
-        $data2=DB::table('master_job_schedules')
-        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')->get();
-        // dd($data2);
+
+        dd();
         $user = Auth::user();
         return view('masterData.schedule.copy',[
             'name'=>$user->name,

@@ -1,18 +1,15 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Master Data / Tunjangan Gaji / Tambah Tunjangan Gaji')
+@section('content-title','Data Staff / Tunjangan Gaji / Edit Tunjangan Gaji')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Master Data')
+@section('title','Tunjangan Gaji')
 @section('head')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-<!--Bootstrap Select [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <style>
     #total_cut {
         margin-top: 40px;
         text-align: center;
     }
-
 </style>
 @endsection
 @section('content')
@@ -30,9 +27,9 @@
                     <div class="col-sm-4">
                         <input type="text" placeholder="Nama Tunjangan" name="information"
                             class="form-control @error('information') is-invalid @enderror"
-                            value="{{$allowance->information}}">
+                            value="{{$allowance->information}}" readonly>
                         @error('information') <div class="text-danger invalid-feedback mt-3">
-                            Nama tunjangan tidak boleh kosong.
+                            Nama Tunjangan tidak boleh kosong.
                         </div> @enderror
                     </div>
                 </div>
@@ -46,7 +43,7 @@
                             class="form-control @error('nominal') is-invalid @enderror" value="{{$allowance->nominal}}"
                             onkeyup="format_rp()">
                         @error('nominal') <div class="text-danger invalid-feedback mt-3">
-                            Nominal tunjangan tidak boleh kosong.
+                            Nominal Tunjangan tidak boleh kosong.
                         </div> @enderror
                     </div>
                 </div>
@@ -59,7 +56,7 @@
                         <div class="col-sm-4">
                             <div class="input-group date">
                                 <input type="text" class="form-control @error('month') is-invalid @enderror"
-                                    placeholder="bulan-tahun" name="month"
+                                    placeholder="bulan-tahun" name="periode"
                                     value="{{switch_month($allowance->month,false).'-'.$allowance->year}}">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -73,7 +70,7 @@
                             class="form-control @error('nominal') is-invalid @enderror" value="{{$allowance->nominal}}"
                             onkeyup="format_rp()">
                         @error('nominal') <div class="text-danger invalid-feedback mt-3">
-                            Nominal tunjangan tidak boleh kosong.
+                            Nominal Tunjangan tidak boleh kosong.
                         </div> @enderror
                     </div>
                 </div>
@@ -90,7 +87,7 @@
                             @endforeach
                         </select>
                         @error('user_id')<div class="text-danger invalid-feedback mt-3">Staff tidak boleh kosong jika
-                            tipe tunjangan "Perorangan".</div> @enderror
+                            tipe Tunjangan "Perorangan".</div> @enderror
                     </div>
                 </div>
             </div>
@@ -103,9 +100,7 @@
 </div>
 @endsection
 @section('script')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-<!--Bootstrap Select [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
     $(document).ready(function () {

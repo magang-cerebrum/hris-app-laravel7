@@ -1,17 +1,15 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Master Data / Potongan Gaji')
+@section('content-title','Data Staff / Pencarian Potongan Gaji')
 @section('title','Potongan Gaji')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 @section('head')
-{{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
-<!--Bootstrap Datepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title">Daftar Potongan Gaji</h3>
+        <h3 class="panel-title">Hasil Pencarian Potongan Gaji : "{{$search}}"</h3>
     </div>
     <div class="panel-body">
         <div class="row">

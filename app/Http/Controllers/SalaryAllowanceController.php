@@ -34,7 +34,9 @@ class SalaryAllowanceController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
+        $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
         return view('masterdata.salaryallowance.create', [
+            'data_type'=>$data_type,
             'staff'=>$staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -45,11 +47,15 @@ class SalaryAllowanceController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'type' => 'required',
+            'information' => 'required',
+            'nominal' => 'required_unless:type,Perorangan',
+            'user_id' => 'required_if:type,Perorangan',
+            'range_month'=> 'required_if:type,Perorangan',
+            's_nominal'=> 'required_if:type,Perorangan'
+        ]);
         if ($request->type == 'Semua') {
-            $request->validate([
-                'information' => 'required',
-                'nominal' => 'required'
-            ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
             MasterSalaryAllowance::create([
                 'information' => $request->information,
@@ -57,12 +63,6 @@ class SalaryAllowanceController extends Controller
                 'nominal' => $nominal
             ]);
         } else {
-            $request->validate([
-                'information' => 'required',
-                'range_month' => 'required',
-                's_nominal' => 'required',
-                'user_id' => 'required'
-            ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->s_nominal);
             $month = date('m');
             $year = date('Y');
@@ -89,7 +89,9 @@ class SalaryAllowanceController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
+        $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
         return view('masterdata.salaryallowance.edit',[
+            'data_type'=>$data_type,
             'allowance' => $allowance,
             'staff' => $staff,
             'name'=>$user->name,
@@ -101,26 +103,21 @@ class SalaryAllowanceController extends Controller
 
     public function update(Request $request, MasterSalaryAllowance $allowance)
     {
+        $request->validate([
+            'information' => 'required',
+            'nominal' => 'required',
+            'periode' => 'required_if:type,Perorangan',
+            'user_id' => 'required_if:type,Perorangan',
+        ]);
+        $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
         if ($allowance->type == 'Semua') {
-            $request->validate([
-                'information' => 'required',
-                'nominal' => 'required'
-            ]);
-            $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
             MasterSalaryAllowance::where('id','=',$allowance->id)
             ->update([
                 'information' => $request->information,
                 'nominal' => $nominal
             ]);
         } else {
-            $request->validate([
-                'information' => 'required',
-                'month' => 'required',
-                'nominal' => 'required',
-                'user_id' => 'required'
-            ]);
-            $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
-            $split = explode('-',$request->month);
+            $split = explode('-',$request->periode);
             MasterSalaryAllowance::where('id','=',$allowance->id)
             ->update([
                 'information' => $request->information,
@@ -184,6 +181,7 @@ class SalaryAllowanceController extends Controller
         $user =  Auth::user();
 
         return view('masterData.salaryallowance.result', [
+            'search' => $request->get('query'),
             'salaryallowance' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

@@ -1,18 +1,15 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Master Data / Potongan Gaji / Tambah Potongan Gaji')
+@section('content-title','Data Staff / Potongan Gaji / Edit Potongan Gaji')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Master Data')
+@section('title','Potongan Gaji')
 @section('head')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-<!--Bootstrap Select [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <style>
     #total_cut {
         margin-top: 40px;
         text-align: center;
     }
-
 </style>
 @endsection
 @section('content')
@@ -59,7 +56,7 @@
                         <div class="col-sm-4">
                             <div class="input-group date">
                                 <input type="text" class="form-control @error('month') is-invalid @enderror"
-                                    placeholder="bulan-tahun" name="month"
+                                    placeholder="bulan-tahun" name="periode"
                                     value="{{switch_month($cut->month,false).'-'.$cut->year}}">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -103,9 +100,7 @@
 </div>
 @endsection
 @section('script')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-<!--Bootstrap Select [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
     $(document).ready(function () {

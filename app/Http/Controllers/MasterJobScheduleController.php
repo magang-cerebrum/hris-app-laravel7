@@ -125,9 +125,11 @@ class MasterJobScheduleController extends Controller
             'master_positions.name as position_name'
             )
         ->get();
+        $data_division = DB::table('master_divisions')->select('name')->get();
         if ($user->role_id == 1) {
             return view('masterData.schedule.create', [
                 'data'=>$data,
+                'data_division'=>$data_division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -136,6 +138,7 @@ class MasterJobScheduleController extends Controller
         } else {
             return view('staff.schedule.create', [
                 'data'=>$data,
+                'data_division'=>$data_division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

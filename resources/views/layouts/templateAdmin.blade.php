@@ -245,6 +245,7 @@
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="psi-clock"></i>Shift</a></li>
                                             <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
+                                            <li><a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe Potongan dan Tunjangan Gaji</a></li>
 						                </ul>
                                     </li>
 

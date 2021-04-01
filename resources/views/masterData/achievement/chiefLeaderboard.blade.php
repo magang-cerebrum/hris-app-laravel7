@@ -27,7 +27,7 @@
                             <input type="text" name="query" placeholder="Cari Leaderboard"
                                 class="form-control" autocomplete="off" readonly>
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-primary" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </div>
@@ -61,6 +61,9 @@
             startView: 'months',
             orientation: 'bottom',
             forceParse: false,
+        });
+        $('#btn-search').on('click',function () {
+            $('.datepicker').hide();
         });
         $('#cari-achievement').on('submit', function (event) {
             event.preventDefault();

@@ -17,6 +17,7 @@ class CreateMasterPositionsTable extends Migration
             $table->id();
             $table->string('abbreviation',50);
             $table->string('name',50);
+            $table->enum('status',['Aktif','Non-Aktif']);
             $table->timestamps();
         });
     }

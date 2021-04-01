@@ -22,57 +22,68 @@ class InsertDataToMasterPositions extends Migration
             [
                 'id' => 1,
                 'abbreviation' => 'CEO',
-                'name' => 'Chief Executive Officer'
+                'name' => 'Chief Executive Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 2,
                 'abbreviation' => 'President',
-                'name' => 'President'
+                'name' => 'President',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 3,
                 'abbreviation' => 'CDO',
-                'name' => 'Chief Development Officer'
+                'name' => 'Chief Development Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 4,
                 'abbreviation' => 'CTO',
-                'name' => 'Chief Techonology Officer'
+                'name' => 'Chief Techonology Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 5,
                 'abbreviation' => 'CPO',
-                'name' => 'Chief Production Officer'
+                'name' => 'Chief Production Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 6,
                 'abbreviation' => 'CBO',
-                'name' => 'Chief Business Officer'
+                'name' => 'Chief Business Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 7,
                 'abbreviation' => 'COO',
-                'name' => 'Chief Operation Officer'
+                'name' => 'Chief Operation Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 8,
                 'abbreviation' => 'QC',
-                'name' => 'Quality Control'
+                'name' => 'Quality Control',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 9,
                 'abbreviation' => 'CAO',
-                'name' => 'Chief Academic Officer'
+                'name' => 'Chief Academic Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 10,
                 'abbreviation' => 'CSO',
-                'name' => 'Chief Sales Officer'
+                'name' => 'Chief Sales Officer',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 11,
                 'abbreviation' => 'Staff',
-                'name' => 'Staff'
+                'name' => 'Staff',
+                'status' => 'Aktif'
             ],
             ]);
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

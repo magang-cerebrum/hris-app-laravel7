@@ -5,6 +5,7 @@
 @section('content')
 @section('head')
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
@@ -35,9 +36,9 @@
                 </div>
                 <div class="row mar-btm">
                     <div class="col-sm-8">
-                        <a href="{{url('/admin/cuts-allowances/add')}}" class="btn btn-primary btn-labeled add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Potongan atau Tunjangan Gaji Baru">
+                        <a href="{{url('/admin/cuts-allowances/add')}}" class="btn btn-primary btn-labeled add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Tipe Potongan / Tunjangan Gaji Baru">
                             <i class="btn-label fa fa-plus"></i>
-                            Tambah Tipe Potongan atau Tunjangan Gaji Baru
+                            Tambah Tipe Potongan / Tunjangan Gaji Baru
                         </a>
                     
                         <form action="{{url('/admin/cuts-allowances')}}" method="POST" id="form-mul-delete" style="display:inline;">
@@ -82,8 +83,25 @@
                                         type="button">
                                         <i class="fa fa-edit"></i>
                                     </a>
+                                    @if ($row->status == 'Aktif')
+                                    <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Nonaktifkan {{$row->category}}"
+                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}','{{$row->category}}')">
+                                        <i class="pli-close"></i>
+                                    </button>
+                                    @else
+                                    <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                        data-container="body" data-placement="top" data-original-title="Aktifkan {{$row->category}}"
+                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}','{{$row->category}}')">
+                                        <i class="pli-yes"></i>
+                                    </button>
+                                    @endif
                                 </td>
-                                <td class="text-center">{{$row->name}}</td>
+                                <td class="text-center">{{$row->name}}
+                                    @if ($row->status == 'Non-Aktif')
+                                    <div class="label label-danger">Non-Aktif</div>
+                                    @endif
+                                </td>
                                 <td class="text-center">{{$row->type}}</td>
                                 <td class="text-center">{{$row->category}}</td>
                             </tr>
@@ -136,6 +154,57 @@
                 icon: 'error',
             })
         }
+    }
+    function toogle_status(id,name,status,category){
+        var url = "/admin/cuts-allowances/:id/status".replace(':id', id);
+        if (status == 'Aktif') { var word = 'menonaktifkan'}
+        else { var word = 'mengaktifkan'}
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Perubahan Status ',
+            text: 'Anda yakin ingin ' + word + ' Tipe '+ category + '  "' + name + '"?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {id : id, name: name, status:status, category:category},
+                    success: function(response) {
+                        Swal.fire({
+                            width: 600,
+                            title: 'Berhasil!',
+                            text: "Tipe " + response.category + " dengan nama " + response.name + " saat ini berstatus " + response.status,
+                            icon: 'success',
+                            timer: 2000
+                        });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Penggantian status gagal!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+                });
+            } else {
+                return false;
+            }} 
+        );
     }
 
 </script>

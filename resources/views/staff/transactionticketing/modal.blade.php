@@ -87,6 +87,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="magic-checkbox" name="anon" id="anon">
+                                    <label for="anon" class="text-bold">Kirim secara anonim (opsional)</label>
+                                    <div class="text-danger mar-ver" id="information"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
             </div>
             <div class="modal-footer">
@@ -98,7 +108,6 @@
     </div>
 </div>
 @section('script')
-<!--Bootstrap Select [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script type="text/javascript">
@@ -122,6 +131,13 @@
             $('#response').text(response);
             $('#status').text(status);
             $('#diajukan').text(diajukan);
+        });
+
+        $("#anon").click(function () {
+            if ($(this).is(":checked"))
+                $("#information").text('Mengirim tiket secara anonim tidak akan tersimpan di history pengajuan ticket!');
+            else
+                $("#information").text("");
         });
     });
 

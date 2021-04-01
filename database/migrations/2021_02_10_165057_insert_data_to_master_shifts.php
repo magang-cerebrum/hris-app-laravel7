@@ -25,7 +25,8 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
                 'total_hour' => 0,
-                'calendar_color' => '#EF5350'
+                'calendar_color' => '#EF5350',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 2,
@@ -33,7 +34,8 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
                 'total_hour' => 0,
-                'calendar_color' => '#FFA726'
+                'calendar_color' => '#FFA726',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 3,
@@ -41,7 +43,8 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '00:00:00',
                 'end_working_time' => '00:00:00',
                 'total_hour' => 0,
-                'calendar_color' => '#ED417B'
+                'calendar_color' => '#ED417B',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 4,
@@ -49,7 +52,8 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '08:00:00',
                 'end_working_time' => '17:00:00',
                 'total_hour' => 9,
-                'calendar_color' => '#9778BB'
+                'calendar_color' => '#9778BB',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 5,
@@ -57,7 +61,8 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '08:00:00',
                 'end_working_time' => '17:00:00',
                 'total_hour' => 9,
-                'calendar_color' => '#8BC34A'
+                'calendar_color' => '#8BC34A',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 6,
@@ -65,7 +70,8 @@ class InsertDataToMasterShifts extends Migration
                 'start_working_time' => '13:00:00',
                 'end_working_time' => '21:00:00',
                 'total_hour' => 8,
-                'calendar_color' => '#00BCD4'
+                'calendar_color' => '#00BCD4',
+                'status' => 'Aktif'
             ],
             
             ]);

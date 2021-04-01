@@ -4,7 +4,6 @@
 @section('title','Master Data')
 @section('content')
 @section('head')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-timepicker/bootstrap-timepicker.min.css")}}" rel="stylesheet">
 @endsection
 
@@ -48,6 +47,14 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label">Jam Masuk:</label>
+                    <div class="col-sm-4">
+                        <input type="color" class="form-control" name="calendar_color">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="panel-footer text-right">
             <button class="btn btn-mint" type="submit">Tambah</button>
@@ -55,7 +62,6 @@
     </form>
 </div>
 @section('script')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-timepicker/bootstrap-timepicker.min.js")}}"></script>
 <script>
     $(document).ready(function () {

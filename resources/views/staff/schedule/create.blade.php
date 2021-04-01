@@ -15,7 +15,7 @@
     </div>
     <div class="panel-body">
         <div class="table-responsive">
-            <form action="{{ url('/staff/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-chek-user-month">
+            <form action="{{ url('/staff/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-chek-user-month" class="form-horizontal">
                 @csrf
                 <div class="row">
                     <div class="col-sm-12">

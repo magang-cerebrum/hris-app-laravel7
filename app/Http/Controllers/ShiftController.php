@@ -39,7 +39,8 @@ class ShiftController extends Controller
         $request->validate([
             'name' => 'required',
             'start_working_time' => 'required',
-            'end_working_time' => 'required'
+            'end_working_time' => 'required',
+            'calendar_color' => 'required'
         ]);
 
         $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
@@ -49,6 +50,7 @@ class ShiftController extends Controller
             'name' => $request->name,
             'start_working_time' => $request->start_working_time,
             'end_working_time' => $request->end_working_time,
+            'calendar_color' => $request->calendar_color,
             'total_hour' => $interval
         ]);
 
@@ -76,7 +78,8 @@ class ShiftController extends Controller
         $request->validate([
             'name' => 'required',
             'start_working_time' => 'required',
-            'end_working_time' => 'required'
+            'end_working_time' => 'required',
+            'calendar_color' => 'required'
         ]);
 
         $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
@@ -87,6 +90,7 @@ class ShiftController extends Controller
                 'name' => $request->name,
                 'start_working_time' => $request->start_working_time,
                 'end_working_time' => $request->end_working_time,
+                'calendar_color' => $request->calendar_color,
                 'total_hour' => $interval
             ]);
         activity()->log($user.' telah memperbarui  ' .$past[0]->name .' ('.$past[0]->start_working_time.'-'.$past[0]->end_working_time.') '.' menjadi '.$request->name .' ('.$request->start_working_time.'-'.$request->end_working_time.') ' );    

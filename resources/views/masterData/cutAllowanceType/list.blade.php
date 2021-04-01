@@ -1,22 +1,21 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Data Staff / Tunjangan Gaji / Tambah Tunjangan Gaji')
+@section('content-title','Master Data / Tipe Potongan dan Tunjangan Gaji')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Tunjangan Gaji')
+@section('title','Tipe Potongan dan Tunjangan Gaji')
+@section('content')
 @section('head')
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
-<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
-@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title">Daftar Tunjangan Gaji</h3>
+        <h3 class="panel-title">Daftar Tipe Potongan dan Tunjangan Gaji</h3>
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row mar-btm" style="margin-top:-60px">
                     <div class="col-sm-4">
-                        <form action="{{url('/admin/salary-allowance/search')}}" method="get"
+                        <form action="{{url('/admin/cuts-allowances/search')}}" method="get"
                             style="position: relative;right:-710px;bottom:-48px">
                             <div id="pickadate">
                                 <div class="input-group date">
@@ -24,7 +23,7 @@
                                         <button class="btn btn-mint" type="button" style="z-index: 2">
                                             <i class="fa fa-calendar"></i></button>
                                     </span>
-                                    <input type="text" name="query" placeholder="Cari (bulan/staff/tunjangan/nominal)"
+                                    <input type="text" name="query" placeholder="Cari (nama/tipe/kategori)"
                                         class="form-control" autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
@@ -36,12 +35,12 @@
                 </div>
                 <div class="row mar-btm">
                     <div class="col-sm-8">
-                        <a href="{{url('/admin/salary-allowance/add')}}" class="btn btn-primary btn-labeled add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Tunjangan Gaji Baru">
+                        <a href="{{url('/admin/cuts-allowances/add')}}" class="btn btn-primary btn-labeled add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Potongan atau Tunjangan Gaji Baru">
                             <i class="btn-label fa fa-plus"></i>
-                            Tambah Tunjangan Gaji Baru
+                            Tambah Tipe Potongan atau Tunjangan Gaji Baru
                         </a>
                     
-                        <form action="{{url('/admin/salary-allowance')}}" method="POST" id="form-mul-delete" style="display:inline;">
+                        <form action="{{url('/admin/cuts-allowances')}}" method="POST" id="form-mul-delete" style="display:inline;">
                             @csrf
                             @method('delete')
                             <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
@@ -54,7 +53,7 @@
                             </div>
                 </div>
                 <div class="table-responsive">
-                    <table id="masterdata-salary-allowance"
+                    <table id="masterdata-cuts-allowances"
                         class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                         aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                         <thead>
@@ -63,60 +62,46 @@
                                 <th class="text-center" style="width: 6%">
                                     All <input type="checkbox" id="check-all">
                                 </th>
-                                <th class="sorting text-center"style="width: 10%">Aksi</th>
-                                <th class="sorting text-center">Nama Tunjangan</th>
-                                <th class="sorting text-center">Nominal</th>
-                                <th class="sorting text-center" style="width: 10%">Tipe</th>
-                                <th class="sorting text-center" style="width: 15%">Periode</th>
-                                <th class="sorting text-center">Staff Terkait</th>
+                                <th class="sorting text-center" style="width: 10%">Aksi</th>
+                                <th class="sorting text-center" style="width: 29%">Nama Potongan</th>
+                                <th class="sorting text-center" style="width: 20%">Tipe</th>
+                                <th class="sorting text-center" style="width: 20%">Kategori</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($salaryallowance as $row)
+                            @foreach ($cutallowancetype as $row)
                             <tr>
-                                <td tabindex="0" class="sorting_1 text-center"> {{($salaryallowance->currentPage() * 10) - 10 + $loop->iteration}}</td>
+                                <td tabindex="0" class="sorting_1 text-center"> {{($cutallowancetype->currentPage() * 10) - 10 + $loop->iteration}}</td>
                                 <td class="text-center">
                                     <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{url("/admin/salary-allowance/$row->id/edit")}}"
+                                    <a href="{{url("/admin/cuts-allowances/$row->id/edit")}}"
                                         class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Edit Tunjangan Gaji"
+                                        data-container="body" data-placement="top" data-original-title="Edit Tipe {{$row->category == 'Potongan' ? 'Potongan' : 'Tunjangan'}} Gaji"
                                         type="button">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </td>
-                                <td class="text-center">{{$row->information}}</td>
-                                <td class="text-center">{{rupiah($row->nominal)}}</td>
+                                <td class="text-center">{{$row->name}}</td>
                                 <td class="text-center">{{$row->type}}</td>
-                                <td class="text-center">{{$row->month}} - {{$row->year}}</td>
-                                <td class="text-center">{{$row->user_name ? $row->user_name : '-'}}</td>
+                                <td class="text-center">{{$row->category}}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
                 </form>
-                <div class="text-center">{{ $salaryallowance->links() }}</div>
+                <div class="text-center">{{ $cutallowancetype->links() }}</div>
             </div>
         </div>
     </div>
 </div>
+@endsection
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script>
     $(document).ready(function () {
-        $('#pickadate .input-group.date').datepicker({
-            format: 'mm/yyyy',
-            autoclose: true,
-            minViewMode: 'months',
-            maxViewMode: 'years',
-            startView: 'months',
-            orientation: 'bottom',
-            forceParse: false,
-        });
-        
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked",true);
@@ -130,6 +115,7 @@
         var check = document.querySelector('.check-item:checked');
         if (check != null){
             Swal.fire({
+                width:600,
                 title: 'Anda yakin ingin menghapus data terpilih?',
                 text: "Data yang sudah di hapus tidak bisa dikembalikan!",
                 icon: 'warning',
@@ -138,8 +124,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Hapus',
                 cancelButtonText: 'Tidak'
-                }
-            ).then((result) => {
+            }).then((result) => {
                 if (result.value == true) {
                     $("#form-mul-delete").submit();
                 }}
@@ -154,5 +139,4 @@
     }
 
 </script>
-@endsection
 @endsection

@@ -45,6 +45,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\LogPresence' => $baseDir . '/app/LogPresence.php',
     'App\\MasterAchievement' => $baseDir . '/app/MasterAchievement.php',
+    'App\\MasterCutAllowanceType' => $baseDir . '/app/MasterCutAllowanceType.php',
     'App\\MasterDivision' => $baseDir . '/app/MasterDivision.php',
     'App\\MasterHoliday' => $baseDir . '/app/MasterHoliday.php',
     'App\\MasterJobRecruitment' => $baseDir . '/app/MasterJobRecruitment.php',

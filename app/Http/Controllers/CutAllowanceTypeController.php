@@ -100,4 +100,11 @@ class CutAllowanceTypeController extends Controller
         ]);
         
     }
+
+    public function toogle_status(Request $request){
+        if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+        else {$change = 'Aktif';}
+        MasterCutAllowanceType::where('id', $request->id)->update(['status' => $change]);
+        return response()->json(['name'=> $request->name, 'status' => $change, 'category' => $request->category]);
+    }
 }

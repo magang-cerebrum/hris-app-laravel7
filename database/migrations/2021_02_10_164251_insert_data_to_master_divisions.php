@@ -21,35 +21,42 @@ class InsertDataToMasterDivisions extends Migration
         DB::table('master_divisions')->insert([
             [
                 'id' => 1,
-                'name' => 'Devtech'
+                'name' => 'Devtech',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 2,
-                'name' => 'Operation'
+                'name' => 'Operation',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 3,
-                'name' => 'Quality Control'
+                'name' => 'Quality Control',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 4,
-                'name' => 'Academic'
+                'name' => 'Academic',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 5,
-                'name' => 'Sales'
+                'name' => 'Sales',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 6,
-                'name' => 'Marketing'
+                'name' => 'Marketing',
+                'status' => 'Aktif'
             ],
             [
                 'id' => 7,
-                'name' => 'One Ring'
+                'name' => 'One Ring',
+                'status' => 'Aktif'
             ],
             
             ]);
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

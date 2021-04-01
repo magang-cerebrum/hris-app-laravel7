@@ -17,6 +17,7 @@ class CreateMasterLeaveTypesTable extends Migration
             $table->id();
             $table->string('name',50);
             $table->integer('default_day');
+            $table->enum('status',['Aktif','Non-Aktif']);
             $table->timestamps();
         });
     }

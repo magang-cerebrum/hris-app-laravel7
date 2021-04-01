@@ -27,7 +27,7 @@
                                     <input type="text" name="query" placeholder="Cari (bulan/staff/tunjangan/nominal)"
                                         class="form-control" autocomplete="off">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-mint" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                     </span>
                                 </div>
                             </div>
@@ -116,7 +116,9 @@
             orientation: 'bottom',
             forceParse: false,
         });
-        
+        $('#btn-search').on('click',function () {
+            $('.datepicker').hide();
+        });
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked",true);

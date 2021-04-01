@@ -125,7 +125,7 @@ class MasterJobScheduleController extends Controller
             'master_positions.name as position_name'
             )
         ->get();
-        $data_division = DB::table('master_divisions')->select('name')->get();
+        $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
         if ($user->role_id == 1) {
             return view('masterData.schedule.create', [
                 'data'=>$data,

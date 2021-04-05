@@ -47,6 +47,7 @@
     <div class="panel-body">
         <form action="{{ url('/admin/schedule/edit-post')}}" method="POST" style="display: inline;" class="form-horizontal" id="form-bulan-tahun">
             @csrf
+            <input name="count" value="{{count($data)}}" hidden>
             <div class="row mar-btm">
                 <div class="col-sm-2">
                     <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
@@ -88,7 +89,7 @@
                         <tr class="sorting text-center" tabindex="0">
                             <td class="sorting text-center" tabindex="0">
                                 {{$loop->iteration}}
-                                <input type="text" value="{{$item->id}}" name="id" hidden>
+                                <input type="text" value="{{$item->id}}" name="{{'id_'.$loop->iteration}}" hidden>
                             </td>
                             <td class="text-center">{{$item->month.' - '.$item->year}}</td>
                             <td class="text-center">{{$item->user_nip}}</td>
@@ -103,6 +104,7 @@
                                 <td class="text-center">
                                     <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span>
                                     <select class="selectpicker {{'sub-master_'.$i}} {{$name_shift == '' ? 'hidden' : ''}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}">
+                                        <option value=" "> </option>
                                         @foreach ($data_shift as $shift)
                                         <option value="{{$shift->id}}"
                                             class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"

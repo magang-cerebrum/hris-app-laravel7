@@ -16,6 +16,7 @@ class CreateMasterDivisionsTable extends Migration
         Schema::create('master_divisions', function (Blueprint $table) {
             $table->id();
             $table->string('name',50);
+            $table->enum('status',['Aktif','Non-Aktif']);
             $table->timestamps();
         });
     }

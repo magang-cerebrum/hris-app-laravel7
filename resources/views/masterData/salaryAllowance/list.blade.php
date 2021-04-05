@@ -1,14 +1,12 @@
 @extends('layouts/templateAdmin')
-@section('content-title','Master Data / Tunjangan Gaji')
-@section('title','Tunjangan Gaji')
+@section('content-title','Data Staff / Tunjangan Gaji')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
+@section('title','Tunjangan Gaji')
 @section('head')
-{{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
-<!--Bootstrap Datepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 @endsection
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Tunjangan Gaji</h3>
@@ -29,7 +27,7 @@
                                     <input type="text" name="query" placeholder="Cari (bulan/staff/tunjangan/nominal)"
                                         class="form-control" autocomplete="off">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-mint" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                     </span>
                                 </div>
                             </div>
@@ -106,7 +104,6 @@
 </div>
 @section('script')
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<!--Bootstrap Datepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script>
     $(document).ready(function () {
@@ -119,7 +116,9 @@
             orientation: 'bottom',
             forceParse: false,
         });
-        
+        $('#btn-search').on('click',function () {
+            $('.datepicker').hide();
+        });
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked",true);

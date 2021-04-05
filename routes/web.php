@@ -106,7 +106,8 @@ Route::prefix('/admin/division')->group(function(){
     Route::post('/', [DivisionController::class, 'store']);
     Route::get('/{division}/edit', [DivisionController::class, 'edit']);
     Route::put('/{division}', [DivisionController::class, 'update']);
-    Route::delete('', [DivisionController::class, 'destroySelected']);
+    Route::put('/{division}/status', [DivisionController::class, 'toogle_status']);
+    Route::delete('/', [DivisionController::class, 'destroySelected']);
 });
 
 //route masterdata posisi
@@ -116,6 +117,7 @@ Route::prefix('/admin/position')->group(function(){
     Route::post('/', [PositionController::class, 'store']);
     Route::get('/{position}/edit', [PositionController::class, 'edit']);
     Route::put('/{position}', [PositionController::class, 'update']);
+    Route::put('/{division}/status', [PositionController::class, 'toogle_status']);
     Route::delete('/', [PositionController::class, 'destroySelected']);
 });
 
@@ -126,6 +128,7 @@ Route::prefix('/admin/shift')->group(function(){
     Route::post('/', [ShiftController::class, 'store']);
     Route::get('/{shift}/edit', [ShiftController::class, 'edit']);
     Route::put('/{shift}', [ShiftController::class, 'update']);
+    Route::put('/{shift}/status', [ShiftController::class, 'toogle_status']);
     Route::delete('/', [ShiftController::class, 'destroySelected']);
 });
 
@@ -136,6 +139,7 @@ Route::prefix('/admin/paid-leave-type')->group(function (){
     Route::post('/',[MasterLeaveTypeController::class,'store'])->name('save');
     Route::get('/{leavetype}/edit',[MasterLeaveTypeController::class,'edit']);
     Route::put('/{leavetype}',[MasterLeaveTypeController::class,'update'])->name('update');
+    Route::put('/{leavetype}/status', [MasterLeaveTypeController::class, 'toogle_status']);
     Route::delete('/',[MasterLeaveTypeController::class,'destroyAll']); 
 });
 
@@ -157,6 +161,7 @@ Route::prefix('/admin/cuts-allowances')->group(function(){
     Route::post('/', [CutAllowanceTypeController::class, 'store']);
     Route::get('/{type}/edit', [CutAllowanceTypeController::class, 'edit']);
     Route::put('/{type}', [CutAllowanceTypeController::class, 'update']);
+    Route::put('/{type}/status', [CutAllowanceTypeController::class, 'toogle_status']);
     Route::delete('/', [CutAllowanceTypeController::class, 'destroy']);
     Route::get('/search',[CutAllowanceTypeController::class, 'search']);
 });

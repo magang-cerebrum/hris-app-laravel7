@@ -34,7 +34,9 @@ class SalaryCutController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
+        $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
         return view('masterdata.salarycut.create', [
+            'data_type'=>$data_type,
             'staff'=>$staff,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -45,11 +47,15 @@ class SalaryCutController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'type' => 'required',
+            'information' => 'required',
+            'nominal' => 'required_unless:type,Perorangan',
+            'user_id' => 'required_if:type,Perorangan',
+            'range_month'=> 'required_if:type,Perorangan',
+            's_nominal'=> 'required_if:type,Perorangan'
+        ]);
         if ($request->type == 'Semua') {
-            $request->validate([
-                'information' => 'required',
-                'nominal' => 'required'
-            ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
             MasterSalaryCut::create([
                 'information' => $request->information,
@@ -57,18 +63,12 @@ class SalaryCutController extends Controller
                 'nominal' => $nominal
             ]);
         } else {
-            $request->validate([
-                'information_individual' => 'required',
-                'range_month' => 'required',
-                's_nominal' => 'required',
-                'user_id' => 'required'
-            ]);
             $nominal = preg_replace('/[Rp. ]/','',$request->s_nominal);
             $month = date('m');
             $year = date('Y');
             for ($i=0; $i < $request->range_month; $i++) {
                 MasterSalaryCut::create([
-                    'information' => $request->information_individual,
+                    'information' => $request->information,
                     'type' => $request->type,
                     'nominal' => $nominal,
                     'month' => switch_month($month),
@@ -89,7 +89,9 @@ class SalaryCutController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
+        $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
         return view('masterdata.salarycut.edit',[
+            'data_type'=>$data_type,
             'cut' => $cut,
             'staff' => $staff,
             'name'=>$user->name,
@@ -101,26 +103,21 @@ class SalaryCutController extends Controller
 
     public function update(Request $request, MasterSalaryCut $cut)
     {
+        $request->validate([
+            'information' => 'required',
+            'nominal' => 'required',
+            'periode' => 'required_if:type,Perorangan',
+            'user_id' => 'required_if:type,Perorangan',
+        ]);
+        $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
         if ($cut->type == 'Semua') {
-            $request->validate([
-                'information' => 'required',
-                'nominal' => 'required'
-            ]);
-            $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
             MasterSalaryCut::where('id','=',$cut->id)
             ->update([
                 'information' => $request->information,
                 'nominal' => $nominal
             ]);
         } else {
-            $request->validate([
-                'information' => 'required',
-                'month' => 'required',
-                'nominal' => 'required',
-                'user_id' => 'required'
-            ]);
-            $nominal = preg_replace('/[Rp. ]/','',$request->nominal);
-            $split = explode('-',$request->month);
+            $split = explode('-',$request->periode);
             MasterSalaryCut::where('id','=',$cut->id)
             ->update([
                 'information' => $request->information,
@@ -184,6 +181,7 @@ class SalaryCutController extends Controller
         $user =  Auth::user();
 
         return view('masterData.salarycut.result', [
+            'search' => $request->get('query'),
             'salarycut' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

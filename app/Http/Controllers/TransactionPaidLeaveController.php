@@ -66,7 +66,7 @@ class TransactionPaidLeaveController extends Controller
 
     public function create()
     {
-        $data = MasterLeaveType::all();
+        $data = MasterLeaveType::where('status','Aktif')->get();
         $user = Auth::user();
         return view('staff.transactionleave.create', [
             'data'=>$data,

@@ -181,16 +181,18 @@ class TransactionTicketingController extends Controller
             return abort(403,'Access Denied, Only Staff Can Access');
         }
         elseif(Gate::allows('is_staff')){
-        $request->validate([
-            'message' => 'required'
-        ]);
-        TransactionTicketing::create([
-            'user_id' => $request->user_id,
-            'message' => $request->message,
-            'category' => $request->category,
-        ]);
-        Alert::success('Berhasil!', 'Input Ticket baru berhasil!');
-        return redirect('/staff/ticketing');}
+            $request->validate([
+                'message' => 'required'
+            ]);
+            $id = ($request->anon == 'on' ? null : $id = $request->user_id);
+            TransactionTicketing::create([
+                'user_id' => $id,
+                'message' => $request->message,
+                'category' => $request->category,
+            ]);
+            Alert::success('Berhasil!', 'Input Ticket baru berhasil!');
+            return redirect('/staff/ticketing');
+        }
     }
     
 }

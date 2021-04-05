@@ -22,17 +22,20 @@ class InsertDataToMasterLeaveTypes extends Migration
             [
                 'id' => 1,
                 'name' => 'Cuti Tahunan',
-                'default_day' => 12
+                'default_day' => 12,
+                'status' => 'Aktif'
             ],
             [
                 'id' => 2,
                 'name' => 'Cuti Melahirkan',
-                'default_day' => 60
+                'default_day' => 60,
+                'status' => 'Aktif'
             ],
             [
                 'id' => 3,
                 'name' => 'Cuti Menikah',
-                'default_day' => 3
+                'default_day' => 3,
+                'status' => 'Aktif'
             ]
             ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

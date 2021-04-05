@@ -73,4 +73,11 @@ class PositionController extends Controller
         Alert::success('Berhasil!', 'Jabatan yang dipilih berhasil dihapus!');
         return redirect('/admin/position');
     }
+
+    public function toogle_status(Request $request){
+        if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+        else {$change = 'Aktif';}
+        MasterPosition::where('id', $request->id)->update(['status' => $change]);
+        return response()->json(['name'=> $request->name, 'status' => $change]);
+    }
 }

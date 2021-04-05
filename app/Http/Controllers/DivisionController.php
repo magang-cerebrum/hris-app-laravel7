@@ -77,4 +77,10 @@ class DivisionController extends Controller
         return redirect('/admin/division');
     }
 
+    public function toogle_status(Request $request){
+        if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+        else {$change = 'Aktif';}
+        MasterDivision::where('id', $request->id)->update(['status' => $change]);
+        return response()->json(['name'=> $request->name, 'status' => $change]);
+    }
 }

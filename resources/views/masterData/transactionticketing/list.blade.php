@@ -26,7 +26,8 @@
                                         <button class="btn btn-mint" type="button" style="z-index: 2"><i
                                                 class="fa fa-calendar"></i></button>
                                     </span>
-                                    <input type="text" name="query" placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
+                                    <input type="text" name="query"
+                                        placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
                                         class="form-control" autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
@@ -50,11 +51,11 @@
                             </button>
                             <div class="radio mar-hor" style="display: inline">
                                 <label for="">Lihat Ticket Selesai: </label>
-                                <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai"
-                                    value="On">
+                                <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio"
+                                    name="lihat_selesai" value="On">
                                 <label for="lihat_selesai_radio-1">On</label>
-                                <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai"
-                                    value="Off">
+                                <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio"
+                                    name="lihat_selesai" value="Off" checked>
                                 <label for="lihat_selesai_radio-2">Off</label>
                             </div>
                     </div>
@@ -91,14 +92,21 @@
                             <td tabindex="0" class="sorting_1 text-center">
                                 {{($done->currentPage() * 10) - 10 + $loop->iteration}}</td>
                             <td class="text-center">
-                                <input type="checkbox" class="check-item-full" name="selectid_full[]" value="{{$row->id}}">
+                                <input type="checkbox" class="check-item-full" name="selectid_full[]"
+                                    value="{{$row->id}}">
                             </td>
                             <td class="text-center">
                                 <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
-                                    style="display: inline; margin: auto 5px" data-id="{{$row->id}}"
-                                    data-name="{{$row->name}}" data-category="{{$row->category}}"
+                                    style="display: inline; margin: auto 5px" data-id="{{$row->id}}" @if ($row->name ==
+                                    null)
+                                    data-name="Anonim"
+                                    @else
+                                    data-name="{{$row->name}}"
+                                    @endif
+                                    data-category="{{$row->category}}"
                                     data-message="{{$row->message}}" data-response="{{$row->response}}"
-                                    data-status="{{$row->status}}" data-diajukan="{{indonesian_date($row->created_at,true)}}"
+                                    data-status="{{$row->status}}"
+                                    data-diajukan="{{indonesian_date($row->created_at,true)}}"
                                     @if ($row->created_at == $row->updated_at)
                                     data-direspon="-"
                                     @else
@@ -112,7 +120,12 @@
                                     </a>
                                 </span>
                             </td>
-                            <td class="text-center">{{$row->name}}</td>
+                            <td class="text-center">
+                                @if ($row->name == null)
+                                Anonim
+                                @else
+                                {{$row->name}}
+                                @endif</td>
                             <td class="text-center">
                                 @if ($row->category == 'Keluhan')
                                 <span class="label label-primary">Keluhan</span>
@@ -174,10 +187,16 @@
                             </td>
                             <td class="text-center">
                                 <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
-                                    style="display: inline; margin: auto 5px" data-id="{{$row->id}}"
-                                    data-name="{{$row->name}}" data-category="{{$row->category}}"
+                                    style="display: inline; margin: auto 5px" data-id="{{$row->id}}" @if ($row->name ==
+                                    null)
+                                    data-name="Anonim"
+                                    @else
+                                    data-name="{{$row->name}}"
+                                    @endif
+                                    data-category="{{$row->category}}"
                                     data-message="{{$row->message}}" data-response="{{$row->response}}"
-                                    data-status="{{$row->status}}" data-diajukan="{{indonesian_date($row->created_at,true)}}"
+                                    data-status="{{$row->status}}"
+                                    data-diajukan="{{indonesian_date($row->created_at,true)}}"
                                     @if ($row->created_at == $row->updated_at)
                                     data-direspon="-"
                                     @else
@@ -191,7 +210,11 @@
                                     </a>
                                 </span>
                             </td>
-                            <td class="text-center">{{$row->name}}</td>
+                            <td class="text-center">@if ($row->name == null)
+                                Anonim
+                                @else
+                                {{$row->name}}
+                                @endif</td>
                             <td class="text-center">
                                 @if ($row->category == 'Keluhan')
                                 <span class="label label-primary">Keluhan</span>

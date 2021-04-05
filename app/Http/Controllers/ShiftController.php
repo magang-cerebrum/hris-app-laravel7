@@ -105,4 +105,11 @@ class ShiftController extends Controller
         Alert::success('Berhasil!', 'Shift yang dipilih berhasil dihapus!');
         return redirect('/admin/shift');
     }
+
+    public function toogle_status(Request $request){
+        if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+        else {$change = 'Aktif';}
+        MasterShift::where('id', $request->id)->update(['status' => $change]);
+        return response()->json(['name'=> $request->name, 'status' => $change]);
+    }
 }

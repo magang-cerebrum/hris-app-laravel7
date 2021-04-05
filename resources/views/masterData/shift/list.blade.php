@@ -4,8 +4,8 @@
 @section('title','Master Data')
 @section('content')
 @section('head')
-{{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
@@ -15,15 +15,13 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-sm-8">
                         <a href="{{url('/admin/shift/add')}}" class="btn btn-primary btn-labeled add-tooltip"
-                            style="margin-bottom:15px" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Data Shift Baru">
+                            data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Data Shift Baru">
                             <i class="btn-label fa fa-plus"></i>
                             Tambah Shift
                         </a>
-                    </div>
-                    <div class="col-sm-6">
-                        <form action="/admin/shift" method="POST" id="form-mul-delete">
+                        <form action="/admin/shift" method="POST" id="form-mul-delete" style="display: inline">
                             @csrf
                             @method('delete')
                             <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
@@ -78,12 +76,28 @@
                                             type="button">
                                             <i class="fa fa-edit"></i>
                                         </a>
+                                        @if ($row->status == 'Aktif')
+                                        <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                            data-container="body" data-placement="top" data-original-title="Nonaktifkan Shift"
+                                            type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
+                                            <i class="pli-close"></i>
+                                        </button>
+                                        @else
+                                        <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                            data-container="body" data-placement="top" data-original-title="Aktifkan Shift"
+                                            type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
+                                            <i class="pli-yes"></i>
+                                        </button>
+                                        @endif
                                     </td>
-                                <td class="text-center">{{$row->name}}</td>
+                                <td class="text-center">{{$row->name}} 
+                                    @if ($row->status == 'Non-Aktif')
+                                    <div class="label label-danger">Non-Aktif</div>
+                                    @endif
+                                </td>
                                 <td class="text-center">{{$row->start_working_time}}</td>
                                 <td class="text-center">{{$row->end_working_time}}</td>
                                 <td class="text-center">{{$row->total_hour}} jam</td>
-
                             </tr>
                             @endforeach
                         </tbody>
@@ -156,6 +170,58 @@
                 }
             }
         }
+    }
+
+    function toogle_status(id,name,status){
+        var url = "/admin/shift/:id/status".replace(':id', id);
+        if (status == 'Aktif') { var word = 'menonaktifkan'}
+        else { var word = 'mengaktifkan'}
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Perubahan Status ',
+            text: 'Anda yakin ingin ' + word + ' Shift "'+ name + '"?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {id : id, name: name, status:status},
+                    success: function(response) {
+                        Swal.fire({
+                            width: 600,
+                            title: 'Berhasil!',
+                            text: "Shift dengan nama " + response.name + " saat ini berstatus " + response.status,
+                            icon: 'success',
+                            timer: 2000
+                        });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: errorThrown,
+                        text: "Penggantian status gagal!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+                });
+            } else {
+                return false;
+            }} 
+        );
     }
 </script>
 @endsection

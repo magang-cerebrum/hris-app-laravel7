@@ -34,7 +34,7 @@ class SalaryAllowanceController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
-        $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
+        $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->where('status','Aktif')->get();
         return view('masterdata.salaryallowance.create', [
             'data_type'=>$data_type,
             'staff'=>$staff,
@@ -89,7 +89,7 @@ class SalaryAllowanceController extends Controller
     {
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
-        $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
+        $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->where('status','Aktif')->get();
         return view('masterdata.salaryallowance.edit',[
             'data_type'=>$data_type,
             'allowance' => $allowance,

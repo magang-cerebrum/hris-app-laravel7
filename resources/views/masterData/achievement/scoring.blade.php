@@ -128,9 +128,6 @@
                             </span>
                             <input type="text" name="query" placeholder="Masukan Periode Penilian" class="form-control"
                                 autocomplete="off" id="query" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="submit"><i class="fa fa-search"></i></button>
-                            </span>
                         </div>
                     </div>
                 

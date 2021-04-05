@@ -32,7 +32,7 @@
                             <input type="text" name="query" placeholder="Masukan Tanggal untuk mencari Jadwal" class="form-control"
                                 autocomplete="off" id="query" readonly>
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-danger" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </div>
@@ -62,6 +62,9 @@
             startView: 'months',
             orientation: 'bottom',
             forceParse: false,
+        });
+        $('#btn-search').on('click',function () {
+            $('.datepicker').hide();
         });
         $('#schedule-search').on('submit', function (event) {
             event.preventDefault();

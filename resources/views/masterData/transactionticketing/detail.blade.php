@@ -65,8 +65,8 @@
     $(document).ready(function () {
         $("#masterdata-ticketing-full").hide();
         $("#done-pagination").hide();
-        $("#masterdata-ticketing").hide();
-        $("#onprog-pagination").hide();
+        // $("#masterdata-ticketing").hide();
+        // $("#onprog-pagination").hide();
         $('.toogle_selesai').on('change',function () {
             if (document.getElementById('lihat_selesai_radio-2').checked) {
                 document.getElementById('masterdata-ticketing').style.display = '';

@@ -18,6 +18,7 @@ class CreateMasterCutAllowanceTypesTable extends Migration
             $table->string('name',50);
             $table->enum('type',['Semua','Perorangan']);
             $table->enum('category',['Potongan','Tunjangan']);
+            $table->enum('status',['Aktif','Non-Aktif']);
         });
     }
 

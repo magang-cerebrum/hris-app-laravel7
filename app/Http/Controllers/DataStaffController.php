@@ -23,7 +23,7 @@ class DataStaffController extends Controller
             'master_positions.name as position_name',
             'master_roles.name as role_name'
         )
-        ->where('status','=','Aktif')
+        ->where('master_users.status','=','Aktif')
         ->paginate(10);
         
         $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
@@ -35,7 +35,7 @@ class DataStaffController extends Controller
             'master_positions.name as position_name',
             'master_roles.name as role_name'
         )
-        ->where('status','=','Non-Aktif')
+        ->where('master_users.status','=','Non-Aktif')
         ->paginate(10);
         $count_aktif = MasterUser::where('status','=','Aktif')->count();
         $count_naktif = MasterUser::where('status','=','Non-Aktif')->count();
@@ -54,8 +54,8 @@ class DataStaffController extends Controller
     public function create()
     {   
         $user = Auth::user();
-        $divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->get();
-        $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->get();
+        $divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
+        $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->where('status','Aktif')->get();
         $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
 
         return view('masterdata.datastaff.create',[
@@ -135,8 +135,8 @@ class DataStaffController extends Controller
     public function edit(MasterUser $staff)
     {
         $user = Auth::user();
-        $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
-        $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
+        $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->where('status','Aktif')->get();
+        $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->where('status','Aktif')->get();
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
         
         return view('masterdata.datastaff.edit',[

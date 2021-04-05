@@ -30,12 +30,22 @@ var bootstrapWizardCreate = function(element, options) {
 
 	this.fixNavigationButtons = function() {
 		// Get the current active tab
-		if(!$activeTab.length) {
-			// Select first one
+		// if(!$activeTab.length) {
+		// 	// Select first one
+		// 	$navigation.find('a:first').tab('show');
+		// 	$activeTab = $navigation.find(baseItemSelector + ':first');
+		// }
+		if (!$activeTab.length) {
+			// Select first one (which will also trigger onTabShow event to be raised)
 			$navigation.find('a:first').tab('show');
 			$activeTab = $navigation.find(baseItemSelector + ':first');
-		}
-
+		  }
+		  else {
+		  // trigger the onTabShow manually only if we already had an activeTab 
+			if ($settings.onTabShow && typeof $settings.onTabShow === 'function' && $settings.onTabShow($activeTab, $navigation, obj.currentIndex()) === false) {
+			  return false;
+			}
+		  }
 		// See if we're currently in the first/last then disable the previous and last buttons
 		$($settings.previousSelector, element).toggleClass('disabled', (obj.firstIndex() >= obj.currentIndex()));
 		$($settings.nextSelector, element).toggleClass('disabled', (obj.currentIndex() >= obj.navigationLength()));
@@ -53,9 +63,9 @@ var bootstrapWizardCreate = function(element, options) {
 		obj.rebindClick($($settings.finishSelector, element), obj.finish);
 		obj.rebindClick($($settings.backSelector, element), obj.back);
 
-		if($settings.onTabShow && typeof $settings.onTabShow === 'function' && $settings.onTabShow($activeTab, $navigation, obj.currentIndex())===false){
-			return false;
-		}
+		// if($settings.onTabShow && typeof $settings.onTabShow === 'function' && $settings.onTabShow($activeTab, $navigation, obj.currentIndex())===false){
+		// 	return false;
+		// }
 	};
 
 	this.next = function(e) {

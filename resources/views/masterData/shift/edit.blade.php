@@ -48,7 +48,7 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <label class="col-sm-2 control-label">Jam Masuk:</label>
+                    <label class="col-sm-2 control-label">Warna Kalendar:</label>
                     <div class="col-sm-4">
                         <input type="color" class="form-control" name="calendar_color">
                     </div>

@@ -16,6 +16,7 @@ use App\Http\Controllers\CutAllowanceTypeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\MasterLeaveTypeController;
 use App\Http\Controllers\MasterJobScheduleController;
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\MasterAchievementController;
 use App\Http\Controllers\TransactionPaidLeaveController;
 use App\Http\Controllers\LogController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\WorkFromHomeController;
+use App\Http\Controllers\OvertimeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,6 +93,23 @@ Route::prefix('/admin/data-staff')->group(function(){
     Route::put('/{staff}/status', [DataStaffController::class, 'toogle_status']);
     Route::delete('/', [DataStaffController::class, 'destroySelected']);
     Route::get('/search', [DataStaffController::class, 'search']);
+});
+//route agenda kerja ==ADMIN==
+Route::prefix('/admin/agenda')->group(function(){
+    Route::get('/',[AgendaController::class,'index']);
+    Route::get('/add',[AgendaController::class,'create']);
+    Route::post('/', [AgendaController::class, 'store']);
+    Route::get('/{agenda}/edit', [AgendaController::class, 'edit']);
+    Route::put('/{agenda}', [AgendaController::class, 'update']);
+    Route::delete('/', [AgendaController::class, 'destroy']);
+    Route::get('/search',[AgendaController::class, 'search']);
+    Route::get('/calendar',[AgendaController::class,'searchCalendar']);
+    Route::post('/calendar',[AgendaController::class,'calendar']);
+});
+
+//route agenda kerja ==STAFF==
+Route::prefix('/staff/agenda')->group(function(){
+    Route::get('/',[AgendaController::class,'index_staff']);
 });
 //route promotion staff 
 Route::prefix('/admin/data-staff/promote')->group(function(){
@@ -166,6 +185,12 @@ Route::prefix('/admin/cuts-allowances')->group(function(){
     Route::get('/search',[CutAllowanceTypeController::class, 'search']);
 });
 
+//route masterdata lembur
+Route::prefix('/admin/overtime')->group(function(){
+    Route::get('/',[OvertimeController::class,'index']);
+    Route::get('/create',[OvertimeController::class,'create']);
+});
+
 //route masterdata potongan gaji
 Route::prefix('/admin/salary-cut')->group(function(){
     Route::get('/',[SalaryCutController::class,'index']);
@@ -202,10 +227,12 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
+    Route::post('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
     Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
     Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
+    Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::post('/copied',[MasterJobScheduleController::class,'copied']);
 });
 Route::prefix('/staff/schedule')->group(function() {
@@ -214,7 +241,9 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
+    Route::post('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
+    Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
 
     Route::get('/copyschedule',[MasterJobScheduleController::class,'ChiefCopySchedule']);
@@ -358,8 +387,9 @@ Route::get('/admin/recruitment/search', [MasterRecruitmentController::class,'sea
 Route::delete('/admin/recruitment/delete', [MasterRecruitmentController::class,'destroySelected']);
 
 
-Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
-Route::POST('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
-Route::POST('/admin/presence/reset', [PresenceController::class,'resetStats']);
+Route::get('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
+Route::post('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
+Route::post('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
 Route::view('/test', 'pdf.salary');
+Route::get('/test/hitung',[AgendaController::class,'test']);

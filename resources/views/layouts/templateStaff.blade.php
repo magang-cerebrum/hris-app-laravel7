@@ -28,6 +28,13 @@
     <script src="{{ asset('plugins/cropper/cropper.min.js')}}"></script>
     
     @yield('head')
+
+    <style>
+        .clean-menu {
+            /* border: 1px solid black; */
+            height: 80px;
+        }
+    </style>
 </head>
 <body>
     @include('sweetalert::alert')
@@ -214,6 +221,14 @@
 
                                         <!--Menu list item-->
                                         <li>
+                                            <a href="{{ url('staff/agenda')}}">
+                                                <i class="fa fa-calendar"></i>
+                                                <span class="menu-title">Agenda Kerja</span>
+                                            </a>
+                                        </li>
+
+                                        <!--Menu list item-->
+                                        <li>
                                             <a href="{{ url('staff/schedule')}}">
                                                 <i class="fa fa-calendar-check-o"></i>
                                                 <span class="menu-title">Jadwal Kerja</span>
@@ -281,8 +296,8 @@
                                             <ul class="collapse">
                                                 <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
                                                 <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
+                                                <li><a href="{{ url('staff/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a></li>
 											    <li><a href="{{ url('staff/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a></li>
-                                                
                                             </ul>
                                         </li>
 
@@ -317,6 +332,7 @@
                                         </li>
                                         @endif
                                     </ul>
+                                    <div class="clean-menu"></div>
                                 </div>
                             </div>
                         </div>

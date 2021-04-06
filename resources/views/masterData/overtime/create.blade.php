@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
 @section('title','Jadwal Kerja')
-@section('content-title','Jadwal Kerja / Pilih Staff untuk Jadwal Kerja')
+@section('content-title','Data Staff / Lembur / Pilih Staff untuk Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('content')
 @section('head')

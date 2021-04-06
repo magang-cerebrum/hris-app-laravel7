@@ -28,6 +28,13 @@
     <script src="{{ asset('plugins/cropper/cropper.min.js')}}"></script>
     
     @yield('head')
+
+    <style>
+        .clean-menu {
+            /* border: 1px solid black; */
+            height: 80px;
+        }
+    </style>
 </head>
 <body>
     @include('sweetalert::alert')
@@ -194,6 +201,14 @@
 						                    <span class="menu-title">Dashboard</span>
 						                </a>
 						            </li>
+
+						            <!--Menu list item-->
+						            <li>
+						                <a href="{{ url('admin/agenda/calendar')}}">
+						                    <i class="fa fa-calendar"></i>
+						                    <span class="menu-title">Agenda Kerja</span>
+						                </a>
+						            </li>
 						
 						            <!--Menu list item-->
 						            <li>
@@ -210,6 +225,7 @@
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
                                             <li><a href="{{ url('admin/wfh')}}"><i class="psi-monitor-laptop"></i>Work From Home</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
+                                            <li><a href="{{ url('admin/overtime')}}"><i class="psi-overtime"></i>Lembur</a></li>
                                             <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
                                             <li><a href="{{ url('admin/salary-allowance')}}"><i class="psi-wallet-2"></i>Tunjangan Gaji</a></li>
 						                </ul>
@@ -226,6 +242,7 @@
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/schedule')}}"><i class="psi-calendar-4"></i>Daftar Jadwal</a></li>
 											<li><a href="{{ url('admin/schedule/add')}}"><i class="psi-checked-user"></i>Tambah Jadwal</a></li>
+                                            <li><a href="{{ url('admin/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a></li>
 											<li><a href="{{ url('admin/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a></li>
                                         </ul>
 						            </li>
@@ -240,12 +257,13 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
+                                            <li><a href="{{ url('admin/agenda/')}}"><i class="psi-calendar-2"></i>Agenda Kerja</a></li>
                                             <li><a href="{{ url('admin/paid-leave-type')}}"><i class="psi-calendar-4"></i>Tipe Cuti</a></li>
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="psi-clock"></i>Shift</a></li>
                                             <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
-                                            <li><a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe Potongan dan Tunjangan Gaji</a></li>
+                                            <li><a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe     Potongan dan Tunjangan Gaji</a></li>
 						                </ul>
                                     </li>
 
@@ -297,6 +315,7 @@
 						                </ul>
                                     </li>
                                 </ul>
+                                <div class="clean-menu"></div>
                             </div>
                         </div>
                     </div>

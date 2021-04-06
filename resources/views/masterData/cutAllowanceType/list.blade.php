@@ -20,10 +20,6 @@
                             style="position: relative;right:-710px;bottom:-48px">
                             <div id="pickadate">
                                 <div class="input-group date">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="button" style="z-index: 2">
-                                            <i class="fa fa-calendar"></i></button>
-                                    </span>
                                     <input type="text" name="query" placeholder="Cari (nama/tipe/kategori)"
                                         class="form-control" autocomplete="off">
                                     <span class="input-group-btn">

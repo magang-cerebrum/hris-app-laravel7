@@ -1,4 +1,4 @@
-@extends('layouts/templateAdmin')
+@extends('layouts/templateStaff')
 @section('title','Jadwal Kerja')
 @section('content-title','Jadwal Kerja / Edit Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
@@ -40,12 +40,12 @@
 @endsection
 
 @section('content')
-<div class="panel panel-danger panel-bordered">
+<div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Form Edit Jadwal Kerja</h3>
     </div>
     <div class="panel-body">
-        <form action="{{ url('/admin/schedule/edit-post')}}" method="POST" style="display: inline;" class="form-horizontal" id="form-bulan-tahun">
+        <form action="{{ url('/staff/schedule/edit-post')}}" method="POST" style="display: inline;" class="form-horizontal" id="form-bulan-tahun">
             @csrf
             <input name="count" value="{{count($data)}}" hidden>
             <div class="row mar-btm">

@@ -62,6 +62,7 @@ return array(
     'App\\MasterSalaryCut' => $baseDir . '/app/MasterSalaryCut.php',
     'App\\MasterShift' => $baseDir . '/app/MasterShift.php',
     'App\\MasterUser' => $baseDir . '/app/MasterUser.php',
+    'App\\Overtime' => $baseDir . '/app/Overtime.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

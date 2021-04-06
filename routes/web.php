@@ -25,6 +25,7 @@ use App\Http\Controllers\MasterJobController;
 use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\WorkFromHomeController;
+use App\Http\Controllers\OvertimeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -182,6 +183,12 @@ Route::prefix('/admin/cuts-allowances')->group(function(){
     Route::put('/{type}/status', [CutAllowanceTypeController::class, 'toogle_status']);
     Route::delete('/', [CutAllowanceTypeController::class, 'destroy']);
     Route::get('/search',[CutAllowanceTypeController::class, 'search']);
+});
+
+//route masterdata lembur
+Route::prefix('/admin/overtime')->group(function(){
+    Route::get('/',[OvertimeController::class,'index']);
+    Route::get('/create',[OvertimeController::class,'create']);
 });
 
 //route masterdata potongan gaji

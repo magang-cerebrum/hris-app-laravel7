@@ -28,6 +28,13 @@
     <script src="{{ asset('plugins/cropper/cropper.min.js')}}"></script>
     
     @yield('head')
+
+    <style>
+        .clean-menu {
+            /* border: 1px solid black; */
+            height: 80px;
+        }
+    </style>
 </head>
 <body>
     @include('sweetalert::alert')
@@ -324,6 +331,7 @@
                                         </li>
                                         @endif
                                     </ul>
+                                    <div class="clean-menu"></div>
                                 </div>
                             </div>
                         </div>

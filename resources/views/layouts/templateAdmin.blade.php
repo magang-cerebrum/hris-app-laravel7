@@ -28,6 +28,13 @@
     <script src="{{ asset('plugins/cropper/cropper.min.js')}}"></script>
     
     @yield('head')
+
+    <style>
+        .clean-menu {
+            /* border: 1px solid black; */
+            height: 80px;
+        }
+    </style>
 </head>
 <body>
     @include('sweetalert::alert')
@@ -218,6 +225,7 @@
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
                                             <li><a href="{{ url('admin/wfh')}}"><i class="psi-monitor-laptop"></i>Work From Home</a></li>
 											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
+                                            <li><a href="{{ url('admin/overtime')}}"><i class="psi-overtime"></i>Lembur</a></li>
                                             <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
                                             <li><a href="{{ url('admin/salary-allowance')}}"><i class="psi-wallet-2"></i>Tunjangan Gaji</a></li>
 						                </ul>
@@ -307,6 +315,7 @@
 						                </ul>
                                     </li>
                                 </ul>
+                                <div class="clean-menu"></div>
                             </div>
                         </div>
                     </div>

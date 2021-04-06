@@ -123,6 +123,21 @@ class SalaryController extends Controller
 
             $total_salary = $master_user->salary - $total_cut_salary + $total_allowance_salary - $total_fine;
 
+
+            // Contoh pembuatan objek
+            // $data = array();
+            // $value_data = new stdClass();
+            // $value_data->name = 'nama_data';
+            // $value_data->value = 1000;
+
+            // array_push($data, $value_data);
+            // $value_data = new stdClass();
+            // $value_data->name = 'data';
+            // $value_data->value = 500;
+
+            // array_push($data, $value_data);
+            // dd($data);
+
             // $pdf = PDF::loadView('/pdf.salary');
             // return $pdf->stream();
 

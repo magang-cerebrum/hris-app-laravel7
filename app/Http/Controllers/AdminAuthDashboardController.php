@@ -92,7 +92,6 @@ class AdminAuthDashboardController extends Controller
     public function updateprofile(Request $request, MasterUser $user)
     {
         $request->validate([
-            'nip' => 'required|numeric',
             'name' => 'required',
             'dob' => 'required',
             'phone_number' => 'numeric',
@@ -110,10 +109,9 @@ class AdminAuthDashboardController extends Controller
         ]);
         MasterUser::where('id', $user->id)
             ->update([
-                'nip' => $request->nip,
                 'name' => $request->name,
                 'dob' => $request->dob,
-                'live_at' => $request->live_at,
+                'address' => $request->address,
                 'phone_number' => $request->phone_number,
                 'gender' => $request->gender,
                 'email' => $request->email,

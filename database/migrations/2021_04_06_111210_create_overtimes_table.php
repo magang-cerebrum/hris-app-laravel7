@@ -22,8 +22,8 @@ class CreateOvertimesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('hour');
             $table->bigInteger('payment');
-            $table->timestamps();
-
+            $table->enum('status',['Pending','Paid']);
+            
             $table->foreign('user_id')->references('id')->on('master_users')->onUpdate('cascade')->onDelete('set null');
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

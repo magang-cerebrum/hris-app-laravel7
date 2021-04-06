@@ -175,7 +175,6 @@ class StaffAuthDashboardController extends Controller
                         }  
 
                     }
-                                  
                 }
                 // if score on a month exists, insert too score array
                 if (array_key_exists($i,$temp)) {
@@ -186,7 +185,7 @@ class StaffAuthDashboardController extends Controller
             }
             $data_poster = DB::table('sliders')->get();
             $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
-            
+
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
                 'name'=>$user->name,

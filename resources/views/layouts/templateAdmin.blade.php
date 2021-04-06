@@ -194,6 +194,14 @@
 						                    <span class="menu-title">Dashboard</span>
 						                </a>
 						            </li>
+
+						            <!--Menu list item-->
+						            <li>
+						                <a href="{{ url('admin/agenda/calendar')}}">
+						                    <i class="fa fa-calendar"></i>
+						                    <span class="menu-title">Agenda Kerja</span>
+						                </a>
+						            </li>
 						
 						            <!--Menu list item-->
 						            <li>
@@ -241,12 +249,13 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
+                                            <li><a href="{{ url('admin/agenda/')}}"><i class="psi-calendar-2"></i>Agenda Kerja</a></li>
                                             <li><a href="{{ url('admin/paid-leave-type')}}"><i class="psi-calendar-4"></i>Tipe Cuti</a></li>
                                             <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
 											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
 											<li><a href="{{ url('admin/shift')}}"><i class="psi-clock"></i>Shift</a></li>
                                             <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
-                                            <li><a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe Potongan dan Tunjangan Gaji</a></li>
+                                            <li><a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe     Potongan dan Tunjangan Gaji</a></li>
 						                </ul>
                                     </li>
 

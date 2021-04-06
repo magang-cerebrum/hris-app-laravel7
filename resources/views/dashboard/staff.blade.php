@@ -11,273 +11,276 @@
         width: 100%;
         height: 400px;
     }
+
     #charts {
         position: relative;
     }
+
     #years {
         position: absolute;
         right: 4px;
         top: 4px;
     }
-    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-            width: 80px;
-        }
 
-                 
-        #first .pos-rel{
-            background-color: #fedb37;
-            /* height: 250px; */
-        }
-        #second .pos-rel{
-          background-color: #e6e8e9  
-        }
-        
-        #third .pos-rel p{
-            color: white
-        }
-        #third .pos-rel{
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+        width: 80px;
+    }
+
+    #first .pos-rel {
+        background-color: #fedb37;
+        /* height: 250px; */
+    }
+
+    #second .pos-rel {
+        background-color: #e6e8e9
+    }
+
+    #third .pos-rel p {
+        color: white
+    }
+
+    #third .pos-rel {
 
         background-color: #b1560f;
+    }
+
+    @keyframes shine {
+        10% {
+            opacity: 1;
+            top: -0%;
+            left: -25%;
+            transition-property: left, top, opacity;
+            transition-duration: 0.7s, 0.7s, 0.15s;
+            transition-timing-function: linear;
         }
-        
-@keyframes shine{
-    10% {
-    opacity: 1;
-    top: -0%;
-    left: -25%;
-    transition-property: left, top, opacity;
-    transition-duration: 0.7s, 0.7s, 0.15s;
-    transition-timing-function: linear;
-  }
-  100% {
-    opacity: 0;
-    top: -0%;
-    left: -10%;
-    transition-property: left, top, opacity;
-  }
-}
 
-#second .pos-rel:after {
-  content: "";
-  position: absolute;
-  top: 0%;
-  left: -210%;
-  width: 200%;
-  height: 100%;
-  opacity: 0;
-  /* transform: rotate(30deg); */
+        100% {
+            opacity: 0;
+            top: -0%;
+            left: -10%;
+            transition-property: left, top, opacity;
+        }
+    }
 
-animation: shine 2s linear  infinite;
-animation-fill-mode: forwards;      
-background: rgba(255, 255, 255, 0.13);
-background: linear-gradient(
-    to right, 
-    rgba(255, 255, 255, 0.13) 0%,
-    rgba(255, 255, 255, 0.13) 77%,
-    rgba(255, 255, 255, 0.5) 95%,
-    rgba(255, 255, 255, 0.0) 100%
-  );
-}
+    #second .pos-rel:after {
+        content: "";
+        position: absolute;
+        top: 0%;
+        left: -210%;
+        width: 200%;
+        height: 100%;
+        opacity: 0;
 
 
+        animation: shine 2s linear infinite;
+        animation-fill-mode: forwards;
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.13) 77%,
+                rgba(255, 255, 255, 0.5) 95%,
+                rgba(255, 255, 255, 0.0) 100%);
+    }
 
-/* Active state */
+    #second .pos-rel:active:after {
+        opacity: 0;
+    }
 
-#second .pos-rel:active:after {
-  opacity: 0;
-}
+    #first .pos-rel:after {
+        content: "";
+        position: absolute;
+        top: 0%;
+        left: -210%;
+        width: 188%;
+        height: 100%;
+        opacity: 0;
+        animation: shine 2s linear infinite;
+        animation-fill-mode: forwards;
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.13) 77%,
+                rgba(255, 255, 255, 0.5) 92%,
+                rgba(255, 255, 255, 0.0) 100%);
+    }
 
-#first .pos-rel:after {
-  content: "";
-  position: absolute;
-  top: 0%;
-  left: -210%;
-  width: 188%;
-  height: 100%;
-  opacity: 0;
-  animation: shine 2s linear infinite;
-  animation-fill-mode: forwards; 
-  
-    background: rgba(255, 255, 255, 0.13);
-    background: linear-gradient(
-    to right, 
-    rgba(255, 255, 255, 0.13) 0%,
-    rgba(255, 255, 255, 0.13) 77%,
-    rgba(255, 255, 255, 0.5) 92%,
-    rgba(255, 255, 255, 0.0) 100%
-  );
-}
+    #first .pos-rel:active:after {
+        opacity: 0;
+    }
 
-#first .pos-rel:active:after {
-  opacity: 0;
-} 
+    #third .pos-rel:after {
+        content: "";
+        position: absolute;
+        top: 0%;
+        left: -210%;
+        width: 188%;
+        height: 100%;
+        opacity: 0;
+        animation: shine 2s linear infinite;
+        animation-fill-mode: forwards;
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.13) 77%,
+                rgba(255, 255, 255, 0.5) 92%,
+                rgba(255, 255, 255, 0.0) 100%);
+    }
 
+    #third .pos-rel:active:after {
+        opacity: 0;
+    }
 
-#third .pos-rel:after {
-  content: "";
-  position: absolute;
-  top: 0%;
-  left: -210%;
-  width: 188%;
-  height: 100%;
-  opacity: 0;
-  animation: shine 2s linear infinite;
-  animation-fill-mode: forwards; 
-  
-    background: rgba(255, 255, 255, 0.13);
-    background: linear-gradient(
-    to right, 
-    rgba(255, 255, 255, 0.13) 0%,
-    rgba(255, 255, 255, 0.13) 77%,
-    rgba(255, 255, 255, 0.5) 92%,
-    rgba(255, 255, 255, 0.0) 100%
-  );
-}
+    #first .ribbon span {
+        background: #fedb37;
+        color: black;
+    }
 
-#third .pos-rel:active:after {
-  opacity: 0;
-} 
+    #first .ribbon span::before {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 2px solid #fedb37;
+        border-right: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #fedb37;
+    }
 
-#first .ribbon span {
-    background: #fedb37;
-    color: black;
-}
-#first .ribbon span::before{
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 2px solid #fedb37;
-    border-right: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #fedb37;
-}
+    #first .ribbon span::after {
+        content: "";
+        position: absolute;
+        right: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 3px solid transparent;
+        border-right: 3px solid #fedb37;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #fedb37;
+    }
 
-#first .ribbon span::after{
-    content: "";
-    position: absolute;
-    right: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 3px solid transparent;
-    border-right: 3px solid #fedb37;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #fedb37;
-}
+    #second .ribbon span {
+        background: #e6e8e9;
+        color: black;
+    }
 
-#second .ribbon span {
-    background: #e6e8e9;
-    color: black;
-}
-#second .ribbon span::before{
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 2px solid #e6e8e9;
-    border-right: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #e6e8e9;
-}
+    #second .ribbon span::before {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 2px solid #e6e8e9;
+        border-right: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #e6e8e9;
+    }
 
-#second .ribbon span::after{
-    content: "";
-    position: absolute;
-    right: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 3px solid transparent;
-    border-right: 3px solid #e6e8e9;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #e6e8e9;
-}
+    #second .ribbon span::after {
+        content: "";
+        position: absolute;
+        right: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 3px solid transparent;
+        border-right: 3px solid #e6e8e9;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #e6e8e9;
+    }
 
-#third .ribbon span {
-    background: #b1560f;
-    color: black;
-}
-#third .ribbon span::before{
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 2px solid #b1560f;
-    border-right: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #b1560f;
-}
+    #third .ribbon span {
+        background: #b1560f;
+        color: black;
+    }
 
-#third .ribbon span::after{
-    content: "";
-    position: absolute;
-    right: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 3px solid transparent;
-    border-right: 3px solid #b1560f;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #b1560f;
-}
+    #third .ribbon span::before {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 2px solid #b1560f;
+        border-right: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #b1560f;
+    }
+
+    #third .ribbon span::after {
+        content: "";
+        position: absolute;
+        right: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 3px solid transparent;
+        border-right: 3px solid #b1560f;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #b1560f;
+    }
+
+    .fc-left,
+    .fc-right{
+        visibility: hidden;
+    }
+    #container .fc-event{
+        cursor: pointer;
+    }
 </style>
 @endsection
 @section('content')
-    @if (count($data_poster) > 0)
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-carousel">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            @foreach ($data_poster as $item_poster)   
-                                <li data-target="#myCarousel" data-slide-to="{{$loop->iteration}}" class="{{$loop->iteration  == 1 ? "active" : ""}}"></li>
-                            @endforeach
-                        </ol>
-            
-                        <!-- deklarasi carousel -->
-                        <div class="carousel-inner" role="listbox">
-                            @foreach ($data_poster as $item_poster)
-                                <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
-                                    <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
-                                </div>
-                            @endforeach
-                        </div>
-            
-                        <!-- membuat panah next dan previous -->
-                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                            <span class="fa fa-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                            <span class="fa fa-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+@if (count($data_poster) > 0)
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-carousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    @foreach ($data_poster as $item_poster)
+                    <li data-target="#myCarousel" data-slide-to="{{$loop->iteration}}"
+                        class="{{$loop->iteration  == 1 ? "active" : ""}}"></li>
+                    @endforeach
+                </ol>
+
+                <!-- deklarasi carousel -->
+                <div class="carousel-inner" role="listbox">
+                    @foreach ($data_poster as $item_poster)
+                    <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
+                        <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
                     </div>
+                    @endforeach
                 </div>
+
+                <!-- membuat panah next dan previous -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
-    @endif
-    <div class="row mt-10">
-        <div class="col-md-12">
-            @if (session('status'))
-                <div class="flash-mess alert-success alert alert-dismissable">
-                    {{session('status')}}
-                    <button class="close" data-dismiss="alert">
-                        <i class="fa fa-close"></i>
-                    </button>
-                </div>
-            @endif
-            <div class="panel panel-bordered panel-primary">
-                <div class="panel-heading">
-                    {{-- <i class="fa"></i> --}}
-                        
-                        <h3 class="panel-title">Grafik "{{$name}}" Tahun  
-                            
-                        <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
-                        <i></i>
-                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold" title="Anda mendapatkan Employee of the month pada tahun ini"></i>
+    </div>
+</div>
+@endif
+<div class="row mt-10">
+    <div class="col-md-12">
+        @if (session('status'))
+        <div class="flash-mess alert-success alert alert-dismissable">
+            {{session('status')}}
+            <button class="close" data-dismiss="alert">
+                <i class="fa fa-close"></i>
+            </button>
+        </div>
+        @endif
+
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Grafik "{{$name}}" Tahun
+                    <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
+                    <i></i>
+                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
+                        title="Anda mendapatkan Employee of the month pada tahun ini"></i>
                     @endif
                 </h3>
             </div>
@@ -472,10 +475,12 @@ background: linear-gradient(
                         <div class="pad-all">
                             <div class="media">
                                 <div class="media-left" style="width: 8%">
-                                    <img class="img-md img-circle img-responsive" src="{{asset('img/profile-photos/'.Auth::user()->profile_photo)}}" alt="Profile Picture">
+                                    <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.Auth::user()->profile_photo)}}"
+                                        alt="Profile Picture">
                                 </div>
                                 <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{Auth::user()->name}} #{{$rankCM}}</span> 
+                                    <span class="text-lg text-semibold">{{Auth::user()->name}} #{{$rankCM}}</span>
                                     @foreach ($user_cm as $item)
                                     <p>Score : {{$item->score}}/100</p>
                                     @endforeach
@@ -492,213 +497,244 @@ background: linear-gradient(
 </div>
 @endif
 @endsection
+
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script>
-    $(".flash-mess").fadeTo(2000, 500).slideUp(500, function(){
-    $(".flash-mess").slideUp(500);
-});
-
-    function showChange(){
-        $('#year-finder').on('change',function(e){
-        var optionSelected = $("option:selected", this);
-        var valueSelected = this.value;
-        document.getElementById("textval").innerText = valueSelected;
-        });
-    }
-
-    var data = {!! json_encode($score) !!}
-        var pageviews = [
-            [1, data[0] ?  data[0] : 0],
-            [2, data[1] ?  data[1] : 0],
-            [3, data[2] ?  data[2] : 0],
-            [4, data[3] ?  data[3] : 0],
-            [5, data[4] ?  data[4] : 0],
-            [6, data[5] ?  data[5] : 0],
-            [7, data[6] ?  data[6] : 0],
-            [8, data[7] ?  data[7] : 0],
-            [9, data[8] ?  data[8] : 0],
-            [10, data[9] ?  data[9] : 0],
-            [11, data[10] ?  data[10] : 0],
-            [12, data[11] ?  data[11] : 0]
-        ];
-        // console.log(pageviews)
-        $(document).ready(function(){
-            $.plot('#staff-charts', [
-        {
-            data: pageviews,
-            lines: {
-                show: true,
-                lineWidth: 0,
-                fill: true,
-                fillColor: {
-                    colors: ["#05032D", "#27257C",{
-                        opacity: 0.7
-                    }, {
-                        opacity: 2
-                    }]
-                }
-            },
-            points: {
-                show: true,
-                radius: 2,
-                fillColor : '#ffffffff'
-                // symbol : "square"
-            },
-            },
-            
-
-        ], {
-        series: {
-            lines: {
-                show: false
-            },
-            points: {
-                show: true,
-                fillColor : '#f5bc00'
-                // symbol:"square"
-            },
-            shadowSize: 0 // Drawing is faster without shadows
-        },
-        colors: ['#05032D'],
-       
-        grid: {
-            borderWidth: 0,
-            hoverable: true,
-            clickable: true
-        },
-        yaxis: {
-            ticks: 9,
-            min : 0,
-            max : 100,
-            tickColor: 'rgba(0,0,0,.1)'
-        },
-        xaxis: {
-
-            ticks: [[1,' Januari'], [2,'Februari'], [3,'Maret'], [4,'April'], [5,'Mei'], [6,'Juni'], [7,'Juli'], [8,'Agustus'], [9,'September'], [10,'Oktober'], [11,'November'], [12,'Desember']],
-            tickColor: 'transparent',
-            tickSize : 14,
-        },
-        tooltip: {
-            show: true,
-            content: 'Bulan: %x, Score: %y'
-        }
+    $(".flash-mess").fadeTo(2000, 500).slideUp(500, function () {
+        $(".flash-mess").slideUp(500);
     });
-        });
-        $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
 
-        $('#year-finder').on('change',function(e){
+    function showChange() {
+        $('#year-finder').on('change', function (e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
-            var url_="{{route('ajx')}}";
-            $.ajax({
-                type:"GET",
-                data:{year:valueSelected},
-                url:url_,
-                dataType:'json',
-                success:function(response){
-                    
-                    var pageviews = [
-                    [1, response.score[0] ?  response.score[0] : 0],
-                    [2, response.score[1] ?  response.score[1] : 0],
-                    [3, response.score[2] ?  response.score[2] : 0],
-                    [4, response.score[3] ?  response.score[3] : 0],
-                    [5, response.score[4] ?  response.score[4] : 0],
-                    [6, response.score[5] ?  response.score[5] : 0],
-                    [7, response.score[6] ?  response.score[6] : 0],
-                    [8, response.score[7] ?  response.score[7] : 0],
-                    [9, response.score[8] ?  response.score[8] : 0],
-                    [10, response.score[9] ?  response.score[9] : 0],
-                    [11, response.score[10] ?  response.score[10] : 0],
-                    [12, response.score[11] ?  response.score[11] : 0]
-                ];
-                if(response.sum_of_eom == 0){
-                    document.getElementById('text_eom_0').innerHTML = "Anda Belum mendapatkan Employee of the Month pada Tahun ini";
-                    document.getElementById('text_eom').innerHTML = " ";
-                    document.getElementById('eom_i_test').className = " "
-                }
-                else {
-                    document.getElementById('text_eom_0').innerHTML =" "
-                    document.getElementById('eom_i_test').className = "fa fa-trophy"
-                    document.getElementById('total_score').innerHTML = "Total Score : "+response.all_score; 
-                    document.getElementById('text_eom').innerHTML = "Jumlah Employee of the month yang anda dapatkan adalah " +response.sum_of_eom+ " yaitu bulan " + response.month_of_eom;
-                }
-                console.log(response);
-                $(document).ready(function(){
-            $.plot('#staff-charts', [
-        {
-            data: pageviews,
-            lines: {
-                show: true,
-                lineWidth: 0,
-                fill: true,
-                fillColor: {
-                    colors: ["#05032D", "#27257C",{
-                        opacity: 0.7
-                    }, {
-                        opacity: 2
-                    }]
-                }
+            document.getElementById("textval").innerText = valueSelected;
+        });
+    }
+
+    var data = {!!json_encode($score) !!}
+    var pageviews = [
+        [1, data[0] ? data[0] : 0],
+        [2, data[1] ? data[1] : 0],
+        [3, data[2] ? data[2] : 0],
+        [4, data[3] ? data[3] : 0],
+        [5, data[4] ? data[4] : 0],
+        [6, data[5] ? data[5] : 0],
+        [7, data[6] ? data[6] : 0],
+        [8, data[7] ? data[7] : 0],
+        [9, data[8] ? data[8] : 0],
+        [10, data[9] ? data[9] : 0],
+        [11, data[10] ? data[10] : 0],
+        [12, data[11] ? data[11] : 0]
+    ];
+    
+    $(document).ready(function () {
+        $.plot('#staff-charts', [{
+                data: pageviews,
+                lines: {
+                    show: true,
+                    lineWidth: 0,
+                    fill: true,
+                    fillColor: {
+                        colors: ["#05032D", "#27257C", {
+                            opacity: 0.7
+                        }, {
+                            opacity: 2
+                        }]
+                    }
+                },
+                points: {
+                    show: true,
+                    radius: 2,
+                    fillColor: '#ffffffff'
+                    // symbol : "square"
+                },
             },
-            points: {
-                show: true,
-                radius: 2,
-                fillColor : '#ffffffff'
-                // symbol : "square"
-            },
-            },
-            
+
 
         ], {
-        series: {
-            lines: {
-                show: false
+            series: {
+                lines: {
+                    show: false
+                },
+                points: {
+                    show: true,
+                    fillColor: '#f5bc00'
+                    // symbol:"square"
+                },
+                shadowSize: 0 // Drawing is faster without shadows
             },
-            points: {
-                show: true,
-                fillColor : '#f5bc00'
-                // symbol:"square"
-            },
-            shadowSize: 0 // Drawing is faster without shadows
-        },
-        colors: ['#05032D'],
-       
-        grid: {
-            borderWidth: 0,
-            hoverable: true,
-            clickable: true
-        },
-        yaxis: {
-            ticks: 9,
-            min : 0,
-            max : 100,
-            tickColor: 'rgba(0,0,0,.1)'
-        },
-        xaxis: {
+            colors: ['#05032D'],
 
-            ticks: [[1,' January'], [2,'February'], [3,'Maret'], [4,'April'], [5,'Mei'], [6,'Juni'], [7,'July'], [8,'Agustus'], [9,'September'], [10,'Oktober'], [11,'November'], [12,'Desember']],
-            tickColor: 'transparent',
-            tickSize : 14,
-        },
-        tooltip: {
-            show: true,
-            content: 'Bulan: %x, Score: %y'
+            grid: {
+                borderWidth: 0,
+                hoverable: true,
+                clickable: true
+            },
+            yaxis: {
+                ticks: 9,
+                min: 0,
+                max: 100,
+                tickColor: 'rgba(0,0,0,.1)'
+            },
+            xaxis: {
+
+                ticks: [
+                    [1, ' Januari'],
+                    [2, 'Februari'],
+                    [3, 'Maret'],
+                    [4, 'April'],
+                    [5, 'Mei'],
+                    [6, 'Juni'],
+                    [7, 'Juli'],
+                    [8, 'Agustus'],
+                    [9, 'September'],
+                    [10, 'Oktober'],
+                    [11, 'November'],
+                    [12, 'Desember']
+                ],
+                tickColor: 'transparent',
+                tickSize: 14,
+            },
+            tooltip: {
+                show: true,
+                content: 'Bulan: %x, Score: %y'
+            }
+        });
+    });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-        });
-                    // console.log(pageviews)
-                    // console.log(response.data)
-                    // console.log(response.year)
-                    
-                },
-                error : function(jXHR, textStatus, errorThrown){
-                    console.log(errorThrown)
+
+    $('#year-finder').on('change', function (e) {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        var url_ = "{{route('ajx')}}";
+        $.ajax({
+            type: "GET",
+            data: {
+                year: valueSelected
+            },
+            url: url_,
+            dataType: 'json',
+            success: function (response) {
+
+                var pageviews = [
+                    [1, response.score[0] ? response.score[0] : 0],
+                    [2, response.score[1] ? response.score[1] : 0],
+                    [3, response.score[2] ? response.score[2] : 0],
+                    [4, response.score[3] ? response.score[3] : 0],
+                    [5, response.score[4] ? response.score[4] : 0],
+                    [6, response.score[5] ? response.score[5] : 0],
+                    [7, response.score[6] ? response.score[6] : 0],
+                    [8, response.score[7] ? response.score[7] : 0],
+                    [9, response.score[8] ? response.score[8] : 0],
+                    [10, response.score[9] ? response.score[9] : 0],
+                    [11, response.score[10] ? response.score[10] : 0],
+                    [12, response.score[11] ? response.score[11] : 0]
+                ];
+                if (response.sum_of_eom == 0) {
+                    document.getElementById('text_eom_0').innerHTML =
+                        "Anda Belum mendapatkan Employee of the Month pada Tahun ini";
+                    document.getElementById('text_eom').innerHTML = " ";
+                    document.getElementById('eom_i_test').className = " "
+                } else {
+                    document.getElementById('text_eom_0').innerHTML = " "
+                    document.getElementById('eom_i_test').className = "fa fa-trophy"
+                    document.getElementById('total_score').innerHTML = "Total Score : " + response
+                        .all_score;
+                    document.getElementById('text_eom').innerHTML =
+                        "Jumlah Employee of the month yang anda dapatkan adalah " + response
+                        .sum_of_eom + " yaitu bulan " + response.month_of_eom;
                 }
-            })
+                console.log(response);
+                $(document).ready(function () {
+                    $.plot('#staff-charts', [{
+                            data: pageviews,
+                            lines: {
+                                show: true,
+                                lineWidth: 0,
+                                fill: true,
+                                fillColor: {
+                                    colors: ["#05032D", "#27257C", {
+                                        opacity: 0.7
+                                    }, {
+                                        opacity: 2
+                                    }]
+                                }
+                            },
+                            points: {
+                                show: true,
+                                radius: 2,
+                                fillColor: '#ffffffff'
+                                // symbol : "square"
+                            },
+                        },
+
+
+                    ], {
+                        series: {
+                            lines: {
+                                show: false
+                            },
+                            points: {
+                                show: true,
+                                fillColor: '#f5bc00'
+                                // symbol:"square"
+                            },
+                            shadowSize: 0 // Drawing is faster without shadows
+                        },
+                        colors: ['#05032D'],
+
+                        grid: {
+                            borderWidth: 0,
+                            hoverable: true,
+                            clickable: true
+                        },
+                        yaxis: {
+                            ticks: 9,
+                            min: 0,
+                            max: 100,
+                            tickColor: 'rgba(0,0,0,.1)'
+                        },
+                        xaxis: {
+
+                            ticks: [
+                                [1, ' January'],
+                                [2, 'February'],
+                                [3, 'Maret'],
+                                [4, 'April'],
+                                [5, 'Mei'],
+                                [6, 'Juni'],
+                                [7, 'July'],
+                                [8, 'Agustus'],
+                                [9, 'September'],
+                                [10, 'Oktober'],
+                                [11, 'November'],
+                                [12, 'Desember']
+                            ],
+                            tickColor: 'transparent',
+                            tickSize: 14,
+                        },
+                        tooltip: {
+                            show: true,
+                            content: 'Bulan: %x, Score: %y'
+                        }
+                    });
+                });
+                // console.log(pageviews)
+                // console.log(response.data)
+                // console.log(response.year)
+
+            },
+            error: function (jXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
         })
+    })
+
 </script>
 @endsection

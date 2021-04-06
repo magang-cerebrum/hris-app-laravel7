@@ -197,7 +197,7 @@
 
 						            <!--Menu list item-->
 						            <li>
-						                <a href="{{ url('admin/agenda/find')}}">
+						                <a href="{{ url('admin/agenda/calendar')}}">
 						                    <i class="fa fa-calendar"></i>
 						                    <span class="menu-title">Agenda Kerja</span>
 						                </a>

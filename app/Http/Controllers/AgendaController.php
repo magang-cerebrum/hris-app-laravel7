@@ -139,13 +139,30 @@ class AgendaController extends Controller
                 ->orWhereRaw("end_event LIKE '" . $request->periode . "%'");
         })
         ->get();
-        $cal = CAL_GREGORIAN;
-        $days_in_month = cal_days_in_month($cal, explode("-", $request->periode)[1] , explode("-", $request->periode)[0]);
+        
         return view('masterData.agenda.calendar',[
             'periode'=>$request->periode,
             'month'=>explode("-", $request->periode)[1],
             'year'=>explode("-", $request->periode)[0],
-            'day'=>$days_in_month,
+            'data' => $data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
+    }
+
+    public function index_staff(){
+        $user = Auth::user();
+        $data = MasterAgenda::where(function ($query){
+            $query->whereRaw("start_event LIKE '" . date('Y-m') . "%'")
+                ->orWhereRaw("end_event LIKE '" . date('Y-m') . "%'");
+        })
+        ->get();
+        
+        return view('staff.agenda.calendar',[
+            'month'=>date('m'),
+            'year'=>date('Y'),
             'data' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

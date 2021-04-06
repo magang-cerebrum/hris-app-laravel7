@@ -11,7 +11,7 @@
 
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
-        <h3 class="panel-title">Agenda Kerja</h3>
+        <h3 class="panel-title">Cari Agenda Kerja</h3>
     </div>
     <div class="panel-body">
         <div class="row mar-btm" >
@@ -78,8 +78,8 @@
                 },
                 error: function (jXHR, textStatus, errorThrown) {
                     Swal.fire({
-                        title: errorThrown,
-                        text: "Form belum diisi / Tidak ada data agenda untuk periode terpilih",
+                        title: 'Error!',
+                        text: "Isi form terlebih dahulu!",
                         icon: 'error',
                         width: 600
                     });

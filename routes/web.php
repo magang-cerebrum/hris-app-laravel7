@@ -93,7 +93,7 @@ Route::prefix('/admin/data-staff')->group(function(){
     Route::delete('/', [DataStaffController::class, 'destroySelected']);
     Route::get('/search', [DataStaffController::class, 'search']);
 });
-//route agenda kerja
+//route agenda kerja ==ADMIN==
 Route::prefix('/admin/agenda')->group(function(){
     Route::get('/',[AgendaController::class,'index']);
     Route::get('/add',[AgendaController::class,'create']);
@@ -102,8 +102,13 @@ Route::prefix('/admin/agenda')->group(function(){
     Route::put('/{agenda}', [AgendaController::class, 'update']);
     Route::delete('/', [AgendaController::class, 'destroy']);
     Route::get('/search',[AgendaController::class, 'search']);
-    Route::get('/find',[AgendaController::class,'searchCalendar']);
+    Route::get('/calendar',[AgendaController::class,'searchCalendar']);
     Route::post('/calendar',[AgendaController::class,'calendar']);
+});
+
+//route agenda kerja ==STAFF==
+Route::prefix('/staff/agenda')->group(function(){
+    Route::get('/',[AgendaController::class,'index_staff']);
 });
 //route promotion staff 
 Route::prefix('/admin/data-staff/promote')->group(function(){
@@ -362,8 +367,9 @@ Route::get('/admin/recruitment/search', [MasterRecruitmentController::class,'sea
 Route::delete('/admin/recruitment/delete', [MasterRecruitmentController::class,'destroySelected']);
 
 
-Route::GET('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
-Route::POST('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
-Route::POST('/admin/presence/reset', [PresenceController::class,'resetStats']);
+Route::get('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
+Route::post('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
+Route::post('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
 Route::view('/test', 'pdf.salary');
+Route::get('/test/hitung',[AgendaController::class,'test']);

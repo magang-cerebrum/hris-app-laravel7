@@ -1,6 +1,10 @@
 <link href="{{asset("plugins/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet">
 <link href="{{asset("plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css")}}" rel="stylesheet">
 <style>
+    .fc-left,
+    .fc-right{
+        visibility: hidden;
+    }
     #container .fc-event{
         cursor: pointer;
     }
@@ -22,18 +26,18 @@
 <script>
     $(document).ready(function () {
         $('#calendar').fullCalendar({
+            height: 575,
             fixedWeekCount: false,
             header:{
-                left: 'prev,next',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
             },
             defaultDate: '<?= $year ?>-<?= $month ?>-01',
             eventLimit: true,
+            timeFormat: 'H:mm',
             eventRender: function(eventObj, $el) {
                 $el.popover({
                     title: eventObj.title,
-                    content: eventObj.description,
+                    content:  new Date(eventObj.start).getUTCHours() + ':' + new Date(eventObj.start).getUTCMinutes() + ' - ' +  new Date(eventObj.end).getUTCHours() + ':' + new Date(eventObj.end).getUTCMinutes()  + ' | ' + eventObj.description,
                     trigger: 'hover',
                     placement: 'top',
                     container: 'body'
@@ -41,11 +45,12 @@
             },
             events: [
                 <?php foreach ($data as $item) { 
-                    
-                    for ($i=1; $i <= 1; $i++) { ?>
+                    $start_date = intval(explode('-',explode(' ',$item->start_event)[0])[2]);
+                    $interval = date_diff(date_create($item->start_event), date_create($item->end_event))->format('%d');
+                    for ($i=$start_date; $i <= ($start_date + $interval); $i++) { ?>
                         <?php 
-                            $start = explode(" ", $item->start_event)[0] . 'T' . explode(" ", $item->start_event)[1];
-                            $end = explode(" ", $item->end_event)[0] . 'T' . explode(" ", $item->end_event)[1];
+                            $start = substr_replace(explode(" ", $item->start_event)[0],$i,9,2) . 'T' . explode(" ", $item->start_event)[1];
+                            $end = substr_replace(explode(" ", $item->start_event)[0],$i,9,2) . 'T' . explode(" ", $item->end_event)[1];
                         ?>
                         {
                             title: '<?= $item->title ?>',

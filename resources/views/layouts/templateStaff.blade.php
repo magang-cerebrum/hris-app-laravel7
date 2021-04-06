@@ -281,6 +281,8 @@
                                             <ul class="collapse">
                                                 <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
                                                 <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
+											    <li><a href="{{ url('staff/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a></li>
+                                                
                                             </ul>
                                         </li>
 

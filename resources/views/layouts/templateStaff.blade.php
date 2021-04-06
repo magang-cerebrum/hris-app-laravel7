@@ -221,6 +221,14 @@
 
                                         <!--Menu list item-->
                                         <li>
+                                            <a href="{{ url('staff/agenda')}}">
+                                                <i class="fa fa-calendar"></i>
+                                                <span class="menu-title">Agenda Kerja</span>
+                                            </a>
+                                        </li>
+
+                                        <!--Menu list item-->
+                                        <li>
                                             <a href="{{ url('staff/schedule')}}">
                                                 <i class="fa fa-calendar-check-o"></i>
                                                 <span class="menu-title">Jadwal Kerja</span>

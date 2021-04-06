@@ -569,6 +569,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\LogPresence' => __DIR__ . '/../..' . '/app/LogPresence.php',
         'App\\MasterAchievement' => __DIR__ . '/../..' . '/app/MasterAchievement.php',
+        'App\\MasterAgenda' => __DIR__ . '/../..' . '/app/MasterAgenda.php',
         'App\\MasterCutAllowanceType' => __DIR__ . '/../..' . '/app/MasterCutAllowanceType.php',
         'App\\MasterDivision' => __DIR__ . '/../..' . '/app/MasterDivision.php',
         'App\\MasterHoliday' => __DIR__ . '/../..' . '/app/MasterHoliday.php',

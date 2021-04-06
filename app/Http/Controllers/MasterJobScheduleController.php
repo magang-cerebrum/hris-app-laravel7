@@ -503,7 +503,7 @@ class MasterJobScheduleController extends Controller
 
     public function edit_post(Request $request)
     {
-        function check($check_shift, $request) {
+        function checkEdit($check_shift, $request) {
             global $total_hour;
             $id = $request->$check_shift;
             $shift_name = '';
@@ -524,37 +524,37 @@ class MasterJobScheduleController extends Controller
             $total_hour = 0;
 
             $check_id = 'id_'.$i;
-            $shift_1 = check('shift_1_'.$i, $request);
-            $shift_2 = check('shift_2_'.$i, $request);
-            $shift_3 = check('shift_3_'.$i, $request);
-            $shift_4 = check('shift_4_'.$i, $request);
-            $shift_5 = check('shift_5_'.$i, $request);
-            $shift_6 = check('shift_6_'.$i, $request);
-            $shift_7 = check('shift_7_'.$i, $request);
-            $shift_8 = check('shift_8_'.$i, $request);
-            $shift_9 = check('shift_9_'.$i, $request);
-            $shift_10 = check('shift_10_'.$i, $request);
-            $shift_11 = check('shift_11_'.$i, $request);
-            $shift_12 = check('shift_12_'.$i, $request);
-            $shift_13 = check('shift_13_'.$i, $request);
-            $shift_14 = check('shift_14_'.$i, $request);
-            $shift_15 = check('shift_15_'.$i, $request);
-            $shift_16 = check('shift_16_'.$i, $request);
-            $shift_17 = check('shift_17_'.$i, $request);
-            $shift_18 = check('shift_18_'.$i, $request);
-            $shift_19 = check('shift_19_'.$i, $request);
-            $shift_20 = check('shift_20_'.$i, $request);
-            $shift_21 = check('shift_21_'.$i, $request);
-            $shift_22 = check('shift_22_'.$i, $request);
-            $shift_23 = check('shift_23_'.$i, $request);
-            $shift_24 = check('shift_24_'.$i, $request);
-            $shift_25 = check('shift_25_'.$i, $request);
-            $shift_26 = check('shift_26_'.$i, $request);
-            $shift_27 = check('shift_27_'.$i, $request);
-            $shift_28 = check('shift_28_'.$i, $request);
-            $shift_29 = check('shift_29_'.$i, $request);
-            $shift_30 = check('shift_30_'.$i, $request);
-            $shift_31 = check('shift_31_'.$i, $request);
+            $shift_1 = checkEdit('shift_1_'.$i, $request);
+            $shift_2 = checkEdit('shift_2_'.$i, $request);
+            $shift_3 = checkEdit('shift_3_'.$i, $request);
+            $shift_4 = checkEdit('shift_4_'.$i, $request);
+            $shift_5 = checkEdit('shift_5_'.$i, $request);
+            $shift_6 = checkEdit('shift_6_'.$i, $request);
+            $shift_7 = checkEdit('shift_7_'.$i, $request);
+            $shift_8 = checkEdit('shift_8_'.$i, $request);
+            $shift_9 = checkEdit('shift_9_'.$i, $request);
+            $shift_10 = checkEdit('shift_10_'.$i, $request);
+            $shift_11 = checkEdit('shift_11_'.$i, $request);
+            $shift_12 = checkEdit('shift_12_'.$i, $request);
+            $shift_13 = checkEdit('shift_13_'.$i, $request);
+            $shift_14 = checkEdit('shift_14_'.$i, $request);
+            $shift_15 = checkEdit('shift_15_'.$i, $request);
+            $shift_16 = checkEdit('shift_16_'.$i, $request);
+            $shift_17 = checkEdit('shift_17_'.$i, $request);
+            $shift_18 = checkEdit('shift_18_'.$i, $request);
+            $shift_19 = checkEdit('shift_19_'.$i, $request);
+            $shift_20 = checkEdit('shift_20_'.$i, $request);
+            $shift_21 = checkEdit('shift_21_'.$i, $request);
+            $shift_22 = checkEdit('shift_22_'.$i, $request);
+            $shift_23 = checkEdit('shift_23_'.$i, $request);
+            $shift_24 = checkEdit('shift_24_'.$i, $request);
+            $shift_25 = checkEdit('shift_25_'.$i, $request);
+            $shift_26 = checkEdit('shift_26_'.$i, $request);
+            $shift_27 = checkEdit('shift_27_'.$i, $request);
+            $shift_28 = checkEdit('shift_28_'.$i, $request);
+            $shift_29 = checkEdit('shift_29_'.$i, $request);
+            $shift_30 = checkEdit('shift_30_'.$i, $request);
+            $shift_31 = checkEdit('shift_31_'.$i, $request);
 
 
             DB::table('master_job_schedules')

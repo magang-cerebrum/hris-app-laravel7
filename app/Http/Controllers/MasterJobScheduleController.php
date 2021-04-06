@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\MasterJobSchedule;
 use App\MasterUser;
 use App\MasterShift;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -151,22 +152,7 @@ class MasterJobScheduleController extends Controller
     {
         $user = Auth::user();
         $division = division_members($user->position_id);
-        // $data = DB::table('master_users')
-        // ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-        // ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-        // ->where('master_users.status','=','Aktif')
-        // ->whereIn('master_users.division_id',$division)
-        // ->whereNotIn('master_users.division_id',[7])
-        // ->select(
-        //     'master_users.id as user_id',
-        //     'master_users.nip as user_nip',
-        //     'master_users.name as user_name',
-        //     'master_users.division_id',
-        //     'master_users.position_id',
-        //     'master_divisions.name as division_name',
-        //     'master_positions.name as position_name'
-        //     )
-        // ->get();
+
         $current_month = date('m');
         $current_year = date('Y');
         $month = array();
@@ -200,8 +186,6 @@ class MasterJobScheduleController extends Controller
 
             array_push($month, switch_month($temp_month));
         }
-
-        dd($month, $year);
         
         $data = DB::table('master_job_schedules')
         ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
@@ -209,8 +193,13 @@ class MasterJobScheduleController extends Controller
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->where('master_users.status','=','Aktif')
         ->whereIn('master_users.division_id',$division)
+        ->whereIn('master_job_schedules.month',$month)
+        ->whereIn('master_job_schedules.year',$year)
         ->whereNotIn('master_users.division_id',[7])
         ->select(
+            'master_job_schedules.id as id',
+            'master_job_schedules.month as month',
+            'master_job_schedules.year as year',
             'master_users.id as user_id',
             'master_users.nip as user_nip',
             'master_users.name as user_name',
@@ -229,7 +218,7 @@ class MasterJobScheduleController extends Controller
                 'id'=>$user->id
             ]);
         } else {
-            return view('staff.schedule.create', [
+            return view('staff.schedule.editCreate', [
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -256,15 +245,15 @@ class MasterJobScheduleController extends Controller
         $month = switch_month($split[0]);
         $days_in_month = cal_days_in_month($cal, $split[0], $split[1]);
         $data_holiday = DB::table('master_holidays')
-        ->where('date', 'LIKE', $split[1].'-'.$month.'%')->get();
+        ->where('date', 'LIKE', $split[1].'-'.$split[0].'%')->get();
 
         $data_paid_leave = DB::table('accepted_paid_leaves')
-        ->where('date', 'LIKE', $split[1].'-'.$month.'%')
+        ->where('date', 'LIKE', $split[1].'-'.$split[0].'%')
         ->whereIn('user_id',$data_id)
         ->get();
 
         $data_wfh = DB::table('accepted_work_from_homes')
-        ->where('date', 'LIKE', $split[1].'-'.$month.'%')
+        ->where('date', 'LIKE', $split[1].'-'.$split[0].'%')
         ->whereIn('user_id',$data_id)
         ->get();
 
@@ -274,7 +263,6 @@ class MasterJobScheduleController extends Controller
                 'data_holiday'=>$data_holiday,
                 'data_paid_leave'=>$data_paid_leave,
                 'data_wfh'=>$data_wfh,
-                'warna'=>'#00ff00',
                 'count_day'=>$days_in_month,
                 'number_of_month'=>$split[0],
                 'month'=>$month,
@@ -304,9 +292,47 @@ class MasterJobScheduleController extends Controller
         }
     }
 
+    public function schedule_edit(Request $request)
+    {
+        $user = Auth::user();
+        $ids = $request->input('check');
+
+        $data = DB::table('master_job_schedules')
+        ->whereIn('master_job_schedules.id',$ids)
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->select(
+            'master_job_schedules.*',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name'
+        )
+        ->get();
+
+        $data_shift = MasterShift::all();
+
+        if($user->role_id == 1){
+            return view('masterData.schedule.edit', [
+                'data'=>$data,
+                'data_shift'=>$data_shift,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        } else {
+            return view('staff.schedule.edit', [
+                'data'=>$data,
+                'data_shift'=>$data_shift,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
+    }
+
     public function schedule_post(Request $request)
     {
-        function check($check_shift, $check_day, $request, $id) {
+        function check($check_shift, $check_day, $request, $user_id) {
             global $total_hour;
             $id = $request->$check_shift;
             $datas = MasterShift::All();
@@ -315,28 +341,35 @@ class MasterJobScheduleController extends Controller
                 if($id == $data->id) {
                     $total_hour += $data->total_hour;
                     $shift_name = $data->name;
-                    
                 }
             }
-            // dd($request);
-            // dd($shift_name);
+
+            $check_accept_wfh = DB::table('accepted_work_from_homes')
+            ->where('date', '=', $request->year.'.'.switch_month($request->month, false).'-'.($check_day/10 < 1 ? '0'.$check_day : $check_day))
+            ->where('user_id', '=', $user_id)
+            ->get();
+
+            if (count($check_accept_wfh) != 0 && $shift_name != 'WFH') {
+                DB::statement('UPDATE work_from_homes SET `days` = `days` - 1 WHERE `id` = '.$check_accept_wfh->wfh_id);
+                DB::table('accepted_work_from_homes')->where('id', '=', $check_accept_wfh->id)->delete();
+            } 
 
             $check_accept_paid = DB::table('accepted_paid_leaves')
             ->where('date', '=', $request->year.'.'.switch_month($request->month, false).'-'.($check_day/10 < 1 ? '0'.$check_day : $check_day))
-            ->where('user_id', '=', $id)
+            ->where('user_id', '=', $user_id)
             ->get();
 
             if (count($check_accept_paid) != 0 && $shift_name != 'Cuti') {
-                DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$id);
-                DB::statement('UPDATE master_users SET `yearly_leave_remaining` = `yearly_leave_remaining` + 1 WHERE `id` = '.$id);
-                DB::table('accepted_paid_leaves')->where('id', '=', $id)->delete();
+                DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$check_accept_paid->paid_leave_id);
+                DB::statement('UPDATE master_users SET `yearly_leave_remaining` = `yearly_leave_remaining` + 1 WHERE `id` = '.$user_id);
+                DB::table('accepted_paid_leaves')->where('id', '=', $check_accept_paid->id)->delete();
             }   
 
             $check_transaction_paid = DB::table('transaction_paid_leaves')
-            ->where('user_id', '=', $id)
-            ->whereIn('status', ['Diajukan', 'Pending'])
+            ->where('user_id', '=', $user_id)
+            ->whereNotIn('status', ['Diterima', 'Cancel', 'Ditolak', 'Ditolak-Chief'])
             ->get();
-
+            
             if (count($check_accept_paid) != 0 && $shift_name != 'Cuti') {
                 foreach($check_transaction_paid as $item) {
                     $transaction_interval = date_diff(date_create($item->paid_leave_date_start),date_create($item->paid_leave_date_end));
@@ -347,6 +380,27 @@ class MasterJobScheduleController extends Controller
                         $check_transaction_days = date('Y-m-d', strtotime('+1 days', strtotime($transaction_date_start)));
                         if ($check_transaction_days == $request->year.'-'.$request->month.'-'.$check_day) {
                             DB::statement('UPDATE transaction_paid_leaves SET `days` = `days` - 1 WHERE `id` = '.$item->id);
+                        }
+                        $transaction_date_start = $check_transaction_days;
+                    }
+                }
+            }
+
+            $check_transaction_wfh = DB::table('work_from_homes')
+            ->where('user_id', '=', $user_id)
+            ->whereNotIn('status', ['Diterima', 'Cancel', 'Ditolak', 'Ditolak-Chief'])
+            ->get();
+            
+            if (count($check_accept_wfh) != 0 && $shift_name != 'WFH') {
+                foreach($check_transaction_wfh as $item_wfh) {
+                    $transaction_interval = date_diff(date_create($item_wfh->wfh_date_start),date_create($item_wfh->wfh_date_end));
+                    $transaction_total_day = $transaction_interval->format('%a') + 1;
+
+                    $transaction_date_start = date('Y-m-d', strtotime('-1 days', strtotime($item_wfh->wfh_date_start)));
+                    for ($x = 0; $x <$transaction_total_day; $x++) {
+                        $check_transaction_days = date('Y-m-d', strtotime('+1 days', strtotime($transaction_date_start)));
+                        if ($check_transaction_days == $request->year.'-'.$request->month.'-'.$check_day) {
+                            DB::statement('UPDATE work_from_homes SET `days` = `days` - 1 WHERE `id` = '.$item_wfh->id);
                         }
                         $transaction_date_start = $check_transaction_days;
                     }
@@ -447,6 +501,107 @@ class MasterJobScheduleController extends Controller
         }
     }
 
+    public function edit_post(Request $request)
+    {
+        function check($check_shift, $request) {
+            global $total_hour;
+            $id = $request->$check_shift;
+            $shift_name = '';
+            if ($id != null) {
+                $datas = MasterShift::All();
+                foreach ($datas as $data) {
+                    if($id == $data->id) {
+                        $total_hour += $data->total_hour;
+                        $shift_name = $data->name;
+                    }
+                }
+            }
+            return $shift_name;
+        }
+
+        for ($i = 1; $i <= $request->count; $i++) {
+            global $total_hour;
+            $total_hour = 0;
+
+            $check_id = 'id_'.$i;
+            $shift_1 = check('shift_1_'.$i, $request);
+            $shift_2 = check('shift_2_'.$i, $request);
+            $shift_3 = check('shift_3_'.$i, $request);
+            $shift_4 = check('shift_4_'.$i, $request);
+            $shift_5 = check('shift_5_'.$i, $request);
+            $shift_6 = check('shift_6_'.$i, $request);
+            $shift_7 = check('shift_7_'.$i, $request);
+            $shift_8 = check('shift_8_'.$i, $request);
+            $shift_9 = check('shift_9_'.$i, $request);
+            $shift_10 = check('shift_10_'.$i, $request);
+            $shift_11 = check('shift_11_'.$i, $request);
+            $shift_12 = check('shift_12_'.$i, $request);
+            $shift_13 = check('shift_13_'.$i, $request);
+            $shift_14 = check('shift_14_'.$i, $request);
+            $shift_15 = check('shift_15_'.$i, $request);
+            $shift_16 = check('shift_16_'.$i, $request);
+            $shift_17 = check('shift_17_'.$i, $request);
+            $shift_18 = check('shift_18_'.$i, $request);
+            $shift_19 = check('shift_19_'.$i, $request);
+            $shift_20 = check('shift_20_'.$i, $request);
+            $shift_21 = check('shift_21_'.$i, $request);
+            $shift_22 = check('shift_22_'.$i, $request);
+            $shift_23 = check('shift_23_'.$i, $request);
+            $shift_24 = check('shift_24_'.$i, $request);
+            $shift_25 = check('shift_25_'.$i, $request);
+            $shift_26 = check('shift_26_'.$i, $request);
+            $shift_27 = check('shift_27_'.$i, $request);
+            $shift_28 = check('shift_28_'.$i, $request);
+            $shift_29 = check('shift_29_'.$i, $request);
+            $shift_30 = check('shift_30_'.$i, $request);
+            $shift_31 = check('shift_31_'.$i, $request);
+
+
+            DB::table('master_job_schedules')
+            ->where('id', $request->$check_id)
+            ->update([
+                'shift_1'=>$shift_1,
+                    'shift_2'=>$shift_2,
+                    'shift_3'=>$shift_3,
+                    'shift_4'=>$shift_4,
+                    'shift_5'=>$shift_5,
+                    'shift_6'=>$shift_6,
+                    'shift_7'=>$shift_7,
+                    'shift_8'=>$shift_8,
+                    'shift_9'=>$shift_9,
+                    'shift_10'=>$shift_10,
+                    'shift_11'=>$shift_11,
+                    'shift_12'=>$shift_12,
+                    'shift_13'=>$shift_13,
+                    'shift_14'=>$shift_14,
+                    'shift_15'=>$shift_15,
+                    'shift_16'=>$shift_16,
+                    'shift_17'=>$shift_17,
+                    'shift_18'=>$shift_18,
+                    'shift_19'=>$shift_19,
+                    'shift_20'=>$shift_20,
+                    'shift_21'=>$shift_21,
+                    'shift_22'=>$shift_22,
+                    'shift_23'=>$shift_23,
+                    'shift_24'=>$shift_24,
+                    'shift_25'=>$shift_25,
+                    'shift_26'=>$shift_26,
+                    'shift_27'=>$shift_27,
+                    'shift_28'=>$shift_28,
+                    'shift_29'=>$shift_29,
+                    'shift_30'=>$shift_30,
+                    'shift_31'=>$shift_31,
+                    'total_hour'=>$total_hour
+            ]);
+        }
+        Alert::success('Berhasil!', 'Jadwal staff berhasil dirubah!');
+        if (Auth::user()->role_id == 1) {
+            return redirect('/admin/schedule');
+        } else {
+            return redirect('/staff/schedule/division');
+        }
+    }
+
     public function result_calendar(Request $request)
     {
         $user = Auth::user();
@@ -498,5 +653,144 @@ class MasterJobScheduleController extends Controller
             ]);
         }
         
+    }
+
+
+    public function CopySchedule(Request $request){
+        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+        $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+        $data = DB::table('master_job_schedules')
+        ->where('month', '=', switch_month(date('m')))
+        ->OrWhere('month','=',$acm)
+        ->where('year', '=',date('Y'))
+        ->whereNotIn('division_id',[7])
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->select(
+            'master_job_schedules.*',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name'
+        )->get();
+        
+        $user = Auth::user();
+        return view('masterData.schedule.copy',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data,
+        ]);
+    }
+
+    public function ajaxCal(Request $request){
+        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+        $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+        $firstPeriode = $request->first_periode;
+        $splitFirstPeriode = explode('/',$firstPeriode);
+        $dataScheduleFirstPeriode = DB::table('master_job_schedules')
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->where('month','=',switch_month($splitFirstPeriode[0]))
+            ->where('year', '=',$splitFirstPeriode[1])
+            ->where('master_users.status','Aktif')
+            ->whereNotIn('division_id',[7])
+            ->select(
+                'master_job_schedules.*',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name'
+            )->get();
+            $id = array();
+            foreach($dataScheduleFirstPeriode as $periodeItems){
+                array_push($id,$periodeItems->user_id);
+            }
+        $dataUser = DB::table('master_users')
+        ->whereNotIn('id',$id)
+        ->where('master_users.status','Aktif')
+        ->whereNotIn('division_id',[7])
+        ->select('name','id')->get();
+        
+        
+        return response()->json([
+            // 'dataRadio'=>$dataRadio,
+            // 'dataCheckBox'=>$dataCheckBox,
+            // 'secondPeriode'=>$secondPeriode
+            // 'first_periode'=>$firstPeriode,
+            'dataUser'=>$dataUser,
+            
+        ]);
+    }
+    public function ajaxCheckBox(Request $request){
+        $check = $request->checkBox_val;
+        $chosens = $request->chosen;
+        $chosenUser = DB::table('master_users')
+        ->select('name')
+        ->where('id',$chosens)
+        ->get();
+        $nameofUser = DB::table('master_users')
+        ->whereIn('id',$check)
+        ->select('name')
+        ->get();
+       return response()->json([
+        'names'=>$nameofUser,
+        'chosenUser'=>$chosenUser
+        // 'check'=>$check
+       ]);
+    }
+
+    public function copied(Request $request){
+        $date = explode('/',$request->first);
+        $chosenCopy = $request->chosen;
+        $chosenTargetToCopy = $request->chosen_checkbox;
+        $dataScheduleCopy = DB::table('master_job_schedules')
+        ->where('user_id',$chosenCopy)
+        ->where('year',$date[1])
+        ->where('month',switch_month($date[0]) )
+        ->first();
+
+        $arrayData = array();
+        for($i = 1 ; $i<=31;$i++ ){
+            $tempName = 'shift_'.$i;
+            array_push($arrayData,$dataScheduleCopy->$tempName);
+        }
+        $totalHour = $dataScheduleCopy->total_hour;
+        foreach($chosenTargetToCopy as $itemTargetCopy){
+            MasterJobSchedule::create([
+                'month'=>switch_month($date[0]),
+                'year'=>$date[1],
+                'user_id'=>$itemTargetCopy,
+                'shift_1'=>$arrayData[0],
+                'shift_2'=>$arrayData[1],
+                'shift_3'=>$arrayData[2],
+                'shift_4'=>$arrayData[3],
+                'shift_5'=>$arrayData[4],
+                'shift_6'=>$arrayData[5],
+                'shift_7'=>$arrayData[6],
+                'shift_8'=>$arrayData[7],
+                'shift_9'=>$arrayData[8],
+                'shift_10'=>$arrayData[9],
+                'shift_11'=>$arrayData[10],
+                'shift_12'=>$arrayData[11],
+                'shift_13'=>$arrayData[12],
+                'shift_14'=>$arrayData[13],
+                'shift_15'=>$arrayData[14],
+                'shift_16'=>$arrayData[15],
+                'shift_17'=>$arrayData[16],
+                'shift_18'=>$arrayData[17],
+                'shift_19'=>$arrayData[18],
+                'shift_20'=>$arrayData[19],
+                'shift_21'=>$arrayData[20],
+                'shift_22'=>$arrayData[21],
+                'shift_23'=>$arrayData[22],
+                'shift_24'=>$arrayData[23],
+                'shift_25'=>$arrayData[24],
+                'shift_26'=>$arrayData[25],
+                'shift_27'=>$arrayData[26],
+                'shift_28'=>$arrayData[27],
+                'shift_29'=>$arrayData[28],
+                'shift_30'=>$arrayData[29],
+                'shift_31'=>$arrayData[30],
+                'total_hour'=>$totalHour
+            ]);
+        }
+        return redirect('/admin/schedule');
+        // dd($arrayData);
     }
 }

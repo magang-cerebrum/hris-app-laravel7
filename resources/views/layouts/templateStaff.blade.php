@@ -289,6 +289,7 @@
                                             <ul class="collapse">
                                                 <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
                                                 <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
+                                                <li><a href="{{ url('staff/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a></li>
                                             </ul>
                                         </li>
 

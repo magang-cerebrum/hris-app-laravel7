@@ -10,17 +10,17 @@
 @endsection
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title">Pilih Staff untuk Jadwal Kerja</h3>
+        <h3 class="panel-title">Pilih Staff Untuk Edit Jadwal Kerja</h3>
     </div>
     <div class="panel-body">
-            <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-check-user-month" class="form-horizontal">
+            <form action="{{ url('/admin/schedule/edit-schedule')}}" method="POST" style="display: inline" id="form-check-user-month" class="form-horizontal">
                 @csrf
                 <div class="row">
                     <div class="col-sm-8">
                         <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
                             data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()">
-                            <i class="btn-labeled fa fa-plus"></i>
-                            Buat Jadwal Kerja
+                            <i class="btn-labeled fa fa-pencil"></i>
+                            Edit Jadwal Kerja
                         </button>
                         <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
                     </div>
@@ -47,7 +47,7 @@
                                     <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
                                 </span>
                                 <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
-                                    autocomplete="off" id="periode" readonly>
+                                    autocomplete="off" id="periode" readonly onchange="filter_division()">
                             </div>
                         </div>
                     </div>
@@ -61,6 +61,7 @@
                     <thead>
                         <tr>
                             <th class="sorting text-center" tabindex="0" style="width: 6%">Checkbox</th>
+                            <th class="sorting text-center" tabindex="0">Periode</th>
                             <th class="sorting text-center" tabindex="0">NIP</th>
                             <th class="sorting text-center" tabindex="0">Nama</th>
                             <th class="sorting text-center" tabindex="0">Divisi</th>
@@ -70,7 +71,8 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr class="sorting text-center" tabindex="0">
-                                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->user_id}}"></td>
+                                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}"></td>
+                                <td class="text-center">{{$item->month.' - '.$item->year}}</td>
                                 <td class="text-center">{{$item->user_nip}}</td>
                                 <td class="text-center">{{$item->user_name}}</td>
                                 <td class="text-center">{{$item->division_name}}</td>
@@ -93,6 +95,7 @@
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+<script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     var queue = new Array();
     $(document).ready(function () {
@@ -104,13 +107,15 @@
             startView: 'months',
             orientation: 'bottom',
             forceParse: false,
+            startDate: '-1m',
+            endDate: '+1m',
         });
         $('#filter').selectpicker({
             dropupAuto: false
         });
         $('.sub_chk').on('click', function(){
             var currentRows = $(this).closest("tr");
-            var valueRowsName = currentRows.find("td:eq(2)").text();
+            var valueRowsName = currentRows.find("td:eq(3)").text();
             if($(this).is(':checked',true)) {
                 queue.push(valueRowsName+', ');
             } else {
@@ -125,59 +130,80 @@
     function submit_add(){
         event.preventDefault();
         var check_user = document.querySelector('.sub_chk:checked');
-        var check_year = document.getElementById('periode').value;
-        if (check_year != '' && check_user != null){
+        if (check_user != null){
                 $('#form-check-user-month').submit();
         }
-        else if (check_year == '' && check_user == null) {
+        else {
             Swal.fire({
                     title: 'Sepertinya ada kesalahan...',
-                    text: "Mohon isi tahun dan pilih staff terlebih dahulu...",
+                    text: "Mohon pilih staff terlebih dahulu...",
                     icon: 'error',
             });
-            return false;
-        }
-        else if (check_year == '') {
-            Swal.fire({
-                    title: 'Sepertinya ada kesalahan...',
-                    text: "Mohon isi periode terlebih dahulu...",
-                    icon: 'error',
-            });
-            return false;
-        }
-        else if (check_user == null){
-            Swal.fire({
-                title: 'Sepertinya ada kesalahan...',
-                text: "Tidak ada staff yang dipilih untuk diatur jadwalnya!",
-                icon: 'error',
-            });
-            event.preventDefault();
             return false;
         }
     }
 
     //live search
     function filter_division() {
-        var input, filter, table, tr, td, i, txtValue;
+        var input, filter, input_periode, periode, table, tr, td_periode, td_divisi, i, txt_periode_value, txt_divisi_value;
         input = document.getElementById("filter");
-        filter = input.value.toUpperCase();
-        if(filter == ' '){$("#masterdata-filter-schedule").addClass("hidden");}
-        else{$("#masterdata-filter-schedule").removeClass("hidden");}
-        table = document.getElementById("masterdata-filter-schedule");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 6; j++ ){
-                    td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
-                    }
+        filter = input.value;
+
+        input_periode = document.getElementById('periode').value;
+        periode = periodic(input_periode);
+
+        if (filter != ' ' && input_periode != '') {
+            $("#masterdata-filter-schedule").removeClass("hidden");
+            table = document.getElementById("masterdata-filter-schedule");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                td_periode = tr[i].getElementsByTagName("td")[1];
+                td_divisi = tr[i].getElementsByTagName("td")[4];
+
+                txt_periode_value = td_periode.textContent || td_periode.innerText;
+                txt_divisi_value = td_divisi.textContent || td_divisi.innerText;
+
+                if ((txt_divisi_value.indexOf(filter) > -1) && (txt_periode_value.indexOf(periode) > -1)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
                 }
             }
+        }
+        else if (filter != ' ') {
+            $("#masterdata-filter-schedule").removeClass("hidden");
+            table = document.getElementById("masterdata-filter-schedule");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                td_divisi = tr[i].getElementsByTagName("td")[4];
+
+                txt_divisi_value = td_divisi.textContent || td_divisi.innerText;
+
+                if (txt_divisi_value.indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+        else if (input_periode != '') {
+            $("#masterdata-filter-schedule").removeClass("hidden");
+            table = document.getElementById("masterdata-filter-schedule");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                td_periode = tr[i].getElementsByTagName("td")[1];
+
+                txt_periode_value = td_periode.textContent || td_periode.innerText;
+
+                if (txt_periode_value.indexOf(periode) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+        else {
+            $("#masterdata-filter-schedule").addClass("hidden");
         }
     }
 </script>

@@ -234,7 +234,9 @@
 						                <ul class="collapse">
                                             <li><a href="{{ url('admin/schedule')}}"><i class="psi-calendar-4"></i>Daftar Jadwal</a></li>
 											<li><a href="{{ url('admin/schedule/add')}}"><i class="psi-checked-user"></i>Tambah Jadwal</a></li>
-						                </ul>
+                                            <li><a href="{{ url('admin/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a></li>
+											<li><a href="{{ url('admin/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a></li>
+                                        </ul>
 						            </li>
                                     
 						            <!--Menu list item-->

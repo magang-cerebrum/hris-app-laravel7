@@ -3,27 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\MasterOvertime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class OvertimeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $overtime = MasterOvertime::paginate(10);
+        return view('masterdata.overtime.searchOvertime', [
+            'overtime' => $overtime,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function ajaxList(Request $request)
+    {
+        $data = MasterOvertime::leftJoin('master_users','master_overtimes.user_id','=','master_users.id')
+        ->where('month',switch_month(explode('-',$request->periode)[1]))
+        ->where('year',explode('-',$request->periode)[0])
+        ->select([
+            'master_overtimes.*',
+            'master_users.name as user_name'
+        ])
+        ->get();
+        return view('masterdata.overtime.list', [
+            'data' => $data,
+            'month' => explode('-',$request->periode)[1],
+            'year' => explode('-',$request->periode)[0]
+        ]);
+    }
+
     public function create()
     {
         $user = Auth::user();

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateOvertimesTable extends Migration
+class CreateMasterOvertimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateOvertimesTable extends Migration
     public function up()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        Schema::create('overtimes', function (Blueprint $table) {
+        Schema::create('master_overtimes', function (Blueprint $table) {
             $table->id();
             $table->string('month', 10);
             $table->string('year', 5);
@@ -36,6 +36,6 @@ class CreateOvertimesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('overtimes');
+        Schema::dropIfExists('master_overtimes');
     }
 }

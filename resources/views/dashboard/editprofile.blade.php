@@ -14,15 +14,6 @@
     <div class="panel-heading">
         <h3 class="panel-title">Edit Profile User</h3>
     </div>
-    @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
     <form class="form-horizontal" method="POST"
         action="{{($data->role_id == 1 ? '/admin/profile/'.$data->id : '/staff/profile/'.$data->id)}}">
         @csrf

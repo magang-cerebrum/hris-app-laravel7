@@ -8,6 +8,9 @@
     #container .fc-event{
         cursor: pointer;
     }
+    a.fc-more{
+        font-weight: bold;
+    }
 </style>
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">

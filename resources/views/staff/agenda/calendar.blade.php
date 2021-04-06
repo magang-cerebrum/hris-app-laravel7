@@ -13,6 +13,9 @@
     #container .fc-event{
         cursor: pointer;
     }
+    a.fc-more{
+        font-weight: bold;
+    }
 </style>
 @endsection
 @section('content')

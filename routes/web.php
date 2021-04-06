@@ -225,13 +225,13 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
-    Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
-    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
-    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
+    Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
+    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
+    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::post('/copied',[MasterJobScheduleController::class,'copied']);
 });
@@ -245,6 +245,11 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
+
+    Route::get('/copyschedule',[MasterJobScheduleController::class,'ChiefCopySchedule']);
+    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
+    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
+    Route::post('/copied',[MasterJobScheduleController::class,'Chiefcopied']);
 });
 
 //route transaksi cuti ==ADMIN==

@@ -1,5 +1,5 @@
 
-@extends('layouts/templateAdmin')
+@extends('layouts/templateStaff')
 @section('title','Jadwal Kerja')
 @section('content-title','Jadwal Kerja / Salin Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
@@ -56,7 +56,7 @@
 
             <!--Form-->
             <div class="form-group">
-            <form id="demo-bv-wz-form" class="form-horizontal" method="POST" action="/admin/schedule/copied" >
+            <form id="demo-bv-wz-form" class="form-horizontal" method="POST" action="/staff/schedule/copied" >
                 @csrf
                 <div class="panel-body">
                     <div class="tab-content">
@@ -67,7 +67,7 @@
                                 <div id="pickadate">
                                     <div class="input-group date">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-danger" type="button" style="z-index: 2"><i
+                                            <button class="btn btn-primary" type="button" style="z-index: 2"><i
                                                     class="fa fa-calendar"></i></button>
                                         </span>
                                         <input type="text" name="first" id="first_periode"  placeholder="Pilih Tanggal" 
@@ -248,12 +248,11 @@
                         break;
                     }
                 };
-                
                 })
                 
                
                 
-                var url = '/admin/schedule/copyschedule/calculate'
+                var url = '/staff/schedule/copyschedule/calculate'
                 $('#ajax').on('click',function(e){
                     // var second_periode = document.getElementById('second_periode').value
                     $.ajaxSetup({
@@ -269,7 +268,6 @@
                         },
                         dataType:'json',
                         success : function(response){
-                            // console.log(response)
                             for(datas in response.dataUser){
                                 completedName = response.dataUser[datas].name
                                 completedId = response.dataUser[datas].id
@@ -288,8 +286,6 @@
                                 tr.appendChild(botTd)
                                 document.getElementById('tbodyCheckbox').appendChild(tr) 
                                 queue.splice(0,queue.length);
-                               
-
                     }
                     
                     $('.chosen-checkbox').on('click',function(){
@@ -301,7 +297,7 @@
                          }
                                
                         });    
-                var urls = '/admin/schedule/copyschedule/calculates'
+                var urls = '/staff/schedule/copyschedule/calculates'
                 $('#ajax').on('click',function(e){
                     var secondsum
                     var checkboxdata
@@ -315,7 +311,7 @@
                         },
                         dataType:'json',
                         success : function(response){
-                            // console.log(response)
+                            console.log(response)
                             for(datascheckbox in response.names){
                                 checkboxdata = response.names[datascheckbox].name
                                 var checkboxTextnodes = document.createTextNode(checkboxdata + ", ")

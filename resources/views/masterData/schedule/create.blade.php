@@ -10,7 +10,7 @@
 @endsection
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
-        <h3 class="panel-title">Pilih Staff untuk Jadwal Kerja</h3>
+        <h3 class="panel-title">Pilih Staff Untuk Jadwal Kerja</h3>
     </div>
     <div class="panel-body">
             <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-check-user-month" class="form-horizontal">

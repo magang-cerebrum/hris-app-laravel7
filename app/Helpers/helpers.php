@@ -39,6 +39,18 @@ function check_hour_shift($check) {
     }
 }
 
+function change_name_day($day) {
+    switch($day) {
+        case 'Monday': return 'Senin'; break;
+        case 'Tuesday': return 'Selasa'; break;
+        case 'Wednesday': return 'Rabu'; break;
+        case 'Thursday': return 'Kamis'; break;
+        case 'Friday': return "Jum'at"; break;
+        case 'Saturday': return 'Sabtu'; break;
+        case 'Sunday': return 'Minggu'; break;
+    }
+}
+
 function switch_month($value, $initial = true) {
     if($initial) {
         switch ($value) {

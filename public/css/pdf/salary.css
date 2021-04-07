@@ -2,7 +2,7 @@
     /* border: black 1px solid; */
 }
 #pdf-salary {
-    width: 700px;
+    width: 650px;
     margin: auto;
     padding: 20px;
     border: black 1px solid;
@@ -24,7 +24,7 @@
     text-align: center;
 }
 .head-salary img {
-    width: 120px;
+    width: 130px;
 }
 .head-salary h3, h5, p {
     margin: 0 0 6px;
@@ -57,21 +57,26 @@
 
 /* body count */
 .body-salary table.body-count {
+    font-size: 12px;
     width: 100%;
     margin-bottom: 15px;
 }
 .body-salary table.body-count tr td.title-count {
     text-align: center;
 }
-.body-salary table.body-count tr td.empty-count {
-    width: 8%;
-}
 .body-salary table.body-count tr td.value-count {
-    width: 13%;
+    width: 10%;
     text-align: right;
 }
+.body-salary table.body-count tr td.info-count {
+    width: 30%;
+    text-align: left;
+}
+.body-salary table.body-count tr td.empty-count {
+    width: 5%;
+}
 .body-salary table.body-count tr td.empty-row {
-    height: 13px;
+    height: 10px;
 }
 
 /* tanda tangan */

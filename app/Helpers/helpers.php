@@ -39,6 +39,13 @@ function check_hour_shift($check) {
     }
 }
 
+function object_array_salary($name, $value = 0) {
+    $data = new stdClass();
+    $data->name = $name;
+    $data->value = $value;
+    return $data;
+}
+
 function change_name_day($day) {
     switch($day) {
         case 'Monday': return 'Senin'; break;

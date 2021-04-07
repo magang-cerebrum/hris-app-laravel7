@@ -1,11 +1,12 @@
-<link href="{{ asset('css/pdf/salary.css')}}" rel="stylesheet">
+{{-- <link href="{{ asset('css/pdf/salary.css')}}" rel="stylesheet"> --}}
+<link href="../public/css/pdf/salary.css" rel="stylesheet">
 
 <div id="pdf-salary">
     <div class="head-salary">
         <table>
             <tr>
-                <td rowspan="3" class="head-image">
-                    <img src="../public/img/logo-cerebrum.jpg">
+                <td rowspan="2" class="head-image">
+                    <img src="../public/img/title-cerebrum.jpg">
                     {{-- <img src="{{ asset('img/title-cerebrum.jpg')}}"> --}}
                 </td>
                 <td>
@@ -14,7 +15,6 @@
                     <p>E-mail : office@cerebrum.id</p>
                 </td>
             </tr>
-            <tr><td class="empty"> </td></tr>
             <tr>
                 <td class="sub-title">Slip Gaji</td>
             </tr>
@@ -26,21 +26,25 @@
             <tr>
                 <td class="identit-head">Nama</td>
                 <td>:</td>
-                <td class="value-identity">Dumy Staff</td>
+                <td class="value-identity">{{$data_staff->name}}</td>
                 <td class="identity-empty"> </td>
-                <td class="identit-head">Bulan - Tahun</td>
+                <td class="identit-head">Bulan</td>
                 <td>:</td>
-                <td>Maret - 2021</td>
+                <td>{{$month}}</td>
             </tr>
             <tr>
-                <td class="identit-head">Jabaran</td>
+                <td class="identit-head">Jabatan</td>
                 <td>:</td>
-                <td class="value-identity">Dumy Jabatan</td>
+                <td class="value-identity">{{$data_staff->position}}</td>
+                <td class="identity-empty"> </td>
+                <td class="identit-head">Tahun</td>
+                <td>:</td>
+                <td>{{$year}}</td>
             </tr>
             <tr>
                 <td class="identit-head">Divisi</td>
                 <td>:</td>
-                <td class="value-identity">Dumy Divisi</td>
+                <td class="value-identity">{{$data_staff->division}}</td>
             </tr>
         </table>
         <div class="border"></div>
@@ -51,57 +55,57 @@
                 <td colspan="4" class="title-count">Potongan</td>
             </tr>
             <tr>
-                <td class="info-count-left">Gaji Pokok</td>
+                <td class="info-count">Gaji Pokok</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">1.000.000 ,-</td>
-                <td class="empty-count"></td>
-                <td class="info-count-right">Pinjaman ke Cerebrum</td>
+                <td class="empty-count"> </td>
+                <td class="info-count">Pinjaman ke Cerebrum</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">100.000 ,-</td>
             </tr>
             <tr>
-                <td class="info-count-left">Bonus</td>
+                <td class="info-count">Bonus</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">500.000 ,-</td>
-                <td class="empty-count"></td>
-                <td class="info-count-right">BMT (Potongan Wajib & Pokok)</td>
+                <td class="empty-count"> </td>
+                <td class="info-count">BMT (Potongan Wajib & Pokok)</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">100.000 ,-</td>
             </tr>
             <tr>
-                <td class="info-count-left">Lembur</td>
+                <td class="info-count">Lembur</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">500.000 ,-</td>
-                <td class="empty-count"></td>
-                <td class="info-count-right">BMT (Pinjaman)</td>
+                <td class="empty-count"> </td>
+                <td class="info-count">BMT (Pinjaman)</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">50.000 ,-</td>
             </tr>
             <tr>
-                <td class="info-count-left">Tunjangan Pulsa WFH</td>
+                <td class="info-count">Tunjangan Pulsa WFH</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">200.000 ,-</td>
-                <td class="empty-count"></td>
-                <td class="info-count-right">Denda Keterlambatan</td>
+                <td class="empty-count"> </td>
+                <td class="info-count">Denda Keterlambatan</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">200.000 ,-</td>
             </tr>
             <tr><td colspan="9" class="empty-row"> </td></tr>
             <tr>
-                <td class="info-count-left">Total Penerimaan</td>
+                <td class="info-count">Total Penerimaan</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">2.200.000 ,-</td>
-                <td class="empty-count"></td>
-                <td class="info-count-right">Total Potongan</td>
+                <td class="empty-count"> </td>
+                <td class="info-count">Total Potongan</td>
                 <td>:</td>
                 <td>Rp.</td>
                 <td class="value-count">450.000 ,-</td>
@@ -127,7 +131,7 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td>Bandung, 23 Maret 2021</td>
+                    <td>Bandung, {{$day.' '.$month.' '.$year}}</td>
                 </tr>
                 <tr>
                     <td class="name">Penerima</td>
@@ -138,7 +142,7 @@
                     <td class="col-signature" colspan="3"> </td>
                 </tr>
                 <tr>
-                    <td>Dumy Admin</td>
+                    <td>{{$data_staff->name}}</td>
                     <td></td>
                     <td>Hadi Rahman Fauzi</td>
                 </tr>

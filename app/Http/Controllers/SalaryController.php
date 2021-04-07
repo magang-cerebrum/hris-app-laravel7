@@ -31,11 +31,15 @@ class SalaryController extends Controller
     {
         global $month;
         global $year;
-        $month = '03';
+        $day = date('j');
+        $month = '04';
         $year = '2021';
         $data_presences = DB::table('master_presences')
         ->where('presence_date', 'LIKE', $year.'-'.$month.'%')
         ->where('status', 0)->get();
+
+        $data_type_cut = DB::table('master_cut_allowance_types')->where('category','Potongan')->get();
+        $data_type_allowance = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
 
         while (count($data_presences) > 0) {
             $data_presences_by_user_id = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->first();
@@ -85,61 +89,99 @@ class SalaryController extends Controller
             }
 
             $default_schedule = DB::table('master_job_schedules')->where('month',switch_month($month))->where('year',$year)->where('user_id',$user_id)->first();
-            $master_user = DB::table('master_users')->where('id',$user_id)->first();
+            
+            $master_user = DB::table('master_users')
+            ->where('master_users.id',$user_id)
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->select(
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_positions.name as position',
+                'master_users.salary as salary',
+            )
+            ->first();
 
-            $cut_salary = DB::table('master_salary_cuts')
-            ->where('type','Semua')
-            ->orWhere(function($query) {
-                global $user_id;
-                global $month;
-                global $year;
-                $query->where('user_id',$user_id)
-                      ->where('month',$month)
-                      ->where('year',$year);
-            })
-            ->get();
-            $total_cut_salary = 0;
+            $data_cut = array();
+            $data_allowance = array();
 
-            foreach($cut_salary as $item_cut) {
-                $total_cut_salary += $item_cut->nominal;
+            array_push($data_allowance, object_array_salary('Gaji Pokok', $master_user->salary));
+
+            $data_overtime = DB::table('master_overtimes')
+            ->where('user_id', $user_id)
+            ->where('month', switch_month($month))->where('year', $year);
+            ->first();
+            if ($data_overtime) {
+                array_push($data_allowance, object_array_salary('Lembur', $data_overtime->payment));
+                DB::table('master_overtimes')->where('id', $data_overtime->id)->update(['status'=>'paid']);
+            }
+            else {
+                array_push($data_allowance, object_array_salary('Lembur'));
             }
 
-            $allowance_salary = DB::table('master_salary_allowances')
-            ->where('type','Semua')
-            ->orWhere(function($query) {
-                global $user_id;
-                global $month;
-                global $year;
-                $query->where('user_id',$user_id)
-                      ->where('month',$month)
-                      ->where('year',$year);
-            })
-            ->get();
-            $total_allowance_salary = 0;
+            array_push($data_cut, object_array_salary('Denda Keterlambatan', $total_fine));
 
-            foreach($allowance_salary as $item_allowance) {
-                $total_allowance_salary += $item_allowance->nominal;
+            foreach($data_type_cut as $cut_type) {
+                if($cut_type->type == 'Semua') {
+                    $get_data_cut = DB::table('master_salary_cuts')->where('information', $cut_type->name)->first();
+                    if($get_data_cut) {
+                        $value_data = object_array_salary($get_data_cut->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($cut_type->name);
+                    }
+                }
+                else {
+                    $get_data_cut = DB::table('master_salary_cuts')
+                    ->where('information', $cut_type->name)
+                    ->where('user_id', $user_id)
+                    ->where('month', switch_month($month))->where('year', $year);
+                    ->first();
+                    if($get_data_cut) {
+                        $value_data = object_array_salary($get_data_cut->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($cut_type->name);
+                    }
+                }
+                array_push($data_cut, $value_data);
             }
 
-            $total_salary = $master_user->salary - $total_cut_salary + $total_allowance_salary - $total_fine;
+            foreach($data_type_allowance as $allowance_type) {
+                if($cut_type->type == 'Semua') {
+                    $get_data_allowance = DB::table('master_salary_allowances')->where('information', $allowance_type->name)->first();
+                    if($get_data_allowance) {
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($allowance_type->name);
+                    }
+                }
+                else {
+                    $get_data_allowance = DB::table('master_salary_allowances')
+                    ->where('information', $allowance_type->name)
+                    ->where('user_id', $user_id)
+                    ->where('month', switch_month($month))->where('year', $year);
+                    ->first();
+                    if($get_data_allowance) {
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($allowance_type->name);
+                    }
+                }
+                array_push($data_allowance, $value_data);
+            }
 
-
-            // Contoh pembuatan objek
-            // $data = array();
-            // $value_data = new stdClass();
-            // $value_data->name = 'nama_data';
-            // $value_data->value = 1000;
-
-            // array_push($data, $value_data);
-            // $value_data = new stdClass();
-            // $value_data->name = 'data';
-            // $value_data->value = 500;
-
-            // array_push($data, $value_data);
-            // dd($data);
-
-            // $pdf = PDF::loadView('/pdf.salary');
-            // return $pdf->stream();
+            $pdf = PDF::loadView('/pdf.salary', [
+                'day'=>$day,
+                'month'=>switch_month($month),
+                'year'=>$year,
+                'data_staff'=>$master_user,
+                'data_cut'=>$data_cut,
+                'data_allowance'=>$data_allowance,
+            ]);
+            return $pdf->stream();
 
             DB::table('master_salaries')->insert([
                 'user_id'=>$user_id,

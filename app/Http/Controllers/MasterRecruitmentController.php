@@ -53,7 +53,7 @@ class MasterRecruitmentController extends Controller
             'name'=>'required|string',
             'born_in'=>'required',
             'dob'=>'required',
-            'live_at'=>'required',
+            'address'=>'required',
             'phone_number'=>'required|numeric',
             'email'=>'required|email',
             'gender'=>'required',
@@ -80,7 +80,7 @@ class MasterRecruitmentController extends Controller
         $insert_data = new MasterRecruitment;
         $insert_data->name = $request->name;
         $insert_data->dob = $dob;
-        $insert_data->live_at = $request->live_at;
+        $insert_data->address = $request->address;
         $insert_data->phone_number = $request->phone_number;
         $insert_data->email = $request->email;
         $insert_data->gender = $request->gender;

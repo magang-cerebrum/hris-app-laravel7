@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Illuminate\Support\Facades\Route;
 class MasterJobScheduleController extends Controller
 {
     /**
@@ -503,7 +503,7 @@ class MasterJobScheduleController extends Controller
 
     public function edit_post(Request $request)
     {
-        function check($check_shift, $request) {
+        function checkEdit($check_shift, $request) {
             global $total_hour;
             $id = $request->$check_shift;
             $shift_name = '';
@@ -524,37 +524,37 @@ class MasterJobScheduleController extends Controller
             $total_hour = 0;
 
             $check_id = 'id_'.$i;
-            $shift_1 = check('shift_1_'.$i, $request);
-            $shift_2 = check('shift_2_'.$i, $request);
-            $shift_3 = check('shift_3_'.$i, $request);
-            $shift_4 = check('shift_4_'.$i, $request);
-            $shift_5 = check('shift_5_'.$i, $request);
-            $shift_6 = check('shift_6_'.$i, $request);
-            $shift_7 = check('shift_7_'.$i, $request);
-            $shift_8 = check('shift_8_'.$i, $request);
-            $shift_9 = check('shift_9_'.$i, $request);
-            $shift_10 = check('shift_10_'.$i, $request);
-            $shift_11 = check('shift_11_'.$i, $request);
-            $shift_12 = check('shift_12_'.$i, $request);
-            $shift_13 = check('shift_13_'.$i, $request);
-            $shift_14 = check('shift_14_'.$i, $request);
-            $shift_15 = check('shift_15_'.$i, $request);
-            $shift_16 = check('shift_16_'.$i, $request);
-            $shift_17 = check('shift_17_'.$i, $request);
-            $shift_18 = check('shift_18_'.$i, $request);
-            $shift_19 = check('shift_19_'.$i, $request);
-            $shift_20 = check('shift_20_'.$i, $request);
-            $shift_21 = check('shift_21_'.$i, $request);
-            $shift_22 = check('shift_22_'.$i, $request);
-            $shift_23 = check('shift_23_'.$i, $request);
-            $shift_24 = check('shift_24_'.$i, $request);
-            $shift_25 = check('shift_25_'.$i, $request);
-            $shift_26 = check('shift_26_'.$i, $request);
-            $shift_27 = check('shift_27_'.$i, $request);
-            $shift_28 = check('shift_28_'.$i, $request);
-            $shift_29 = check('shift_29_'.$i, $request);
-            $shift_30 = check('shift_30_'.$i, $request);
-            $shift_31 = check('shift_31_'.$i, $request);
+            $shift_1 = checkEdit('shift_1_'.$i, $request);
+            $shift_2 = checkEdit('shift_2_'.$i, $request);
+            $shift_3 = checkEdit('shift_3_'.$i, $request);
+            $shift_4 = checkEdit('shift_4_'.$i, $request);
+            $shift_5 = checkEdit('shift_5_'.$i, $request);
+            $shift_6 = checkEdit('shift_6_'.$i, $request);
+            $shift_7 = checkEdit('shift_7_'.$i, $request);
+            $shift_8 = checkEdit('shift_8_'.$i, $request);
+            $shift_9 = checkEdit('shift_9_'.$i, $request);
+            $shift_10 = checkEdit('shift_10_'.$i, $request);
+            $shift_11 = checkEdit('shift_11_'.$i, $request);
+            $shift_12 = checkEdit('shift_12_'.$i, $request);
+            $shift_13 = checkEdit('shift_13_'.$i, $request);
+            $shift_14 = checkEdit('shift_14_'.$i, $request);
+            $shift_15 = checkEdit('shift_15_'.$i, $request);
+            $shift_16 = checkEdit('shift_16_'.$i, $request);
+            $shift_17 = checkEdit('shift_17_'.$i, $request);
+            $shift_18 = checkEdit('shift_18_'.$i, $request);
+            $shift_19 = checkEdit('shift_19_'.$i, $request);
+            $shift_20 = checkEdit('shift_20_'.$i, $request);
+            $shift_21 = checkEdit('shift_21_'.$i, $request);
+            $shift_22 = checkEdit('shift_22_'.$i, $request);
+            $shift_23 = checkEdit('shift_23_'.$i, $request);
+            $shift_24 = checkEdit('shift_24_'.$i, $request);
+            $shift_25 = checkEdit('shift_25_'.$i, $request);
+            $shift_26 = checkEdit('shift_26_'.$i, $request);
+            $shift_27 = checkEdit('shift_27_'.$i, $request);
+            $shift_28 = checkEdit('shift_28_'.$i, $request);
+            $shift_29 = checkEdit('shift_29_'.$i, $request);
+            $shift_30 = checkEdit('shift_30_'.$i, $request);
+            $shift_31 = checkEdit('shift_31_'.$i, $request);
 
 
             DB::table('master_job_schedules')
@@ -682,40 +682,74 @@ class MasterJobScheduleController extends Controller
     }
 
     public function ajaxCal(Request $request){
-        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
-        $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
-        $firstPeriode = $request->first_periode;
-        $splitFirstPeriode = explode('/',$firstPeriode);
-        $dataScheduleFirstPeriode = DB::table('master_job_schedules')
-        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-            ->where('month','=',switch_month($splitFirstPeriode[0]))
-            ->where('year', '=',$splitFirstPeriode[1])
+        if(Route::current()->uri == "admin/schedule/copyschedule/calculate"){
+            $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+            $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+            $firstPeriode = $request->first_periode;
+            $splitFirstPeriode = explode('/',$firstPeriode);
+            $dataScheduleFirstPeriode = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+                ->where('month','=',switch_month($splitFirstPeriode[0]))
+                ->where('year', '=',$splitFirstPeriode[1])
+                ->where('master_users.status','Aktif')
+                ->whereNotIn('division_id',[7])
+                ->select(
+                    'master_job_schedules.*',
+                    'master_users.nip as user_nip',
+                    'master_users.name as user_name'
+                )->get();
+                $id = array();
+                foreach($dataScheduleFirstPeriode as $periodeItems){
+                    array_push($id,$periodeItems->user_id);
+                }
+            $dataUser = DB::table('master_users')
+            ->whereNotIn('id',$id)
             ->where('master_users.status','Aktif')
             ->whereNotIn('division_id',[7])
-            ->select(
-                'master_job_schedules.*',
-                'master_users.nip as user_nip',
-                'master_users.name as user_name'
-            )->get();
-            $id = array();
-            foreach($dataScheduleFirstPeriode as $periodeItems){
-                array_push($id,$periodeItems->user_id);
-            }
-        $dataUser = DB::table('master_users')
-        ->whereNotIn('id',$id)
-        ->where('master_users.status','Aktif')
-        ->whereNotIn('division_id',[7])
-        ->select('name','id')->get();
-        
-        
-        return response()->json([
-            // 'dataRadio'=>$dataRadio,
-            // 'dataCheckBox'=>$dataCheckBox,
-            // 'secondPeriode'=>$secondPeriode
-            // 'first_periode'=>$firstPeriode,
-            'dataUser'=>$dataUser,
+            ->select('name','id')->get();
             
+            
+        return response()->json([
+            'dataUser'=>$dataUser,
         ]);
+        }
+        elseif(Route::current()->uri == "staff/schedule/copyschedule/calculate"){
+            $user = Auth::user();
+            $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+            $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+            $firstPeriode = $request->first_periode;
+            $splitFirstPeriode = explode('/',$firstPeriode);
+            $dataScheduleFirstPeriode = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+                ->where('month','=',switch_month($splitFirstPeriode[0]))
+                ->where('year', '=',$splitFirstPeriode[1])
+                ->where('master_users.status','Aktif')
+                ->whereNotIn('division_id',[7])
+                ->select(
+                    'master_job_schedules.*',
+                    'master_users.nip as user_nip',
+                    'master_users.name as user_name'
+                )->get();
+                $id = array();
+                foreach($dataScheduleFirstPeriode as $periodeItems){
+                    array_push($id,$periodeItems->user_id);
+                }
+            $dataUser = DB::table('master_users')
+            ->whereNotIn('id',$id)
+            ->whereIn('master_users.division_id',division_members($user->position_id))
+            ->where('id','!=',Auth::user()->id)
+            ->where('master_users.status','Aktif')
+            ->whereNotIn('division_id',[7])
+            // ->select('name','id')
+            ->get();
+
+            return response()->json([
+                // 'uri'=>"Route::current()->uri",
+                'dataUser'=>$dataUser,
+                
+            ]); 
+        }
+        
     }
     public function ajaxCheckBox(Request $request){
         $check = $request->checkBox_val;
@@ -730,8 +764,8 @@ class MasterJobScheduleController extends Controller
         ->get();
        return response()->json([
         'names'=>$nameofUser,
-        'chosenUser'=>$chosenUser
-        // 'check'=>$check
+        'chosenUser'=>$chosenUser,
+        'check'=>$chosenUser
        ]);
     }
 
@@ -793,4 +827,96 @@ class MasterJobScheduleController extends Controller
         return redirect('/admin/schedule');
         // dd($arrayData);
     }
+
+
+    public function ChiefCopySchedule(Request $request){
+        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+        $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+        $user = Auth::user();
+        $data = DB::table('master_job_schedules')
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->whereNotIn('master_users.division_id',[7])
+        ->where('month', '=', switch_month(date('m')))
+        ->orWhere('month','=',$acm)
+        ->where('year', '=',date('Y'))
+        ->select(
+            'master_job_schedules.*',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name',
+            'master_users.division_id as division_id',
+            'master_users.role_id as role_id'
+        )
+        ->get();
+        // dd();
+        
+        
+        return view('masterData.schedule.Chiefcopy',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data,
+        ]);
+    }
+
+    public function Chiefcopied(Request $request){
+        $date = explode('/',$request->first);
+        $chosenCopy = $request->chosen;
+        $chosenTargetToCopy = $request->chosen_checkbox;
+        $dataScheduleCopy = DB::table('master_job_schedules')
+        ->where('user_id',$chosenCopy)
+        ->where('year',$date[1])
+        ->where('month',switch_month($date[0]) )
+        ->first();
+
+        $arrayData = array();
+        for($i = 1 ; $i<=31;$i++ ){
+            $tempName = 'shift_'.$i;
+            array_push($arrayData,$dataScheduleCopy->$tempName);
+        }
+        $totalHour = $dataScheduleCopy->total_hour;
+        foreach($chosenTargetToCopy as $itemTargetCopy){
+            MasterJobSchedule::create([
+                'month'=>switch_month($date[0]),
+                'year'=>$date[1],
+                'user_id'=>$itemTargetCopy,
+                'shift_1'=>$arrayData[0],
+                'shift_2'=>$arrayData[1],
+                'shift_3'=>$arrayData[2],
+                'shift_4'=>$arrayData[3],
+                'shift_5'=>$arrayData[4],
+                'shift_6'=>$arrayData[5],
+                'shift_7'=>$arrayData[6],
+                'shift_8'=>$arrayData[7],
+                'shift_9'=>$arrayData[8],
+                'shift_10'=>$arrayData[9],
+                'shift_11'=>$arrayData[10],
+                'shift_12'=>$arrayData[11],
+                'shift_13'=>$arrayData[12],
+                'shift_14'=>$arrayData[13],
+                'shift_15'=>$arrayData[14],
+                'shift_16'=>$arrayData[15],
+                'shift_17'=>$arrayData[16],
+                'shift_18'=>$arrayData[17],
+                'shift_19'=>$arrayData[18],
+                'shift_20'=>$arrayData[19],
+                'shift_21'=>$arrayData[20],
+                'shift_22'=>$arrayData[21],
+                'shift_23'=>$arrayData[22],
+                'shift_24'=>$arrayData[23],
+                'shift_25'=>$arrayData[24],
+                'shift_26'=>$arrayData[25],
+                'shift_27'=>$arrayData[26],
+                'shift_28'=>$arrayData[27],
+                'shift_29'=>$arrayData[28],
+                'shift_30'=>$arrayData[29],
+                'shift_31'=>$arrayData[30],
+                'total_hour'=>$totalHour
+            ]);
+        }
+        return redirect('/staff/schedule/division');
+        // dd($arrayData);
+    }
+    
 }

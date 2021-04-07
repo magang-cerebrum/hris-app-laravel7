@@ -34,9 +34,9 @@
                                 value="{{$data->dob}}" readonly>
                         </div>
                     </div>
-                    <label class="col-sm-2 control-label" for="textarea-input-live_at">Alamat:</label>
+                    <label class="col-sm-2 control-label" for="textarea-input-address">Alamat:</label>
                     <div class="col-sm-4">
-                        <textarea id="textarea-input-live_at" rows="2" class="form-control" placeholder="Alamat Lengkap" name="live_at" readonly>{{$data->live_at}}</textarea>
+                        <textarea id="textarea-input-address" rows="2" class="form-control" placeholder="Alamat Lengkap" name="address" readonly>{{$data->address}}</textarea>
                     </div>
                     <label class="col-sm-2 control-label">Jenis Kelamin:</label>
                     <div class="col-sm-4">

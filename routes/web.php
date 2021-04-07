@@ -225,13 +225,13 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
-    Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
-    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
-    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::post('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
+    Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
+    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
+    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::post('/copied',[MasterJobScheduleController::class,'copied']);
 });
@@ -245,6 +245,11 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
+
+    Route::get('/copyschedule',[MasterJobScheduleController::class,'ChiefCopySchedule']);
+    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
+    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
+    Route::post('/copied',[MasterJobScheduleController::class,'Chiefcopied']);
 });
 
 //route transaksi cuti ==ADMIN==
@@ -303,6 +308,14 @@ Route::prefix('/staff/wfh/division')->group(function(){
     Route::put('/{reject}/reject',[WorkFromHomeController::class,'division_reject']);
 });
 
+//route transaksi lembur ==ADMIN==
+Route::prefix('/admin/overtime')->group(function(){
+    Route::get('/',[OvertimeController::class,'index']);
+    Route::get('/add',[OvertimeController::class,'create']);
+    Route::post('/',[OvertimeController::class,'ajaxList']);
+    Route::post('/store',[OvertimeController::class,'store']);
+});
+
 //route transaction ticketing ==ADMIN==
 Route::prefix('/admin/ticketing')->group(function (){
     Route::get('/',[TransactionTicketingController::class,'admin_index']);
@@ -329,7 +342,6 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
 });
-
 
 //Route Achievement ==Chief==
 Route::prefix('/staff/achievement')->group(function () {

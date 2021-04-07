@@ -324,7 +324,7 @@ class StaffAuthDashboardController extends Controller
             ->update([
                 'name' => $request->name,
                 'dob' => $request->dob,
-                'live_at' => $request->live_at,
+                'address' => $request->address,
                 'phone_number' => $request->phone_number,
                 'gender' => $request->gender,
                 'email' => $request->email,

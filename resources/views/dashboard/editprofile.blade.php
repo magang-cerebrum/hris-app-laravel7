@@ -65,10 +65,10 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <label class="col-sm-2 control-label" for="textarea-input-live_at">Alamat:</label>
+                    <label class="col-sm-2 control-label" for="textarea-input-address">Alamat:</label>
                     <div class="col-sm-10">
-                        <textarea id="textarea-input-live_at" rows="2" class="form-control"
-                            placeholder="Alamat Lengkap" name="live_at">{{$data->live_at}}</textarea>
+                        <textarea id="textarea-input-address" rows="2" class="form-control"
+                            placeholder="Alamat Lengkap" name="address">{{$data->address}}</textarea>
                     </div>
                 </div>
             </div>

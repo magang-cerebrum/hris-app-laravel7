@@ -100,7 +100,7 @@
                                 <td class="text-center">
                                     <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
                                         style="display: inline;" data-nip="{{$row->nip}}"
-                                        data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-live_at="{{$row->live_at}}"
+                                        data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-address="{{$row->address}}"
                                         data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
                                         data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
                                         data-employee_status="{{$row->employee_status}}"
@@ -192,7 +192,7 @@
                                 <td class="text-center">
                                     <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
                                         style="display: inline;" data-nip="{{$row->nip}}"
-                                        data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-live_at="{{$row->live_at}}"
+                                        data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-address="{{$row->address}}"
                                         data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
                                         data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
                                         data-employee_status="{{$row->employee_status}}"

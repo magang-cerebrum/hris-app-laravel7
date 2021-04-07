@@ -73,7 +73,7 @@
                                 value="{{$item->id}}"></td>
                         <td class="text-center">{{$item->name}}</td>
                         <td class="text-center">{{$item->dob}}</td>
-                        <td class="text-center">{{$item->live_at}}</td>
+                        <td class="text-center">{{$item->address}}</td>
                         <td class="text-center">{{$item->phone_number}}</td>
                         <td class="text-center">{{$item->email}}</td>
                         <td class="text-center">{{$item->gender}}</td>

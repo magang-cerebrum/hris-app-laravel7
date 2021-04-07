@@ -20,7 +20,7 @@ class CreateMasterUsersTable extends Migration
             $table->string('nip',12)->unique();
             $table->string('name',100);
             $table->date('dob');
-            $table->string('live_at',200);
+            $table->string('address',200);
             $table->string('phone_number',13);
             $table->enum('gender',['Laki-laki','Perempuan']);
             $table->string('email',60);

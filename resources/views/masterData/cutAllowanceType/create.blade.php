@@ -16,7 +16,7 @@
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label" for="type">Tipe :</label>
-                    <div class="col-sm-4 mar-lft">
+                    <div class="col-sm-4">
                         <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer">
                             <option value=" " selected></option>
                             <option value="Semua">Semua</option>
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label" for="type">Kategori :</label>
-                    <div class="col-sm-4 mar-lft">
+                    <div class="col-sm-4">
                         <select class="selectpicker" data-style="btn-pink" name="category" id="category-changer">
                             <option value=" " selected></option>
                             <option value="Potongan">Potongan</option>
@@ -42,10 +42,11 @@
                     <label class="col-sm-2 control-label" for="name">Nama <span id="category-name"></span>:</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                            name="name" placeholder="Informasi potongan/tunjangan"
-                            value="{{old('name')}}">
+                            name="name" placeholder="Informasi potongan/tunjangan" id="name"
+                            value="{{old('name')}}" maxlength="25" onkeyup="limit_character(this.value)">
                         @error('name') <div class="text-danger invalid-feedback mt-3">Mohon isi nama <span id="category-name"></span>.</div>
                         @enderror
+                        <div id="info" class="text-danger"></div>
                     </div>
                 </div>
             </div>
@@ -64,6 +65,12 @@
             var type = document.getElementById('category-changer').value
             $('#category-name').text(type)
         })
-    })
+    });
+    function limit_character(value){
+        var category = document.getElementById('category-changer').value
+        if (value.length == 25) {
+            document.getElementById('info').innerHTML = 'Nama ' + category + ' tidak boleh melebihi 25 karakter!';
+        }
+    }
 </script>
 @endsection

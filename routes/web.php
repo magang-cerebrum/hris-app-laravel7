@@ -308,6 +308,14 @@ Route::prefix('/staff/wfh/division')->group(function(){
     Route::put('/{reject}/reject',[WorkFromHomeController::class,'division_reject']);
 });
 
+//route transaksi lembur ==ADMIN==
+Route::prefix('/admin/overtime')->group(function(){
+    Route::get('/',[OvertimeController::class,'index']);
+    Route::get('/add',[OvertimeController::class,'create']);
+    Route::post('/',[OvertimeController::class,'ajaxList']);
+    Route::post('/store',[OvertimeController::class,'store']);
+});
+
 //route transaction ticketing ==ADMIN==
 Route::prefix('/admin/ticketing')->group(function (){
     Route::get('/',[TransactionTicketingController::class,'admin_index']);
@@ -334,7 +342,6 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
 });
-
 
 //Route Achievement ==Chief==
 Route::prefix('/staff/achievement')->group(function () {

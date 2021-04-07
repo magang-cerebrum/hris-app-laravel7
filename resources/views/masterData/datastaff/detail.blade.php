@@ -116,7 +116,7 @@
             var nip = $(this).data('nip');
             var name = $(this).data('name');
             var dob = $(this).data('dob');
-            var live_at = $(this).data('live_at');
+            var address = $(this).data('address');
             var phone_number = $(this).data('phone_number');
             var gender = $(this).data('gender');
             var email = $(this).data('email');
@@ -152,7 +152,7 @@
             $('#nip').text(nip);
             $('#name').text(name);
             $('#dob').text(indonesian_date(dob));
-            $('#live_at').text(live_at);
+            $('#address').text(address);
             $('#gender').text(gender);
             $('#email').text(email);
             $('#phone_number').text(phone_number);

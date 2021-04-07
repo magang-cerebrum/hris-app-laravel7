@@ -76,8 +76,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="demo-text-input">Domisili</label>
                                 <div class="col-md-9">
-                                    <input id="domisili-input" type="text" class="form-control @error('live_at') is-invalid @enderror" placeholder="Domisili" name="live_at">
-                                    @error('live_at') <div class="text-danger invalid-feedback mt-3">
+                                    <input id="domisili-input" type="text" class="form-control @error('address') is-invalid @enderror" placeholder="Domisili" name="address">
+                                    @error('address') <div class="text-danger invalid-feedback mt-3">
                                         Domisili tidak boleh kosong.
                                         </div> @enderror
                                 </div>

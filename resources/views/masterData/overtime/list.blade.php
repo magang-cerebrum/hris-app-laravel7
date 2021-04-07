@@ -3,7 +3,21 @@
         <h3 class="panel-title">{{'Daftar Lembur "'.switch_month($month) . ' - ' . $year . '"'}}</h3>
     </div>
     <div class="panel-body">
-        <table id="presensi-result" class="table table-striped table-bordered no-footer dtr-inline collapsed"
+        <div class="row mar-btm">
+            <div class="col-sm-12">
+                <form action="{{url('/admin/overtime/add')}}" method="get">
+                    <input type="hidden" name="month" value="{{$month}}">
+                    <input type="hidden" name="year" value="{{$year}}">
+                    <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
+                        data-toggle="tooltip" data-container="body" data-placement="top"
+                        data-original-title="Tambah Lembur Baru" type="submit">
+                        <i class="btn-label fa fa-plus"></i>
+                        Tambah Lembur Baru
+                    </button>
+                </form>
+            </div>
+        </div>
+        <table id="overtime-result" class="table table-striped table-bordered no-footer dtr-inline collapsed"
             role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
             <thead>
                 <tr role="row">

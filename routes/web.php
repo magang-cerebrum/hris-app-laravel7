@@ -313,6 +313,7 @@ Route::prefix('/admin/overtime')->group(function(){
     Route::get('/',[OvertimeController::class,'index']);
     Route::get('/add',[OvertimeController::class,'create']);
     Route::post('/',[OvertimeController::class,'ajaxList']);
+    Route::post('/store',[OvertimeController::class,'store']);
 });
 
 //route transaction ticketing ==ADMIN==

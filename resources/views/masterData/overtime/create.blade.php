@@ -3,8 +3,6 @@
 @section('content-title','Data Staff / Lembur / Tambah Data Lembur')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
-<link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
-<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <style>
     .table > tbody > tr > td,
@@ -22,6 +20,9 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+    .swal2-container {
+        z-index: 10000 !important;
+    }
 </style>
 @endsection
 
@@ -31,6 +32,7 @@
         <h3 class="panel-title">Pilih Staff untuk Lembur Periode "{{switch_month($month) . ' - ' . $year}}"</h3>
     </div>
     <div class="panel-body">
+        @if(!$data->isEmpty())
         <table id="overtime-create" class="table table-striped table-bordered no-footer dtr-inline collapsed"
             role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
             <thead>
@@ -60,6 +62,12 @@
                 @endforeach
             </tbody>
         </table>
+        @else
+        <div class="text-center text-danger text-bold">Ma'af, tidak ada data jadwal kerja ditemukan untuk periode {{switch_month($month) . ' - ' . $year}}</div>
+        <div class="text-center mar-top">
+            <a href="{{url('/admin/schedule/add')}}" class="btn btn-mint">Klik disini untuk menambahkan jadwal!</a>
+        </div>
+        @endif
     </div>
 </div>
 @include('masterdata/overtime/modalCreate')

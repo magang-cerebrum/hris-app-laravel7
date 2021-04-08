@@ -6,8 +6,10 @@
                 <h5 class="modal-title text-bold text-center">Form Tambah Lembur "<span id="name-title"></span>"</h5>
             </div>
             <div class="modal-body">
-                <form action="{{url('/admin/overtime/store')}}" method="post" class="form-horizontal">
-                    <input type="hidden" name="id" id="id">
+                <form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal"
+                    id="form-overtime">
+                    @csrf
+                    <input type="hidden" name="user_id" id="user_id">
                     <input type="hidden" name="salary" id="salary">
                     <input type="hidden" name="user_hour" id="user_hour">
                     <input type="hidden" name="payment" id="payment">
@@ -15,77 +17,100 @@
                         <div class="row">
                             <label class="col-sm-2 control-label">Nama Staff:</label>
                             <div class="col-sm-4">
-                                <input type="text" placeholder="Nama Staff" name="name" class="form-control" id="name" readonly>
+                                <input type="text" placeholder="Nama Staff" name="name" class="form-control" id="name" disabled>
                             </div>
                             <label class="col-sm-1 control-label">NIP:</label>
                             <div class="col-sm-4">
-                                <input type="text" placeholder="NIP" name="nip" class="form-control" id="nip" readonly>
-                            </div>                            
+                                <input type="text" placeholder="NIP" name="nip" class="form-control" id="nip" disabled>
+                            </div>
                             <div class="col-sm-1"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <label class="col-sm-2 control-label">Bulan/Tahun:</label>
-                            <div id="pickadate">
-                                <div class="col-sm-4">
-                                    <div class="input-group date">
-                                        <input type="text" class="form-control @error('periode') is-invalid @enderror"
-                                            placeholder="Periode" name="periode" value="{{old('periode')}}">
-                                        <span class="input-group-addon btn-mint"><i class="fa fa-calendar"></i></span>
-                                    </div>
-                                    @error('periode') <div class="text-danger invalid-feedback mt-3">Mohon isi
-                                        tanggal lahir.</div> @enderror
-                                </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="periode" name="periode" class="form-control"
+                                    value="{{$month.'/'.$year}}" readonly>
                             </div>
                             <label class="col-sm-1 control-label">Jam:</label>
                             <div class="col-sm-4">
-                                <input type="number" placeholder="Jumlah Jam Lembur" name="hour" class="form-control" id="hour" onkeyup="calculate(this.value)">
-                            </div>                            
+                                <input type="number" placeholder="Jumlah Jam Lembur" name="hour"
+                                    class="form-control @error('hour') is-invalid @enderror" id="hour"
+                                    onkeyup="calculate(this.value)">
+                                @error('hour') <div class="text-danger">Mohon isi jam lembur.</div> @enderror
+                            </div>
                             <div class="col-sm-1"></div>
                         </div>
                     </div>
-                    <div id="information"></div>
-                </form>
+                    <div id="information" class="text-info text-center"></div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambahkan Data Lembur">Tambah</button>
+                <button type="submit" class="btn btn-success add-tooltip" id="btn-submit" data-toggle="tooltip"
+                    data-container="body" data-placement="top"
+                    data-original-title="Tambahkan Data Lembur" onclick="submit_form()">Tambah</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
 @section('script')
-<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
-<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+<script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#pickadate .input-group.date').datepicker({
-            format: 'mm/yyyy',
-            autoclose: true,
-            minViewMode: 'months',
-            maxViewMode: 'years',
-            startView: 'months',
-            orientation: 'bottom',
-            forceParse: false,
-        });
         $(document).on('click', '#create_overtime', function () {
-            
             var id = $(this).data('id');
             var nip = $(this).data('nip');
             var name = $(this).data('name');
             var salary = $(this).data('salary');
             var user_hour = $(this).data('user_hour');
 
-            document.getElementById('id').value = id;
+            document.getElementById('user_id').value = id;
             document.getElementById('nip').value = nip;
             document.getElementById('name').value = name;
             document.getElementById('salary').value = salary;
             document.getElementById('user_hour').value = user_hour;
+            document.getElementById('hour').value = '';
+            document.getElementById('information').innerHTML = '';
 
             $('#name-title').text(name);
         });
+        $(document).on('click', '#btn-submit', function () {
+            event.preventDefault();
+            if (document.getElementById('hour').value != '') {
+                Swal.fire({
+                    width: 600,
+                    title: 'Anda yakin dengan data yang akan di tambahkan?',
+                    text: "Data yang sudah dimasukan tidak dapat dirubah kembali!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.value == true) {
+                        $('#form-overtime').submit();
+                    } else {
+                        Swal.fire({
+                            width: 600,
+                            title: 'Dibatalkan!',
+                            text: "Pastikan data diisi dengan benar terlebih dahulu!",
+                            icon: 'error',
+                        });
+                    }
+                })
+            } else {
+                Swal.fire({
+                    width: 600,
+                    title: 'Error',
+                    text: 'Mohon isi jam lembur terlebih dahulu',
+                    icon: 'error'
+                });
+            }
+        })
     });
 
     function calculate(hour) {
@@ -95,41 +120,10 @@
 
         var salary = document.getElementById('salary').value;
         var user_hour = document.getElementById('user_hour').value;
-        var payment = Math.round(( salary / user_hour ) * hour);
-        // var payment = (( salary / user_hour ) * hour);
-        console.log(salary,user_hour,payment)
-    }
-
-    // Sweetalert 2
-    function submit_add() {
-        event.preventDefault();
-        var check_user = document.querySelector('.sub_chk:checked');
-        var check_year = document.getElementById('periode').value;
-        if (check_year != '' && check_user != null) {
-            $('#form-check-user-month').submit();
-        } else if (check_year == '' && check_user == null) {
-            Swal.fire({
-                title: 'Sepertinya ada kesalahan...',
-                text: "Mohon isi tahun dan pilih staff terlebih dahulu...",
-                icon: 'error',
-            });
-            return false;
-        } else if (check_year == '') {
-            Swal.fire({
-                title: 'Sepertinya ada kesalahan...',
-                text: "Mohon isi periode terlebih dahulu...",
-                icon: 'error',
-            });
-            return false;
-        } else if (check_user == null) {
-            Swal.fire({
-                title: 'Sepertinya ada kesalahan...',
-                text: "Tidak ada staff yang dipilih untuk diatur jadwalnya!",
-                icon: 'error',
-            });
-            event.preventDefault();
-            return false;
-        }
+        var payment = Math.round((salary / user_hour) * hour);
+        document.getElementById('information').innerHTML = 'Upah Lembur sebesar <strong>"' + format_rupiah(payment) +
+            '"</strong> dihitung dari <strong>"' + hour + '"</strong> jam lembur';
+        document.getElementById('payment').value = payment;
     }
 
 </script>

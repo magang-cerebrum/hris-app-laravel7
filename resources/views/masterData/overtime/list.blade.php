@@ -17,6 +17,7 @@
                 </form>
             </div>
         </div>
+        @if(!$data->isEmpty())
         <table id="overtime-result" class="table table-striped table-bordered no-footer dtr-inline collapsed"
             role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
             <thead>
@@ -44,5 +45,8 @@
                 @endforeach
             </tbody>
         </table>
+        @else
+        <div class="text-center text-danger text-bold">Ma'af, tidak ada data lembur ditemukan untuk periode {{switch_month($month) . ' - ' . $year}}</div>
+        @endif
     </div>
 </div>

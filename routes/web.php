@@ -205,6 +205,7 @@ Route::prefix('/admin/salary-cut')->group(function(){
 //route gaji admin & staff
 Route::prefix('/admin/salary')->group(function(){
     Route::get('/',[SalaryController::class,'index']);
+    Route::post('/',[SalaryController::class,'list_data']);
     Route::post('/processed',[SalaryController::class,'get_salary']);
     Route::post('/reset',[SalaryController::class,'reset_salary']);
 });

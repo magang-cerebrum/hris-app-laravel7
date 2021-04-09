@@ -2,6 +2,10 @@
 @section('title','Cuti')
 @section('content-title','Cuti / Riwayat Pengajuan Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('head')
+<link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
 <div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
@@ -49,12 +53,12 @@
                                 <i class="fa fa-times"></i>
                             </button>
                             @else
-                            <a href="/staff/paid-leave/{{$item->id}}/cancel"
+                            <button onclick="cancel({{$item->id}},'{{$item->type_name}}')"
                                 class="cancel-paid-leave btn btn-sm btn-danger btn-icon btn-circle add-tooltip"
                                 data-toggle="tooltip" data-container="body" data-placement="left"
                                 data-original-title="Cancel Pengajuan Cuti" type="button">
                                 <i class="fa fa-times"></i>
-                            </a>
+                            </button>
                             @endif
                         </td>
                     </tr>
@@ -74,4 +78,55 @@
         @endif
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script>
+        function cancel(id,name){
+            var url = "/staff/paid-leave/:id/cancel".replace(':id', id);
+            Swal.fire({
+                width: 600,
+                title: 'Yakin untuk membatalkan ' + name + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+                }).then((result) => {
+                if (result.value == true) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: url,
+                        type: 'PUT',
+                        data: {id : id, name: name},
+                        success: function(response) {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Berhasil!',
+                                text: response.name + " berhasil di cancel!",
+                                icon: 'info',
+                                timer: 2000
+                            });
+                            window.location.reload();
+                        },
+                        error: function (jXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: errorThrown,
+                            text: "Pengajuan cuti gagal di cancel!",
+                            icon: 'error',
+                            width: 600
+                        });
+                    }
+                    });
+                } else {
+                    return false;
+                }} 
+            );
+        }
+    </script>
 @endsection

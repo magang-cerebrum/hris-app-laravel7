@@ -46,13 +46,13 @@ class SalaryController extends Controller
         ]);
     }
 
-    public function get_salary()
+    public function get_salary(Request $request)
     {
         global $month;
         global $year;
         $day = date('j');
-        $month = '04';
-        $year = '2021';
+        $month = $request->month;
+        $year = $request->year;
         $data_presences = DB::table('master_presences')
         ->where('presence_date', 'LIKE', $year.'-'.$month.'%')
         ->where('status', 0)->get();
@@ -166,8 +166,14 @@ class SalaryController extends Controller
         return redirect('/admin/salary');
     }
 
-    public function create_slip()
+    public function create_slip(Request $request)
     {
+        $id = $request->input('check');
+        $alls = $request->input('alls');
+        dump($id, $alls, $request);
+
+        die();
+
         global $month;
         global $year;
         $day = date('j');
@@ -342,21 +348,6 @@ class SalaryController extends Controller
 
             die();
 
-            DB::table('master_salaries')->insert([
-                'user_id'=>$user_id,
-                'month'=>$month,
-                'year'=>$year,
-                'total_default_hour'=>$default_schedule->total_hour,
-                'total_work_time'=>$total_work_time[0].":".$total_work_time[1].":".$total_work_time[2],
-                'total_late_time'=>$total_late_time[0].":".$total_late_time[1].":".$total_late_time[2],
-                'total_fine'=>$total_fine,
-                'default_salary'=>$master_user->salary,
-                'total_salary_cut'=>$total_cut_salary,
-                'total_salary_allowance'=>$total_allowance_salary,
-                'total_salary'=>$total_salary,
-                'file_salary'=>"check.pdf",
-                'status'=>"Pending"
-            ]);
 
             $data_presences = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
         }

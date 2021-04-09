@@ -62,7 +62,7 @@
         $('#btn-search').on('click',function () {
             $('.datepicker').hide();
         });
-        $('#search-overtime').on('submit', function (event) {
+        $('#search-salary').on('submit', function (event) {
             event.preventDefault();
             var periode = document.getElementById('periode').value;
             $.ajaxSetup({

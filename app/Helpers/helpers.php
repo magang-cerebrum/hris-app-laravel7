@@ -30,6 +30,11 @@ function indonesian_date($waktu,$jam = false){
     return $join;
 }
 
+function split_time($time) {
+    $split_time = explode(':',$time);
+    return $split_time[0].' Jam '.$split_time[1].' Menit '.$split_time[2].' Detik';
+}
+
 function check_hour_shift($check) {
     $data_shift = DB::table('master_shifts')->get();
     foreach ($data_shift as $item_shift) {

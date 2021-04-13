@@ -53,6 +53,12 @@
                                     placeholder="Tanggal Berakhir" name="paid_leave_date_end" id="paid_leave_date_end"
                                     value="{{old('paid_leave_date_start')}}" autocomplete="off" onchange="result_end()">
                             </div>
+                            @error('paid_leave_date_start') <div class="text-danger invalid-feedback mt-3">
+                                Tanggal mulai tidak boleh kosong.
+                            </div> @enderror
+                            @error('paid_leave_date_end') <div class="text-danger invalid-feedback mt-3">
+                                Tanggal akhir tidak boleh kosong.
+                            </div> @enderror
                         </div>
                     </div>
                 </div>
@@ -71,6 +77,7 @@
             </div>
             <div class="defaulted hidden">
                 <div class="row">
+                    <input type="hidden" name="paid_leave_date_end_defaulted" id="paid_leave_date_end_defaulted" hidden>
                     <label class="col-sm-2 control-label">Tanggal :</label>
                     <div id="datepicker-input-date-defaulted">
                         <div class="col-sm-4">
@@ -106,14 +113,16 @@
             orientation:'bottom',
             autoclose: true,
             todayHighlight: true,
-            startDate: '0d'
+            startDate: '0d',
+            daysOfWeekDisabled: [0,6]
         });
         $('#datepicker-input-date-defaulted .input-group.date').datepicker({
             format: 'yyyy/mm/dd',
             orientation:'bottom',
             autoclose: true,
             todayHighlight: true,
-            startDate: '0d'
+            startDate: '0d',
+            daysOfWeekDisabled: [0,6]
         });
     });
 
@@ -157,9 +166,13 @@
                         document.getElementById("yearly_info").innerHTML = '';
                         document.getElementById("yearly_info-2").innerHTML = '';                        
                     } else {
-                        document.getElementById("yearly_info").innerHTML = 'Pengajuan Cuti sebanyak ' + response.yearly_days + ' hari (belum termasuk hari libur)';
+                        document.getElementById("yearly_info").innerHTML = 'Pengajuan Cuti sebanyak ' + response.yearly_days + ' hari kerja';
                         document.getElementById("yearly_info-2").innerHTML = 'Jumlah pengajuan cuti sebaiknya tidak melebihi dari sisa cuti tahunan!';
                     }
+                    document.getElementById("paid_leave_date_start").disabled = false;
+                    document.getElementById("paid_leave_date_end").disabled = false;
+                    document.getElementById('paid_leave_date_start_defaulted').disabled = true;
+                    document.getElementById('paid_leave_date_end_defaulted').disabled = true;
                 } else {
                     if (defaulted_start == '') {
                         document.getElementById("end_date").className = 'text-center text-danger'
@@ -167,7 +180,12 @@
                     } else {
                         document.getElementById("end_date").className = 'text-center text-success'
                         document.getElementById("end_date").innerHTML = response.info;
+                        document.getElementById("paid_leave_date_end_defaulted").value = response.end_date;
                     }
+                    document.getElementById("paid_leave_date_start").disabled = true;
+                    document.getElementById("paid_leave_date_end").disabled = true;
+                    document.getElementById('paid_leave_date_start_defaulted').disabled = false;
+                    document.getElementById('paid_leave_date_end_defaulted').disabled = false;
                 }
             }
         });

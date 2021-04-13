@@ -81,21 +81,14 @@ class TransactionPaidLeaveController extends Controller
     
     public function store(Request $request)
     {
-        if ($request->paid_leave_type_id == 1) {
-            $request->validate([
-                'user_id'=>'required',
-                'paid_leave_type_id'=>'required',
-                'paid_leave_date_start'=>'required',
-                'paid_leave_date_end'=>'required',
-                'needs'=>'required'
-            ]);
-        } else {
-            $request->validate([
-                'user_id'=>'required',
-                'paid_leave_type_id'=>'required',
-                'paid_leave_date_start_defaulted'=>'required',
-            ]);
-        };
+        $request->validate([
+            'user_id'=>'required',
+            'paid_leave_type_id'=>'required',
+            'paid_leave_date_start'=>'required_if:paid_leave_type_id,1',
+            'paid_leave_date_end'=>'required_if:paid_leave_type_id,1',
+            'needs'=>'required_if:paid_leave_type_id,1',
+            'paid_leave_date_start_defaulted'=>'required_unless:paid_leave_type_id,1',
+        ]);
 
         $info = "-";
         
@@ -112,14 +105,10 @@ class TransactionPaidLeaveController extends Controller
             $date_start = date('Y/m/d',strtotime($request->paid_leave_date_start));
             $date_end = date('Y/m/d',strtotime($request->paid_leave_date_end));
             $needs = $request->needs;
-            $interval = (new DateTime($request->paid_leave_date_start))->diff(new DateTime($request->paid_leave_date_end));
+            $interval = (new DateTime($date_start))->diff(new DateTime($date_end));
         } else {
             $date_start = date('Y/m/d',strtotime($request->paid_leave_date_start_defaulted));
-            if ($request->paid_leave_type_id == 2) {
-                $date_end = date('Y/m/d',strtotime('+59 days',strtotime($date_start)));
-            } elseif ($request->paid_leave_type_id == 3) {
-                $date_end = date('Y/m/d',strtotime('+2 days',strtotime($date_start)));
-            }
+            $date_end = date('Y/m/d',strtotime($request->paid_leave_date_end_defaulted));
             $needs = "-";
             $interval = (new DateTime($date_start))->diff(new DateTime($date_end));
         }
@@ -130,21 +119,17 @@ class TransactionPaidLeaveController extends Controller
         for ($i = 0; $i < $paid_leave; $i++) {
             $check_days = date('Y/m/d', strtotime('+1 days', strtotime($start)));
             $check_name_days = date('l', strtotime($check_days));
-
             $table_schedule = DB::table('master_job_schedules')
             ->where('user_id', '=', $request->user_id)
             ->where('month', '=', switch_month(date('m', strtotime($check_days))))
             ->where('year', '=', date('Y', strtotime($check_days)))->get();
-
             if (count($table_schedule) == 0) {
                 if ($user->division_id == 5) {
                     $days_paid_leave++;
-                }
-                else {
+                } else { 
                     $check_holiday = DB::table('master_holidays')
-                    ->where('date','=',$check_days)->get();
-
-                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
+                    ->where('date',$check_days)->get();
+                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday == 0))) {
                         $days_paid_leave++;
                     }
                 }
@@ -152,14 +137,13 @@ class TransactionPaidLeaveController extends Controller
             else {
                 $name_for_get_shift = 'shift_' .date('j', strtotime($check_days));
                 $shift = $table_schedule[0]->$name_for_get_shift;
-                if ($shift != 'Cuti' || $shift != 'Off') {
+                if ($shift != 'Cuti' && $shift != 'Off') {
                     $days_paid_leave++;
                 }
             }
 
             $start = $check_days;
         }
-
         TransactionPaidLeave::create([
             'user_id'=>$request->user_id,
             'paid_leave_date_start'=>$date_start,
@@ -314,36 +298,33 @@ class TransactionPaidLeaveController extends Controller
         return redirect('/admin/paid-leave');
     }
 
-    public function cancel_staff(TransactionPaidLeave $id){
-        TransactionPaidLeave::where('id','=', $id->id)->update(['status' => 'Cancel']);
-        Alert::info('Berhasil!', 'Pengajuan cuti telah di cancel!');
-        return redirect('/staff/paid-leave/history');
+    public function cancel_staff(Request $request){
+        TransactionPaidLeave::where('id', $request->id)->update(['status' => 'Cancel']);
+        return response()->json(['name' => $request->name]);
     }
 
     public function calculate(Request $request){
         if ($request->type == 1) {
-            $interval = (new DateTime($request->yearly_start))->diff(new DateTime($request->yearly_end));
-            $paid_leave_days = ($interval->format('%a')) + 1;
+            $paid_leave_days = count_workday($request->yearly_start,$request->yearly_end);
             if($request->yearly_start == '') $paid_leave_days = 0;
             
             return response()->json([
                 'type' => $request->type,
                 'yearly_days'=>$paid_leave_days
             ]);
-
+            
         } else {
+            $day = MasterLeaveType::where('id',$request->type)->select(['default_day'])->get();
             $date_start = date('Y/m/d',strtotime($request->defaulted_start));
-            if ($request->type == 2) {
-                $date_end = date('Y/m/d',strtotime('+59 days',strtotime($date_start)));
-            } elseif ($request->type == 3) {
-                $date_end = date('Y/m/d',strtotime('+2 days',strtotime($date_start)));
-            }
+            $date_end = workday_end($date_start,$day[0]->default_day);
+            
             $split = explode('/',$date_end);
             $end_info = 'Cuti akan berakhir pada tanggal '. $split[2] . ' ' . switch_month($split[1]) . ' ' .$split[0];
 
             return response()->json([
                 'type' => $request->type,
-                'info' => $end_info
+                'info' => $end_info,
+                'end_date' => $date_end,
             ]);
         }
     }
@@ -438,4 +419,5 @@ class TransactionPaidLeaveController extends Controller
         }
         return redirect('/staff/paid-leave/division');
     }
+
 }

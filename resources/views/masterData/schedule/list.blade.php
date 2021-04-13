@@ -83,7 +83,7 @@
                 error: function (jXHR, textStatus, errorThrown) {
                     Swal.fire({
                         title: errorThrown,
-                        text: "Form belum diisi dengan benar / Tidak ada data jadwal untuk bulan terpilih",
+                        text: "Mohon isi dulu form!",
                         icon: 'error',
                         width: 600
                     });

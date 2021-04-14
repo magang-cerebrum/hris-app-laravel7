@@ -27,7 +27,7 @@
                     @else
                     <th class="sorting_asc text-center" tabindex="0">No</th>
                     <th class="sorting_asc text-center">Nama</th>
-                    <th class="sorting_asc text-center">Bulan - Tahun</th>
+                    <th class="sorting_asc text-center">Periode</th>
                     <th class="sorting text-center">Lama Lembur</th>
                     <th class="sorting text-center">Upah Lembur</th>
                     @endif

@@ -29,6 +29,11 @@ class PresenceController extends Controller
                 $bool_presence = 2;
             }
         }
+        $bool_schedule = DB::table('master_job_schedules')
+        ->where('month', switch_month(date('m')))
+        ->where('year', 200)
+        ->where('user_id', $user->id)->first();
+
         return view('staff.presence.history',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -36,7 +41,8 @@ class PresenceController extends Controller
             'id'=>$user->id,
             'division'=>$division->name,
             'bool_presence'=>$bool_presence,
-            'presence' => $presence
+            'presence' => $presence,
+            'bool_schedule' => $bool_schedule
         ]);
     }
 
@@ -167,7 +173,6 @@ class PresenceController extends Controller
                 $late = '0:0:0';
             }
             $fine = (intval($lateInMinute/5))*20000;
-            // dd($fine,$defaultInTime,$entryTime,$intervalLate,$inTimeLateHour,$inTimeLateMinute,$late,$invertedLate);
             DB::table('master_presences')
             ->insert(
                 [

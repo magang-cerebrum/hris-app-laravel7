@@ -172,3 +172,28 @@ function terbilang($angka) {
     }  
     return $terbilang;
 }
+
+function workday_end($date, $total_day){
+    $date = date('Y/m/d',strtotime('-1days',strtotime($date)));
+    for ($i=$total_day; $i >= 1; $i--) { 
+        $date = date('Y/m/d',strtotime('+1days',strtotime($date)));
+        $day_name = date('l',strtotime($date));
+        if ($day_name == 'Saturday' || $day_name == 'Sunday') {
+            $i++;
+            continue;
+        }
+    }
+    return $date;
+}
+
+function count_workday($date_start,$date_end){
+    $start = strtotime($date_start);
+    $end = strtotime($date_end);
+    $result = 0;
+    for ($i=$start; $i <= $end; $i += (60 * 60 * 24)) {
+        if (date("w",$i) !="0" AND date("w",$i) !="6") {
+            $result++;
+        }
+    }
+    return $result;
+}

@@ -275,7 +275,7 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
     Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
-    Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
+    Route::put('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });
 
 //route transaksi cuti ==STAFF==
@@ -406,4 +406,4 @@ Route::post('/admin/presence/processed', [PresenceController::class,'viewProcess
 Route::post('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
 Route::view('/test', 'pdf.salary');
-Route::get('/test/hitung',[AgendaController::class,'test']);
+Route::get('/test/hitung',[TransactionPaidLeaveController::class,'test']);

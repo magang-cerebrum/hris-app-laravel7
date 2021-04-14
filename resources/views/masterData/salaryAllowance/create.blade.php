@@ -35,13 +35,14 @@
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label" for="information">Nama Tunjangan:</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-10">
                         <select class="selectpicker @error('information') is-invalid @enderror" data-style="btn-pink" name="information" id="information">
                             <option id="null" value=" "></option>
                             @foreach ($data_type as $item)
                             <option class="{{$item->type}}" value="{{$item->name}}">{{$item->name}}</option>
                             @endforeach
                         </select>
+                        <div id="info" class="text-danger">Tidak ada data tipe tunjangan tersedia. <a href="{{url('/admin/cuts-allowances/add')}}">Klik disini untuk menambahkan tipe tunjangan!</a></div>
                         @error('information') <div class="text-danger invalid-feedback mt-3">
                             Nama Tunjangan tidak boleh kosong.
                         </div> @enderror
@@ -106,7 +107,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
-            <button class="btn btn-mint" type="submit">Tambah</button>
+            <button class="btn btn-mint" type="submit" id="submit-button">Tambah</button>
         </div>
     </form>
 </div>
@@ -121,11 +122,27 @@
             $(".global").removeClass("hidden disabled");
             $('.Semua').show();
             $('.Perorangan').hide();
+            var check = $('.Semua').length;
+            if (check > 0) {
+                $('#info').hide();
+                document.getElementById('submit-button').disabled = false;
+            } else {
+                $('#info').show();
+                document.getElementById('submit-button').disabled = true;
+            }
         } else {
             $(".individual").removeClass("hidden disabled");
             $(".global").addClass("hidden disabled");
             $('.Semua').hide();
             $('.Perorangan').show();
+            var check = $('.Perorangan').length;
+            if (check > 0) {
+                $('#info').hide();
+                document.getElementById('submit-button').disabled = false;
+            } else {
+                $('#info').show();
+                document.getElementById('submit-button').disabled = true;
+            }
         }
         $('select[name=information]').val(' ');
         $('select[name=user_id]').val(' ');
@@ -160,7 +177,7 @@
         var jangka = document.getElementById("jangka").value;
         var number_string = angka.replace(/[^,\d]/g, '').toString();
         var total = number_string * jangka;
-        console.log(total);
+        
         //format rp start from here
         split = number_string.split(','),
             sisa = split[0].length % 3,

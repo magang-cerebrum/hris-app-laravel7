@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use Asset\img;
+use Asset\file_slip;
 
 class SalaryController extends Controller
 {
@@ -19,7 +20,7 @@ class SalaryController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('masterData.salary.list',[
+        return view('masterData.salary.search',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -27,12 +28,63 @@ class SalaryController extends Controller
         ]);
     }
 
-    public function get_salary()
+    public function list_data(Request $request)
+    {
+        $data = DB::table('master_salaries')
+        ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->where('month',switch_month(explode('-',$request->periode)[1]))
+        ->where('year',explode('-',$request->periode)[0])
+        ->select([
+            'master_salaries.*',
+            'master_users.name as user_name',
+            'master_users.nip as nip',
+            'master_divisions.name as division',
+            'master_positions.name as position'
+        ])
+        ->get();
+
+        return view('masterdata.salary.list', [
+            'data' => $data,
+            'month' => explode('-',$request->periode)[1],
+            'year' => explode('-',$request->periode)[0]
+        ]);
+    }
+
+    public function index_staff()
+    {
+        $user = Auth::user();
+        $data = DB::table('master_salaries')
+        ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->where('user_id',$user->id)
+        ->select([
+            'master_salaries.*',
+            'master_users.name as user_name',
+            'master_users.nip as nip',
+            'master_divisions.name as division',
+            'master_positions.name as position'
+        ])
+        ->get();
+
+        return view('staff.salary.list', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data' => $data
+        ]);
+    }
+
+    public function get_salary(Request $request)
     {
         global $month;
         global $year;
-        $month = '03';
-        $year = '2021';
+        $day = date('j');
+        $month = $request->month;
+        $year = $request->year;
         $data_presences = DB::table('master_presences')
         ->where('presence_date', 'LIKE', $year.'-'.$month.'%')
         ->where('status', 0)->get();
@@ -85,6 +137,7 @@ class SalaryController extends Controller
             }
 
             $default_schedule = DB::table('master_job_schedules')->where('month',switch_month($month))->where('year',$year)->where('user_id',$user_id)->first();
+            
             $master_user = DB::table('master_users')->where('id',$user_id)->first();
 
             $cut_salary = DB::table('master_salary_cuts')
@@ -123,27 +176,9 @@ class SalaryController extends Controller
 
             $total_salary = $master_user->salary - $total_cut_salary + $total_allowance_salary - $total_fine;
 
-
-            // Contoh pembuatan objek
-            // $data = array();
-            // $value_data = new stdClass();
-            // $value_data->name = 'nama_data';
-            // $value_data->value = 1000;
-
-            // array_push($data, $value_data);
-            // $value_data = new stdClass();
-            // $value_data->name = 'data';
-            // $value_data->value = 500;
-
-            // array_push($data, $value_data);
-            // dd($data);
-
-            // $pdf = PDF::loadView('/pdf.salary');
-            // return $pdf->stream();
-
             DB::table('master_salaries')->insert([
                 'user_id'=>$user_id,
-                'month'=>$month,
+                'month'=>switch_month($month),
                 'year'=>$year,
                 'total_default_hour'=>$default_schedule->total_hour,
                 'total_work_time'=>$total_work_time[0].":".$total_work_time[1].":".$total_work_time[2],
@@ -153,13 +188,142 @@ class SalaryController extends Controller
                 'total_salary_cut'=>$total_cut_salary,
                 'total_salary_allowance'=>$total_allowance_salary,
                 'total_salary'=>$total_salary,
-                'file_salary'=>"check.pdf",
+                'file_salary'=>null,
                 'status'=>"Pending"
             ]);
 
             $data_presences = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
         }
 
+        return redirect('/admin/salary');
+    }
+
+    public function create_slip(Request $request)
+    {
+        $ids = $request->input('check');
+        $data_type_cut = DB::table('master_cut_allowance_types')->where('category','Potongan')->get();
+        $data_type_allowance = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
+        $day = date('j');
+        $month = date('m');
+        $year = date('Y');
+
+        foreach( $ids as $id ) {
+            $data = DB::table('master_salaries')->where('id',$id)->first();
+
+            $master_user = DB::table('master_users')
+            ->where('master_users.id',$data->user_id)
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->select(
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_positions.name as position',
+            )
+            ->first();
+
+            $data_cut = array();
+            $data_allowance = array();
+
+            array_push($data_allowance, object_array_salary('Gaji Pokok', $data->default_salary));
+
+            $data_overtime = DB::table('master_overtimes')
+            ->where('user_id', $data->user_id)
+            ->where('month', $data->month)->where('year', $data->year)
+            ->first();
+            if ($data_overtime) {
+                array_push($data_allowance, object_array_salary('Lembur', $data_overtime->payment));
+                DB::table('master_overtimes')->where('id', $data_overtime->id)->update(['status'=>'Paid']);
+            }
+            else {
+                array_push($data_allowance, object_array_salary('Lembur'));
+            }
+
+            array_push($data_cut, object_array_salary('Denda Keterlambatan', $data->total_fine));
+
+            foreach($data_type_cut as $cut_type) {
+                if($cut_type->type == 'Semua') {
+                    $get_data_cut = DB::table('master_salary_cuts')->where('information', $cut_type->name)->first();
+                    if($get_data_cut) {
+                        $value_data = object_array_salary($get_data_cut->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($cut_type->name);
+                    }
+                }
+                else {
+                    $get_data_cut = DB::table('master_salary_cuts')
+                    ->where('information', $cut_type->name)
+                    ->where('user_id', $user_id)
+                    ->where('month', switch_month($month))->where('year', $year)
+                    ->first();
+                    if($get_data_cut) {
+                        $value_data = object_array_salary($get_data_cut->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($cut_type->name);
+                    }
+                }
+                array_push($data_cut, $value_data);
+            }
+
+            foreach($data_type_allowance as $allowance_type) {
+                if($cut_type->type == 'Semua') {
+                    $get_data_allowance = DB::table('master_salary_allowances')->where('information', $allowance_type->name)->first();
+                    if($get_data_allowance) {
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($allowance_type->name);
+                    }
+                }
+                else {
+                    $get_data_allowance = DB::table('master_salary_allowances')
+                    ->where('information', $allowance_type->name)
+                    ->where('user_id', $user_id)
+                    ->where('month', switch_month($month))->where('year', $year)
+                    ->first();
+                    if($get_data_allowance) {
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                    }
+                    else {
+                        $value_data = object_array_salary($allowance_type->name);
+                    }
+                }
+                array_push($data_allowance, $value_data);
+            }
+
+            $total_cut_salary = 0;
+            $total_allowance_salary = 0;
+
+            foreach($data_cut as $cut) {
+                $total_cut_salary += $cut->value;
+            }
+
+            foreach($data_allowance as $allowance) {
+                $total_allowance_salary += $allowance->value;
+            }
+
+            $total_salary = $total_allowance_salary - $total_cut_salary;
+            $string_total_salary = terbilang($total_salary);
+
+            $pdf = PDF::loadView('/pdf.salary', [
+                'day'=>$day,
+                'month'=>switch_month($month),
+                'year'=>$year,
+                'data_staff'=>$master_user,
+                'data_cut'=>$data_cut,
+                'data_allowance'=>$data_allowance,
+                'total_salary_cut'=>$total_cut_salary,
+                'total_salary_allowance'=>$total_allowance_salary,
+                'total_salary'=>$total_salary,
+                'string_salary'=>$string_total_salary
+            ]);
+            $file_output = $pdf->output();
+            $file_name = $year.'_'.$month.'_'.$master_user->name.'.pdf';
+            $file_patch = 'file_slip/'.$file_name;
+            file_put_contents($file_patch, $file_output);
+            DB::table('master_salaries')->where('id',$id)->update(['status'=>'Accepted', 'file_salary'=>$file_name]);
+        }
         return redirect('/admin/salary');
     }
 

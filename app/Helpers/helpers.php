@@ -30,6 +30,11 @@ function indonesian_date($waktu,$jam = false){
     return $join;
 }
 
+function split_time($time) {
+    $split_time = explode(':',$time);
+    return $split_time[0].' Jam '.$split_time[1].' Menit '.$split_time[2].' Detik';
+}
+
 function check_hour_shift($check) {
     $data_shift = DB::table('master_shifts')->get();
     foreach ($data_shift as $item_shift) {
@@ -37,6 +42,13 @@ function check_hour_shift($check) {
             return $item_shift->total_hour;
         }
     }
+}
+
+function object_array_salary($name, $value = 0) {
+    $data = new stdClass();
+    $data->name = $name;
+    $data->value = $value;
+    return $data;
 }
 
 function change_name_day($day) {

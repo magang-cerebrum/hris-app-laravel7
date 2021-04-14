@@ -144,7 +144,8 @@
                                                 ($check_paid_leave == true ? 
                                                     ($loop->iteration == 2 ? 'selected' : '')
                                                     :
-                                                    ($check_wfh == true ? ($loop->iteration == 4 ? 'selected' : '') : ($loop->iteration == 5 ? 'selected' : ''))
+                                                    ($check_wfh == true ? ($loop->iteration == 4 ? 'selected' : '') : 
+                                                    ($loop->iteration == 5 ? 'selected' : ''))
                                                 )
                                                 :
                                                 ($check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false ?
@@ -180,7 +181,7 @@
             for (let index = 1; index < 32; index++) {
                 $('#master_'+ index).on('click', function(event) {
                     if($(this).is(':checked',true)) {
-                        $('.select-master_' + index + '_2').prop('selected', true);
+                        $('.select-master_' + index + '_5').prop('selected', true);
                     }
                     else {  
                         $('.select-master_' + index + '_1').prop('selected', true);

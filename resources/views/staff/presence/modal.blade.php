@@ -6,24 +6,34 @@
                 <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
                 <h5 class="modal-title text-bold text-center">Ambil Kehadiran Kerja</h5>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" action="/staff/presence/add" method="POST" id="take_presence">
-                    @csrf
+            @if ($bool_schedule)
+                <div class="modal-body">
+                    <form class="form-horizontal" action="/staff/presence/add" method="POST" id="take_presence">
+                        @csrf
+                        <div class="panel-body text-center" style="padding-top: 0">
+                            <input type="hidden" name="user_id" value="{{$id}}">
+                            <input type="hidden" name="bool_presence" value="{{$bool_presence}}">
+                            <h5 class="h4">{{$name}}</h5>
+                            <h5 class="h5">Divisi {{$division}}</h5>
+                            <h2 class="h3">
+                                {{$bool_presence == 0 ? 'Silahkan mengambil absensi masuk kerja' : ($bool_presence == 1 ? 'Silahkan mengambil absensi pulang kerja' : 'Anda telah mengambil absensi hari ini')}}
+                            </h2>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success add-tooltip" type="button" onClick="getLocation()" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Ambil Absensi" {{$bool_presence == 2 ? 'disabled     ' : ''}}>Absensi</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
+                </div>
+                </form>
+            @else
+                <div class="modal-body">
                     <div class="panel-body text-center" style="padding-top: 0">
-                        <input type="hidden" name="user_id" value="{{$id}}">
-                        <input type="hidden" name="bool_presence" value="{{$bool_presence}}">
-                        <h5 class="h4">{{$name}}</h5>
-                        <h5 class="h5">Divisi {{$division}}</h5>
-                        <h2 class="h3">
-                            {{$bool_presence == 0 ? 'Silahkan mengambil absensi masuk kerja' : ($bool_presence == 1 ? 'Silahkan mengambil absensi pulang kerja' : 'Anda telah mengambil absensi hari ini')}}
-                        </h2>
+                        <span style="font-size: 100px; margin-top: 0"><i class="pli-close"></i></span>
+                        <h5 class="h4">Upss Anda Belum Memiliki Jadwal Untuk Hari ini</h5>
+                        <h5 class="h5">Silahkan Menghubungi Chief Anda</h5>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success add-tooltip" type="button" onClick="getLocation()" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Ambil Absensi" {{$bool_presence == 2 ? 'disabled     ' : ''}}>Absensi</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
-            </div>
-            </form>
+                </div>
+            @endif
         </div>
     </div>
 </div>

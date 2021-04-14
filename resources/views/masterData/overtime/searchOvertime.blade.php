@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
-@section('title','Agenda Kerja')
-@section('content-title','Agenda Kerja / Kalendar Agenda Kerja')
+@section('title','Lembur')
+@section('content-title','Lembur / Cari Lembur')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">

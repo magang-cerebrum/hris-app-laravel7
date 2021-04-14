@@ -3,20 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\MasterUser;
-
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Access\Gate;
-use Illuminate\Auth\SessionGuard;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-use Jenssegers\Agent\Agent;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
+use Jenssegers\Agent\Agent;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -25,32 +18,27 @@ class AuthController extends Controller
     }
     public function login()
     {
-        // dd(Auth::guest());
         if (Auth::check()==false){
-            // dd(Cookie::get());
             Cookie::forget('XSRF-TOKEN');
             Cookie::forget('laravel_session');
-            return view('auth.login');
+            Alert::error('Unauthorized!', 'Login terlebih dahulu untuk mengakeses HRIS!')->width(600);
+            return view('auth/login');
         }
-        elseif(Auth::check() == true){
+        else if(Auth::check() == true){
             Cookie::forget('XSRF-TOKEN');
             Cookie::forget('laravel_session');
             $stats = Auth::User()->role_id;
             if($stats==1){
                 return redirect('/admin/dashboard');
             }
-            elseif($stats == 2){
+            else if($stats == 2){
                 return redirect('/staff/dashboard');
             }
-            // else return redirect('/login');
         }
-
-        // return view('auth.login');
     }
 
     protected function authenticate(Request $request)
     {
-        // dd(Auth::guest());
         Cookie::forget('XSRF-TOKEN');
         Cookie::forget('laravel_session');
         $request->session()->flush();
@@ -62,7 +50,6 @@ class AuthController extends Controller
         $user = MasterUser::where('nip',$request->nip)->first();
         $credentials = $request->only('nip','password');
         if (Auth::attempt($credentials) ) {
-            
             $employeeStats= Auth::user()->status;
             $stats = Auth::User()->role_id;
             $user = Auth::user()->name;
@@ -75,10 +62,8 @@ class AuthController extends Controller
             }
             elseif($stats == 2&& $employeeStats=="Aktif"){
                 Auth::logoutOtherDevices($request->password);
-                
                 $device = $agent->platform();
                 $browser = $agent->browser();
-               
                 activity()->log($user.' Telah Login (Staff) pada platform ' . $device);
                 return redirect('/staff/dashboard')->with('status', 'Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser);
             }
@@ -88,8 +73,6 @@ class AuthController extends Controller
             elseif($stats ==2 && $employeeStats=="Non-Aktif"){
                 return redirect('/logout');
             }
-
-            
         }
         else if ( !Hash::check($request->password,$user['password']) or $request->nip!=$user['nip']){
             return back()->with('error','NIP atau Password Salah !');
@@ -111,5 +94,3 @@ class AuthController extends Controller
             return redirect('/login');
         }
     }
-
-

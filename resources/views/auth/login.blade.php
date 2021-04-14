@@ -6,22 +6,20 @@
     <link href="{{ asset('css/fonts.css')}}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/nifty.min.css" rel="stylesheet">
-
     <link href="css/login/main.tambah.css" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-
-    {{-- <link href="{{asset('css/demo/nifty-demo-icons.min.css')}}" rel="stylesheet"> --}}
-    {{-- <link rel="stylesheet" href="{{asset(style.css)}}"> --}}
     <link href="plugins/pace/pace.min.css" rel="stylesheet">
     <script src="plugins/pace/pace.min.js"></script>
     <style>
         input::-ms-reveal,
-      input::-ms-clear {
-        display: none;
-      }
+        input::-ms-clear {
+            display: none;
+        }
     </style>
 </head>
+
 <body>
+    @include('sweetalert::alert')
     <div id="bg-overlay1" class="bg-img"></div>
     <div class="cls-content">
         <div class="cls-content-sm panel">
@@ -34,73 +32,60 @@
                     @csrf
                     <div class="form-group">
                         <div class="input-group">
-                         <span class="input-group-addon">
-                            <i class="fa fa-drivers-license-o" title="NIP"></i>
-                         </span>
-                        <input required type="text" name="nip" class="form-control" placeholder="NIP" autofocus>
+                            <span class="input-group-addon">
+                                <i class="fa fa-drivers-license-o" title="NIP"></i>
+                            </span>
+                            <input required type="text" name="nip" class="form-control" placeholder="NIP" autofocus>
                         </div>
-                                {{-- <div class="invalid-feedback is-invalid" role="alert">
-                                    <strong>{{ session()->get('errornip')}}</strong>
-                                </div> --}}
-                            
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="fa fa-lock" title="Password"></i>
-                             </span>
-                            <input name="password" type="password" class="form-control" placeholder="Password" id="pass-form" required> 
-                        <span onmousedown="mousedownPass();" onmouseup="mouseoutPass();" class="input-group-addon">
-                            <i class="fa fa-eye" title="Lihat Password"></i>
-                        </span>
-                        
+                            </span>
+                            <input name="password" type="password" class="form-control" placeholder="Password"
+                                id="pass-form" required>
+                            <span onmousedown="mousedownPass();" onmouseup="mouseoutPass();" class="input-group-addon">
+                                <i class="fa fa-eye" title="Lihat Password"></i>
+                            </span>
                         </div>
                         <input type="hidden" name="remember_me">
                         <div class="message"></div>
-
                         <div class="invalid-feedback is-invalid" role="alert">
                             <strong>{{ session()->get('error')}}</strong>
                         </div>
-                        
-                        
                     </div>
-                    
                     <div class="checkbox pad-btm text-left">
                     </div>
-
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                 </form>
             </div>
-            {{-- {{dd(Auth::check())}} --}}
-            {{-- {{dd(MasterUser::all()->password)}} --}}
-            {{-- <p>{{dd(Auth::logout())}}</p> --}}
         </div>
     </div>
 </body>
 
-    <script>
-        function mousedownPass(obj) {
-  var obj = document.getElementById('pass-form');
-  obj.type = "text";
-}
-function mouseoutPass(obj) {
-  var obj = document.getElementById('pass-form');
-  obj.type = "password";
-}
+<script>
+    function mousedownPass(obj) {
+        var obj = document.getElementById('pass-form');
+        obj.type = "text";
+    }
 
-const password = document.querySelector('#pass-form');
- const message = document.querySelector('.message');
+    function mouseoutPass(obj) {
+        var obj = document.getElementById('pass-form');
+        obj.type = "password";
+    }
 
- password.addEventListener('keyup', function (e) {
-     if (e.getModifierState('CapsLock')) {
-         message.textContent = 'Capslock anda menyala';
-         message.className = "text-warning fa fa-warning"
-        //  document.getElementById('warning').className = "fa fa-warning"
-     } else {
-         message.textContent = '';
-         message.className = "message"
+    const password = document.querySelector('#pass-form');
+    const message = document.querySelector('.message');
 
-     }
- });
-   
-    </script>
+    password.addEventListener('keyup', function (e) {
+        if (e.getModifierState('CapsLock')) {
+            message.textContent = 'Capslock anda menyala';
+            message.className = "text-warning fa fa-warning"
+        } else {
+            message.textContent = '';
+            message.className = "message"
+        }
+    });
+
+</script>

@@ -13,7 +13,8 @@ class AdminAuthDashboardController extends Controller
 {
     public function index(){
         if(Gate::denies('is_admin')){
-            return abort(403,'Must be Admin');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }
         else if(Gate::allows('is_admin')){
             $user = Auth::user();
@@ -55,10 +56,13 @@ class AdminAuthDashboardController extends Controller
     }
     public function profile()
     {
+        if(Gate::denies('is_admin')){
+            return redirect('/staff/profile');
+        }
         $data = Auth::user();
-        $divisions = DB::table('master_divisions')->where('id', '=', $data->division_id)->get();
-        $positions = DB::table('master_positions')->where('id', '=', $data->position_id)->get();
-        $roles = DB::table('master_roles')->where('id', '=', $data->role_id)->get();
+        $divisions = DB::table('master_divisions')->where('id', $data->division_id)->get();
+        $positions = DB::table('master_positions')->where('id', $data->position_id)->get();
+        $roles = DB::table('master_roles')->where('id', $data->role_id)->get();
         
         return view('dashboard.profile',[
             'name'=>$data->name,
@@ -69,10 +73,13 @@ class AdminAuthDashboardController extends Controller
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles
-            ]);
+        ]);
     }
     public function editprofile()
     {
+        if(Gate::denies('is_admin')){
+            return redirect('/staff/profile/edit');
+        }
         $data = Auth::user();
         $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
@@ -87,7 +94,7 @@ class AdminAuthDashboardController extends Controller
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles
-            ]);
+        ]);
     }
     public function updateprofile(Request $request, MasterUser $user)
     {

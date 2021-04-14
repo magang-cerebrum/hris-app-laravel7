@@ -644,7 +644,7 @@ class MasterJobScheduleController extends Controller
                 'data'=>$data_staff,
                 'data_shift'=>$data_shift,
                 'day'=>$days_in_month,
-                'month'=>$month,
+                'month'=>$split[0],
                 'year'=>$split[1],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

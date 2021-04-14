@@ -69,8 +69,6 @@ class SalaryController extends Controller
         ])
         ->get();
 
-        // dd($data);
-
         return view('staff.salary.list', [
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

@@ -1,6 +1,6 @@
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
-        <h3 class="panel-title">{{'Daftar Lembur "'.switch_month($month) . ' - ' . $year . '"'}}</h3>
+        <h3 class="panel-title">{{'Daftar Gaji "'.switch_month($month) . ' - ' . $year . '"'}}</h3>
     </div>
     <div class="panel-body">
         <div class="row mar-btm">
@@ -50,10 +50,11 @@
                     <th class="sorting_asc text-center" tabindex="0">Checked</th>
                     <th class="sorting_asc text-center">Aksi / File Slip Gaji</th>
                     <th class="sorting_asc text-center">Nama</th>
+                    <th class="sorting_asc text-center">Divisi</th>
                     <th class="sorting_asc text-center">Periode</th>
                     <th class="sorting_asc text-center">Total Jam Kerja Seharusnya</th>
                     <th class="sorting_asc text-center">Total Jam Kerja</th>
-                    <th class="sorting_asc text-center">Total Keterlambatab</th>
+                    <th class="sorting_asc text-center">Total Keterlambatan</th>
                     @endif
                 </tr>
             </thead>
@@ -63,6 +64,11 @@
                     <?php
                         $string_time_work = split_time($item->total_work_time);
                         $string_time_late = split_time($item->total_late_time);
+                        $default_salary = rupiah($item->default_salary);
+                        $total_fine = rupiah($item->total_fine);
+                        $total_salary_allowance = rupiah($item->total_salary_allowance);
+                        $total_salary_cut = rupiah($item->total_salary_cut);
+                        $total_salary = rupiah($item->total_salary);
                     ?>
                     <td class="text-center">
                         @if ($item->status == "Pending")
@@ -72,6 +78,20 @@
                         @endif
                     </td>
                     <td class="text-center">
+                        <span id="detail_salary_staff" data-toggle="modal" data-target="#modal-salary-staff"
+                            style="display: inline;" data-nip="{{$item->nip}}"
+                            data-name="{{$item->user_name}}" data-division_name="{{$item->division}}"
+                            data-position_name="{{$item->position}}" data-periode="{{$item->month . ' - ' . $item->year}}"
+                            data-total_hour="{{$item->total_default_hour.' Jam'}}" data-work_hour="{{$string_time_work}}"
+                            data-late="{{$string_time_late}}" data-salary="{{$default_salary}}"
+                            data-fine="{{$total_fine}}" data-allowance="{{$total_salary_allowance}}"
+                            data-cut="{{$total_salary_cut}}" data-total_salary="{{$total_salary}}">
+                            <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                data-container="body" data-placement="top" data-original-title="Detail Gaji Staff"
+                                type="button">
+                                <i class="fa fa-info"></i>
+                            </a>
+                        </span>
                         @if ($item->status == "Pending")
                             <a href="/admin/salary/{{$item->id}}/edit"
                                 class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
@@ -80,7 +100,7 @@
                                 <i class="fa fa-pencil-square"></i>
                             </a>
                         @else
-                            <a href="{{ asset('/upload_recruitment/cv_upload/'.$item->file_salary)}}" target="blank">
+                            <a href="{{ asset('/file_slip/'.$item->file_salary)}}" target="blank">
                                 <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip"
                                     data-toggle="tooltip" data-container="body" data-placement="top"
                                     data-original-title="Buka CV">
@@ -90,6 +110,7 @@
                         @endif
                     </td>
                     <td class="text-center">{{$item->user_name}}</td>
+                    <td class="text-center">{{$item->division}}</td>
                     <td class="text-center">{{$item->month . ' - ' . $item->year}}</td>
                     <td class="text-center">{{$item->total_default_hour.' Jam'}}</td>
                     <td class="text-center">{{$string_time_work}}</td>
@@ -104,3 +125,4 @@
         @endif
     </div>
 </div>
+@include('masterdata/salary/detail')

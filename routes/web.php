@@ -202,13 +202,18 @@ Route::prefix('/admin/salary-cut')->group(function(){
     Route::get('/search',[SalaryCutController::class, 'search']);
 });
 
-//route gaji admin & staff
+//route gaji admin
 Route::prefix('/admin/salary')->group(function(){
     Route::get('/',[SalaryController::class,'index']);
     Route::post('/',[SalaryController::class,'list_data']);
     Route::post('/slip',[SalaryController::class,'create_slip']);
     Route::post('/processed',[SalaryController::class,'get_salary']);
     Route::post('/reset',[SalaryController::class,'reset_salary']);
+});
+
+//route gaji staff
+Route::prefix('/staff/salary')->group(function(){
+    Route::get('/',[SalaryController::class,'index_staff']);
 });
 
 //route masterdata tunjangan gaji

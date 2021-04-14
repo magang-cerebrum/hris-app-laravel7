@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use Asset\img;
+use Asset\file_slip;
 
 class SalaryController extends Controller
 {
@@ -31,11 +32,16 @@ class SalaryController extends Controller
     {
         $data = DB::table('master_salaries')
         ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->where('month',switch_month(explode('-',$request->periode)[1]))
         ->where('year',explode('-',$request->periode)[0])
         ->select([
             'master_salaries.*',
-            'master_users.name as user_name'
+            'master_users.name as user_name',
+            'master_users.nip as nip',
+            'master_divisions.name as division',
+            'master_positions.name as position'
         ])
         ->get();
 
@@ -43,6 +49,34 @@ class SalaryController extends Controller
             'data' => $data,
             'month' => explode('-',$request->periode)[1],
             'year' => explode('-',$request->periode)[0]
+        ]);
+    }
+
+    public function index_staff()
+    {
+        $user = Auth::user();
+        $data = DB::table('master_salaries')
+        ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->where('user_id',$user->id)
+        ->select([
+            'master_salaries.*',
+            'master_users.name as user_name',
+            'master_users.nip as nip',
+            'master_divisions.name as division',
+            'master_positions.name as position'
+        ])
+        ->get();
+
+        // dd($data);
+
+        return view('staff.salary.list', [
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data' => $data
         ]);
     }
 
@@ -168,93 +202,35 @@ class SalaryController extends Controller
 
     public function create_slip(Request $request)
     {
-        $id = $request->input('check');
-        $alls = $request->input('alls');
-        dump($id, $alls, $request);
-
-        die();
-
-        global $month;
-        global $year;
-        $day = date('j');
-        $month = '04';
-        $year = '2021';
-        $data_presences = DB::table('master_presences')
-        ->where('presence_date', 'LIKE', $year.'-'.$month.'%')
-        ->where('status', 0)->get();
-
+        $ids = $request->input('check');
         $data_type_cut = DB::table('master_cut_allowance_types')->where('category','Potongan')->get();
         $data_type_allowance = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->get();
+        $day = date('j');
+        $month = date('m');
+        $year = date('Y');
 
-        while (count($data_presences) > 0) {
-            $data_presences_by_user_id = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->first();
-            global $user_id;
-            $user_id = $data_presences_by_user_id->user_id;
-            $data_user = DB::table('master_presences')->where('user_id',$user_id)->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
-            $total_work_time = [ 0, 0, 0 ];
-            $total_late_time = [ 0, 0, 0 ];
-            $total_fine = 0;
+        foreach( $ids as $id ) {
+            $data = DB::table('master_salaries')->where('id',$id)->first();
 
-            foreach ($data_user as $item_user) {
-                $work_hour = date('H', strtotime($item_user->inaday_time));
-                $work_minute = date('i', strtotime($item_user->inaday_time));
-                $work_seconds = date('s', strtotime($item_user->inaday_time));
-                $late_hour = date('H', strtotime($item_user->late_time));
-                $late_minute = date('i', strtotime($item_user->late_time));
-                $late_seconds = date('s', strtotime($item_user->late_time));
-
-                $total_work_time[0] += $work_hour;
-                $total_work_time[1] += $work_minute;
-                $total_work_time[2] += $work_seconds;
-                $total_late_time[0] += $late_hour;
-                $total_late_time[1] += $late_minute;
-                $total_late_time[2] += $late_seconds;
-
-                $total_fine += $item_user->fine;
-
-                DB::table('master_presences')->where('id',$item_user->id)->update(['status'=>1]);
-            }
-
-            if ( $total_work_time[2] >= 60 ) {
-                $total_work_time[1] += intval($total_work_time[2]/60);
-                $total_work_time[2] = intval($total_work_time[2]%60);
-            }
-            if ( $total_work_time[1] >= 60 ) {
-                $total_work_time[0] += intval($total_work_time[1]/60);
-                $total_work_time[1] = intval($total_work_time[1]%60);
-            }
-
-            if ( $total_late_time[2] >= 60 ) {
-                $total_late_time[1] += intval($total_late_time[2]/60);
-                $total_late_time[2] = intval($total_late_time[2]%60);
-            }
-            if ( $total_late_time[1] >= 60 ) {
-                $total_late_time[0] += intval($total_late_time[1]/60);
-                $total_late_time[1] = intval($total_late_time[1]%60);
-            }
-
-            $default_schedule = DB::table('master_job_schedules')->where('month',switch_month($month))->where('year',$year)->where('user_id',$user_id)->first();
-            
             $master_user = DB::table('master_users')
-            ->where('master_users.id',$user_id)
+            ->where('master_users.id',$data->user_id)
             ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
             ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->select(
                 'master_users.name as name',
                 'master_divisions.name as division',
                 'master_positions.name as position',
-                'master_users.salary as salary',
             )
             ->first();
 
             $data_cut = array();
             $data_allowance = array();
 
-            array_push($data_allowance, object_array_salary('Gaji Pokok', $master_user->salary));
+            array_push($data_allowance, object_array_salary('Gaji Pokok', $data->default_salary));
 
             $data_overtime = DB::table('master_overtimes')
-            ->where('user_id', $user_id)
-            ->where('month', switch_month($month))->where('year', $year)
+            ->where('user_id', $data->user_id)
+            ->where('month', $data->month)->where('year', $data->year)
             ->first();
             if ($data_overtime) {
                 array_push($data_allowance, object_array_salary('Lembur', $data_overtime->payment));
@@ -264,7 +240,7 @@ class SalaryController extends Controller
                 array_push($data_allowance, object_array_salary('Lembur'));
             }
 
-            array_push($data_cut, object_array_salary('Denda Keterlambatan', $total_fine));
+            array_push($data_cut, object_array_salary('Denda Keterlambatan', $data->total_fine));
 
             foreach($data_type_cut as $cut_type) {
                 if($cut_type->type == 'Semua') {
@@ -344,14 +320,12 @@ class SalaryController extends Controller
                 'total_salary'=>$total_salary,
                 'string_salary'=>$string_total_salary
             ]);
-            return $pdf->stream();
-
-            die();
-
-
-            $data_presences = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
+            $file_output = $pdf->output();
+            $file_name = $year.'_'.$month.'_'.$master_user->name.'.pdf';
+            $file_patch = 'file_slip/'.$file_name;
+            file_put_contents($file_patch, $file_output);
+            DB::table('master_salaries')->where('id',$id)->update(['status'=>'Accepted', 'file_salary'=>$file_name]);
         }
-
         return redirect('/admin/salary');
     }
 

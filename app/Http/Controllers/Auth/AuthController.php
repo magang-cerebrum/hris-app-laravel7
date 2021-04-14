@@ -21,7 +21,6 @@ class AuthController extends Controller
         if (Auth::check()==false){
             Cookie::forget('XSRF-TOKEN');
             Cookie::forget('laravel_session');
-            Alert::error('Unauthorized!', 'Login terlebih dahulu untuk mengakeses HRIS!')->width(600);
             return view('auth/login');
         }
         else if(Auth::check() == true){

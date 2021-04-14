@@ -44,9 +44,10 @@
                     <div class="col-sm-4">
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                             name="name" placeholder="Informasi potongan/tunjangan"
-                            value="{{$cutallowancetype->name}}">
+                            value="{{$cutallowancetype->name}}" maxlength="25" onkeyup="limit_character(this.value)">
                         @error('name') <div class="text-danger invalid-feedback mt-3">Mohon isi nama <span id="category-name"></span>.</div>
                         @enderror
+                        <div id="info" class="text-danger"></div>
                     </div>
                 </div>
             </div>
@@ -66,5 +67,11 @@
             $('#category-name').text(type)
         })
     })
+    function limit_character(value){
+        var category = document.getElementById('category-changer').value
+        if (value.length == 25) {
+            document.getElementById('info').innerHTML = 'Nama ' + category + ' tidak boleh melebihi 25 karakter!';
+        }
+    }
 </script>
 @endsection

@@ -9,7 +9,7 @@ class MasterRecruitment extends Model
     protected $fillable=[
         'name',
         'dob',
-        'live_at',
+        'address',
         'phone_number',
         'email',
         'gender',

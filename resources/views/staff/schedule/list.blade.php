@@ -28,13 +28,13 @@
                     <div id="pickadate">
                         <div class="input-group date">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" style="z-index: 2"><i
+                                <button class="btn btn-primary" type="button" style="z-index: 2"><i
                                         class="fa fa-calendar"></i></button>
                             </span>
                             <input type="text" name="query" placeholder="Masukan Tanggal untuk mencari Jadwal"
                                 class="form-control" autocomplete="off" id="query" readonly>
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-primary" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </div>
@@ -64,6 +64,9 @@
             startView: 'months',
             orientation: 'bottom',
             forceParse: false,
+        });
+        $('#btn-search').on('click',function () {
+            $('.datepicker').hide();
         });
         $('#schedule-search').on('submit', function (event) {
             event.preventDefault();

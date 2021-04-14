@@ -17,7 +17,7 @@ class CreateMasterRecruitmentsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('dob', 100);
-            $table->string('live_at', 200);
+            $table->string('address', 200);
             $table->string('phone_number', 13);
             $table->string('email', 60);
             $table->enum('gender', ['Laki - laki', 'Perempuan']);

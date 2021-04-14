@@ -270,7 +270,7 @@ Route::prefix('/staff/paid-leave')->group(function(){
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
     Route::get('/calculate',[TransactionPaidLeaveController::class,'calculate']);
-    Route::get('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
+    Route::put('/{id}/cancel',[TransactionPaidLeaveController::class,'cancel_staff']);
 });
 
 //route transaksi cuti ==STAFF==
@@ -310,6 +310,14 @@ Route::prefix('/staff/wfh/division')->group(function(){
     Route::put('/{reject}/reject',[WorkFromHomeController::class,'division_reject']);
 });
 
+//route transaksi lembur ==ADMIN==
+Route::prefix('/admin/overtime')->group(function(){
+    Route::get('/',[OvertimeController::class,'index']);
+    Route::get('/add',[OvertimeController::class,'create']);
+    Route::post('/',[OvertimeController::class,'ajaxList']);
+    Route::post('/store',[OvertimeController::class,'store']);
+});
+
 //route transaction ticketing ==ADMIN==
 Route::prefix('/admin/ticketing')->group(function (){
     Route::get('/',[TransactionTicketingController::class,'admin_index']);
@@ -336,7 +344,6 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
 });
-
 
 //Route Achievement ==Chief==
 Route::prefix('/staff/performance')->group(function () {
@@ -395,4 +402,4 @@ Route::post('/admin/presence/processed', [PresenceController::class,'viewProcess
 Route::post('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
 Route::view('/test', 'pdf.salary');
-Route::get('/test/hitung',[AgendaController::class,'test']);
+Route::get('/test/hitung',[TransactionPaidLeaveController::class,'test']);

@@ -5,6 +5,7 @@
 @section('head')
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
 
@@ -67,6 +68,11 @@
         });
         $('#cari-achievement').on('submit', function (event) {
             event.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 url: $(this).attr('action'),
                 type: $(this).attr('method'),

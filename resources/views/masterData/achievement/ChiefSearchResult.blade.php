@@ -21,20 +21,22 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 0; $i < $count; $i++)
+                {{-- @for ($i = 0; $i < $count; $i++) --}}
+                @foreach($data as $dataItems)
+                
                   <tr>
-                    <td tabindex="0" class="sorting_1 text-center">{{$i+1}}</td>
-                    @if ($data[$i]->score == $employee_of_the_month)
-                    <td class="text-center"><i class="fa fa-star" title="Employee of The Month" style="color : gold"></i> {{$data[$i]->name}} <i class="fa fa-star" title="Employee of The Month" style="color : gold"></i></td>
-                    @else <td class="text-center">{{$data[$i]->name}}</td>
-                    @endif
-                    <td class="text-center">{{$data[$i]->score}}</td>
-                    <td class="text-center">{{$data[$i]->month}}</td>
-                    <td class="text-center">{{$data[$i]->year}}</td>
+                    <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
+                    {{-- @if ($data[$i]->performance_score == $employee_of_the_month) --}}
+                    {{-- <td class="text-center"><i class="fa fa-star" title="Employee of The Month" style="color : gold"></i> {{$data[$i]->name}} <i class="fa fa-star" title="Employee of The Month" style="color : gold"></i></td> --}}
+                   {{-- @else --}}<td class="text-center">{{$dataItems->name}}</td>
+                    {{-- @endif --}}
+                    <td class="text-center">{{$dataItems->performance_score}}</td>
+                    <td class="text-center">{{$dataItems->month}}</td>
+                    <td class="text-center">{{$dataItems->year}}</td>
                     {{-- <td class="text-center">{{$row->late_time}}</td> --}}
                         </tr>
-                    
-                @endfor
+                @endforeach
+                {{-- @endfor --}}
             </tbody>
         </table>
         

@@ -26,6 +26,8 @@ use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\WorkFromHomeController;
 use App\Http\Controllers\OvertimeController;
+use App\Http\Controllers\PerformanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -337,13 +339,14 @@ Route::prefix('/admin/achievement')->group(function () {
 
 
 //Route Achievement ==Chief==
-Route::prefix('/staff/achievement')->group(function () {
-    Route::get('/', [MasterAchievementController::class,'indexChief']);
-    Route::get('/scoring',[MasterAchievementController::class,'chiefScoring']);
-    Route::get('/searchlist',[MasterAchievementController::class,'Chiefsearchlist']);
-    Route::post('/scoring',[MasterAchievementController::class,'chiefScored']);
-    Route::post('/search',[MasterAchievementController::class,'ChiefSearch']);
-    Route::get('/Charts', [MasterAchievementController::class,'chief_chart_index']);
+Route::prefix('/staff/performance')->group(function () {
+    Route::get('/', [PerformanceController::class,'indexChief']);
+    Route::get('/searchlist',[PerformanceController::class,'Chiefsearchlist']);
+    Route::get('/ajx/pickdate',[PerformanceController::class,'pickDateResult']);
+    Route::get('/scoring',[PerformanceController::class,'chiefScoring']);
+    Route::post('/scoring',[PerformanceController::class,'chiefScored']);
+    Route::post('/search',[PerformanceController::class,'ChiefSearch']);
+    Route::get('/charts', [PerformanceController::class,'chief_chart_index']);
 });
 //route achievement ==STAFF==
 

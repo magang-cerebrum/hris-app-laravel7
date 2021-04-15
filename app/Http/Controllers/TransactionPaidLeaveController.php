@@ -129,7 +129,7 @@ class TransactionPaidLeaveController extends Controller
                 } else { 
                     $check_holiday = DB::table('master_holidays')
                     ->where('date',$check_days)->get();
-                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday == 0))) {
+                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
                         $days_paid_leave++;
                     }
                 }

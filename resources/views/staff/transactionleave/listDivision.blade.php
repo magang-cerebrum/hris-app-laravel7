@@ -18,7 +18,7 @@
                     data-toggle="tooltip" data-container="body" data-placement="top"
                     data-original-title="Lihat Riwayat Pengajuan Cuti" style="margin-bottom: 15px">
                     <i class="fa fa-history"></i>
-                    Riwayat Pengajuan
+                    Riwayat Pengajuan Cuti
                 </a>
                 @if (count($data) == 0)
             </div>

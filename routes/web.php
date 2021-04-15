@@ -52,14 +52,6 @@ Route::put('/staff/password/saved',[UserController::class,'update'])->middleware
 Route::get('/admin/password',[UserController::class,'edit'])->middleware('auth');
 Route::put('/admin/password/saved',[UserController::class,'update'])->middleware('auth');
 
-//route profile
-Route::get('/admin/profile', [AdminAuthDashboardController::class,'profile']);
-Route::get('/admin/profile/edit', [AdminAuthDashboardController::class,'editprofile']);
-Route::put('/admin/profile/{user}', [AdminAuthDashboardController::class,'updateprofile']);
-Route::get('/staff/profile', [StaffAuthDashboardController::class,'profile']);
-Route::get('/staff/profile/edit', [StaffAuthDashboardController::class,'editprofile']);
-Route::put('/staff/profile/{user}', [StaffAuthDashboardController::class,'updateprofile']);
-
 //route landing dashboard, ganti password & profil ==ADMIN==
 Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);
@@ -72,7 +64,7 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
 });
 
 //route landing dashboard, ganti password & profil ==STAFF==
-Route::prefix('/staff')->group(function(){
+Route::prefix('/staff')->middleware('auth')->group(function(){
     Route::get('/dashboard', [StaffAuthDashboardController::class,'index']);
     Route::get('/password/{user}',[UserController::class,'edit']);
     Route::put('/password/{user}/saved',[UserController::class,'update']);
@@ -83,7 +75,7 @@ Route::prefix('/staff')->group(function(){
 });
 
 //route masterdata staff
-Route::prefix('/admin/data-staff')->group(function(){
+Route::prefix('/admin/data-staff')->middleware('auth')->group(function(){
     Route::get('/',[DataStaffController::class,'index']);
     Route::get('/add',[DataStaffController::class,'create']);
     Route::post('/', [DataStaffController::class, 'store']);
@@ -95,7 +87,7 @@ Route::prefix('/admin/data-staff')->group(function(){
     Route::get('/search', [DataStaffController::class, 'search']);
 });
 //route agenda kerja ==ADMIN==
-Route::prefix('/admin/agenda')->group(function(){
+Route::prefix('/admin/agenda')->middleware('auth')->group(function(){
     Route::get('/',[AgendaController::class,'index']);
     Route::get('/add',[AgendaController::class,'create']);
     Route::post('/', [AgendaController::class, 'store']);
@@ -108,18 +100,18 @@ Route::prefix('/admin/agenda')->group(function(){
 });
 
 //route agenda kerja ==STAFF==
-Route::prefix('/staff/agenda')->group(function(){
+Route::prefix('/staff/agenda')->middleware('auth')->group(function(){
     Route::get('/',[AgendaController::class,'index_staff']);
 });
 //route promotion staff 
-Route::prefix('/admin/data-staff/promote')->group(function(){
+Route::prefix('/admin/data-staff/promote')->middleware('auth')->group(function(){
     Route::get('/{staff}',[DataStaffController::class,'promotion']);
     Route::post('/calculate',[DataStaffController::class,'promotion_calculate']);
     Route::post('/approved', [DataStaffController::class, 'promotion_approved']);
 
 });
 //route masterdata divisi
-Route::prefix('/admin/division')->group(function(){
+Route::prefix('/admin/division')->middleware('auth')->group(function(){
     Route::get('/',[DivisionController::class,'index']);
     Route::get('/add',[DivisionController::class,'create']);
     Route::post('/', [DivisionController::class, 'store']);
@@ -130,7 +122,7 @@ Route::prefix('/admin/division')->group(function(){
 });
 
 //route masterdata posisi
-Route::prefix('/admin/position')->group(function(){
+Route::prefix('/admin/position')->middleware('auth')->group(function(){
     Route::get('/',[PositionController::class,'index']);
     Route::get('/add',[PositionController::class,'create']);
     Route::post('/', [PositionController::class, 'store']);
@@ -141,7 +133,7 @@ Route::prefix('/admin/position')->group(function(){
 });
 
 //route masterdata shift
-Route::prefix('/admin/shift')->group(function(){
+Route::prefix('/admin/shift')->middleware('auth')->group(function(){
     Route::get('/',[ShiftController::class,'index']);
     Route::get('/add',[ShiftController::class,'create']);
     Route::post('/', [ShiftController::class, 'store']);
@@ -152,7 +144,7 @@ Route::prefix('/admin/shift')->group(function(){
 });
 
 //route masterdata tipe cuti
-Route::prefix('/admin/paid-leave-type')->group(function (){
+Route::prefix('/admin/paid-leave-type')->middleware('auth')->group(function (){
     Route::get('/',[MasterLeaveTypeController::class,'index'])->name('tablelist');
     Route::get('/add',[MasterLeaveTypeController::class,'create'])->name('addleavetype');
     Route::post('/',[MasterLeaveTypeController::class,'store'])->name('save');
@@ -163,7 +155,7 @@ Route::prefix('/admin/paid-leave-type')->group(function (){
 });
 
 // route masterdata hari libur
-Route::prefix('/admin/holiday')->group(function() {
+Route::prefix('/admin/holiday')->middleware('auth')->group(function() {
     Route::get('/',[HolidayController::class, 'index']);
     Route::get('/add',[HolidayController::class, 'create']);
     Route::post('/',[HolidayController::class, 'store']);
@@ -174,7 +166,7 @@ Route::prefix('/admin/holiday')->group(function() {
 });
 
 //route masterdata tipe potongan dan tunjangan
-Route::prefix('/admin/cuts-allowances')->group(function(){
+Route::prefix('/admin/cuts-allowances')->middleware('auth')->group(function(){
     Route::get('/',[CutAllowanceTypeController::class,'index']);
     Route::get('/add',[CutAllowanceTypeController::class,'create']);
     Route::post('/', [CutAllowanceTypeController::class, 'store']);
@@ -185,14 +177,8 @@ Route::prefix('/admin/cuts-allowances')->group(function(){
     Route::get('/search',[CutAllowanceTypeController::class, 'search']);
 });
 
-//route masterdata lembur
-Route::prefix('/admin/overtime')->group(function(){
-    Route::get('/',[OvertimeController::class,'index']);
-    Route::get('/create',[OvertimeController::class,'create']);
-});
-
 //route masterdata potongan gaji
-Route::prefix('/admin/salary-cut')->group(function(){
+Route::prefix('/admin/salary-cut')->middleware('auth')->group(function(){
     Route::get('/',[SalaryCutController::class,'index']);
     Route::get('/add',[SalaryCutController::class,'create']);
     Route::post('/', [SalaryCutController::class, 'store']);
@@ -202,8 +188,8 @@ Route::prefix('/admin/salary-cut')->group(function(){
     Route::get('/search',[SalaryCutController::class, 'search']);
 });
 
-//route gaji admin
-Route::prefix('/admin/salary')->group(function(){
+//route gaji admin & staff
+Route::prefix('/admin/salary')->middleware('auth')->group(function(){
     Route::get('/',[SalaryController::class,'index']);
     Route::post('/',[SalaryController::class,'list_data']);
     Route::post('/slip',[SalaryController::class,'create_slip']);
@@ -212,12 +198,12 @@ Route::prefix('/admin/salary')->group(function(){
 });
 
 //route gaji staff
-Route::prefix('/staff/salary')->group(function(){
+Route::prefix('/staff/salary')->middleware('auth')->group(function(){
     Route::get('/',[SalaryController::class,'index_staff']);
 });
 
 //route masterdata tunjangan gaji
-Route::prefix('/admin/salary-allowance')->group(function(){
+Route::prefix('/admin/salary-allowance')->middleware('auth')->group(function(){
     Route::get('/',[SalaryAllowanceController::class,'index']);
     Route::get('/add',[SalaryAllowanceController::class,'create']);
     Route::post('/', [SalaryAllowanceController::class, 'store']);
@@ -228,7 +214,7 @@ Route::prefix('/admin/salary-allowance')->group(function(){
 });
 
 //route jadwal kerja admin & staff
-Route::prefix('/admin/schedule')->group(function() {
+Route::prefix('/admin/schedule')->middleware('auth')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
@@ -242,7 +228,7 @@ Route::prefix('/admin/schedule')->group(function() {
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::post('/copied',[MasterJobScheduleController::class,'copied']);
 });
-Route::prefix('/staff/schedule')->group(function() {
+Route::prefix('/staff/schedule')->middleware('auth')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'staff_calendar']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
@@ -252,15 +238,15 @@ Route::prefix('/staff/schedule')->group(function() {
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
-
+    //copy jadwal
     Route::get('/copyschedule',[MasterJobScheduleController::class,'ChiefCopySchedule']);
-    Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
-    Route::GET('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
+    Route::post('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
+    Route::get('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);
     Route::post('/copied',[MasterJobScheduleController::class,'Chiefcopied']);
 });
 
 //route transaksi cuti ==ADMIN==
-Route::prefix('/admin/paid-leave')->group(function(){
+Route::prefix('/admin/paid-leave')->middleware('auth')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'index']);
     Route::get('/history',[TransactionPaidLeaveController::class,'history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'update_approve']);
@@ -270,7 +256,7 @@ Route::prefix('/admin/paid-leave')->group(function(){
 });
 
 //route transaksi cuti ==STAFF==
-Route::prefix('/staff/paid-leave')->group(function(){
+Route::prefix('/staff/paid-leave')->middleware('auth')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'create']);
     Route::post('/',[TransactionPaidLeaveController::class,'store']);
     Route::get('/history',[TransactionPaidLeaveController::class,'show']);
@@ -279,7 +265,7 @@ Route::prefix('/staff/paid-leave')->group(function(){
 });
 
 //route transaksi cuti ==STAFF==
-Route::prefix('/staff/paid-leave/division')->group(function(){
+Route::prefix('/staff/paid-leave/division')->middleware('auth')->group(function(){
     Route::get('/',[TransactionPaidLeaveController::class,'division']);
     Route::get('/history',[TransactionPaidLeaveController::class,'division_history']);
     Route::put('/approve',[TransactionPaidLeaveController::class,'division_approve']);
@@ -288,7 +274,7 @@ Route::prefix('/staff/paid-leave/division')->group(function(){
 });
 
 //route transaksi wfh ==ADMIN==
-Route::prefix('/admin/wfh')->group(function(){
+Route::prefix('/admin/wfh')->middleware('auth')->group(function(){
     Route::get('/',[WorkFromHomeController::class,'index']);
     Route::get('/history',[WorkFromHomeController::class,'history']);
     Route::put('/approve',[WorkFromHomeController::class,'update_approve']);
@@ -298,7 +284,7 @@ Route::prefix('/admin/wfh')->group(function(){
 });
 
 //route transaksi wfh ==STAFF==
-Route::prefix('/staff/wfh')->group(function(){
+Route::prefix('/staff/wfh')->middleware('auth')->group(function(){
     Route::get('/',[WorkFromHomeController::class,'create']);
     Route::post('/',[WorkFromHomeController::class,'store']);
     Route::get('/history',[WorkFromHomeController::class,'show']);
@@ -307,7 +293,7 @@ Route::prefix('/staff/wfh')->group(function(){
 });
 
 //route transaksi wfh ==STAFF==
-Route::prefix('/staff/wfh/division')->group(function(){
+Route::prefix('/staff/wfh/division')->middleware('auth')->group(function(){
     Route::get('/',[WorkFromHomeController::class,'division']);
     Route::get('/history',[WorkFromHomeController::class,'division_history']);
     Route::put('/approve',[WorkFromHomeController::class,'division_approve']);
@@ -316,7 +302,7 @@ Route::prefix('/staff/wfh/division')->group(function(){
 });
 
 //route transaksi lembur ==ADMIN==
-Route::prefix('/admin/overtime')->group(function(){
+Route::prefix('/admin/overtime')->middleware('auth')->group(function(){
     Route::get('/',[OvertimeController::class,'index']);
     Route::get('/add',[OvertimeController::class,'create']);
     Route::post('/',[OvertimeController::class,'ajaxList']);
@@ -324,7 +310,7 @@ Route::prefix('/admin/overtime')->group(function(){
 });
 
 //route transaction ticketing ==ADMIN==
-Route::prefix('/admin/ticketing')->group(function (){
+Route::prefix('/admin/ticketing')->middleware('auth')->group(function (){
     Route::get('/',[TransactionTicketingController::class,'admin_index']);
     Route::get('/{ticket}/edit',[TransactionTicketingController::class,'admin_edit']);
     Route::put('/on-progress',[TransactionTicketingController::class,'make_on_progress']);
@@ -334,14 +320,14 @@ Route::prefix('/admin/ticketing')->group(function (){
 });
 
 //route transaction ticketing ==STAFF==
-Route::prefix('/staff/ticketing')->group(function (){
+Route::prefix('/staff/ticketing')->middleware('auth')->group(function (){
     Route::get('/',[TransactionTicketingController::class,'staff_index']);
     Route::get('/create',[TransactionTicketingController::class,'staff_create']);
     Route::post('/input',[TransactionTicketingController::class,'staff_input']);
 });
 
 //route achievement ==ADMIN==
-Route::prefix('/admin/achievement')->group(function () {
+Route::prefix('/admin/achievement')->middleware('auth')->group(function () {
     Route::get('/', [App\Http\Controllers\MasterAchievementController::class,'index']);
     Route::get('/scoring',[MasterAchievementController::class,'scoring']);
     Route::get('/searchlist',[MasterAchievementController::class,'searchlist']);
@@ -351,7 +337,7 @@ Route::prefix('/admin/achievement')->group(function () {
 });
 
 //Route Achievement ==Chief==
-Route::prefix('/staff/achievement')->group(function () {
+Route::prefix('/staff/achievement')->middleware('auth')->group(function () {
     Route::get('/', [MasterAchievementController::class,'indexChief']);
     Route::get('/scoring',[MasterAchievementController::class,'chiefScoring']);
     Route::get('/searchlist',[MasterAchievementController::class,'Chiefsearchlist']);
@@ -362,14 +348,14 @@ Route::prefix('/staff/achievement')->group(function () {
 //route achievement ==STAFF==
 
 //route staff presence
-Route::prefix('/staff/presence')->group(function () {
+Route::prefix('/staff/presence')->middleware('auth')->group(function () {
     Route::get('/',[PresenceController::class,'staff_view']);
     Route::post('/search',[PresenceController::class,'search']);
     Route::post('/add',[PresenceController::class,'add_presence']);
 });
 
 //route sistem poster
-Route::prefix('/admin/poster')->group(function(){
+Route::prefix('/admin/poster')->middleware('auth')->group(function(){
     Route::get('/',[SliderController::class,'index']);
     Route::get('/add',[SliderController::class,'create']);
     Route::post('/add',[SliderController::class,'store']);
@@ -379,7 +365,7 @@ Route::prefix('/admin/poster')->group(function(){
 });
 
 //route sistem log
-Route::prefix('/admin/log')->group(function(){
+Route::prefix('/admin/log')->middleware('auth')->group(function(){
     Route::get('/',[LogController::class,'index']);
     Route::get('/search',[LogController::class,'search']);
     Route::delete('/',[LogController::class,'destroyselected']);
@@ -387,7 +373,7 @@ Route::prefix('/admin/log')->group(function(){
 });
 
 //route masterdata job
-Route::prefix('/admin/job')->group(function (){
+Route::prefix('/admin/job')->middleware('auth')->group(function (){
     Route::get('/',[ MasterJobController::class,'indexJob']);
     Route::post('/',[ MasterJobController::class,'store']);
     Route::get('/add',[ MasterJobController::class,'create']);
@@ -396,14 +382,18 @@ Route::prefix('/admin/job')->group(function (){
 });
 
 //route recruitment
-Route::get('/admin/recruitment',[ MasterRecruitmentController::class,'index']);
-Route::get('/admin/recruitment/search', [MasterRecruitmentController::class,'search']);
-Route::delete('/admin/recruitment/delete', [MasterRecruitmentController::class,'destroySelected']);
+Route::prefix('/admin/recruitment')->middleware('auth')->group(function () {
+    Route::get('/',[ MasterRecruitmentController::class,'index']);
+    Route::get('/search', [MasterRecruitmentController::class,'search']);
+    Route::delete('/delete', [MasterRecruitmentController::class,'destroySelected']);
+});
 
+Route::prefix('/admin/presence')->middleware('auth')->group(function () {
+    Route::get('/', [PresenceController::class,'getProcessedPresenceView']);
+    Route::post('/processed', [PresenceController::class,'viewProcessedPresence']);
+    Route::post('/reset', [PresenceController::class,'resetStats']);
+});
 
-Route::get('/admin/presence', [PresenceController::class,'getProcessedPresenceView']);
-Route::post('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
-Route::post('/admin/presence/reset', [PresenceController::class,'resetStats']);
-
-Route::view('/test', 'kamera');
+//route testing
+Route::view('/test', 'pdf.salary');
 Route::get('/test/hitung',[TransactionPaidLeaveController::class,'test']);

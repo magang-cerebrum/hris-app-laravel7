@@ -7,9 +7,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">Profile User</h3>
     </div>
-    <form class="form-horizontal" method="POST">
-        @csrf
-        @method('put')
+    <form class="form-horizontal">
         <div class="panel-body">
             <div class="form-group">
                 <div class="row">
@@ -138,7 +136,11 @@
             </div>
         </div>
         <div class="panel-footer text-right">
-            <a href="/admin/profile/edit" class="btn btn-mint" type="submit">Ubah Profil</a>
+            @if (Auth::user()->role_id == 1)
+            <a href="{{url('/admin/profile/edit')}}" class="btn btn-mint" type="button">Ubah Profil</a>
+            @else
+            <a href="{{url('/staff/profile/edit')}}" class="btn btn-mint" type="button">Ubah Profil</a>
+            @endif
         </div>
     </form>
 </div>

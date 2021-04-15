@@ -405,5 +405,5 @@ Route::get('/admin/presence', [PresenceController::class,'getProcessedPresenceVi
 Route::post('/admin/presence/processed', [PresenceController::class,'viewProcessedPresence']);
 Route::post('/admin/presence/reset', [PresenceController::class,'resetStats']);
 
-Route::view('/test', 'pdf.salary');
+Route::view('/test', 'kamera');
 Route::get('/test/hitung',[TransactionPaidLeaveController::class,'test']);

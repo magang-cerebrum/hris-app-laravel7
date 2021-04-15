@@ -31,7 +31,7 @@ class PresenceController extends Controller
         }
         $bool_schedule = DB::table('master_job_schedules')
         ->where('month', switch_month(date('m')))
-        ->where('year', 200)
+        ->where('year', date('Y'))
         ->where('user_id', $user->id)->first();
 
         return view('staff.presence.history',[

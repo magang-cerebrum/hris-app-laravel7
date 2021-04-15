@@ -206,4 +206,5 @@ class PresenceController extends Controller
         ->update(['status'=>0]);
         return redirect()->back();
     }
+    
 }

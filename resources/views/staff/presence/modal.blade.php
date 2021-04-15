@@ -7,10 +7,23 @@
                 <h5 class="modal-title text-bold text-center">Ambil Kehadiran Kerja</h5>
             </div>
             @if ($bool_schedule)
+            <?php
+                return redirect('/login');
+            ?>
                 <div class="modal-body">
                     <form class="form-horizontal" action="/staff/presence/add" method="POST" id="take_presence">
                         @csrf
                         <div class="panel-body text-center" style="padding-top: 0">
+                            <div class="container" id="Cam"><b>Webcam Preview...</b>
+                                <div id="my_camera"></div><form>
+                                <input type="button" value="Snap It" onClick="take_snapshot()"></form>
+                            </div>
+                            <div class="container" id="Prev">
+                                <b>Snap Preview...</b><div id="results"></div>
+                            </div>
+                            <div class="container" id="Saved">
+                                <b>Saved</b><span id="loading"></span><img id="uploaded" src=""/>
+                            </div>
                             <input type="hidden" name="user_id" value="{{$id}}">
                             <input type="hidden" name="bool_presence" value="{{$bool_presence}}">
                             <h5 class="h4">{{$name}}</h5>
@@ -44,6 +57,23 @@
 {{-- Sweetalert 2 --}}
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
+    function presensi() {
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "../plugins/webcam/webcam.js";
+        var script2 = document.createElement('script');
+        script2.type = "text/javascript";
+        script2.src = "../plugins/webcam/webcam2.js";
+
+        document.head.appendChild(script);
+        document.head.appendChild(script2);
+        
+        var input = document.createElement('input');
+        input.type = "button";
+        input.value = "Snap It";
+        input.onClick = "take_snapshot()";
+        console.log(input);
+    }
     $(document).ready(function () {
         $('#cari-presensi').on('submit', function (event) {
             event.preventDefault();

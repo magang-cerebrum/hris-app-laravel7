@@ -7,6 +7,23 @@
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+{{-- webcam --}}
+{{-- <script type="text/javascript" src="{{asset('plugins/webcam/webcam.js')}}"></script>
+<script type="text/javascript" src="{{asset('plugins/webcam/webcam2.js')}}"></script> --}}
+<style type="text/css">
+    .container {
+        display:inline-block;width:320px;
+    }
+    #Cam {
+        background:rgb(255,255,215);
+    }
+    #Prev {
+        background:rgb(255,255,155);
+    }
+    #Saved {
+        background:rgb(255,255,55);
+    }
+</style>
 @endsection
 
 @section('content')
@@ -31,7 +48,7 @@
             </div>
     </div>
     <div class="panel-footer text-right">
-        <button type="button" data-toggle="modal" data-target="#modal-input-presence" class="btn btn-warning float-right" id="input-presence">Absensi</button>
+        <button type="button" data-toggle="modal" data-target="#modal-input-presence" class="btn btn-warning float-right" id="input-presence" onClick="presensi()">Absensi</button>
         <button type="submit" class="btn btn-pink float-right">Cari Presensi</button>
     </div>
     </form>
@@ -40,5 +57,5 @@
 <div id="panel-output"></div>
 
 @include('staff/presence/modal')
-@endsection
 
+@endsection

@@ -353,6 +353,7 @@ Route::prefix('/staff/presence')->middleware('auth')->group(function () {
     Route::post('/search',[PresenceController::class,'search']);
     Route::post('/add',[PresenceController::class,'add_presence']);
 });
+Route::view('/staff/presence/take', 'staff.presence.take');
 
 //route sistem poster
 Route::prefix('/admin/poster')->middleware('auth')->group(function(){

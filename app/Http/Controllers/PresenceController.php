@@ -12,10 +12,6 @@ class PresenceController extends Controller
 {
     public function staff_view(){
         $user = Auth::user();
-        $presence = MasterPresence::where(['presence_date'=> date('Y-m-d'),'user_id'=> $user->id,])
-        ->select('in_time','out_time','late_time')
-        ->first();
-        $division = DB::table('master_divisions')->where('id', $user->division_id)->first();
         $date = date('Y-m-d');
         $count_presence_in_day = DB::table('master_presences')->where('user_id', $user->id)->where('presence_date', $date)->get();
         if (count($count_presence_in_day) == 0) {
@@ -29,26 +25,60 @@ class PresenceController extends Controller
                 $bool_presence = 2;
             }
         }
+        $shift = 'shift_'.date('j');
         $bool_schedule = DB::table('master_job_schedules')
         ->where('month', switch_month(date('m')))
         ->where('year', date('Y'))
         ->where('user_id', $user->id)->first();
+
+        $bool_schedule = $bool_schedule->$shift;
 
         return view('staff.presence.history',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id,
-            'division'=>$division->name,
             'bool_presence'=>$bool_presence,
-            'presence' => $presence,
             'bool_schedule' => $bool_schedule
+        ]);
+    }
+
+    public function take_presence(){
+        $user = Auth::user();
+        $division = DB::table('master_divisions')->where('id', $user->division_id)->select(['name'])->first();
+        $date = date('Y-m-d');
+        $count_presence_in_day = DB::table('master_presences')->where('user_id', $user->id)->where('presence_date', $date)->get();
+        if (count($count_presence_in_day) == 0) {
+            $bool_presence = 0;
+        }
+        else {
+            if ($count_presence_in_day[0]->out_time == null) {
+                $bool_presence = 1;
+            }
+            else {
+                $bool_presence = 2;
+            }
+        }
+
+        return view('staff.presence.take',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'division'=>$division->name,
+            'bool_presence'=>$bool_presence
         ]);
     }
 
     public function add_presence(Request $request) {
         $date = date('Y-m-d');
         $time = date('H:i:s');
+
+        $image = $request->image;
+        $image_array_1 = explode(";", $image);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $data = base64_decode($image_array_2[1]);
+        $image_name = $date.'_'. Auth::user()->name . '.jpeg';
         
         $master_shift = DB::table('master_shifts')->get();
 
@@ -66,12 +96,17 @@ class PresenceController extends Controller
                     $hour_shift = $item_shift->total_hour;
                 }
             }
+
+            $image_path = 'img-presensi/masuk/' . $image_name;
+            file_put_contents($image_path, $data);
+
             DB::table('master_presences')->insert([
                 'user_id' => $request->user_id,
                 'presence_date' => $date,
                 'in_time' => $time,
                 'shift_name' => $shift,
-                'shift_default_hour' => $hour_shift
+                'shift_default_hour' => $hour_shift,
+                'file_in' => $image_name
             ]);
         }
         else if ($request->bool_presence == 1) {
@@ -100,13 +135,17 @@ class PresenceController extends Controller
             }
             $fine = (intval($lateInMinute/5))*20000;
 
+            $image_path = 'img-presensi/pulang/' . $image_name;
+            file_put_contents($image_path, $data);
+
             DB::table('master_presences')
             ->where('id', $data_presence->id)
             ->update([
                 'out_time'=>$time,
                 'inaday_time'=> $inadayTime,
                 'late_time'=> $late,
-                'fine'=> $fine
+                'fine'=> $fine,
+                'file_out'=> $image_name
             ]);
         }
         return redirect('/staff/presence');

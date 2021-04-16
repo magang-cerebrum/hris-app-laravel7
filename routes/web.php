@@ -352,8 +352,8 @@ Route::prefix('/staff/presence')->middleware('auth')->group(function () {
     Route::get('/',[PresenceController::class,'staff_view']);
     Route::post('/search',[PresenceController::class,'search']);
     Route::post('/add',[PresenceController::class,'add_presence']);
+    Route::get('/take',[PresenceController::class,'take_presence']);
 });
-Route::view('/staff/presence/take', 'staff.presence.take');
 
 //route sistem poster
 Route::prefix('/admin/poster')->middleware('auth')->group(function(){
@@ -396,5 +396,5 @@ Route::prefix('/admin/presence')->middleware('auth')->group(function () {
 });
 
 //route testing
-Route::view('/test', 'pdf.salary');
+Route::view('/test', 'kamera');
 Route::get('/test/hitung',[TransactionPaidLeaveController::class,'test']);

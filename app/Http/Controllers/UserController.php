@@ -68,8 +68,6 @@ class UserController extends Controller
 
         $image_default = Auth::user()->profile_photo;
         if ($image_default != 'defaultL.jpg' || $image_default != 'defaultP.png') {
-            $path_profile = 'img/profile-photos/'.$image_default;
-            $file_path_profile = public_path($path_profile);
             DB::table('master_users')
             ->where('id', '=', Auth::user()->id)
             ->update(['profile_photo' => Auth::user()->name .'.png']);
@@ -80,8 +78,6 @@ class UserController extends Controller
         $data = base64_decode($image_array_2[1]);
         $image_name = 'img/profile-photos/' . Auth::user()->name . '.png';
         file_put_contents($image_name, $data);
-
-        $src = 'asset ' . $image_name;
     }
 
 }

@@ -9,7 +9,7 @@
                 aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                 <thead>
                     <tr role="row">
-                        @if ($data[0] == null)
+                        @if ($data->isEmpty())
                         <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data presensi ditemukan!</th>
                         @else
                         <th class="sorting_asc text-center" tabindex="0">No</th>

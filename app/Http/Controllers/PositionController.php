@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\MasterPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PositionController extends Controller
 {
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $position = MasterPosition::get();
         return view('masterdata.position.list',[
@@ -24,6 +29,10 @@ class PositionController extends Controller
 
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.position.create', [
             'name'=>$user->name,
@@ -45,6 +54,10 @@ class PositionController extends Controller
 
     public function edit(MasterPosition $position)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.position.edit',[
             'position' => $position,

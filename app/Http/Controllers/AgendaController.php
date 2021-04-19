@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\MasterAgenda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AgendaController extends Controller
@@ -14,6 +14,10 @@ class AgendaController extends Controller
 
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $agenda = MasterAgenda::paginate(10);
         return view('masterdata.agenda.list',[
@@ -27,6 +31,10 @@ class AgendaController extends Controller
 
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.agenda.create',[
             'name'=>$user->name,
@@ -60,6 +68,10 @@ class AgendaController extends Controller
 
     public function edit(MasterAgenda $agenda)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.agenda.edit',[
             'agenda' => $agenda,
@@ -102,6 +114,10 @@ class AgendaController extends Controller
     }
 
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/agenda');}
         $user = Auth::user();
         $result = MasterAgenda::where(function ($query) use ($request){
@@ -123,6 +139,10 @@ class AgendaController extends Controller
 
     public function searchCalendar()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.agenda.searchCalendar',[
             'name'=>$user->name,

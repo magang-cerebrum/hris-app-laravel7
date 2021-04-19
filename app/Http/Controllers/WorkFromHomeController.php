@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Gate;
 use App\WorkFromHome;
 use App\MasterUser;
 use App\AcceptedWorkFromHome;
@@ -14,13 +15,12 @@ use DateTime;
 
 class WorkFromHomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $data = WorkFromHome::whereIn('work_from_homes.status', ['Diterima-Chief','Pending'])
         ->leftJoin('master_users','work_from_homes.user_id','=','master_users.id')
         ->select(
@@ -42,6 +42,10 @@ class WorkFromHomeController extends Controller
 
     public function history()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $data = DB::table('work_from_homes')
         ->whereNotIn('work_from_homes.status',['Diajukan', 'Pending-Chief','Diterima-Chief'])
         ->leftJoin('master_users','work_from_homes.user_id','=','master_users.id')

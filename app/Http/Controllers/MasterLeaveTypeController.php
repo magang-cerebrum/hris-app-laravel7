@@ -13,7 +13,8 @@ class MasterLeaveTypeController extends Controller
     public function index()
     {
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
             $leavetype = MasterLeaveType::paginate(5);
@@ -31,7 +32,8 @@ class MasterLeaveTypeController extends Controller
     public function create()
     {
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
             return view('masterdata.leavetype.create',[
@@ -59,7 +61,8 @@ class MasterLeaveTypeController extends Controller
     public function edit(MasterLeaveType $leavetype)
     {
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
             return view('masterdata.leavetype.edit',['cuti' => $leavetype,
@@ -78,7 +81,6 @@ class MasterLeaveTypeController extends Controller
             'default_day'=>'required|numeric'
         ]);
         $past = MasterLeaveType::where('id',$leavetype->id)->get();
-        // dd($past[0]);
         MasterLeaveType::where('id',$leavetype->id)->update([
             'name'=>$request->name,
             'default_day'=>$request->default_day

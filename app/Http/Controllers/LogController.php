@@ -5,12 +5,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 class LogController extends Controller
 {    
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $logse = DB::table('activity_log')
         ->orderBy('created_at','asc')
         ->where('created_at','<=',Carbon::now()->subDay(45)->isoFormat('YYYY-MM-DD'))
@@ -38,6 +43,10 @@ class LogController extends Controller
     }
     
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/log');}
         if (strpos($request->get('query'),'/')) {
             $split = explode('/',$request->get('query'));

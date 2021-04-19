@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\MasterCutAllowanceType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CutAllowanceTypeController extends Controller
 {
     public function index(){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $cutallowancetype = MasterCutAllowanceType::paginate(10);
         return view('masterdata.cutallowancetype.list',[
@@ -24,6 +28,10 @@ class CutAllowanceTypeController extends Controller
     }
 
     public function create(){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.cutallowancetype.create',[
             'name'=>$user->name,
@@ -46,6 +54,10 @@ class CutAllowanceTypeController extends Controller
 
     public function edit(MasterCutAllowanceType $type)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.cutallowancetype.edit',[
             'cutallowancetype' => $type,
@@ -81,6 +93,10 @@ class CutAllowanceTypeController extends Controller
     }
 
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/cuts-allowances');}
         $user = Auth::user();
         $result = MasterCutAllowanceType::where(function ($query) use ($request){

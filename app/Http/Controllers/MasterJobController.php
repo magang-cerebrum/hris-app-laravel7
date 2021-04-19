@@ -6,16 +6,10 @@ use Illuminate\Http\Request;
 use App\MasterJobRecruitment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MasterJobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $data = MasterJobRecruitment::all();
@@ -24,6 +18,10 @@ class MasterJobController extends Controller
 
     public function indexJob()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $dataJob = MasterJobRecruitment::paginate(5);
         $user = Auth::user();
 
@@ -36,13 +34,12 @@ class MasterJobController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterData.job.create', [
             'name'=>$user->name,
@@ -52,12 +49,6 @@ class MasterJobController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -88,6 +79,10 @@ class MasterJobController extends Controller
     }
 
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/job');}
         $user = Auth::user();
         $data = MasterJobRecruitment::whereRaw("name LIKE '%" . $request->get('query') . "%'")

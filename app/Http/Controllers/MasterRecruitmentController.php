@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\MasterRecruitment;
-use App\MasterJobRecruitment;
-use Asset\upload_recruitment\cv_upload;
-use Asset\upload_recruitment\portofolio_upload;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MasterRecruitmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $data = MasterRecruitment::paginate(10);
         return view('masterData.recruitment.listRecruitment', [
@@ -31,22 +27,11 @@ class MasterRecruitmentController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('recruitment.recruitment');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -119,6 +104,10 @@ class MasterRecruitmentController extends Controller
         return redirect('/admin/recruitment');
     }
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/recruitment');}
         $user = Auth::user();
         $data = MasterRecruitment::whereRaw("name LIKE '%" . $request->get('query') . "%'")

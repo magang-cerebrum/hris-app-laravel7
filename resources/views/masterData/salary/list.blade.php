@@ -42,8 +42,8 @@
 
         @if (!$bool_check_day)    
         <div class="row mar-btm">
-            <div class="col-sm-12 text-danger text-bold">
-                Maaf Anda Belum Bisa Mengambil Data Gaji Periode {{switch_month($month) . ' - ' . $year}}, Karena Belum Melewati Tanggal {{$next_date}}
+            <div class="col-sm-12 text-danger text-bold text-center">
+                Ma'af Anda Belum Bisa Mengambil Data Gaji Periode {{switch_month($month) . ' - ' . $year}}, Karena Belum Melewati Tanggal {{$next_date}}
             </div>
         </div>
         @endif

@@ -343,6 +343,8 @@ Route::prefix('/admin/achievement')->group(function () {
     Route::post('/scoring',[MasterAchievementController::class,'scored']);
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
+    Route::get('/eom',[MasterAchievementController::class,'eom']);
+    Route::post('/eom/chosed',[MasterAchievementController::class,'chosedEom']);
 });
 
 //Route Achievement ==Chief==

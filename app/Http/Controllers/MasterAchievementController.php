@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\MasterPerformance;
+use App\MasterUser;
+
 class MasterAchievementController extends Controller
 {
     /**
@@ -74,7 +76,7 @@ class MasterAchievementController extends Controller
             $data = DB::table('master_users')
             ->where('status','=','Aktif')
             ->where('division_id','!=',7)
-            ->where('position_id','!=',[11,3])
+            ->where('position_id','!=',[3])
             ->get();
             
             
@@ -322,5 +324,58 @@ class MasterAchievementController extends Controller
         ]);
     }
 
-   
+   public function eom(){
+    if(Gate::denies('is_admin')){
+        return abort(403,'Access Denied, Only Admin Can Access');
+    }
+        $dataDate = date('m/Y');
+        $explodeDataDate = explode('/',$dataDate);
+        $user = Auth::user();
+        $divisions = DB::table('master_divisions')
+        ->whereNotIn('id',[7])
+        ->get();
+        $data = DB::table('master_users')
+        ->whereNotIn('master_users.division_id',[7])
+        ->leftjoin('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_performances','master_users.id','=','master_performances.user_id')
+        ->where('master_users.status','Aktif')
+        ->where('master_divisions.status','Aktif')
+        ->where('position_id','!=',[3])
+        ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name')
+       ->get();
+        // dd($data->where('division_name','=','Operation'));
+        return view('masterData.achievement.eom',[
+        'name'=>$user->name,
+        'profile_photo'=>$user->profile_photo,
+        'email'=>$user->email,
+        'id'=>$user->id,
+        'data'=>$data,
+        'divisions'=>$divisions
+        // 'allData'=>$arrayDataDivision
+    ]);
+
+   }
+   public function chosedEom(Request $request){
+    //    dd($request);
+       $user_id = $request->radio_input_eom;
+       $explodedDate = explode('/',$request->date);
+       $month = switch_month($explodedDate[0]);
+       $year = $explodedDate[1];
+       $check = DB::table('master_eoms')
+       ->where('user_id',$user_id)
+       ->where('month',$month)
+       ->where('year',$year)->get();
+       if(count($check)>0){
+        foreach($check as $items){
+            DB::table('master_eoms')->where('id',$items->id)->update(['user_id'=>$user_id]);
+        }
+       }
+       DB::table('master_eoms')->insert([
+           'user_id'=>$user_id,
+            'month'=>$month,
+            'year'=>$year
+       ]);
+       return redirect('/admin/achievement/eom');
+   }
 }

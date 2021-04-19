@@ -17,7 +17,7 @@
     <link href="{{ asset('css/icons/premium-solid-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('css/icons/premium-line-icons.min.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-
+    <link href="{{ asset('plugins/themify-icons/themify-icons.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
@@ -279,6 +279,7 @@
                                         <ul class="collapse">
                                             <li><a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
                                             <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
+                                            <li><a href="/admin/achievement/eom"><i class="ti-crown" style="color: gold"></i>Karyawan Terbaik</a></li>
                                             <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>
                                         </ul>
                 

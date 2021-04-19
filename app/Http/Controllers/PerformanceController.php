@@ -9,6 +9,8 @@ use App\MasterUser;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use stdClass;
+
 class PerformanceController extends Controller
 {
     //
@@ -107,49 +109,78 @@ class PerformanceController extends Controller
             ]);
         }
 public function chiefScored(Request $request){
-        global $datas;
-        $datas=$request;
-        for($i = 1; $i <=$request->count; $i++){
-            global $datas;
-            // dd($datas);
-            $user_id = 'user_id_'.$i;
-            $data_id = $datas->$user_id;
-            $score = 'score_'.$i;
-            $divId = 'division_id_'.$i;
-            $dataDivId = $datas->$divId;
-            $data = $datas->$score;
-            $split = explode('/',$datas->get('query'));
-            // dd($split);
-            $check = DB::table('master_performances')
-            ->where('year','=',$split[1])
-            ->where('month','=',switch_month($split[0]))
-            ->where('user_id',$data_id)
-            ->get();
-            if ($data == 0) {continue;}
-                MasterPerformance::create([
-                    'performance_score' => $data,
-                    'month'  =>switch_month($split[0]),
-                    'year' =>$split[1] ,
-                    'division_id'=>$dataDivId,
-                    'user_id'=>$data_id
-                ]);
-                
-                
-
-            // dd(MasterPerformance::where('division_id',Auth::user()->division_id)->avg('performance_score'));
-            
+    
+    global $datas;
+    $datas=$request;
+    $divisi = array();
+    $dataScoring = array();
+    // dd
+    for ($i=1; $i<=$request->count;$i++){
+        $tempdivision = 'division_id_'.$i;
+        $divisionCheck=false;
+        foreach($divisi as $items){
+            if($items == $datas->$tempdivision){
+                $divisionCheck=true;
+            }
         }
-        $average = MasterPerformance::whereIn('division_id',division_members(Auth::user()->position_id))->avg('performance_score');
-        MasterPerformance::create([
-            'performance_score'=>$average,
-            'month'  =>switch_month($split[0]),
-            'year' =>$split[1],
-            'division_id'=>Auth::user()->division_id,
-            'user_id'=>Auth::user()->id
-        ]);
-        // dd($average);
-        Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
-        return redirect('/staff/performance/scoring');
+        if(!$divisionCheck){
+            array_push($divisi,$datas->$tempdivision);
+        }
+    }
+    foreach($divisi as $divisiItems){
+        $tempdivision = 'division_id_'.$i;
+        for($j=1;$j<=$request->count;$j++){
+            if($divisiItems == $datas->$tempdivision){
+
+            }
+        }
+    }
+
+        // global $datas;
+        // $datas=$request;
+        // $checkPos = division_members(Auth::user()->position_id);
+        //     for($i = 1; $i <=$request->count; $i++){
+        //     global $datas;
+        //     $user_id = 'user_id_'.$i;
+        //     $data_id = $datas->$user_id;
+        //     $score = 'score_'.$i;
+        //     $divId = 'division_id_'.$i;
+        //     $dataDivId = $datas->$divId;
+        //     $data = $datas->$score;
+        //     $split = explode('/',$datas->get('date'));
+        //     // $check = DB::table('master_performances')
+        //     // ->where('year','=',$split[1])
+        //     // ->where('month','=',switch_month($split[0]))
+        //     // ->where('user_id',$data_id)
+        //     // ->get();
+
+
+        //     // else{
+        //         if ($data == 0) {continue;}
+        //             MasterPerformance::create([
+        //                 'performance_score' => $data,
+        //                 'month'  =>switch_month($split[0]),
+        //                 'year' =>$split[1] ,
+        //                 'division_id'=>$dataDivId,
+        //                 'user_id'=>$data_id
+        //                 ]);
+        //                 $average = MasterPerformance::whereIn('division_id',division_members(Auth::user()->position_id))
+        //                 ->avg('performance_score');
+                        
+        //                 MasterPerformance::create([
+        //                     'performance_score'=>round($average,1),
+        //                     'month'  =>switch_month($split[0]),
+        //                     'year' =>$split[1],
+        //                     'division_id'=>Auth::user()->division_id,
+        //                     'user_id'=>Auth::user()->id
+        //                 ]);
+        //     // }
+                
+            
+        // }
+        // // dd($average);
+        // Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
+        // return redirect('/staff/performance/scoring');
 }
 
 public function chief_chart_index(){

@@ -16,7 +16,7 @@ class CreateMasterPerformancesTable extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Schema::create('master_performances', function (Blueprint $table) {
             $table->id();
-            $table->integer('performance_score');
+            $table->double('performance_score');
             $table->string('month');
             $table->integer('year');
             $table->unsignedBigInteger('division_id')->nullable();

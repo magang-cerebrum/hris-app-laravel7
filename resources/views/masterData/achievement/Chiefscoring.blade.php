@@ -73,7 +73,7 @@ input[type=range]::-moz-range-track {
                               <span class="input-group-btn">
                                   <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
                               </span>
-                              <input type="text" name="query" placeholder="Masukan Periode Penilian" class="form-control"
+                              <input type="text" name="date" placeholder="Masukan Periode Penilian" class="form-control"
                                   autocomplete="off" id="query" readonly>
                           </div>
                       </div>
@@ -209,7 +209,7 @@ input[type=range]::-moz-range-track {
                             counterData.setAttribute('name','count')
                             counterData.setAttribute('value',response.countData)
                             var slider = document.createElement('input')
-                            var sliderhidden = document.createElement('input')
+                            // var sliderhidden = document.createElement('input')
                             frthTd = document.createElement("td")
                             var spanOnFourthTD = document.createElement("span")
                             firstTd.setAttribute('class','sorting_1 text-center')
@@ -226,12 +226,12 @@ input[type=range]::-moz-range-track {
                             slider.setAttribute('value','0')
                             slider.setAttribute('oninput','slidervalfunc()')
                             slider.setAttribute('name','score_'+counted)
-                            sliderhidden.setAttribute('type','hidden')
-                            sliderhidden.setAttribute('value',dataOutId)
-                            sliderhidden.setAttribute('name',"id-"+dataOutId)
+                            // sliderhidden.setAttribute('type','hidden')
+                            // sliderhidden.setAttribute('value',dataOutId)
+                            // sliderhidden.setAttribute('name',"id_"+dataOutId)
                             thrdTd.setAttribute('class','text-center')
                             thrdTd.appendChild(slider)
-                            thrdTd.appendChild(sliderhidden)
+                            // thrdTd.appendChild(sliderhidden)
                             frthTd.setAttribute('class','text-center')
                             spanOnFourthTD.setAttribute('id','val_'+counted)
                             var hiddenDivisionId = document.createElement('input')

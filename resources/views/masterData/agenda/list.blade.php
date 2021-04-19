@@ -22,7 +22,7 @@
     </div>
 
     <form action="{{url('/admin/agenda/search')}}" method="get" id="search_form"></form>
-    <form action="{{url('/admin/agenda')}}" method="POST" id="form-mul-delete" style="display:inline;" id="delete_agenda">
+    <form action="{{url('/admin/agenda')}}" method="POST" id="form-mul-delete">
         @csrf
         @method('delete')
     </form>
@@ -56,7 +56,7 @@
                         </a>
                     
                         <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                            data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()" form="delete_agenda">
+                            data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()" form="form-mul-delete">
                             <i class="btn-label fa fa-trash"></i>
                             Hapus Data Terpilih
                         </button>
@@ -86,7 +86,7 @@
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center"> {{($agenda->currentPage() * 10) - 10 + $loop->iteration}}</td>
                                 <td class="text-center">
-                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="delete_agenda">
+                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
                                 </td>
                                 <td class="text-center">
                                     <a href="{{url("/admin/agenda/$row->id/edit")}}"

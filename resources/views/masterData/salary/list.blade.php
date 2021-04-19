@@ -20,9 +20,8 @@
 
                 <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="get_salary"
-                    data-original-title="Tambah Lembur Baru" type="submit">
+                    data-original-title="Tambah Lembur Baru" type="submit" {{$bool_check_day == false ? 'disabled' : ''}}>
                     <i class="btn-label fa fa-plus"></i>
-                    {{-- {{$bool_check_day == false ? 'disabled' : ''}} --}}
                     Ambil Data Gaji Baru
                 </button>
                 <button class="btn btn-success btn-labeled add-tooltip"

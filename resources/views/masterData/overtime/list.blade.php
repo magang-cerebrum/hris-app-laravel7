@@ -2,19 +2,20 @@
     <div class="panel-heading">
         <h3 class="panel-title">{{'Daftar Lembur "'.switch_month($month) . ' - ' . $year . '"'}}</h3>
     </div>
+
+    <form action="{{url('/admin/overtime/add')}}" method="get" id="search"></form>
+
     <div class="panel-body">
         <div class="row mar-btm">
             <div class="col-sm-12">
-                <form action="{{url('/admin/overtime/add')}}" method="get">
-                    <input type="hidden" name="month" value="{{$month}}">
-                    <input type="hidden" name="year" value="{{$year}}">
-                    <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
-                        data-toggle="tooltip" data-container="body" data-placement="top"
-                        data-original-title="Tambah Lembur Baru" type="submit">
-                        <i class="btn-label fa fa-plus"></i>
-                        Tambah Lembur Baru
-                    </button>
-                </form>
+                <input type="hidden" name="month" value="{{$month}}" form="search">
+                <input type="hidden" name="year" value="{{$year}}" form="search">
+                <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
+                    data-toggle="tooltip" data-container="body" data-placement="top"
+                    data-original-title="Tambah Lembur Baru" type="submit" form="search">
+                    <i class="btn-label fa fa-plus"></i>
+                    Tambah Lembur Baru
+                </button>
             </div>
         </div>
         @if(!$data->isEmpty())

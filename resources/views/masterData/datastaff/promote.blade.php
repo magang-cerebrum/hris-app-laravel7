@@ -45,100 +45,102 @@
     <div class="panel-heading">
         <h3 class="panel-title">Form Promosi Staff</h3>
     </div>
+    
     <form class="form-horizontal" action="/admin/data-staff/promote/approved" method="POST" id="form-promotion">
         @csrf
-        <div class="panel-body">
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">NIP:</label>
-                    <div class="col-sm-4">
-                        <input type="number" placeholder="NIP" name="nip"
-                            class="form-control" value="{{$staff->nip}}" readonly>
-                    </div>
-                    <label class="col-sm-2 control-label">Nama Staff:</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Nama Lengkap" name="name"
-                            class="form-control" value="{{$staff->name}}" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="separator mar-ver">Status staff saat ini</div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Status Karyawan:</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Status karyawan saat ini"
-                            class="form-control" value="{{$staff->employee_status}}" id="status_before" readonly>
-                    </div>
-                    <label class="col-sm-2 control-label">Gaji Pokok:</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Gaji Pokok saat ini" id="salary_before" name="salary_before"
-                            class="form-control" value="{{$staff->salary}}" onload="format_rp(salary_before)" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="separator mar-ver">Status staff setelah promosi</div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Status Karyawan:</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Status karyawan saat ini" name="new_employee_status"
-                            class="form-control text-success text-bold" value="{{$staff->employee_status == 'Probation' ? 'Kontrak' : 'Tetap'}}" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Tipe kenaikan gaji:</label>
-                    <div class="col-sm-4">
-                        <div class="radio">
-                            <input id="salary_raise_type_radio-1" class="magic-radio" type="radio"
-                                name="salary_raise_type" value="Persentase" onclick="showSalaryRaiseTypeOption()" onchange="calculate()" checked>
-                            <label for="salary_raise_type_radio-1">Persentase</label>
-                            <input id="salary_raise_type_radio-2" class="magic-radio" type="radio"
-                                name="salary_raise_type" value="Penambahan" onclick="showSalaryRaiseTypeOption()" onchange="calculate()">
-                            <label for="salary_raise_type_radio-2">Penambahan Langsung</label>
-                        </div>
-                    </div>
-                    <span id="input-percentage">
-                        <label class="col-sm-2 control-label">Persentase:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Hanya isi oleh angka (kenaikan berdasarkan gaji sebelumnya)"
-                                name="percentage" id="percentage" onkeyup="calculate()"
-                                class="form-control @error('percentage') is-invalid @enderror">
-                            @error('percentage') <div class="text-danger invalid-feedback mt-3">
-                                Persentase harus diisi.
-                            </div> @enderror
-                        </div>
-                    </span>
-                    <span id="input-direct_add">
-                        <label class="col-sm-2 control-label">Penambahan Langsung:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Jumlah penambahan langsung"
-                                name="direct_add" id="direct_add"
-                                class="form-control @error('direct_add') is-invalid @enderror" onkeyup="calculate();format_rp(this.id)">
-                            @error('direct_add') <div class="text-danger invalid-feedback mt-3">
-                                Penambahan langsung harus diisi.
-                            </div> @enderror
-                        </div>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Gaji Pokok:</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Gaji pokok setelah mendapatkan promosi" id="salary_after" name="salary_after"
-                            class="form-control text-success text-bold" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="row"><div class="text-info text-center" id="information"></div></div>
-        </div>
-        <div class="panel-footer text-right">
-            <button class="btn btn-mint" type="submit" onclick="submit_promote()">Promosikan</button>
-        </div>
     </form>
+
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label">NIP:</label>
+                <div class="col-sm-4">
+                    <input type="number" placeholder="NIP" name="nip" form="form-promotion"
+                        class="form-control" value="{{$staff->nip}}" readonly>
+                </div>
+                <label class="col-sm-2 control-label">Nama Staff:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Nama Lengkap" name="name" form="form-promotion"
+                        class="form-control" value="{{$staff->name}}" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="separator mar-ver">Status staff saat ini</div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label">Status Karyawan:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Status karyawan saat ini" form="form-promotion"
+                        class="form-control" value="{{$staff->employee_status}}" id="status_before" readonly>
+                </div>
+                <label class="col-sm-2 control-label">Gaji Pokok:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Gaji Pokok saat ini" id="salary_before" name="salary_before" form="form-promotion"
+                        class="form-control" value="{{$staff->salary}}" onload="format_rp(salary_before)" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="separator mar-ver">Status staff setelah promosi</div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label">Status Karyawan:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Status karyawan saat ini" name="new_employee_status" form="form-promotion"
+                        class="form-control text-success text-bold" value="{{$staff->employee_status == 'Probation' ? 'Kontrak' : 'Tetap'}}" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label">Tipe kenaikan gaji:</label>
+                <div class="col-sm-4">
+                    <div class="radio">
+                        <input id="salary_raise_type_radio-1" class="magic-radio" type="radio" form="form-promotion"
+                            name="salary_raise_type" value="Persentase" onclick="showSalaryRaiseTypeOption()" onchange="calculate()" checked>
+                        <label for="salary_raise_type_radio-1">Persentase</label>
+                        <input id="salary_raise_type_radio-2" class="magic-radio" type="radio" form="form-promotion"
+                            name="salary_raise_type" value="Penambahan" onclick="showSalaryRaiseTypeOption()" onchange="calculate()">
+                        <label for="salary_raise_type_radio-2">Penambahan Langsung</label>
+                    </div>
+                </div>
+                <span id="input-percentage">
+                    <label class="col-sm-2 control-label">Persentase:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Hanya isi oleh angka (kenaikan berdasarkan gaji sebelumnya)"
+                            name="percentage" id="percentage" onkeyup="calculate()" form="form-promotion"
+                            class="form-control @error('percentage') is-invalid @enderror">
+                        @error('percentage') <div class="text-danger invalid-feedback mt-3">
+                            Persentase harus diisi.
+                        </div> @enderror
+                    </div>
+                </span>
+                <span id="input-direct_add">
+                    <label class="col-sm-2 control-label">Penambahan Langsung:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Jumlah penambahan langsung"
+                            name="direct_add" id="direct_add" form="form-promotion"
+                            class="form-control @error('direct_add') is-invalid @enderror" onkeyup="calculate();format_rp(this.id)">
+                        @error('direct_add') <div class="text-danger invalid-feedback mt-3">
+                            Penambahan langsung harus diisi.
+                        </div> @enderror
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label">Gaji Pokok:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Gaji pokok setelah mendapatkan promosi" id="salary_after" name="salary_after"
+                        class="form-control text-success text-bold" form="form-promotion" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row"><div class="text-info text-center" id="information"></div></div>
+    </div>
+    <div class="panel-footer text-right">
+        <button class="btn btn-mint" type="submit" onclick="submit_promote()" form="form-promotion">Promosikan</button>
+    </div>
 </div>
 @endsection
 @section('script')

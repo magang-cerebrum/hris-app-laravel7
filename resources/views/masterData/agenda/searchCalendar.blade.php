@@ -13,25 +13,27 @@
     <div class="panel-heading">
         <h3 class="panel-title">Cari Agenda Kerja</h3>
     </div>
+
+    <form action="{{url('/admin/agenda/calendar')}}" method="POST" id="cari-agenda">
+        @csrf
+    </form>
+
     <div class="panel-body">
         <div class="row mar-btm" >
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <form action="{{url('/admin/agenda/calendar')}}" method="POST" id="cari-achievement">
-                    @csrf
-                    <div id="pickadate">
-                        <div class="input-group date">
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
-                            </span>
-                            <input type="text" name="periode" placeholder="Cari Agenda Kerja" id="periode"
-                                class="form-control" autocomplete="off" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                        </span>
+                        <input type="text" name="periode" placeholder="Cari Agenda Kerja" id="periode" form="cari-agenda"
+                            class="form-control" autocomplete="off" readonly>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" id="btn-search" type="submit" form="cari-agenda"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="col-sm-4"></div>
         </div>
@@ -62,7 +64,7 @@
         $('#btn-search').on('click',function () {
             $('.datepicker').hide();
         });
-        $('#cari-achievement').on('submit', function (event) {
+        $('#cari-agenda').on('submit', function (event) {
             event.preventDefault();
             var periode = document.getElementById('periode').value;
             $.ajaxSetup({

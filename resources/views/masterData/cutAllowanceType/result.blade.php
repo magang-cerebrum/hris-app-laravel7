@@ -11,23 +11,27 @@
     <div class="panel-heading">
         <h3 class="panel-title">Hasil Pencarian Tipe Potongan dan Tunjangan Gaji : "{{$search}}"</h3>
     </div>
+    
+    <form action="{{url('/admin/cuts-allowances/search')}}" method="get" id="result"></form>
+    <form action="{{url('/admin/cuts-allowances')}}" method="POST" id="form-mul-delete">
+        @csrf
+        @method('delete')
+    </form>
+
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row mar-btm" style="margin-top:-60px">
                     <div class="col-sm-4">
-                        <form action="{{url('/admin/cuts-allowances/search')}}" method="get"
-                            style="position: relative;right:-710px;bottom:-48px">
-                            <div id="pickadate">
-                                <div class="input-group date">
-                                    <input type="text" name="query" placeholder="Cari (nama/tipe/kategori)"
-                                        class="form-control" autocomplete="off">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
+                        <div id="pickadate" style="position: relative;right:-710px;bottom:-48px">
+                            <div class="input-group date">
+                                <input type="text" name="query" placeholder="Cari (nama/tipe/kategori)"
+                                    class="form-control" autocomplete="off" form="result">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-mint" type="submit" form="result"><i class="fa fa-search"></i></button>
+                                </span>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="row mar-btm">
@@ -36,16 +40,13 @@
                             <i class="btn-label fa fa-plus"></i>
                             Tambah Tipe Potongan / Tunjangan Gaji Baru
                         </a>
-                        <form action="{{url('/admin/cuts-allowances')}}" method="POST" id="form-mul-delete" style="display:inline;">
-                            @csrf
-                            @method('delete')
-                            <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                                data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()">
-                                <i class="btn-label fa fa-trash"></i>
-                                Hapus Data Terpilih
-                            </button>
-                            @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
-                                Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
+                        <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
+                            data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()" form="form-mul-delete">
+                            <i class="btn-label fa fa-trash"></i>
+                            Hapus Data Terpilih
+                        </button>
+                        @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
+                            Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -69,7 +70,7 @@
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center">{{($cutallowancetype->currentPage() * 10) - 10 + $loop->iteration}}</td>
                                 <td class="text-center">
-                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
                                 </td>
                                 <td class="text-center">
                                     <a href="{{url("/admin/cuts-allowances/$row->id/edit")}}"
@@ -104,7 +105,6 @@
                         </tbody>
                     </table>
                 </div>
-                </form>
                 <div class="text-center">{{ $cutallowancetype->withQueryString()->links() }}</div>
             </div>
             <div class="row">

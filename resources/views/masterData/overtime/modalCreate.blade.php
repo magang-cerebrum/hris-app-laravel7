@@ -1,4 +1,8 @@
 <div class="modal fade" id="modal-create-overtime" tabindex="-1" role="dialog" style="overflow-x: auto !important">
+    <form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal"
+        id="form-overtime">
+        @csrf
+    </form>
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,52 +10,48 @@
                 <h5 class="modal-title text-bold text-center">Form Tambah Lembur "<span id="name-title"></span>"</h5>
             </div>
             <div class="modal-body">
-                <form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal"
-                    id="form-overtime">
-                    @csrf
-                    <input type="hidden" name="user_id" id="user_id">
-                    <input type="hidden" name="salary" id="salary">
-                    <input type="hidden" name="user_hour" id="user_hour">
-                    <input type="hidden" name="payment" id="payment">
-                    <div class="form-group">
-                        <div class="row">
-                            <label class="col-sm-2 control-label">Nama Staff:</label>
-                            <div class="col-sm-4">
-                                <input type="text" placeholder="Nama Staff" name="name" class="form-control" id="name" disabled>
-                            </div>
-                            <label class="col-sm-1 control-label">NIP:</label>
-                            <div class="col-sm-4">
-                                <input type="text" placeholder="NIP" name="nip" class="form-control" id="nip" disabled>
-                            </div>
-                            <div class="col-sm-1"></div>
+                <input type="hidden" name="user_id" id="user_id" form="form-overtime">
+                <input type="hidden" name="salary" id="salary" form="form-overtime">
+                <input type="hidden" name="user_hour" id="user_hour" form="form-overtime">
+                <input type="hidden" name="payment" id="payment" form="form-overtime">
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Nama Staff:</label>
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="Nama Staff" name="name" class="form-control" id="name" disabled form="form-overtime">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <label class="col-sm-2 control-label">Bulan/Tahun:</label>
-                            <div class="col-sm-4">
-                                <input type="text" placeholder="periode" name="periode" class="form-control"
-                                    value="{{$month.'/'.$year}}" readonly>
-                            </div>
-                            <label class="col-sm-1 control-label">Jam:</label>
-                            <div class="col-sm-4">
-                                <input type="number" placeholder="Jumlah Jam Lembur" name="hour"
-                                    class="form-control @error('hour') is-invalid @enderror" id="hour"
-                                    onkeyup="calculate(this.value)">
-                                @error('hour') <div class="text-danger">Mohon isi jam lembur.</div> @enderror
-                            </div>
-                            <div class="col-sm-1"></div>
+                        <label class="col-sm-1 control-label">NIP:</label>
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="NIP" name="nip" class="form-control" id="nip" disabled form="form-overtime">
                         </div>
+                        <div class="col-sm-1"></div>
                     </div>
-                    <div id="information" class="text-info text-center"></div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Bulan/Tahun:</label>
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="periode" name="periode" class="form-control"
+                                value="{{$month.'/'.$year}}" form="form-overtime" readonly>
+                        </div>
+                        <label class="col-sm-1 control-label">Jam:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="Jumlah Jam Lembur" name="hour"
+                                class="form-control @error('hour') is-invalid @enderror" id="hour"
+                                onkeyup="calculate(this.value)" form="form-overtime">
+                            @error('hour') <div class="text-danger">Mohon isi jam lembur.</div> @enderror
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                </div>
+                <div id="information" class="text-info text-center"></div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success add-tooltip" id="btn-submit" data-toggle="tooltip"
                     data-container="body" data-placement="top"
-                    data-original-title="Tambahkan Data Lembur" onclick="submit_form()">Tambah</button>
+                    data-original-title="Tambahkan Data Lembur" onclick="submit_form()" form="form-overtime">Tambah</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
             </div>
-            </form>
         </div>
     </div>
 </div>

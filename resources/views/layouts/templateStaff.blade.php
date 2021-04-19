@@ -302,6 +302,13 @@
                                         </li>
 
                                         <li>
+                                            <a href="{{ url('staff/presence/division')}}">
+                                                <i class="fa fa-users"></i>
+                                                <span class="menu-title">Presensi Divisi</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
                                             <a href="{{ url('staff/paid-leave/division')}}">
                                                 <i class="fa fa-users"></i>
                                                 <span class="menu-title">Cuti Anggota Divisi</span>

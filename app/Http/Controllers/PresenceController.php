@@ -43,6 +43,46 @@ class PresenceController extends Controller
         ]);
     }
 
+    public function chief_view(){
+        $user = Auth::user();
+        $data = DB::table('master_presences')
+        ->leftJoin('master_users','master_presences.user_id','=','master_users.id')
+        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->whereNotNull('file_in')->whereNotNull('file_out')->where('check_chief',0)
+        ->select([
+            'master_presences.*',
+            'master_users.name as name'
+        ])
+        ->get();
+
+        return view('staff.presence.division',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data
+        ]);
+    }
+
+    public function chief_approv(Request $request){
+        foreach ($request->selectid as $item) {
+
+            $data = DB::table('master_presences')->where('id',$item)->first();
+            
+            $path_file = 'img-presensi/masuk/'.$data->file_in;
+            $file_path_file = public_path($path_file);
+            unlink($file_path_file);
+
+            $path_file = 'img-presensi/pulang/'.$data->file_out;
+            $file_path_file = public_path($path_file);
+            unlink($file_path_file);
+
+            DB::table('master_presences')->where('id',$item)->update(['file_in'=>null, 'file_out'=>null, 'check_chief'=>1]);
+        }
+
+        return redirect('/staff/presence/division');
+    }
+
     public function take_presence(){
         $user = Auth::user();
         $division = DB::table('master_divisions')->where('id', $user->division_id)->select(['name'])->first();

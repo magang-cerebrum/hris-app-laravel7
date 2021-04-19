@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use RealRashid\SweetAlert\Facades\Alert;
 use Asset\img;
 use Asset\file_slip;
 
@@ -106,7 +107,12 @@ class SalaryController extends Controller
         ->select(['master_divisions.name as name'])->get();
 
         if(count($data_check_presence) != 0) {
-            dd($data_check_presence);
+            $error_division = array();
+            for ($i=0; $i < count($data_check_presence); $i++) { 
+                $error_division[$i] = $data_check_presence[$i]->name;
+            }
+            Alert::error('Error!', "Masih terdapat presensi yang belum di cek oleh Chief di Divisi : " . implode(', ',$error_division) . "!")->width(600);
+            return back();
         }
         else {
             $data_presences = DB::table('master_presences')

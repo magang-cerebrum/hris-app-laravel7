@@ -20,26 +20,26 @@
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Agenda Kerja</h3>
     </div>
+
+    <form action="{{url('/admin/agenda/search')}}" method="get" id="search_form"></form>
+    
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row mar-btm" style="margin-top:-60px">
                     <div class="col-sm-4">
-                        <form action="{{url('/admin/agenda/search')}}" method="get"
-                            style="position: relative;right:-710px;bottom:-48px">
-                            <div id="pickadate">
-                                <div class="input-group date">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                    <input type="text" name="query" placeholder="Cari (nama/deskripsi/tanggal kegiatan)"
-                                        class="form-control" autocomplete="off">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-mint" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
+                        <div id="pickadate" style="position: relative;right:-710px;bottom:-48px">
+                            <div class="input-group date">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-mint" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <input type="text" name="query" placeholder="Cari (nama/deskripsi/tanggal kegiatan)"
+                                    class="form-control" autocomplete="off" form="search_form">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-mint" id="btn-search" type="submit" form="search_form"><i class="fa fa-search"></i></button>
+                                </span>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="row mar-btm">

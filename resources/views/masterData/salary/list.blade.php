@@ -6,29 +6,10 @@
         <div class="row mar-btm">
             <div class="col-sm-12">
 
-                <form action="{{url('/admin/salary/processed')}}" method="post">
+                <form action="{{url('/admin/salary/processed')}}" method="post" id="get_salary">
                     @csrf
                     <input type="hidden" name="month" value="{{$month}}">
-                    <input type="hidden" name="year" value="{{$year}}">
-                    <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
-                        data-toggle="tooltip" data-container="body" data-placement="top"
-                        data-original-title="Tambah Lembur Baru" type="submit">
-                        <i class="btn-label fa fa-plus"></i>
-                        {{-- {{$bool_check_day == false ? 'disabled' : ''}} --}}
-                        Ambil Data Gaji Baru
-                    </button>
-                    <button class="btn btn-success btn-labeled add-tooltip"
-                        data-toggle="tooltip" data-container="body" data-placement="top" form="slip"
-                        data-original-title="Tambah Lembur Baru" type="submit">
-                        <i class="btn-label fa fa-check"></i>
-                        Cetak Slip Gaji Data Terpilih
-                    </button>
-                    <button class="btn btn-danger btn-labeled add-tooltip"
-                        data-toggle="tooltip" data-container="body" data-placement="top" form="reset"
-                        data-original-title="Tambah Lembur Baru" type="submit">
-                        <i class="btn-label fa fa-check"></i>
-                        Reset Log Salary
-                    </button>
+                    <input type="hidden" name="year" value="{{$year}}">   
                 </form>
                 <form action="{{url('/admin/salary/reset')}}" method="post" id="reset">
                     @csrf
@@ -36,6 +17,26 @@
                 <form action="{{url('/admin/salary/slip')}}" method="post" id="slip">
                     @csrf
                 </form>
+
+                <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
+                    data-toggle="tooltip" data-container="body" data-placement="top" form="get_salary"
+                    data-original-title="Tambah Lembur Baru" type="submit">
+                    <i class="btn-label fa fa-plus"></i>
+                    {{-- {{$bool_check_day == false ? 'disabled' : ''}} --}}
+                    Ambil Data Gaji Baru
+                </button>
+                <button class="btn btn-success btn-labeled add-tooltip"
+                    data-toggle="tooltip" data-container="body" data-placement="top" form="slip"
+                    data-original-title="Tambah Lembur Baru" type="submit">
+                    <i class="btn-label fa fa-check"></i>
+                    Cetak Slip Gaji Data Terpilih
+                </button>
+                <button class="btn btn-danger btn-labeled add-tooltip"
+                    data-toggle="tooltip" data-container="body" data-placement="top" form="reset"
+                    data-original-title="Tambah Lembur Baru" type="submit">
+                    <i class="btn-label fa fa-check"></i>
+                    Reset Log Salary
+                </button>
             </div>
         </div>
 

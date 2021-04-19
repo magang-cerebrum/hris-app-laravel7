@@ -7,12 +7,17 @@ use Illuminate\Support\Facades\Auth;
 use App\MasterSalaryCut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SalaryCutController extends Controller
 {
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $salarycut = MasterSalaryCut::leftjoin('master_users','master_salary_cuts.user_id','=','master_users.id')
         ->select([
@@ -32,6 +37,10 @@ class SalaryCutController extends Controller
 
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
         $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
@@ -87,6 +96,10 @@ class SalaryCutController extends Controller
 
     public function edit(MasterSalaryCut $cut)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
         $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
@@ -141,6 +154,10 @@ class SalaryCutController extends Controller
     }
 
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/salary-cut');}
         if (strpos($request->get('query'),'/')) {
             $split = explode('/',$request->get('query'));

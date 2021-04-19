@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\MasterDivision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 class DivisionController extends Controller
 {
     public function index()
     {   
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $division = MasterDivision::get();
         return view('masterdata.division.list',[
@@ -23,6 +28,10 @@ class DivisionController extends Controller
 
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.division.create', [
             'name'=>$user->name,
@@ -44,6 +53,10 @@ class DivisionController extends Controller
 
     public function edit(MasterDivision $division)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.division.edit',[
             'division' => $division,

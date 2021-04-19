@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TransactionTicketing;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 class TransactionTicketingController extends Controller
 {
     public function admin_index(){
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }
         elseif(Gate::allows('is_admin')){
         $user = Auth::user();
@@ -38,7 +39,8 @@ class TransactionTicketingController extends Controller
     }
     public function admin_edit(TransactionTicketing $ticket){
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }
         elseif(Gate::allows('is_admin')){
         $user = Auth::user();
@@ -100,6 +102,10 @@ class TransactionTicketingController extends Controller
     }
 
     public function admin_search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/ticketing');}
         if (strpos($request->get('query'),'/')) {
             $split = explode('/',$request->get('query'));

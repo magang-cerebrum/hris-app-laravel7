@@ -6,7 +6,6 @@
         <div class="row mar-btm">
             <div class="col-sm-12">
 
-
                 <form action="{{url('/admin/salary/processed')}}" method="post">
                     @csrf
                     <input type="hidden" name="month" value="{{$month}}">
@@ -15,6 +14,7 @@
                         data-toggle="tooltip" data-container="body" data-placement="top"
                         data-original-title="Tambah Lembur Baru" type="submit">
                         <i class="btn-label fa fa-plus"></i>
+                        {{-- {{$bool_check_day == false ? 'disabled' : ''}} --}}
                         Ambil Data Gaji Baru
                     </button>
                     <button class="btn btn-success btn-labeled add-tooltip"
@@ -38,6 +38,15 @@
                 </form>
             </div>
         </div>
+
+        @if (!$bool_check_day)    
+        <div class="row mar-btm">
+            <div class="col-sm-12 text-danger text-bold">
+                Maaf Anda Belum Bisa Mengambil Data Gaji Periode {{switch_month($month) . ' - ' . $year}}, Karena Belum Melewati Tanggal {{$next_date}}
+            </div>
+        </div>
+        @endif
+
         @if(!$data->isEmpty())
         
         <table id="salary-result" class="table table-striped table-bordered no-footer dtr-inline collapsed"

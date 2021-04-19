@@ -355,6 +355,12 @@ Route::prefix('/staff/presence')->middleware('auth')->group(function () {
     Route::get('/take',[PresenceController::class,'take_presence']);
 });
 
+//route staff presence division
+Route::prefix('/staff/presence/division')->middleware('auth')->group(function () {
+    Route::get('/',[PresenceController::class,'chief_view']);
+    Route::post('/',[PresenceController::class,'chief_approv']);
+});
+
 //route sistem poster
 Route::prefix('/admin/poster')->middleware('auth')->group(function(){
     Route::get('/',[SliderController::class,'index']);

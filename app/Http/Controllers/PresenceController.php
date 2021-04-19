@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MasterPresence;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 class PresenceController extends Controller
 {
     public function staff_view(){
@@ -207,6 +208,10 @@ class PresenceController extends Controller
         ]);
     }
     public function getProcessedPresenceView(){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.presence.views',[
             'name'=>$user->name,

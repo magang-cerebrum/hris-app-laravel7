@@ -12,8 +12,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
-
-
     public function edit()
     {
         $id = Auth::user()->id;

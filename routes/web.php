@@ -376,7 +376,6 @@ Route::prefix('/admin/log')->middleware('auth')->group(function(){
     Route::get('/',[LogController::class,'index']);
     Route::get('/search',[LogController::class,'search']);
     Route::delete('/',[LogController::class,'destroyselected']);
-    Route::get('/autodelete',[LogController::class,'AutoDeleteLogs']);
 });
 
 //route masterdata job

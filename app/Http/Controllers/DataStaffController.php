@@ -7,12 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DataStaffController extends Controller
 {
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
@@ -53,6 +58,10 @@ class DataStaffController extends Controller
 
     public function create()
     {   
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
         $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->where('status','Aktif')->get();
@@ -134,6 +143,10 @@ class DataStaffController extends Controller
 
     public function edit(MasterUser $staff)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->where('status','Aktif')->get();
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->where('status','Aktif')->get();
@@ -230,6 +243,10 @@ class DataStaffController extends Controller
     }
 
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/data-staff');}
         $user = Auth::user();
         $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
@@ -284,7 +301,10 @@ class DataStaffController extends Controller
     }
 
     public function promotion(MasterUser $staff){
-        
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.datastaff.promote',[
             

@@ -10,8 +10,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use RealRashid\SweetAlert\Facades\Alert;
 class MasterJobScheduleController extends Controller
 {
     /**
@@ -42,6 +43,10 @@ class MasterJobScheduleController extends Controller
 
     public function index(Request $request)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $data = DB::table('master_job_schedules')
         ->where('month', '=', $request->month)
         ->where('year', '=', $request->year)
@@ -108,6 +113,10 @@ class MasterJobScheduleController extends Controller
 
     public function filter()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $division = division_members($user->position_id);
         $data = DB::table('master_users')
@@ -150,6 +159,10 @@ class MasterJobScheduleController extends Controller
 
     public function filter_edit()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $division = division_members($user->position_id);
 
@@ -657,7 +670,11 @@ class MasterJobScheduleController extends Controller
 
 
     public function CopySchedule(Request $request){
-        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
+        $carbon = Carbon::now('UTC');
         $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
         $data = DB::table('master_job_schedules')
         ->where('month', '=', switch_month(date('m')))

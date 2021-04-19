@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\MasterShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ShiftController extends Controller
 {
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $shift = MasterShift::get();
         return view('masterdata.shift.list',[
@@ -24,6 +29,10 @@ class ShiftController extends Controller
 
     public function create()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.shift.create', [
             'name'=>$user->name,
@@ -61,6 +70,10 @@ class ShiftController extends Controller
 
     public function edit(MasterShift $shift)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.shift.edit',[
             'shift' => $shift,

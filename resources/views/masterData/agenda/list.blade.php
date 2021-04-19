@@ -22,7 +22,11 @@
     </div>
 
     <form action="{{url('/admin/agenda/search')}}" method="get" id="search_form"></form>
-    
+    <form action="{{url('/admin/agenda')}}" method="POST" id="form-mul-delete" style="display:inline;" id="delete_agenda">
+        @csrf
+        @method('delete')
+    </form>
+
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
@@ -51,17 +55,14 @@
                             Tambah Agenda Kerja Baru
                         </a>
                     
-                        <form action="{{url('/admin/agenda')}}" method="POST" id="form-mul-delete" style="display:inline;">
-                            @csrf
-                            @method('delete')
-                            <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                                data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()">
-                                <i class="btn-label fa fa-trash"></i>
-                                Hapus Data Terpilih
-                            </button>
-                            @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
-                                Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
-                            </div>
+                        <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
+                            data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()" form="delete_agenda">
+                            <i class="btn-label fa fa-trash"></i>
+                            Hapus Data Terpilih
+                        </button>
+                        @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
+                            Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="masterdata-agenda"
@@ -85,7 +86,7 @@
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center"> {{($agenda->currentPage() * 10) - 10 + $loop->iteration}}</td>
                                 <td class="text-center">
-                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="delete_agenda">
                                 </td>
                                 <td class="text-center">
                                     <a href="{{url("/admin/agenda/$row->id/edit")}}"
@@ -104,7 +105,6 @@
                         </tbody>
                     </table>
                 </div>
-                </form>
                 <div class="text-center">{{ $agenda->links() }}</div>
             </div>
         </div>

@@ -11,12 +11,17 @@ use App\AcceptedPaidLeave;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionPaidLeaveController extends Controller
 {
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $data = TransactionPaidLeave::whereIn('transaction_paid_leaves.status', ['Diterima-Chief','Pending'])
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
@@ -41,6 +46,10 @@ class TransactionPaidLeaveController extends Controller
 
     public function history()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $data = DB::table('transaction_paid_leaves')
         ->whereNotIn('transaction_paid_leaves.status',['Diajukan', 'Pending-Chief','Diterima-Chief'])
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
@@ -129,7 +138,7 @@ class TransactionPaidLeaveController extends Controller
                 } else { 
                     $check_holiday = DB::table('master_holidays')
                     ->where('date',$check_days)->get();
-                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday == 0))) {
+                    if ($check_name_days != "Saturday" && $check_name_days != "Sunday" && (count($check_holiday) == 0)) {
                         $days_paid_leave++;
                     }
                 }

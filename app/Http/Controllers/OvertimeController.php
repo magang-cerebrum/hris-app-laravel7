@@ -7,12 +7,17 @@ use App\MasterOvertime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use  Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OvertimeController extends Controller
 {
     public function index()
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $overtime = MasterOvertime::paginate(10);
         return view('masterdata.overtime.searchOvertime', [
@@ -43,6 +48,10 @@ class OvertimeController extends Controller
 
     public function create(Request $request)
     {
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         $user_overtime = array();
         $user_schedule = array();

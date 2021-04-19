@@ -1,53 +1,56 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <title>WebcamJS Test Page</title>
-    <script src="https://s0.2mdn.net/instream/video/client.js" async="" type="text/javascript"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Cam Snap</title>
+<script type="text/javascript" src="{{asset('plugins/webcam/webcam.js')}}"></script>
+<script language="JavaScript">
+function take_snapshot() {
+    Webcam.snap(function(data_uri) {
+    document.getElementById('results').innerHTML = '<img id="base64image" src="'+data_uri+'"/><button onclick="SaveSnap();">Save Snap</button>';
+});
+}
+function ShowCam(){
+Webcam.set({
+width: 320,
+height: 240,
+image_format: 'jpeg',
+jpeg_quality: 100
+});
+Webcam.attach('#my_camera');
+}
+function SaveSnap(){
+    document.getElementById("loading").innerHTML="Saving, please wait...";
+    var file =  document.getElementById("base64image").src;
+    var formdata = new FormData();
+    formdata.append("base64image", file);
+    var ajax = new XMLHttpRequest();
+    ajax.addEventListener("load", function(event) { uploadcomplete(event);}, false);
+    ajax.open("POST", "upload.php");
+    ajax.send(formdata);
+}
+function uploadcomplete(event){
+    document.getElementById("loading").innerHTML="";
+    var image_return=event.target.responseText;
+    var showup=document.getElementById("uploaded").src=image_return;
+}
+window.onload= ShowCam;
+</script>
+<style type="text/css">
+.container{display:inline-block;width:320px;}
+#Cam{background:rgb(255,255,215);}#Prev{background:rgb(255,255,155);}#Saved{background:rgb(255,255,55);}
+</style>
 </head>
 <body>
-    <div class="">
-        <video autoplay="true" id="video-webcam">
-            Izinkan untuk Mengakses Webcam untuk Demo
-        </video>
-        <button onclick="takeSnapshot()">Ambil Gambar</button>
-    </div>
-    <script>
-        var video = document.querySelector("#video-webcam");
-    
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-    
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia({ video: true }, handleVideo, videoError);
-        }
-    
-        function handleVideo(stream) {
-            video.src = window.URL.createObjectURL(stream);
-            console.log(stream);
-        }
-    
-        function videoError(e) {
-            // do something
-            alert("Izinkan menggunakan webcam untuk demo!")
-        }
-    
-        function takeSnapshot() {
-            var img = document.createElement('img');
-            var context;
-            var width = video.offsetWidth
-                    , height = video.offsetHeight;
-    
-            canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-    
-            context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, width, height);
-    
-            img.src = canvas.toDataURL('image/png');
-            document.body.appendChild(img);
-        }
-    
-    </script>
-    
+<div class="container" id="Cam"><b>Webcam Preview...</b>
+    <div id="my_camera"></div><form>
+    <input type="button" value="Snap It" onClick="take_snapshot()"></form>
+</div>
+<div class="container" id="Prev">
+    <b>Snap Preview...</b><div id="results"></div>
+</div>
+<div class="container" id="Saved">
+    <b>Saved</b><span id="loading"></span><img id="uploaded" src=""/>
+</div>
 </body>
 </html>

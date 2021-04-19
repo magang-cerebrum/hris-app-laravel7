@@ -6,16 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MasterPresence;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 class PresenceController extends Controller
 {
     public function staff_view(){
         $user = Auth::user();
-        $presence = MasterPresence::where(['presence_date'=> date('Y-m-d'),'user_id'=> $user->id,])
-        ->select('in_time','out_time','late_time')
-        ->first();
-        $division = DB::table('master_divisions')->where('id', $user->division_id)->first();
         $date = date('Y-m-d');
         $count_presence_in_day = DB::table('master_presences')->where('user_id', $user->id)->where('presence_date', $date)->get();
         if (count($count_presence_in_day) == 0) {
@@ -29,20 +26,100 @@ class PresenceController extends Controller
                 $bool_presence = 2;
             }
         }
+        $shift = 'shift_'.date('j');
+        $bool_schedule = DB::table('master_job_schedules')
+        ->where('month', switch_month(date('m')))
+        ->where('year', date('Y'))
+        ->where('user_id', $user->id)->first();
+
+        $bool_schedule = $bool_schedule->$shift;
+
         return view('staff.presence.history',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id,
-            'division'=>$division->name,
             'bool_presence'=>$bool_presence,
-            'presence' => $presence
+            'bool_schedule' => $bool_schedule
+        ]);
+    }
+
+    public function chief_view(){
+        $user = Auth::user();
+        $data = DB::table('master_presences')
+        ->leftJoin('master_users','master_presences.user_id','=','master_users.id')
+        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->whereNotNull('file_in')->whereNotNull('file_out')->where('check_chief',0)
+        ->select([
+            'master_presences.*',
+            'master_users.name as name'
+        ])
+        ->get();
+
+        return view('staff.presence.division',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$data
+        ]);
+    }
+
+    public function chief_approv(Request $request){
+        foreach ($request->selectid as $item) {
+
+            $data = DB::table('master_presences')->where('id',$item)->first();
+            
+            $path_file = 'img-presensi/masuk/'.$data->file_in;
+            $file_path_file = public_path($path_file);
+            unlink($file_path_file);
+
+            $path_file = 'img-presensi/pulang/'.$data->file_out;
+            $file_path_file = public_path($path_file);
+            unlink($file_path_file);
+
+            DB::table('master_presences')->where('id',$item)->update(['file_in'=>null, 'file_out'=>null, 'check_chief'=>1]);
+        }
+
+        return redirect('/staff/presence/division');
+    }
+
+    public function take_presence(){
+        $user = Auth::user();
+        $division = DB::table('master_divisions')->where('id', $user->division_id)->select(['name'])->first();
+        $date = date('Y-m-d');
+        $count_presence_in_day = DB::table('master_presences')->where('user_id', $user->id)->where('presence_date', $date)->get();
+        if (count($count_presence_in_day) == 0) {
+            $bool_presence = 0;
+        }
+        else {
+            if ($count_presence_in_day[0]->out_time == null) {
+                $bool_presence = 1;
+            }
+            else {
+                $bool_presence = 2;
+            }
+        }
+
+        return view('staff.presence.take',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'division'=>$division->name,
+            'bool_presence'=>$bool_presence
         ]);
     }
 
     public function add_presence(Request $request) {
         $date = date('Y-m-d');
         $time = date('H:i:s');
+
+        $image = $request->image;
+        $image_array_1 = explode(";", $image);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $data = base64_decode($image_array_2[1]);
+        $image_name = $date.'_'. Auth::user()->name . '.jpeg';
         
         $master_shift = DB::table('master_shifts')->get();
 
@@ -60,12 +137,17 @@ class PresenceController extends Controller
                     $hour_shift = $item_shift->total_hour;
                 }
             }
+
+            $image_path = 'img-presensi/masuk/' . $image_name;
+            file_put_contents($image_path, $data);
+
             DB::table('master_presences')->insert([
                 'user_id' => $request->user_id,
                 'presence_date' => $date,
                 'in_time' => $time,
                 'shift_name' => $shift,
-                'shift_default_hour' => $hour_shift
+                'shift_default_hour' => $hour_shift,
+                'file_in' => $image_name
             ]);
         }
         else if ($request->bool_presence == 1) {
@@ -94,13 +176,17 @@ class PresenceController extends Controller
             }
             $fine = (intval($lateInMinute/5))*20000;
 
+            $image_path = 'img-presensi/pulang/' . $image_name;
+            file_put_contents($image_path, $data);
+
             DB::table('master_presences')
             ->where('id', $data_presence->id)
             ->update([
                 'out_time'=>$time,
                 'inaday_time'=> $inadayTime,
                 'late_time'=> $late,
-                'fine'=> $fine
+                'fine'=> $fine,
+                'file_out'=> $image_name
             ]);
         }
         return redirect('/staff/presence');
@@ -122,6 +208,10 @@ class PresenceController extends Controller
         ]);
     }
     public function getProcessedPresenceView(){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         $user = Auth::user();
         return view('masterdata.presence.views',[
             'name'=>$user->name,
@@ -167,7 +257,6 @@ class PresenceController extends Controller
                 $late = '0:0:0';
             }
             $fine = (intval($lateInMinute/5))*20000;
-            // dd($fine,$defaultInTime,$entryTime,$intervalLate,$inTimeLateHour,$inTimeLateMinute,$late,$invertedLate);
             DB::table('master_presences')
             ->insert(
                 [
@@ -201,4 +290,5 @@ class PresenceController extends Controller
         ->update(['status'=>0]);
         return redirect()->back();
     }
+    
 }

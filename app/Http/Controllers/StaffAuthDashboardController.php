@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\File;
 use App\MasterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,8 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Jenssegers\Agent\Agent;
-use Asset\img\profile_photos;
-// use Illuminate\Contracts\Auth\Guard;
+
 class StaffAuthDashboardController extends Controller
 {
     public function index(Request $request){
@@ -115,7 +113,6 @@ class StaffAuthDashboardController extends Controller
             ->where('year',$this_year)
             ->where('month',$before_current_month)->get();
 
-
             $positionLastMonth =DB::table('master_achievements')
             ->leftjoin('master_users',
             'master_achievements.achievement_user_id','=','master_users.id')
@@ -137,11 +134,10 @@ class StaffAuthDashboardController extends Controller
             
             $datrankCurrentMonth = $positionCurrentMonth->where('achievement_user_id','=',Auth::user()->id);
             $rankCurrentMonth = $datrankCurrentMonth->keys()->first()+1;
-           
+            
             $count_current_month_achievement = count($current_month_achievement);
             $count_before_current_month_achievement = count($before_current_month_achievement);
             
-             
             for ($i = 1 ; $i<=12;$i++){
                 $max_score=0;
                 $data_month =DB::table('master_achievements')
@@ -275,11 +271,13 @@ class StaffAuthDashboardController extends Controller
     
     public function profile()
     {
+        if(Gate::denies('is_staff')){
+            return redirect('/admin/profile');
+        };
         $data = Auth::user();
         $divisions = DB::table('master_divisions')->where('id', '=', $data->division_id)->get();
         $positions = DB::table('master_positions')->where('id', '=', $data->position_id)->get();
         $roles = DB::table('master_roles')->where('id', '=', $data->role_id)->get();
-        $shifts = DB::table('master_shifts')->where('id', '=', $data->shift_id)->get();
 
         return view('dashboard.profile',[
             'id' =>$data->id,
@@ -289,29 +287,32 @@ class StaffAuthDashboardController extends Controller
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,
-            'roles'=>$roles,
-            'shifts'=>$shifts
+            'roles'=>$roles
             ]);
     }
     public function editprofile()
     {
+        if(Gate::denies('is_staff')){
+            return redirect('/admin/profile/edit');
+        };
         $data = Auth::user();
         $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
-        $shifts = DB::table('master_shifts')->select('name as shifts_name','id as shifts_id')->get();
 
         return view('dashboard.editprofile',[
+            'id' =>$data->id,
+            'name'=> $data->name,
+            'email'=> $data->email,
+            'profile_photo'=> $data->profile_photo,
             'data' => $data,
             'divisions'=>$divisions,
             'positions'=>$positions,
-            'roles'=>$roles,
-            'shifts'=>$shifts
-            ]);
+            'roles'=>$roles
+        ]);
     }
     public function updateprofile(Request $request, MasterUser $user)
     {
-        // dd($request);
         $request->validate([
             'name' => 'required',
             'dob' => 'required',
@@ -330,29 +331,8 @@ class StaffAuthDashboardController extends Controller
                 'email' => $request->email,
                 'profile_photo' => $request->profile_photo,
             ]);
-            Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
+        Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/staff/profile');
-    }
-    public function foto(Request $request)
-    {
-        $image = $request->image;
-
-        $image_default = Auth::user()->profile_photo;
-        if ($image_default != 'defaultL.jpg' || $image_default != 'defaultP.png') {
-            $path_profile = 'img/profile-photos/'.$image_default;
-            $file_path_profile = public_path($path_profile);
-            DB::table('master_users')
-            ->where('id', '=', Auth::user()->id)
-            ->update(['profile_photo' => Auth::user()->name .'.png']);
-        }
-
-        $image_array_1 = explode(";", $image);
-        $image_array_2 = explode(",", $image_array_1[1]);
-        $data = base64_decode($image_array_2[1]);
-        $image_name = 'img/profile-photos/' . Auth::user()->name . '.png';
-        file_put_contents($image_name, $data);
-
-        $src = 'asset ' . $image_name;
     }
     
 }

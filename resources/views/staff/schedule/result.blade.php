@@ -16,6 +16,11 @@
                 <td style="width: 20px;height:20px;background-color:{{$item->calendar_color}}"></td><td class="break"></td><td>: {{$item->name}}</td><td class="break">
             @endforeach
         <tr></table>
+            @if ($data->isEmpty())
+        <div class="text-right">
+            <a href="{{url('/staff/schedule/add')}}" class="btn btn-warning">Klik disini untuk menambahkan jadwal kerja divisi!</a>
+        </div>
+        @endif
     </div>
 </div>
 

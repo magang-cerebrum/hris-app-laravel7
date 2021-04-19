@@ -15,7 +15,8 @@ class HolidayController extends Controller
     public function index()
     {
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }
         elseif(Gate::allows('is_admin')) {
         $data = MasterHoliday::paginate(10);
@@ -33,7 +34,8 @@ class HolidayController extends Controller
     public function create()
     {
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }
         elseif(Gate::allows('is_admin')) {
         $user = Auth::user();
@@ -154,7 +156,8 @@ class HolidayController extends Controller
     public function edit(MasterHoliday $holiday)
     {
         if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
         }
         elseif(Gate::allows('is_admin')) {
         $user = Auth::user();
@@ -201,6 +204,10 @@ class HolidayController extends Controller
     }
 
     public function search(Request $request){
+        if(Gate::denies('is_admin')){
+            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            return back();
+        }
         if ($request->get('query') == null) {return redirect('/admin/holiday');}
         if (strpos($request->get('query'),'/')) {
             $split = explode('/',$request->get('query'));

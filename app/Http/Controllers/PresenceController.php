@@ -48,7 +48,7 @@ class PresenceController extends Controller
         $user = Auth::user();
         $data = DB::table('master_presences')
         ->leftJoin('master_users','master_presences.user_id','=','master_users.id')
-        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->where('master_users.division_id',$user->division_id)
         ->whereNotNull('file_in')->whereNotNull('file_out')->where('check_chief',0)
         ->select([
             'master_presences.*',

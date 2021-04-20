@@ -12,6 +12,12 @@
         <div class="panel-heading">
             <h3 class="panel-title">Data Poster Dashboard</h3>
         </div>
+        
+        <form action="{{ url('/admin/poster')}}" method="POST" id="form-mul-delete">
+            @csrf
+            @method('delete')
+        </form>
+
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-12">
@@ -24,14 +30,11 @@
                             </a>
                         </div>
                         <div class="col-sm-6">
-                            <form action="{{ url('/admin/poster')}}" method="POST" id="form-mul-delete">
-                                @csrf
-                                @method('delete')
-                                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                                    data-container="body" data-placement="top" data-original-title="Hapus Poster" onclick="submit_delete()">
-                                    <i class="btn-label fa fa-trash"></i>
-                                    Hapus Poster Terpilih
-                                </button>
+                            <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
+                                data-container="body" data-placement="top" data-original-title="Hapus Poster" onclick="submit_delete()" form="form-mul-delete">
+                                <i class="btn-label fa fa-trash"></i>
+                                Hapus Poster Terpilih
+                            </button>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group float-right">
@@ -60,7 +63,7 @@
                                 <tr>
                                     <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                     <td class="text-center">
-                                        <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                        <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
                                     </td>
                                     <td class="text-center">
                                         <a href="/admin/poster/{{$row->id}}/edit"
@@ -77,7 +80,6 @@
                             </tbody>
                         </table>
                     </div>
-                </form>
                 </div>
             </div>
         </div>

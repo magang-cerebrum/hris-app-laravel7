@@ -13,69 +13,71 @@
     <div class="panel-heading">
         <h3 class="panel-title">Pilih Staff untuk Jadwal Kerja</h3>
     </div>
+    
+    <form action="{{ url('/staff/schedule/add-schedule')}}" method="POST" id="form-chek-user-month" class="form-horizontal">
+        @csrf
+    </form>
+
     <div class="panel-body">
         <div class="table-responsive">
-            <form action="{{ url('/staff/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-chek-user-month" class="form-horizontal">
-                @csrf
-                <div class="row">
-                    <div class="col-sm-12">
-                        <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                            data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()">
-                            <i class="btn-labeled fa fa-plus"></i>
-                            Buat Jadwal Kerja
-                        </button>
-                        <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
-                    </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                        data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()" form="form-chek-user-month">
+                        <i class="btn-labeled fa fa-plus"></i>
+                        Buat Jadwal Kerja
+                    </button>
+                    <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
                 </div>
-                <div class="row mar-btm">
-                    <label class="col-sm-1 control-label" for="query">Periode : </label>
-                    <div class="col-sm-4">
-                        <div id="pickadate">
-                            <div class="input-group date">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
-                                </span>
-                                <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
-                                    autocomplete="off" id="periode" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-4">
-                        <div class="form-group float-right">
-                            <input type="text" id="cari-divisi" class="form-control"
-                                placeholder="Cari Staff" onkeyup="filter_schedule()">
+            </div>
+            <div class="row mar-btm">
+                <label class="col-sm-1 control-label" for="query">Periode : </label>
+                <div class="col-sm-4">
+                    <div id="pickadate">
+                        <div class="input-group date">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                            </span>
+                            <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
+                                autocomplete="off" id="periode" form="form-chek-user-month" readonly>
                         </div>
                     </div>
                 </div>
-                <table id="staff-filter-schedule"
-                class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                            <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master"></th>
-                            <th class="sorting text-center" tabindex="0">NIP</th>
-                            <th class="sorting text-center" tabindex="0">Nama</th>
-                            <th class="sorting text-center" tabindex="0">Divisi</th>
-                            <th class="sorting text-center" tabindex="0">Jabatan</th>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <div class="form-group float-right">
+                        <input type="text" id="cari-divisi" class="form-control"
+                            placeholder="Cari Staff" onkeyup="filter_schedule()" form="form-chek-user-month">
+                    </div>
+                </div>
+            </div>
+            <table id="staff-filter-schedule"
+            class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
+            role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
+            cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
+                        <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master"></th>
+                        <th class="sorting text-center" tabindex="0">NIP</th>
+                        <th class="sorting text-center" tabindex="0">Nama</th>
+                        <th class="sorting text-center" tabindex="0">Divisi</th>
+                        <th class="sorting text-center" tabindex="0">Jabatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $item)
+                        <tr class="sorting text-center" tabindex="0">
+                            <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
+                            <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->user_id}}" form="form-chek-user-month"></td>
+                            <td class="text-center">{{$item->user_nip}}</td>
+                            <td class="text-center">{{$item->user_name}}</td>
+                            <td class="text-center">{{$item->division_name}}</td>
+                            <td class="text-center">{{$item->position_name}}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $item)
-                            <tr class="sorting text-center" tabindex="0">
-                                <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
-                                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->user_id}}"></td>
-                                <td class="text-center">{{$item->user_nip}}</td>
-                                <td class="text-center">{{$item->user_name}}</td>
-                                <td class="text-center">{{$item->division_name}}</td>
-                                <td class="text-center">{{$item->position_name}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </form>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

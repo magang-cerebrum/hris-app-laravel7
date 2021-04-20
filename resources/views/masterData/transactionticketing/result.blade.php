@@ -13,50 +13,50 @@
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Ticketing</h3>
     </div>
+    
+    <form action="{{url('/admin/ticketing/search')}}" method="get" id="form_search"></form>
+    <form action="/admin/ticketing/on-progress" method="POST" id="form-mul-onprog">
+        @csrf
+        @method('put')     
+    </form>
+    
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row mar-btm" style="margin-top:-60px">
                     <div class="col-sm-5">
-                        <form action="{{url('/admin/ticketing/search')}}" method="get"
-                            style="position: relative;right:-630px;bottom:-48px">
-                            <div id="pickadate">
-                                <div class="input-group date">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="button" style="z-index: 2"><i
-                                                class="fa fa-calendar"></i></button>
-                                    </span>
-                                    <input type="text" name="query" placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
-                                        class="form-control" autocomplete="off">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
+                        <div id="pickadate" style="position: relative;right:-630px;bottom:-48px">
+                            <div class="input-group date">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-mint" type="button" style="z-index: 2"><i
+                                            class="fa fa-calendar"></i></button>
+                                </span>
+                                <input type="text" name="query" placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
+                                    class="form-control" autocomplete="off" form="form_search">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-mint" type="submit" form="form_search"><i class="fa fa-search"></i></button>
+                                </span>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="row mar-btm">
                     <div class="col-sm-8">
-                        <form action="/admin/ticketing/on-progress" method="POST" id="form-mul-onprog"
-                            style="display: inline">
-                            @csrf
-                            @method('put')
-                            <button id="btn-onprog" class="btn btn-primary  btn-labeled add-tooltip"
-                                data-toggle="tooltip" data-container="body" data-placement="top"
-                                data-original-title="Jadikan On Progress" onclick="submit_on_progress()">
-                                <i class="btn-label fa fa-spinner"></i>
-                                Jadikan On Progress
-                            </button>
-                            <div class="radio mar-hor" style="display: inline">
-                                <label for="">Lihat Ticket Selesai: </label>
-                                <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai"
-                                    value="On">
-                                <label for="lihat_selesai_radio-1">On</label>
-                                <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai"
-                                    value="Off">
-                                <label for="lihat_selesai_radio-2">Off</label>
-                            </div>
+                        <button id="btn-onprog" class="btn btn-primary  btn-labeled add-tooltip"
+                            data-toggle="tooltip" data-container="body" data-placement="top"
+                            data-original-title="Jadikan On Progress" onclick="submit_on_progress()" form="form-mul-onprog">
+                            <i class="btn-label fa fa-spinner"></i>
+                            Jadikan On Progress
+                        </button>
+                        <div class="radio mar-hor" style="display: inline">
+                            <label for="">Lihat Ticket Selesai: </label>
+                            <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
+                                value="On">
+                            <label for="lihat_selesai_radio-1">On</label>
+                            <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
+                                value="Off">
+                            <label for="lihat_selesai_radio-2">Off</label>
+                        </div>
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
@@ -91,7 +91,7 @@
                             <td tabindex="0" class="sorting_1 text-center">
                                 {{($done->currentPage() * 10) - 10 + $loop->iteration}}</td>
                             <td class="text-center">
-                                <input type="checkbox" class="check-item-full" name="selectid_full[]" value="{{$row->id}}">
+                                <input type="checkbox" class="check-item-full" name="selectid_full[]" value="{{$row->id}}" form="form-mul-onprog">
                             </td>
                             <td class="text-center">
                                 <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
@@ -170,7 +170,7 @@
                             <td tabindex="0" class="sorting_1 text-center">
                                 {{($ticketing->currentPage() * 10) - 10 + $loop->iteration}}</td>
                             <td class="text-center">
-                                <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-onprog">
                             </td>
                             <td class="text-center">
                                 <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
@@ -218,7 +218,6 @@
                     </tbody>
                 </table>
                 <div id="onprog-pagination" class="text-center">{{ $ticketing->withQueryString()->links() }}</div>
-                </form>
             </div>
         </div>
         <div class="row">

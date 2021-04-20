@@ -1,4 +1,9 @@
 <!-- modal form reject -->
+<form class="form-horizontal" action="" method="POST" id="form-reject">
+    @csrf
+    @method('put')
+</form>
+
 <div class="modal fade" id="modal-reject" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -7,9 +12,6 @@
                 <h5 class="modal-title text-bold text-center">Form Penolakan Pengajuan Cuti</h5>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="POST" id="form-reject">
-                    @csrf
-                    @method('put')
                     <div class="panel-body">
                         <table class="table table-bordered table-striped">
                             <tbody>
@@ -46,17 +48,16 @@
                                 <label class="col-sm-2 control-label" for="textarea-informations-message">Alasan Penolakan:</label>
                                 <div class="col-sm-10">
                                     <textarea id="textarea-informations-message" rows="2" class="form-control"
-                                        placeholder="Masukan keterangan penolakan disini" name="informations"></textarea>
+                                        placeholder="Masukan keterangan penolakan disini" name="informations" form="form-reject"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Penolakan Pengajuan Cuti">Kirim Penolakan</button>
+                <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Penolakan Pengajuan Cuti" form="form-reject">Kirim Penolakan</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
             </div>
-            </form>
         </div>
     </div>
 </div>

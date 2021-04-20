@@ -18,46 +18,48 @@
     <div class="panel-heading">
         <h3 class="panel-title">Form Pengajuan WFH</h3>
     </div>
-    <form class="form-horizontal" action="{{url('/staff/wfh')}}" method="POST">
+    
+    <form class="form-horizontal" action="{{url('/staff/wfh')}}" method="POST" id="form_create">
         @csrf
-        <div class="panel-body">
-            <input type="hidden" name="user_id" class="form-control" value="{{$id}}">
-            <div class="yearly">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Tanggal :</label>
-                    <div id="datepicker-input-cuti">
-                        <div class="col-sm-10">
-                            <div class="input-group input-daterange">
-                                <input type="text"
-                                    class="form-control @error('wfh_date_start') is-invalid @enderror"
-                                    placeholder="Tanggal Mulai" name="wfh_date_start" id="wfh_date_start"
-                                    value="{{old('wfh_date_start')}}" autocomplete="off" onchange="result_end()">
-                                <span class="input-group-addon">sampai</span>
-                                <input type="text"
-                                    class="form-control @error('wfh_date_end') is-invalid @enderror"
-                                    placeholder="Tanggal Berakhir" name="wfh_date_end" id="wfh_date_end"
-                                    value="{{old('wfh_date_start')}}" autocomplete="off" onchange="result_end()">
-                            </div>
+    </form>
+    
+    <div class="panel-body">
+        <input type="hidden" name="user_id" class="form-control" value="{{$id}}" form="form_create">
+        <div class="yearly">
+            <div class="row">
+                <label class="col-sm-2 control-label">Tanggal :</label>
+                <div id="datepicker-input-cuti">
+                    <div class="col-sm-10">
+                        <div class="input-group input-daterange">
+                            <input type="text" form="form_create"
+                                class="form-control @error('wfh_date_start') is-invalid @enderror"
+                                placeholder="Tanggal Mulai" name="wfh_date_start" id="wfh_date_start"
+                                value="{{old('wfh_date_start')}}" autocomplete="off" onchange="result_end()">
+                            <span class="input-group-addon">sampai</span>
+                            <input type="text" form="form_create"
+                                class="form-control @error('wfh_date_end') is-invalid @enderror"
+                                placeholder="Tanggal Berakhir" name="wfh_date_end" id="wfh_date_end"
+                                value="{{old('wfh_date_start')}}" autocomplete="off" onchange="result_end()">
                         </div>
                     </div>
                 </div>
-                <div class="row"><div class="text-info text-center" id="yearly_info"></div></div>
-                <div class="row">
-                    <label class="col-md-2 control-label" for="demo-textarea-input">Keterangan Keperluan : </label>
-                    <div class="col-md-10">
-                        <textarea id="needs" rows="4" class="form-control @error('needs') is-invalid @enderror"
-                            placeholder="Keterangan Keperluan" name="needs"></textarea>
-                        @error('needs') <div class="text-danger invalid-feedback mt-3">
-                            Keterangan keperluan tidak boleh kosong.
-                        </div> @enderror
-                    </div>
+            </div>
+            <div class="row"><div class="text-info text-center" id="yearly_info"></div></div>
+            <div class="row">
+                <label class="col-md-2 control-label" for="demo-textarea-input">Keterangan Keperluan : </label>
+                <div class="col-md-10">
+                    <textarea id="needs" rows="4" class="form-control @error('needs') is-invalid @enderror"
+                        placeholder="Keterangan Keperluan" name="needs" form="form_create"></textarea>
+                    @error('needs') <div class="text-danger invalid-feedback mt-3">
+                        Keterangan keperluan tidak boleh kosong.
+                    </div> @enderror
                 </div>
             </div>
         </div>
-        <div class="panel-footer text-right">
-            <button class="btn btn-success" type="submit" id="submit-button">Ajukan</button>
-        </div>
-    </form>
+    </div>
+    <div class="panel-footer text-right">
+        <button class="btn btn-success" type="submit" id="submit-button" form="form_create">Ajukan</button>
+    </div>
 </div>
 @endsection
 

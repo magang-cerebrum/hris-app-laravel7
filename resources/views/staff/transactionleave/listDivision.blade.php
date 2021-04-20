@@ -11,6 +11,12 @@
     <div class="panel-heading">
         <h3 class="panel-title">Riwayat Pengajuan Cuti Divisi</h3>
     </div>
+
+    <form action="" method="POST" id="form-approve-pending">
+        @method('put')
+        @csrf
+    </form>
+
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
@@ -28,18 +34,15 @@
             <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
         </div>
         @else
-        <form action="" method="POST" style="display: inline" id="form-approve-pending">
-            @method('put')
-            @csrf
             <button id="btn-approve" class="btn btn-primary btn-labeled add-tooltip" style="margin-top: -15px"
                 type="button" data-toggle="tooltip" data-container="body" data-placement="top"
-                data-original-title="Terima Pengajuan Cuti" onclick="submit_approve()">
+                data-original-title="Terima Pengajuan Cuti" onclick="submit_approve()" form="form-approve-pending">
                 <i class="btn-label fa fa-check"></i>
                 Terima Cuti Terpilih
             </button>
             <button id="btn-pending" class="btn btn-warning btn-labeled add-tooltip" style="margin-top: -15px"
                 type="button" data-toggle="tooltip" data-container="body" data-placement="top"
-                data-original-title="Pending Pengajuan Cuti" onclick="submit_pending()">
+                data-original-title="Pending Pengajuan Cuti" onclick="submit_pending()" form="form-approve-pending">
                 <i class="btn-label fa fa-spinner"></i>
                 Pending Data Terpilih
             </button>
@@ -68,7 +71,7 @@
             @foreach ($data as $item)
             <tr class="sorting text-center" tabindex="0">
                 <td class="sorting text-center" tabindex="0">{{$data->currentpage() * 5 - 5 + $loop->iteration}}</td>
-                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}"></td>
+                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->id}}" form="form-approve-pending"></td>
                 <td class="text-center">
                     <span id="reject" data-toggle="modal" data-target="#modal-reject"
                         style="display: inline; margin: auto 5px" data-id="{{$item->id}}" data-nip="{{$item->user_nip}}"
@@ -94,7 +97,6 @@
             @endforeach
         </tbody>
     </table>
-    </form>
 </div>
 <div class="row" style="margin-top: -50px">
     <div class="col-sm-5"></div>

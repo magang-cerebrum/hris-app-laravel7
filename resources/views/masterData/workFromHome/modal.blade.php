@@ -1,4 +1,9 @@
 <!-- modal form reject -->
+<form class="form-horizontal" action="" method="POST" id="form-reject">
+    @csrf
+    @method('put')
+</form>
+
 <div class="modal fade" id="modal-reject" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -7,54 +12,50 @@
                 <h5 class="modal-title text-bold text-center">Form Penolakan Pengajuan WFH</h5>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="POST" id="form-reject">
-                    @csrf
-                    @method('put')
-                    <div class="panel-body">
-                        <table class="table table-bordered table-striped">
-                            <tbody>
-                                <tr>
-                                    <td><label for="nip">NIP: </label></td>
-                                    <td><span id="nip"></span></td>
-                                    <td><label for="name">Nama Staff: </label></td>
-                                    <td><span id="name"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="datestart">Tanggal Awal WFH: </label></td>
-                                    <td><span id="datestart"></span></td>
-                                    <td><label for="dateend">Tanggal Akhir WFH: </label></td>
-                                    <td><span id="dateend"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="days">Jumlah Hari Pengajuan WFH: </label></td>
-                                    <td><span id="days"></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="form-group">
-                            <div class="row">
-                                <label class="col-sm-2 control-label" for="textarea-needs-message">Keterangan WFH:</label>
-                                <div class="col-sm-10">
-                                    <textarea id="needs" rows="2" class="form-control" readonly></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label class="col-sm-2 control-label" for="textarea-informations-message">Alasan Penolakan:</label>
-                                <div class="col-sm-10">
-                                    <textarea id="textarea-informations-message" rows="2" class="form-control"
-                                        placeholder="Masukan keterangan penolakan disini" name="informations"></textarea>
-                                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <td><label for="nip">NIP: </label></td>
+                                <td><span id="nip"></span></td>
+                                <td><label for="name">Nama Staff: </label></td>
+                                <td><span id="name"></span></td>
+                            </tr>
+                            <tr>
+                                <td><label for="datestart">Tanggal Awal WFH: </label></td>
+                                <td><span id="datestart"></span></td>
+                                <td><label for="dateend">Tanggal Akhir WFH: </label></td>
+                                <td><span id="dateend"></span></td>
+                            </tr>
+                            <tr>
+                                <td><label for="days">Jumlah Hari Pengajuan WFH: </label></td>
+                                <td><span id="days"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-2 control-label" for="textarea-needs-message">Keterangan WFH:</label>
+                            <div class="col-sm-10">
+                                <textarea id="needs" rows="2" class="form-control" readonly></textarea>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-2 control-label" for="textarea-informations-message">Alasan Penolakan:</label>
+                            <div class="col-sm-10">
+                                <textarea id="textarea-informations-message" rows="2" class="form-control" form="form-reject"
+                                    placeholder="Masukan keterangan penolakan disini" name="informations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Penolakan Pengajuan WFH">Kirim Penolakan</button>
+                <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Penolakan Pengajuan WFH" form="form-reject">Kirim Penolakan</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
             </div>
-            </form>
         </div>
     </div>
 </div>

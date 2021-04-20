@@ -44,22 +44,25 @@
     <div class="panel-heading">
         <h3 class="panel-title">{{'Form Tambah Jadwal Kerja Bulan '.$month.' - '.$year}}</h3>
     </div>
-    <div class="panel-body">
-        <form action="{{ url('/admin/schedule/post')}}" method="POST" style="display: inline;" class="form-horizontal" id="form-bulan-tahun">
-            @csrf
-            <input name="count" value="{{count($data_user)}}" hidden>
-            <input name="month" value="{{$month}}" hidden>
-            <input name="year" value="{{$year}}" hidden>
-            <div class="row mar-btm">
-                <div class="col-sm-2">
-                    <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                        data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal" onclick="submit_add()">
-                        <i class="btn-label fa fa-send-o"></i>
-                        Kirim Jadwal
-                    </button>
-                </div>
+
+    <form action="{{ url('/admin/schedule/post')}}" method="POST" class="form-horizontal" id="form-bulan-tahun">
+        @csrf
+    </form>
+    
+    <div class="panel-body">    
+        <input name="count" value="{{count($data_user)}}" form="form-bulan-tahun" hidden>
+        <input name="month" value="{{$month}}" form="form-bulan-tahun" hidden>
+        <input name="year" value="{{$year}}" form="form-bulan-tahun" hidden>
+        <div class="row mar-btm">
+            <div class="col-sm-2">
+                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                    data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal" onclick="submit_add()" form="form-bulan-tahun">
+                    <i class="btn-label fa fa-send-o"></i>
+                    Kirim Jadwal
+                </button>
             </div>
-            <div class="table-responsive" style="padding-bottom: 150px">
+        </div>
+        <div class="table-responsive" style="padding-bottom: 150px">
             <table id="schedule-add"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%" width="100%"
@@ -101,7 +104,7 @@
                         <tr class="sorting text-center" tabindex="0">
                             <td class="sorting text-center" tabindex="0">
                                 {{$loop->iteration}}
-                                <input type="text" value="{{$item_user->id}}" name="{{'id_user_'.$loop->iteration}}" hidden>
+                                <input type="text" value="{{$item_user->id}}" name="{{'id_user_'.$loop->iteration}}" form="form-bulan-tahun" hidden>
                             </td>
                             <td class="text-center">{{$item_user->nip}}</td>
                             <td class="text-center">{{$item_user->name}}</td>
@@ -129,7 +132,7 @@
                                     }
                                 ?>
                                 <td class="text-center">
-                                    <select class="selectpicker {{'sub-master_'.$i}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}">
+                                    <select class="selectpicker {{'sub-master_'.$i}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
                                         @foreach ($data_shift as $shift)
                                         <option value="{{$shift->id}}"
                                             class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
@@ -168,9 +171,8 @@
                     @endforeach
                 </tbody>
             </table>
-        </form>
+        </div>
     </div>
-</div>
 </div>
 @endsection
 

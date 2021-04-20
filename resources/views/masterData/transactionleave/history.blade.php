@@ -7,19 +7,22 @@
     <div class="panel-heading">
         <h3 class="panel-title">Riwayat Pengajuan Cuti Staff</h3>
     </div>
+    
+    <form action="{{ url('/admin/paid-leave/delete')}}" method="POST" id="form_history">
+        @method('delete')
+        @csrf
+    </form>
+
     <div class="panel-body">
         @if (count($data) == 0)
-        <div class="text-center">
-            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
-            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
-        </div>
+            <div class="text-center">
+                <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+                <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+            </div>
         @else
-        <form action="{{ url('/admin/paid-leave/delete')}}" method="POST" style="display: inline">
-            @method('delete')
-            @csrf
             <button id="btn-delete" class="btn btn-danger add-tooltip" style="margin-bottom: 10px" type="submit"
                 data-toggle="tooltip" data-container="body" data-placement="top"
-                data-original-title="Hapus Riwayat Pengajuan Cuti">
+                data-original-title="Hapus Riwayat Pengajuan Cuti" form="form_history">
                 <i class="btn-label fa fa-trash"></i>
                 Hapus Data Terpilih
             </button>
@@ -48,7 +51,7 @@
                             <td class="sorting text-center" tabindex="0">
                                 {{$data->currentpage() * 5 - 5 + $loop->iteration}}</td>
                             <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]"
-                                    value="{{$item->id}}"></td>
+                                value="{{$item->id}}" form="form_history"></td>
                             <td class="text-center">{{$item->user_nip}}</td>
                             <td class="text-center">{{$item->user_name}}</td>
                             <td class="text-center">{{$item->type_name}}</td>
@@ -63,16 +66,15 @@
                     </tbody>
                 </table>
             </div>
-        </form>
-        <div class="row" style="margin-top: -50px">
-            <div class="col-sm-5"></div>
-            <div class="col-sm-2">
-                <ul class="pagination">
-                    {{ $data->links() }}
-                </ul>
+            <div class="row" style="margin-top: -50px">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2">
+                    <ul class="pagination">
+                        {{ $data->links() }}
+                    </ul>
+                </div>
+                <div class="col-sm-5"></div>
             </div>
-            <div class="col-sm-5"></div>
-        </div>
         @endif
     </div>
 </div>

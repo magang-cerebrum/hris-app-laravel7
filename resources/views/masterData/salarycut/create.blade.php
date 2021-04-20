@@ -17,99 +17,101 @@
     <div class="panel-heading">
         <h3 class="panel-title">Form Tambah Potongan Gaji</h3>
     </div>
-    <form class="form-horizontal" action="{{url('/admin/salary-cut')}}" method="POST">
+    
+    <form class="form-horizontal" action="{{url('/admin/salary-cut')}}" method="POST" id="form_create">
         @csrf
-        <div class="panel-body">
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="type">Tipe Potongan:</label>
-                    <div class="col-sm-4">
-                        <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer"
-                            onchange="showIndividualCuts()">
-                            <option value="Semua" checked>Semua</option>
-                            <option value="Perorangan">Perorangan</option>
-                        </select>
-                    </div>
+    </form>
+
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label" for="type">Tipe Potongan:</label>
+                <div class="col-sm-4">
+                    <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer" form="form_create"
+                        onchange="showIndividualCuts()">
+                        <option value="Semua" checked>Semua</option>
+                        <option value="Perorangan">Perorangan</option>
+                    </select>
                 </div>
             </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label" for="information">Nama Potongan:</label>
+                <div class="col-sm-10">
+                    <select class="selectpicker @error('information') is-invalid @enderror" data-style="btn-pink" name="information" id="information" form="form_create">
+                        <option id="null" value=" "></option>
+                        @foreach ($data_type as $item)
+                        <option class="{{$item->type}}" value="{{$item->name}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                    <div id="info" class="text-danger">Tidak ada data tipe potongan tersedia. <a href="{{url('/admin/cuts-allowances/add')}}">Klik disini untuk menambahkan tipe potongan!</a></div>
+                    @error('information') <div class="text-danger invalid-feedback mt-3">
+                        Nama potongan tidak boleh kosong.
+                    </div> @enderror
+                </div>
+            </div>
+        </div>
+        <div class="global">
             <div class="form-group">
                 <div class="row">
-                    <label class="col-sm-2 control-label" for="information">Nama Potongan:</label>
-                    <div class="col-sm-10">
-                        <select class="selectpicker @error('information') is-invalid @enderror" data-style="btn-pink" name="information" id="information">
-                            <option id="null" value=" "></option>
-                            @foreach ($data_type as $item)
-                            <option class="{{$item->type}}" value="{{$item->name}}">{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        <div id="info" class="text-danger">Tidak ada data tipe potongan tersedia. <a href="{{url('/admin/cuts-allowances/add')}}">Klik disini untuk menambahkan tipe potongan!</a></div>
-                        @error('information') <div class="text-danger invalid-feedback mt-3">
-                            Nama potongan tidak boleh kosong.
+                    <label class="col-sm-2 control-label" for="nominal">Nominal :</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal"
+                            class="form-control @error('nominal') is-invalid @enderror" value="{{old('nominal')}}"
+                            onkeyup="format_rp()" form="form_create">
+                        @error('nominal') <div class="text-danger invalid-feedback mt-3">
+                            Nominal potongan tidak boleh kosong.
                         </div> @enderror
                     </div>
                 </div>
             </div>
-            <div class="global">
-                <div class="form-group">
-                    <div class="row">
-                        <label class="col-sm-2 control-label" for="nominal">Nominal :</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal"
-                                class="form-control @error('nominal') is-invalid @enderror" value="{{old('nominal')}}"
-                                onkeyup="format_rp()">
-                            @error('nominal') <div class="text-danger invalid-feedback mt-3">
-                                Nominal potongan tidak boleh kosong.
-                            </div> @enderror
-                        </div>
+        </div>
+        <div class="individual hidden disabled">
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="type">Staff :</label>
+                    <div class="col-sm-6">
+                        <select class="selectpicker" data-style="btn-primary" name="user_id" id="choose_staff"
+                            data-live-search="true" data-live-search-placeholder="Cari Staff" form="form_create">
+                            <option value=" "></option>
+                            @foreach ($staff as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('user_id')<div class="text-danger invalid-feedback mt-3">Staff tidak boleh kosong
+                            jika
+                            tipe potongan "Perorangan".</div> @enderror
                     </div>
                 </div>
             </div>
-            <div class="individual hidden disabled">
-                <div class="form-group">
-                    <div class="row">
-                        <label class="col-sm-2 control-label" for="type">Staff :</label>
-                        <div class="col-sm-6">
-                            <select class="selectpicker" data-style="btn-primary" name="user_id" id="choose_staff"
-                                data-live-search="true" data-live-search-placeholder="Cari Staff">
-                                <option value=" "></option>
-                                @foreach ($staff as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('user_id')<div class="text-danger invalid-feedback mt-3">Staff tidak boleh kosong
-                                jika
-                                tipe potongan "Perorangan".</div> @enderror
-                        </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="range">Jangka Potongan:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control @error('range_month') is-invalid @enderror" form="form_create"
+                            name="range_month" id="jangka" placeholder="Jangka Bayar (dalam satuan bulan)"
+                            value="{{old('range_month')}}" onkeyup="format_rp_s()">
+                        @error('range_month') <div class="text-danger invalid-feedback mt-3">Mohon isi Jangka Bayar.</div>
+                        @enderror
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <label class="col-sm-2 control-label" for="range">Jangka Potongan:</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control @error('range_month') is-invalid @enderror"
-                                name="range_month" id="jangka" placeholder="Jangka Bayar (dalam satuan bulan)"
-                                value="{{old('range_month')}}" onkeyup="format_rp_s()">
-                            @error('range_month') <div class="text-danger invalid-feedback mt-3">Mohon isi Jangka Bayar.</div>
-                            @enderror
-                        </div>
-                        <label class="col-sm-2 control-label" for="s_nominal">Nominal per Bulan:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="s_nominal" name="s_nominal"
-                                class="form-control @error('s_nominal') is-invalid @enderror" value="{{old('s_nominal')}}"
-                                onkeyup="format_rp_s()">
-                            @error('s_nominal') <div class="text-danger invalid-feedback mt-3">
-                                Nominal tunjangan tidak boleh kosong.
-                            </div> @enderror
-                        </div>
-                        <div class="text-success text-center" id="total_cut"></div>
+                    <label class="col-sm-2 control-label" for="s_nominal">Nominal per Bulan:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="s_nominal" name="s_nominal"
+                            class="form-control @error('s_nominal') is-invalid @enderror" value="{{old('s_nominal')}}"
+                            onkeyup="format_rp_s()" form="form_create">
+                        @error('s_nominal') <div class="text-danger invalid-feedback mt-3">
+                            Nominal tunjangan tidak boleh kosong.
+                        </div> @enderror
                     </div>
+                    <div class="text-success text-center" id="total_cut"></div>
                 </div>
             </div>
         </div>
-        <div class="panel-footer text-right">
-            <button class="btn btn-mint" type="submit" id="submit-button">Tambah</button>
-        </div>
-    </form>
+    </div>
+    <div class="panel-footer text-right">
+        <button class="btn btn-mint" type="submit" id="submit-button" form="form_create">Tambah</button>
+    </div>
 </div>
 @endsection
 @section('script')

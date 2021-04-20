@@ -1,4 +1,8 @@
 <!-- modal detail ticket-->
+<form class="form-horizontal" action="/staff/ticketing/input" method="POST" id="form_modal">
+    @csrf
+</form>
+
 <div class="modal fade" id="modal-detail-ticket" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -60,16 +64,14 @@
                 <h5 class="modal-title text-bold text-center">Input Ticket Baru</h5>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="/staff/ticketing/input" method="POST">
-                    @csrf
                     <div class="panel-body">
-                        <input type="hidden" name="user_id" value="{{$id}}">
-                        <input type="hidden" name="status" value="Diajukan">
+                        <input type="hidden" name="user_id" value="{{$id}}" form="form_modal">
+                        <input type="hidden" name="status" value="Diajukan" form="form_modal">
                         <div class="form-group">
                             <div class="row">
                                 <label class="col-sm-2 control-label">Kategori:</label>
                                 <div class="col-sm-4">
-                                    <select class="selectpicker" data-style="btn-mint" name="category">
+                                    <select class="selectpicker" data-style="btn-mint" name="category" form="form_modal">
                                         <option value="Keluhan">Keluhan</option>
                                         <option value="Masukan">Masukan</option>
                                         <option value="Bug Aplikasi">Bug Aplikasi</option>
@@ -83,7 +85,7 @@
                                 <label class="col-sm-2 control-label" for="textarea-edit-message">Pesan:</label>
                                 <div class="col-sm-10">
                                     <textarea id="textarea-edit-message" rows="2" class="form-control"
-                                        placeholder="Masukan keterangan tambahan anda disini" name="message"></textarea>
+                                        placeholder="Masukan keterangan tambahan anda disini" name="message" form="form_modal"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +93,7 @@
                             <div class="row">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-10">
-                                    <input type="checkbox" class="magic-checkbox" name="anon" id="anon">
+                                    <input type="checkbox" class="magic-checkbox" name="anon" id="anon" form="form_modal">
                                     <label for="anon" class="text-bold">Kirim secara anonim (opsional)</label>
                                     <div class="text-danger mar-ver" id="information"></div>
                                 </div>
@@ -100,10 +102,9 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Ticket">Kirim Ticket</button>
+                <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Ticket" form="form_modal">Kirim Ticket</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Tutup</button>
             </div>
-            </form>
         </div>
     </div>
 </div>

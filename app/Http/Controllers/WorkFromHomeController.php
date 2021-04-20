@@ -323,7 +323,7 @@ class WorkFromHomeController extends Controller
         $user = Auth::user();
 
         $data = WorkFromHome::leftJoin('master_users','work_from_homes.user_id','=','master_users.id')
-        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->where('master_users.division_id',$user->division_id)
         ->whereIn('work_from_homes.status',['Diajukan','Pending-Chief'])
         ->select(
             'work_from_homes.*',
@@ -343,7 +343,7 @@ class WorkFromHomeController extends Controller
     public function division_history(){
         $user = Auth::user();
         $data = DB::table('work_from_homes')
-        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->where('master_users.division_id',$user->division_id)
         ->leftJoin('master_users','work_from_homes.user_id','=','master_users.id')
         ->select(
             'work_from_homes.*',

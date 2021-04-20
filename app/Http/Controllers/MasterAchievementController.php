@@ -75,7 +75,7 @@ class MasterAchievementController extends Controller
         leftjoin('master_users',
         'master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')
-        ->where('division_id',division_members($user->position_id))
+        ->where('division_id',$user->division_id)
         ->get();
         $is_champ = MasterAchievement::where(['month'=>switch_month($splitter[0]),
         'year'=>$splitter[1]])->max('score');
@@ -161,7 +161,7 @@ class MasterAchievementController extends Controller
             // dd($user->division_id);
             $data = DB::table('master_users')
             ->where('status','=','Aktif')
-            ->whereIn('division_id',division_members($user->position_id))
+            ->where('division_id',$user->division_id)
             ->where('position_id','=',11)
             ->get();
             return view('masterData.achievement.Chiefscoring',[
@@ -347,7 +347,7 @@ class MasterAchievementController extends Controller
             $min[$i-1] = $min_month;
         }
         $staff = DB::table('master_users')->where('status','Aktif')
-        ->whereIn('division_id',division_members($user->position_id))
+        ->where('division_id',$user->division_id)
         ->whereNotIn('position_id',[1,2,3])
         ->select(['id','name'])->paginate(10);
         return view('masterdata.achievement.Chieflistchart',[
@@ -459,7 +459,7 @@ class MasterAchievementController extends Controller
         $check_user = DB::table('master_users')->select(['id','name'])
         ->whereRaw("name LIKE '%" . $request->get('query') . "%'")
         ->where('status','Aktif')
-        ->whereIn('division_id',division_members($user->position_id))
+        ->where('division_id',$user->division_id)
         ->get();
         foreach ($check_user as $item){
             $ids[] = $item->id;

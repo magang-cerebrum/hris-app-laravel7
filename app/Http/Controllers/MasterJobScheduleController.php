@@ -113,17 +113,16 @@ class MasterJobScheduleController extends Controller
 
     public function filter()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
-        }
+        // if(Gate::denies('is_admin')){
+        //     Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+        //     return back();
+        // }
         $user = Auth::user();
-        $division = division_members($user->position_id);
         $data = DB::table('master_users')
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->where('master_users.status','=','Aktif')
-        ->whereIn('master_users.division_id',$division)
+        ->where('master_users.division_id',$user->division_id)
         ->whereNotIn('master_users.division_id',[7])
         ->select(
             'master_users.id as user_id',
@@ -159,12 +158,11 @@ class MasterJobScheduleController extends Controller
 
     public function filter_edit()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
-        }
+        // if(Gate::denies('is_admin')){
+        //     Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+        //     return back();
+        // }
         $user = Auth::user();
-        $division = division_members($user->position_id);
 
         $current_month = date('m');
         $current_year = date('Y');
@@ -205,7 +203,7 @@ class MasterJobScheduleController extends Controller
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
         ->where('master_users.status','=','Aktif')
-        ->whereIn('master_users.division_id',$division)
+        ->where('master_users.division_id',$user->division_id)
         ->whereIn('master_job_schedules.month',$month)
         ->whereIn('master_job_schedules.year',$year)
         ->whereNotIn('master_users.division_id',[7])
@@ -618,7 +616,6 @@ class MasterJobScheduleController extends Controller
     public function result_calendar(Request $request)
     {
         $user = Auth::user();
-        $division = division_members($user->position_id);
         $split = explode('/', $request->periode);
         $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('month', '=',switch_month($split[0]))
@@ -630,7 +627,7 @@ class MasterJobScheduleController extends Controller
         $data_staff = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('month', '=',switch_month($split[0]))
         ->where('year', '=', $split[1])
-        ->whereIn('master_users.division_id',$division)
+        ->where('master_users.division_id',$user->division_id)
         ->select(
             'master_job_schedules.*',
             'master_users.name as user_name'
@@ -753,7 +750,7 @@ class MasterJobScheduleController extends Controller
                 }
             $dataUser = DB::table('master_users')
             ->whereNotIn('id',$id)
-            ->whereIn('master_users.division_id',division_members($user->position_id))
+            ->where('master_users.division_id',$user->division_id)
             ->where('id','!=',Auth::user()->id)
             ->where('master_users.status','Aktif')
             ->whereNotIn('division_id',[7])
@@ -852,7 +849,7 @@ class MasterJobScheduleController extends Controller
         $user = Auth::user();
         $data = DB::table('master_job_schedules')
         ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->where('master_users.division_id',$user->division_id)
         ->whereNotIn('master_users.division_id',[7])
         ->where('month', '=', switch_month(date('m')))
         ->orWhere('month','=',$acm)

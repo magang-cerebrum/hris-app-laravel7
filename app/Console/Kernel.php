@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\checkPresence',
+        'App\Console\Commands\deleteLogs'
     ];
 
     /**
@@ -30,7 +31,9 @@ class Kernel extends ConsoleKernel
         // $schedule->call(function () {
         //     DB::table('activity_log')->where('created_at','>',Carbon::now()->subDays(1))->delete();
         // })->dailyAt('17:19');
-        $schedule->command('activitylog:clean')->dailyAt('11:30');
+        // $schedule->command('activitylog:clean')->dailyAt('11:30');
+        $schedule->command('presence:check')->everyMinute();
+        $schedule->command('logs:delete')->everyMinute();
     }
 
     /**

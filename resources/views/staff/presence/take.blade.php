@@ -118,10 +118,17 @@
             var position_longitude_1 = 107.56162952882028;
             var position_latitude_2 = position.coords.latitude;
             var position_longitude_2 = position.coords.longitude;
-            var jarak = getDistanceFromLatLonInKm(position_latitude_1,position_longitude_1,position_latitude_2,position_longitude_2)
-            if (jarak <= 10000000 ) {
+            var jarak = getDistanceFromLatLonInKm(position_latitude_1,position_longitude_1,position_latitude_2,position_longitude_2);
+            var shift = {!!json_encode($shift) !!};
+            if (shift == 'WFH') {
                 take_snapshot()
-                $('#take_presence').submit();
+                    $('#take_presence').submit();
+            }
+            else {
+                if (jarak <= 10 ) {
+                    take_snapshot()
+                    $('#take_presence').submit();
+                }
             }
         }
         

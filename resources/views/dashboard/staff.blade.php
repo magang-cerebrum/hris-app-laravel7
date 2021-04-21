@@ -263,17 +263,8 @@
     </div>
 </div>
 @endif
-<div class="row mt-10">
+<div class="row mt-5">
     <div class="col-md-12">
-        @if (session('status'))
-        <div class="flash-mess alert-success alert alert-dismissable">
-            {{session('status')}}
-            <button class="close" data-dismiss="alert">
-                <i class="fa fa-close"></i>
-            </button>
-        </div>
-        @endif
-
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik "{{$name}}" Tahun

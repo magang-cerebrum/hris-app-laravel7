@@ -8,6 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\AcceptedPaidLeave' => $baseDir . '/app/AcceptedPaidLeave.php',
     'App\\AcceptedWorkFromHome' => $baseDir . '/app/AcceptedWorkFromHome.php',
+    'App\\Console\\Commands\\checkPresence' => $baseDir . '/app/Console/Commands/checkPresence.php',
+    'App\\Console\\Commands\\deleteLogs' => $baseDir . '/app/Console/Commands/deleteLogs.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminAuthDashboardController' => $baseDir . '/app/Http/Controllers/AdminAuthDashboardController.php',
@@ -49,6 +51,7 @@ return array(
     'App\\LogPresence' => $baseDir . '/app/LogPresence.php',
     'App\\MasterAchievement' => $baseDir . '/app/MasterAchievement.php',
     'App\\MasterAgenda' => $baseDir . '/app/MasterAgenda.php',
+    'App\\MasterCheckPresence' => $baseDir . '/app/MasterCheckPresence.php',
     'App\\MasterCutAllowanceType' => $baseDir . '/app/MasterCutAllowanceType.php',
     'App\\MasterDivision' => $baseDir . '/app/MasterDivision.php',
     'App\\MasterHoliday' => $baseDir . '/app/MasterHoliday.php',

@@ -57,14 +57,22 @@ class AuthController extends Controller
                 $device = $agent->platform();
                 $browser = $agent->browser();
                 activity()->log($user.' Telah Login (Admin) pada platform ' . $device);
-                return redirect()->intended('/admin/dashboard')->with('status', 'Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser);
+                Alert::toast('Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser, 'success')
+                ->width(500)
+                ->timerProgressBar()
+                ->background('#FFDB26');
+                return redirect()->intended('/admin/dashboard');
             }
-            elseif($stats == 2&& $employeeStats=="Aktif"){
+            elseif($stats == 2 && $employeeStats=="Aktif"){
                 Auth::logoutOtherDevices($request->password);
                 $device = $agent->platform();
                 $browser = $agent->browser();
                 activity()->log($user.' Telah Login (Staff) pada platform ' . $device);
-                return redirect('/staff/dashboard')->with('status', 'Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser);
+                Alert::toast('Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser, 'success')
+                ->width(500)
+                ->timerProgressBar()
+                ->background('#FFDB26');
+                return redirect('/staff/dashboard');
             }
             elseif($stats ==1 && $employeeStats=="Non-Aktif"){
                 return redirect('/logout');

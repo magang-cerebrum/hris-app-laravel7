@@ -42,7 +42,7 @@
         </div>
     @endif
     <div class="row mt-10">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-warning panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-info panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-mint panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
@@ -78,6 +78,19 @@
                 <div class="media-body">
                     <p class="text-2x mar-no text-semibold">{{count($data_ticket)}}</p>
                     <p class="mar-no">Ticket Belum Selesai</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+            <div class="panel panel-dark panel-colorful media middle pad-all">
+                <div class="media-left">
+                    <div class="pad-hor">
+                        <i class="pli-fingerprint icon-3x"></i>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <p class="text-2x mar-no text-semibold">{{count($data_absensi)}}</p>
+                    <p class="mar-no">Staff Belum Absensi</p>
                 </div>
             </div>
         </div>
@@ -182,4 +195,5 @@
             </div>
         </div>
     </div>
+    @include('dashboard/modalPresence')
 @endsection

@@ -47,7 +47,14 @@ class checkPresence extends Command
         ->get();
 
         foreach($data_schedule as $item){
-            DB::table('master_check_presences')->insert(['user_id'=>$item->user_id, 'shift'=>$item->$temp_name_shift]);
+            $work_time;
+            $check_shift = DB::table('master_shifts')->select(['name','start_working_time'])->get();
+            foreach($check_shift as $item_shift){
+                if($item->$temp_name_shift == $item_shift->name){
+                    $work_time = $item_shift->start_working_time;
+                }
+            }
+            DB::table('master_check_presences')->insert(['user_id'=>$item->user_id, 'shift'=>$item->$temp_name_shift, 'working_time'=>$work_time]);
         }
     }
 }

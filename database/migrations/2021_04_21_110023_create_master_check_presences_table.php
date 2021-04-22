@@ -19,6 +19,7 @@ class CreateMasterCheckPresencesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('shift')->nullable();
+            $table->timeTz('working_time');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('master_users')->onUpdate('cascade')->onDelete('set null');

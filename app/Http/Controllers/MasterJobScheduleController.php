@@ -118,24 +118,23 @@ class MasterJobScheduleController extends Controller
         //     return back();
         // }
         $user = Auth::user();
-        $data = DB::table('master_users')
-        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-        ->where('master_users.status','=','Aktif')
-        ->where('master_users.division_id',$user->division_id)
-        ->whereNotIn('master_users.division_id',[7])
-        ->select(
-            'master_users.id as user_id',
-            'master_users.nip as user_nip',
-            'master_users.name as user_name',
-            'master_users.division_id',
-            'master_users.position_id',
-            'master_divisions.name as division_name',
-            'master_positions.name as position_name'
-            )
-        ->get();
         $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
         if ($user->role_id == 1) {
+            $data = DB::table('master_users')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->where('master_users.status','=','Aktif')
+            ->whereNotIn('master_users.division_id',[7])
+            ->select(
+                'master_users.id as user_id',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name',
+                'master_users.division_id',
+                'master_users.position_id',
+                'master_divisions.name as division_name',
+                'master_positions.name as position_name'
+                )
+            ->get();
             return view('masterData.schedule.create', [
                 'data'=>$data,
                 'data_division'=>$data_division,
@@ -145,6 +144,22 @@ class MasterJobScheduleController extends Controller
                 'id'=>$user->id
             ]);
         } else {
+            $data = DB::table('master_users')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->where('master_users.status','=','Aktif')
+            ->where('master_users.division_id',$user->division_id)
+            ->whereNotIn('master_users.division_id',[7])
+            ->select(
+                'master_users.id as user_id',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name',
+                'master_users.division_id',
+                'master_users.position_id',
+                'master_divisions.name as division_name',
+                'master_positions.name as position_name'
+                )
+            ->get();
             return view('staff.schedule.create', [
                 'data'=>$data,
                 'data_division'=>$data_division,

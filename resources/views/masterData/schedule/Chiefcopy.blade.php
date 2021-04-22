@@ -311,7 +311,7 @@
                         },
                         dataType:'json',
                         success : function(response){
-                            console.log(response)
+                            // console.log(response)
                             for(datascheckbox in response.names){
                                 checkboxdata = response.names[datascheckbox].name
                                 var checkboxTextnodes = document.createTextNode(checkboxdata + ", ")

@@ -7,9 +7,14 @@
 <link href="{{asset("css/slider/slide.css")}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
-    #staff-charts {
+    #staff-charts-performance {
         width: 100%;
-        height: 400px;
+        height: 270px;
+    }
+
+    #staff-charts-achievement {
+        width: 100%;
+        height: 270px;
     }
 
     #charts {
@@ -267,7 +272,7 @@
     <div class="col-md-12">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Grafik "{{$name}}" Tahun
+                <h3 class="panel-title">Grafik Performa "{{$name}}" Tahun
                     <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
                     <i></i>
                     @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
@@ -287,25 +292,63 @@
                         @endforeach
                     </select>
                 </div>
-                <div id="staff-charts"></div>
+                <div id="staff-charts-performance"></div>
                 <br>
                 <div id="eom_message">
                     <p id="text_eom_0" class="text-danger"></p>
-                    @if ($sum_of_eom == 0)
+                    {{-- {{dd($act)}} --}}
+                    @if ($actualEomCount == 0)
                     <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
-                    <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
+                    <p id="total_score" class="text-info">Total Score : {{$all_score_performance}}</p>
                     @else
-                    <p id="total_score" class="text-info">Total Score : {{$all_score}}</p>
+                    <p id="total_score" class="text-info">Total Score : {{$all_score_performance}}</p>
                     <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah
-                        {{$sum_of_eom}} yaitu bulan
-                        @foreach ($month_of_eom as $item)
+                        {{$actualEomCount}} yaitu bulan
+                        @foreach ($actualEom as $item)
                         @if ($loop->last)
-                        {{$item}}
-                        @else {{$item}},&nbsp;
+                        {{$item->month}}
+                        @else {{$item->month}},&nbsp;
                         @endif
                         @endforeach
                     </p>
                     @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Charts Achievement --}}
+    <div class="col-md-6">
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Grafik Achievement "{{$name}}" Tahun
+                    <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
+                    <i></i>
+                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
+                        title="Anda mendapatkan Employee of the month pada tahun ini"></i>
+                    @endif
+                </h3>
+            </div>
+            <div class="panel-body" id="charts">
+                <div id="years">
+                    <select name="select" id="year-finder" class="selectpicker" data-style="btn-primary"
+                        onchange="showChange()">
+                        @foreach ($year_list as $item)
+                        @if ($item->year == $current_year)
+                        <option value="{{$item->year}}" selected>{{$item->year}}</option>
+                        @else <option value="{{$item->year}}">{{$item->year}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div id="staff-charts-achievement"></div>
+                <br>
+                <div id="eom_message">
+                    <p id="text_eom_0" class="text-danger"></p>
+                  
+                    <p id="total_score" class="text-info">Total Score : {{$all_score_achievements}}</p>
+                    
+               
                 </div>
             </div>
         </div>
@@ -320,7 +363,7 @@
         @if ($count_current_month_ach == 0)
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Top Scored Employee ({{$last_month_name}} {{$rankLM}})</h3>
+                <h3 class="panel-title">Top Scored Employee ({{$last_month_name}} {{$rankLMPerformance}})</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -374,7 +417,7 @@
                     <div class="col-sm-1 col-md-1"></div>
                 </div>
                 <div class="pos row" id="pot">
-                    @if ($rankLM == 1 || $rankLM == 2 || $rankLM ==3)
+                    @if ($rankLMPerformance == 1 || $rankLMPerformance == 2 || $rankLMPerformance ==3)
                     <p></p>
                     @else
                     @foreach ($user_lm as $item)
@@ -389,7 +432,7 @@
                                     </div>
                                     <div class="media-body pad-top">
                                         <span class="text-lg text-semibold">{{$item->name}}</span> <span
-                                            class="text-lg text-right">#{{$rankLM}}</span>
+                                            class="text-lg text-right">#{{$rankLMPerformance}}</span>
                                         <p class="text-sm">Score : {{$item->score}}/100</p>
                                     </div>
                                 </div>
@@ -420,7 +463,7 @@
                                         src="{{asset('img/profile-photos/'.$current_month[1]->profile_photo)}}">
                                     <p class="text-lg text-semibold mar-no text-main">{{$current_month[1]->name}}</p>
                                     <p class="text-sm">{{$current_month[1]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$current_month[1]->score}}</p>
+                                    <p class="text-sm">Score : {{$current_month[1]->performance_score}}</p>
                                 </div>
                             </div>
                         </div>
@@ -435,7 +478,7 @@
                                         src="{{asset('img/profile-photos/'.$current_month[0]->profile_photo)}}">
                                     <p class="text-lg text-semibold mar-no text-main">{{$current_month[0]->name}}</p>
                                     <p class="text-sm">{{$current_month[0]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$current_month[0]->score}}</p>
+                                    <p class="text-sm">Score : {{$current_month[0]->performance_score}}</p>
                                 </div>
                             </div>
                         </div>
@@ -459,7 +502,7 @@
                     <div class="col-sm-1 col-md-1"></div>
                 </div>
                 <div class="pos" id="pot">
-                    @if ($rankCM == 1 || $rankCM == 2 || $rankCM ==3)
+                    @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
                     <p></p>
                     @else
                     <div class="panel panel-success panel-colorful">
@@ -471,9 +514,9 @@
                                         alt="Profile Picture">
                                 </div>
                                 <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{Auth::user()->name}} #{{$rankCM}}</span>
-                                    @foreach ($user_cm as $item)
-                                    <p>Score : {{$item->score}}/100</p>
+                                    <span class="text-lg text-semibold">{{Auth::user()->name}} #{{$rankCMPerformance}}</span>
+                                    @foreach ($user_cmPerformance as $item)
+                                    <p>Score : {{$item->performance_score}}/100</p>
                                     @endforeach
                                 </div>
                             </div>
@@ -504,25 +547,42 @@
         });
     }
 
-    var data = {!!json_encode($score) !!}
-    var pageviews = [
-        [1, data[0] ? data[0] : 0],
-        [2, data[1] ? data[1] : 0],
-        [3, data[2] ? data[2] : 0],
-        [4, data[3] ? data[3] : 0],
-        [5, data[4] ? data[4] : 0],
-        [6, data[5] ? data[5] : 0],
-        [7, data[6] ? data[6] : 0],
-        [8, data[7] ? data[7] : 0],
-        [9, data[8] ? data[8] : 0],
-        [10, data[9] ? data[9] : 0],
-        [11, data[10] ? data[10] : 0],
-        [12, data[11] ? data[11] : 0]
+    var dataPerformance = {!!json_encode($scorePerformance) !!}
+    var pageviewsPerformance = [
+        [1, dataPerformance[0] ? dataPerformance[0] : 0],
+        [2, dataPerformance[1] ? dataPerformance[1] : 0],
+        [3, dataPerformance[2] ? dataPerformance[2] : 0],
+        [4, dataPerformance[3] ? dataPerformance[3] : 0],
+        [5, dataPerformance[4] ? dataPerformance[4] : 0],
+        [6, dataPerformance[5] ? dataPerformance[5] : 0],
+        [7, dataPerformance[6] ? dataPerformance[6] : 0],
+        [8, dataPerformance[7] ? dataPerformance[7] : 0],
+        [9, dataPerformance[8] ? dataPerformance[8] : 0],
+        [10, dataPerformance[9] ? dataPerformance[9] : 0],
+        [11, dataPerformance[10] ? dataPerformance[10] : 0],
+        [12, dataPerformance[11] ? dataPerformance[11] : 0]
+    ];
+
+
+    var dataAchievement = {!!json_encode($scoreAchievement) !!}
+    var pageviewsAchievement = [
+        [1, dataAchievement[0] ? dataAchievement[0] : 0],
+        [2, dataAchievement[1] ? dataAchievement[1] : 0],
+        [3, dataAchievement[2] ? dataAchievement[2] : 0],
+        [4, dataAchievement[3] ? dataAchievement[3] : 0],
+        [5, dataAchievement[4] ? dataAchievement[4] : 0],
+        [6, dataAchievement[5] ? dataAchievement[5] : 0],
+        [7, dataAchievement[6] ? dataAchievement[6] : 0],
+        [8, dataAchievement[7] ? dataAchievement[7] : 0],
+        [9, dataAchievement[8] ? dataAchievement[8] : 0],
+        [10, dataAchievement[9] ? dataAchievement[9] : 0],
+        [11, dataAchievement[10] ? dataAchievement[10] : 0],
+        [12, dataAchievement[11] ? dataAchievement[11] : 0]
     ];
     
     $(document).ready(function () {
-        $.plot('#staff-charts', [{
-                data: pageviews,
+        $.plot('#staff-charts-performance', [{
+                data: pageviewsPerformance,
                 lines: {
                     show: true,
                     lineWidth: 0,
@@ -572,18 +632,18 @@
             xaxis: {
 
                 ticks: [
-                    [1, ' Januari'],
-                    [2, 'Februari'],
-                    [3, 'Maret'],
-                    [4, 'April'],
+                    [1, 'Jan'],
+                    [2, 'Feb'],
+                    [3, 'Mar'],
+                    [4, 'Apr'],
                     [5, 'Mei'],
-                    [6, 'Juni'],
-                    [7, 'Juli'],
-                    [8, 'Agustus'],
-                    [9, 'September'],
-                    [10, 'Oktober'],
-                    [11, 'November'],
-                    [12, 'Desember']
+                    [6, 'Jun'],
+                    [7, 'Jul'],
+                    [8, 'Agu'],
+                    [9, 'Sep'],
+                    [10, 'Okt'],
+                    [11, 'Nov'],
+                    [12, 'Des']
                 ],
                 tickColor: 'transparent',
                 tickSize: 14,
@@ -593,7 +653,86 @@
                 content: 'Bulan: %x, Score: %y'
             }
         });
+
+
+        $.plot('#staff-charts-achievement', [{
+                data: pageviewsAchievement,
+                lines: {
+                    show: true,
+                    lineWidth: 0,
+                    fill: true,
+                    fillColor: {
+                        colors: ["#05032D", "#27257C", {
+                            opacity: 0.7
+                        }, {
+                            opacity: 2
+                        }]
+                    }
+                },
+                points: {
+                    show: true,
+                    radius: 2,
+                    fillColor: '#ffffffff'
+                    // symbol : "square"
+                },
+            },
+
+
+        ], {
+            series: {
+                lines: {
+                    show: false
+                },
+                points: {
+                    show: true,
+                    fillColor: '#f5bc00'
+                    // symbol:"square"
+                },
+                shadowSize: 0 // Drawing is faster without shadows
+            },
+            colors: ['#05032D'],
+
+            grid: {
+                borderWidth: 0,
+                hoverable: true,
+                clickable: true
+            },
+            yaxis: {
+                ticks: 9,
+                min: 0,
+                max: 100,
+                tickColor: 'rgba(0,0,0,.1)'
+            },
+            xaxis: {
+
+                ticks: [
+                    [1, 'Jan'],
+                    [2, 'Feb'],
+                    [3, 'Mar'],
+                    [4, 'Apr'],
+                    [5, 'Mei'],
+                    [6, 'Jun'],
+                    [7, 'Jul'],
+                    [8, 'Agu'],
+                    [9, 'Sep'],
+                    [10, 'Okt'],
+                    [11, 'Nov'],
+                    [12, 'Des']
+                ],
+                tickColor: 'transparent',
+                tickSize: 14,
+            },
+            tooltip: {
+                show: true,
+                content: 'Bulan: %x, Score: %y'
+            }
+        });
+
     });
+
+
+    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

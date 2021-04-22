@@ -26,6 +26,8 @@ use App\Http\Controllers\MasterRecruitmentController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\WorkFromHomeController;
 use App\Http\Controllers\OvertimeController;
+use App\Http\Controllers\PerformanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -334,9 +336,22 @@ Route::prefix('/admin/achievement')->middleware('auth')->group(function () {
     Route::post('/scoring',[MasterAchievementController::class,'scored']);
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
+    Route::get('/eom',[MasterAchievementController::class,'eom']);
+    Route::post('/eom/chosed',[MasterAchievementController::class,'chosedEom']);
 });
 
 //Route Achievement ==Chief==
+Route::prefix('/staff/performance')->group(function () {
+    Route::get('/', [PerformanceController::class,'indexChief']);
+    Route::get('/searchlist',[PerformanceController::class,'Chiefsearchlist']);
+    Route::get('/ajx/pickdate',[PerformanceController::class,'pickDateResult']);
+    Route::get('/scoring',[PerformanceController::class,'chiefScoring']);
+    Route::post('/scoring',[PerformanceController::class,'chiefScored']);
+    Route::post('/search',[PerformanceController::class,'ChiefSearch']);
+    Route::get('/charts', [PerformanceController::class,'chief_chart_index']);
+});
+
+//route achievement ==STAFF==
 Route::prefix('/staff/achievement')->middleware('auth')->group(function () {
     Route::get('/', [MasterAchievementController::class,'indexChief']);
     Route::get('/scoring',[MasterAchievementController::class,'chiefScoring']);
@@ -345,7 +360,6 @@ Route::prefix('/staff/achievement')->middleware('auth')->group(function () {
     Route::post('/search',[MasterAchievementController::class,'ChiefSearch']);
     Route::get('/Charts', [MasterAchievementController::class,'chief_chart_index']);
 });
-//route achievement ==STAFF==
 
 //route staff presence
 Route::prefix('/staff/presence')->middleware('auth')->group(function () {

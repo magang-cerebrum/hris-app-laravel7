@@ -41,7 +41,17 @@ class AdminAuthDashboardController extends Controller
             $data_poster = DB::table('sliders')->get();
             $data_rect = MasterRecruitment::paginate(5);
 
+            $data_absensi = DB::table('master_check_presences')
+            ->leftJoin('master_users','master_check_presences.user_id','=','master_users.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->select([
+                'master_check_presences.shift as shift',
+                'master_users.name as name',
+                'master_divisions.name as division'
+            ])->where('working_time','<',date('H:i:s'))->get();
+
             return view('dashboard.admin',[
+                'data_absensi'=>$data_absensi,
                 'data_poster'=>$data_poster,
                 'data_recruitment'=>$data_rect,
                 'data_paid_leave'=>$data_paid,

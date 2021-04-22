@@ -155,6 +155,8 @@ class PresenceController extends Controller
                 'shift_default_hour' => $hour_shift,
                 'file_in' => $image_name
             ]);
+
+            DB::table('master_check_presences')->where('user_id',$request->user_id)->delete();
         }
         else if ($request->bool_presence == 1) {
             $data_presence = DB::table('master_presences')

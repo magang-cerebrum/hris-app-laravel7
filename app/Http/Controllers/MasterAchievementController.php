@@ -320,8 +320,10 @@ class MasterAchievementController extends Controller
         ->where('master_users.status','Aktif')
         ->where('master_divisions.status','Aktif')
         ->where('position_id','!=',[3])
-        ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name')
+        // ->where('master_users.division_id','master_divisions.id')
+        ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
        ->get();
+    //    dd($data);
         // dd($data->where('division_name','=','Operation'));
         return view('masterData.achievement.eom',[
         'name'=>$user->name,

@@ -28,21 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                
-
-                
-
-                {{-- <tr>
-                    <td>
-                        {{$dataItems->staff_name}}
-                    </td>
-                    <td>
-                        {{$dataItems->division_name}}
-                    </td>
-                    <td>
-                        {{$dataItems->performance_score}}
-                    </td>
-                </tr> --}}
+   
                     @foreach ($divisions as $divisionsItems)
                     <tr>
                         <td><a href="#collapseRow{{$loop->iteration}}" data-toggle="collapse" data-id="">{{$divisionsItems->name}}</a></td>    
@@ -60,7 +46,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data->where('division_name','=',$divisionsItems->name) as $dataItem)
+                                    @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
                                     <tr>  
                                         {{-- {{dd($dataItem)}} --}}
                                         <td class="text-center">{{$dataItem->staff_name}}</td>

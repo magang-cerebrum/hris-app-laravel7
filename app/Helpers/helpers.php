@@ -198,9 +198,9 @@ function count_workday($date_start,$date_end){
     return $result;
 }
 
-function pushData($division_id){
-    $data = stdClass();
-    $data->division_id=$division_id;
-    $data->scoring =0;
-    return $data;
-}
+// function pushData($division_id){
+//     $data = new stdClass();
+//     $data->division_id=$division_id;
+//     $data->scoring =0;
+//     return $data;
+// }

@@ -325,7 +325,7 @@
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-trophy"></i>
-                                                <span class="menu-title">Pencapaian Divisi</span>
+                                                <span class="menu-title">Performa Divisi</span>
                                                 <i class="arrow"></i>
                                             </a>
                                             

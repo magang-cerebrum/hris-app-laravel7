@@ -100,6 +100,11 @@ class PresenceController extends Controller
                 $bool_presence = 2;
             }
         }
+        $shift = 'shift_'.date('j');
+        $bool_schedule = DB::table('master_job_schedules')
+        ->where('month', switch_month(date('m')))
+        ->where('year', date('Y'))
+        ->where('user_id', $user->id)->first();
 
         return view('staff.presence.take',[
             'name'=>$user->name,
@@ -107,7 +112,8 @@ class PresenceController extends Controller
             'email'=>$user->email,
             'id'=>$user->id,
             'division'=>$division->name,
-            'bool_presence'=>$bool_presence
+            'bool_presence'=>$bool_presence,
+            'shift'=>$bool_schedule->$shift
         ]);
     }
 
@@ -149,6 +155,8 @@ class PresenceController extends Controller
                 'shift_default_hour' => $hour_shift,
                 'file_in' => $image_name
             ]);
+
+            DB::table('master_check_presences')->where('user_id',$request->user_id)->delete();
         }
         else if ($request->bool_presence == 1) {
             $data_presence = DB::table('master_presences')

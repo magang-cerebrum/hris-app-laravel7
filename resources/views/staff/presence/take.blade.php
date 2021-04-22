@@ -107,21 +107,39 @@
         window.onload= ShowCam;
 
         function getLocation() {
-            if (navigator.geolocation) { 
+            console.log('get location');
+            if (navigator.geolocation) {
+                console.log('location success');
                 navigator.geolocation.getCurrentPosition(getPosition);
             } else {
                 alert("Oops! This browser does not support HTML Geolocation.");
             }
         }
-        function getPosition(position) { 
+        function getPosition(position) {
+            console.log('get position');
             var position_latitude_1 = -7.055286522681598;
             var position_longitude_1 = 107.56162952882028;
             var position_latitude_2 = position.coords.latitude;
             var position_longitude_2 = position.coords.longitude;
-            var jarak = getDistanceFromLatLonInKm(position_latitude_1,position_longitude_1,position_latitude_2,position_longitude_2)
-            if (jarak <= 10000000 ) {
+            var jarak = getDistanceFromLatLonInKm(position_latitude_1,position_longitude_1,position_latitude_2,position_longitude_2);
+            var shift = {!!json_encode($shift) !!};
+            if (shift == 'WFH') {
                 take_snapshot()
-                $('#take_presence').submit();
+                    $('#take_presence').submit();
+            }
+            else {
+                if (jarak <= 10 ) {
+                    take_snapshot()
+                    $('#take_presence').submit();
+                }
+                else {
+                    Swal.fire({
+                        width: 600,
+                        title: 'Error!',
+                        text: "Anda Berada Diluar Kantor, Jarak Anda Sejauh " + jarak + " m !",
+                        icon: 'error'
+                    }); 
+                }
             }
         }
         

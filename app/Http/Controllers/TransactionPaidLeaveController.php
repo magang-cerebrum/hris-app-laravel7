@@ -356,7 +356,7 @@ class TransactionPaidLeaveController extends Controller
 
         $data = TransactionPaidLeave::leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
-        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->where('master_users.division_id',$user->division_id)
         ->whereIn('transaction_paid_leaves.status',['Diajukan','Pending-Chief'])
         ->select(
             'transaction_paid_leaves.*',
@@ -377,7 +377,7 @@ class TransactionPaidLeaveController extends Controller
     public function division_history(){
         $user = Auth::user();
         $data = DB::table('transaction_paid_leaves')
-        ->whereIn('master_users.division_id',division_members($user->position_id))
+        ->where('master_users.division_id',$user->division_id)
         ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
         ->leftJoin('master_leave_types','transaction_paid_leaves.paid_leave_type_id','=','master_leave_types.id')
         ->select(

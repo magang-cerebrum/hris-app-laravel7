@@ -531,6 +531,8 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
     public static $classMap = array (
         'App\\AcceptedPaidLeave' => __DIR__ . '/../..' . '/app/AcceptedPaidLeave.php',
         'App\\AcceptedWorkFromHome' => __DIR__ . '/../..' . '/app/AcceptedWorkFromHome.php',
+        'App\\Console\\Commands\\checkPresence' => __DIR__ . '/../..' . '/app/Console/Commands/checkPresence.php',
+        'App\\Console\\Commands\\deleteLogs' => __DIR__ . '/../..' . '/app/Console/Commands/deleteLogs.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminAuthDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminAuthDashboardController.php',
@@ -573,6 +575,7 @@ class ComposerStaticInit4693190126b9cc81e55e3343768422cc
         'App\\LogPresence' => __DIR__ . '/../..' . '/app/LogPresence.php',
         'App\\MasterAchievement' => __DIR__ . '/../..' . '/app/MasterAchievement.php',
         'App\\MasterAgenda' => __DIR__ . '/../..' . '/app/MasterAgenda.php',
+        'App\\MasterCheckPresence' => __DIR__ . '/../..' . '/app/MasterCheckPresence.php',
         'App\\MasterCutAllowanceType' => __DIR__ . '/../..' . '/app/MasterCutAllowanceType.php',
         'App\\MasterDivision' => __DIR__ . '/../..' . '/app/MasterDivision.php',
         'App\\MasterHoliday' => __DIR__ . '/../..' . '/app/MasterHoliday.php',

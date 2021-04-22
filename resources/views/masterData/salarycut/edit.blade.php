@@ -17,86 +17,88 @@
     <div class="panel-heading">
         <h3 class="panel-title">Form Edit Potongan Gaji</h3>
     </div>
-    <div class="panel-body">
-        <form class="form-horizontal" action="{{url('/admin/salary-cut/'.$cut->id)}}" method="POST">
-            @csrf
-            @method('put')
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="information">Nama Potongan :</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Nama Potongan" name="information"
-                            class="form-control @error('information') is-invalid @enderror"
-                            value="{{$cut->information}}" readonly>
-                        @error('information') <div class="text-danger invalid-feedback mt-3">
-                            Nama potongan tidak boleh kosong.
-                        </div> @enderror
-                    </div>
-                </div>
-            </div>
-            @if ($cut->type == 'Semua')
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="nominal">Nominal :</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal"
-                            class="form-control @error('nominal') is-invalid @enderror" value="{{$cut->nominal}}"
-                            onkeyup="format_rp()">
-                        @error('nominal') <div class="text-danger invalid-feedback mt-3">
-                            Nominal potongan tidak boleh kosong.
-                        </div> @enderror
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label">Untuk periode:</label>
-                    <div id="datepicker-edit-range">
-                        <div class="col-sm-4">
-                            <div class="input-group date">
-                                <input type="text" class="form-control @error('month') is-invalid @enderror"
-                                    placeholder="bulan-tahun" name="periode"
-                                    value="{{switch_month($cut->month,false).'-'.$cut->year}}">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
-                            @error('month') <div class="text-danger invalid-feedback mt-3">Mohon isi periode.</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <label class="col-sm-2 control-label" for="s_nominal">Nominal per Bulan:</label>
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal"
-                            class="form-control @error('nominal') is-invalid @enderror" value="{{$cut->nominal}}"
-                            onkeyup="format_rp()">
-                        @error('nominal') <div class="text-danger invalid-feedback mt-3">
-                            Nominal potongan tidak boleh kosong.
-                        </div> @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="type">Staff :</label>
-                    <div class="col-sm-6 mar-lft">
-                        <select class="selectpicker" data-style="btn-primary" name="user_id" id="choose_staff" data-live-search="true" data-live-search-placeholder="Cari Staff">
-                            <option value=""></option>
-                            @foreach ($staff as $item)
-                            <option value="{{$item->id}}" {{$item->id == $cut->user_id ? 'selected' : ''}}>
-                                {{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        @error('user_id')<div class="text-danger invalid-feedback mt-3">Staff tidak boleh kosong jika
-                            tipe potongan "Perorangan".</div> @enderror
-                    </div>
-                </div>
-            </div>
-            @endif
-    </div>
-    <div class="panel-footer text-right">
-        <button class="btn btn-mint" type="submit">Update</button>
-    </div>
+    
+    <form class="form-horizontal" action="{{url('/admin/salary-cut/'.$cut->id)}}" method="POST" id="form_edit">
+        @csrf
+        @method('put')
     </form>
+
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label" for="information">Nama Potongan :</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Nama Potongan" name="information" form="form_edit"
+                        class="form-control @error('information') is-invalid @enderror"
+                        value="{{$cut->information}}" readonly>
+                    @error('information') <div class="text-danger invalid-feedback mt-3">
+                        Nama potongan tidak boleh kosong.
+                    </div> @enderror
+                </div>
+            </div>
+        </div>
+        @if ($cut->type == 'Semua')
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label" for="nominal">Nominal :</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal" form="form_edit"
+                        class="form-control @error('nominal') is-invalid @enderror" value="{{$cut->nominal}}"
+                        onkeyup="format_rp()">
+                    @error('nominal') <div class="text-danger invalid-feedback mt-3">
+                        Nominal potongan tidak boleh kosong.
+                    </div> @enderror
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label">Untuk periode:</label>
+                <div id="datepicker-edit-range">
+                    <div class="col-sm-4">
+                        <div class="input-group date">
+                            <input type="text" class="form-control @error('month') is-invalid @enderror"
+                                placeholder="bulan-tahun" name="periode" form="form_edit"
+                                value="{{switch_month($cut->month,false).'-'.$cut->year}}">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        @error('month') <div class="text-danger invalid-feedback mt-3">Mohon isi periode.</div>
+                        @enderror
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label" for="s_nominal">Nominal per Bulan:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Jumlah Nominal dalam Rupiah" id="nominal" name="nominal"
+                        class="form-control @error('nominal') is-invalid @enderror" value="{{$cut->nominal}}"
+                        onkeyup="format_rp()" form="form_edit">
+                    @error('nominal') <div class="text-danger invalid-feedback mt-3">
+                        Nominal potongan tidak boleh kosong.
+                    </div> @enderror
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 control-label" for="type">Staff :</label>
+                <div class="col-sm-6 mar-lft">
+                    <select class="selectpicker" data-style="btn-primary" name="user_id" id="choose_staff" data-live-search="true" data-live-search-placeholder="Cari Staff" form="form_edit">
+                        <option value=""></option>
+                        @foreach ($staff as $item)
+                        <option value="{{$item->id}}" {{$item->id == $cut->user_id ? 'selected' : ''}}>
+                            {{$item->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('user_id')<div class="text-danger invalid-feedback mt-3">Staff tidak boleh kosong jika
+                        tipe potongan "Perorangan".</div> @enderror
+                </div>
+            </div>
+        </div>
+        @endif
+</div>
+<div class="panel-footer text-right">
+    <button class="btn btn-mint" type="submit" form="form_edit">Update</button>
+</div>
 </div>
 @endsection
 @section('script')

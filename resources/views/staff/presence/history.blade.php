@@ -31,27 +31,29 @@
     <div class="panel-heading">
         <h3 class="panel-title">Status Absensi</h3>
     </div>
+    
+    <form action="/staff/presence/search" method="post" id="cari-presensi">
+        @csrf
+    </form>
+    
     <div class="panel-body">
-        <form action="/staff/presence/search" method="post" id="cari-presensi">
-            @csrf
             <label class="col-sm-1 control-label">Tanggal:</label>
             <div id="datepicker-input-cari">
                 <div class="col-sm-11">
                     <div class="input-group input-daterange">
                         <input type="text" class="form-control @error('start') is-invalid @enderror"
-                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off">
+                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off" form="cari-presensi">
                         <span class="input-group-addon">sampai</span>
                         <input type="text" class="form-control @error('end') is-invalid @enderror"
-                            placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}" autocomplete="off">
+                            placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}" autocomplete="off" form="cari-presensi">
                     </div>
                 </div>
             </div>
     </div>
     <div class="panel-footer text-right">
         <button type="button" class="btn btn-warning float-right" id="input-presence" onClick="presensi()">Absensi</button>
-        <button type="submit" class="btn btn-pink float-right">Cari Presensi</button>
+        <button type="submit" class="btn btn-pink float-right" form="cari-presensi">Cari Presensi</button>
     </div>
-    </form>
 </div>
 
 <div id="panel-output"></div>

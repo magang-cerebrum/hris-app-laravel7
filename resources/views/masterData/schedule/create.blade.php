@@ -13,12 +13,12 @@
         <h3 class="panel-title">Pilih Staff Untuk Jadwal Kerja</h3>
     </div>
     <div class="panel-body">
-            <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" style="display: inline" id="form-check-user-month" class="form-horizontal">
+            <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" id="form-check-user-month" class="form-horizontal">
                 @csrf
                 <div class="row">
                     <div class="col-sm-8">
                         <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                            data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()">
+                            data-container="body" data-placement="top" data-original-title="Buat Jadwal Kerja" onclick="submit_add()" form="form-check-user-month">
                             <i class="btn-labeled fa fa-plus"></i>
                             Buat Jadwal Kerja
                         </button>
@@ -29,7 +29,7 @@
                 <div class="row mar-btm">
                     <label class="col-sm-1 control-label" for="filter">Divisi : </label>
                     <div class="col-sm-3">
-                        <select class="selectpicker" data-style="btn-info" id="filter" onchange="filter_division()">
+                        <select class="selectpicker" data-style="btn-info" id="filter" onchange="filter_division()" form="form-check-user-month">
                             <option value=" "></option>
                             @foreach ($data_division as $division)
                             <option value="{{$division->name}}">{{$division->name}}</option>
@@ -44,7 +44,7 @@
                                     <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
                                 </span>
                                 <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
-                                    autocomplete="off" id="periode" readonly>
+                                    autocomplete="off" id="periode" form="form-check-user-month" readonly>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr class="sorting text-center" tabindex="0">
-                                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->user_id}}"></td>
+                                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->user_id}}" form="form-check-user-month"></td>
                                 <td class="text-center">{{$item->user_nip}}</td>
                                 <td class="text-center">{{$item->user_name}}</td>
                                 <td class="text-center">{{$item->division_name}}</td>

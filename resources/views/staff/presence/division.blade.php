@@ -15,16 +15,18 @@
         <div class="panel-heading">
             <h3 class="panel-title">Daftar Presensi Divisi</h3>
         </div>
+        
+        <form action="/staff/presence/division" method="POST" id="accept_presence">
+            @csrf
+        </form>
+
         <div class="panel-body">
-            <form action="/staff/presence/division" method="POST" id="accept_presence" style="margin-bottom: 10px">
-                @csrf
-                <button id="btn-presence" class="btn btn-success btn-labeled add-tooltip" type="button"
-                    data-toggle="tooltip" data-container="body" data-placement="top"
-                    data-original-title="Terima Presensi Terpilih" onclick="check_data()">
-                    <i class="btn-label fa fa-check"></i>
-                    Terima Presensi Terpilih
-                </button>
-            </form>
+            <button id="btn-presence" class="btn btn-success btn-labeled add-tooltip" type="button"
+                data-toggle="tooltip" data-container="body" data-placement="top"
+                data-original-title="Terima Presensi Terpilih" onclick="check_data()" form="accept_presence" style="margin-bottom: 10px">
+                <i class="btn-label fa fa-check"></i>
+                Terima Presensi Terpilih
+            </button>
             <div class="table-responsive">
                 <table class="table table-striped table-responsive table-bordered no-footer dtr-inline collapsed" role="grid"
                 aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">

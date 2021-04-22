@@ -22,19 +22,24 @@
     <div class="panel-heading">
         <h3 class="panel-title">Data Staff</h3>
     </div>
+
+    <form action="{{url('/admin/data-staff/search')}}" method="get" id="search"></form>
+    <form action="/admin/data-staff" method="POST" id="form-mul-delete">
+        @csrf
+        @method('delete')
+    </form>
+
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row mar-btm" style="margin-top:-60px">
                     <div class="col-sm-4">
-                        <form action="{{url('/admin/data-staff/search')}}" method="get" style="position: relative;right:-710px;bottom:-48px">
-                            <div class="input-group">
-                                <input type="text" name="query" placeholder="Cari Staff (NIP, Nama, Divisi)" class="form-control" autocomplete="off">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>
-                        </form>
+                        <div class="input-group" style="position: relative;right:-710px;bottom:-48px">
+                            <input type="text" name="query" placeholder="Cari Staff (NIP, Nama, Divisi)" class="form-control" autocomplete="off" form="search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-mint" type="submit" form="search"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row mar-btm">
@@ -43,27 +48,22 @@
                             <i class="btn-label fa fa-user-plus"></i>
                             Tambah Data Staff
                         </a>
-                        <form action="/admin/data-staff" method="POST" id="form-mul-delete" style="display:inline;">
-                            @csrf
-                            @method('delete')
-                            <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
-                                data-toggle="tooltip" data-container="body" data-placement="top"
-                                data-original-title="Hapus Data" onclick="submit_delete()">
-                                <i class="btn-label fa fa-trash"></i>
-                                Hapus Data Terpilih
-                            </button>
-                            @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
-                                Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
-                    
+                        <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
+                            data-toggle="tooltip" data-container="body" data-placement="top"
+                            data-original-title="Hapus Data" onclick="submit_delete()" form="form-mul-delete">
+                            <i class="btn-label fa fa-trash"></i>
+                            Hapus Data Terpilih
+                        </button>
+                        @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
+                            Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
                         <div class="radio mar-hor" style="display: inline">
                             <label for="">Staff Non-aktif: </label>
                             <input id="toogle-nonaktif-radio-1" class="magic-radio" type="radio" name="lihat_selesai"
-                                value="On" onclick="toogle_nonaktif()">
+                                value="On" onclick="toogle_nonaktif()" form="form-mul-delete">
                             <label for="toogle-nonaktif-radio-1">On</label>
                             <input id="toogle-nonaktif-radio-2" class="magic-radio" type="radio" name="lihat_selesai"
-                                value="Off" checked onclick="toogle_nonaktif()">
+                                value="Off" checked onclick="toogle_nonaktif()" form="form-mul-delete">
                             <label for="toogle-nonaktif-radio-2">Off</label>
-                        
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                                 <td tabindex="0" class="sorting_1 text-center">{{($aktif->currentPage() * 10) - 10 + $loop->iteration}}</td>
                                 <td class="text-center">
                                     <input type="checkbox" class="check-item-active @error('selectid_active') is-invalid @enderror"
-                                        name="selectid_active[]" value="{{$row->id}}">
+                                        name="selectid_active[]" value="{{$row->id}}" form="form-mul-delete">
                                 </td>
                                 <td class="text-center">
                                     <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
@@ -187,7 +187,7 @@
                                 <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">
                                     <input type="checkbox" class="check-item @error('selectid') is-invalid @enderror"
-                                        name="selectid[]" value="{{$row->id}}">
+                                        name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
                                 </td>
                                 <td class="text-center">
                                     <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
@@ -246,7 +246,6 @@
                     </table>
                     <span class="text-muted" id="count-all">Jumlah Staff Tidak Aktif : {{$count_naktif}}</span>
                     <div id="nactive-pagination" class="text-center">{{ $naktif->links() }}</div>
-                </form>
                 </div>
             </div>
         </div>

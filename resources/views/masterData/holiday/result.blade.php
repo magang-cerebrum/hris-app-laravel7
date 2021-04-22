@@ -13,25 +13,30 @@
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Hari Libur</h3>
     </div>
+    
+    <form action="{{url('/admin/holiday/search')}}" method="get" id="search"></form>
+    <form action="/admin/holiday" method="POST" id="form-mul-delete">
+        @csrf
+        @method('delete')
+    </form>
+
     <div class="panel-body">
         <div class="row mar-btm" style="margin-top:-60px">
             <div class="col-sm-4">
-                <form action="{{url('/admin/holiday/search')}}" method="get"
-                    style="position: relative;right:-710px;bottom:-48px">
-                    <div id="pickadate">
-                        <div class="input-group date">
-                            <span class="input-group-btn">
-                                <button class="btn btn-mint" type="button" style="z-index: 2"><i
-                                        class="fa fa-calendar"></i></button>
-                            </span>
-                            <input type="text" name="query" placeholder="Cari Hari Libur (bulan / nama libur)"
-                                class="form-control" autocomplete="off">
-                            <span class="input-group-btn">
-                                <button class="btn btn-mint" type="submit"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
+                <div id="pickadate" style="position: relative;right:-710px;bottom:-48px">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="button" style="z-index: 2">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                        <input type="text" name="query" placeholder="Cari Hari Libur (bulan / nama libur)"
+                            class="form-control" autocomplete="off" form="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="submit" form="search"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -40,15 +45,12 @@
                     <i class="btn-label fa fa-plus"></i>
                     Tambah Hari Libur
                 </a>
-                <form action="/admin/holiday" method="POST" id="form-mul-delete" style="display:inline">
-                    @csrf
-                    @method('delete')
-                    <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
-                        data-toggle="tooltip" data-container="body" data-placement="top"
-                        data-original-title="Hapus Hari Libur Terpilih" onclick="submit_delete()">
-                        <i class="btn-label fa fa-trash"></i>
-                        Hapus Data Terpilih
-                    </button>
+                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
+                    data-toggle="tooltip" data-container="body" data-placement="top"
+                    data-original-title="Hapus Hari Libur Terpilih" onclick="submit_delete()" form="form-mul-delete">
+                    <i class="btn-label fa fa-trash"></i>
+                    Hapus Data Terpilih
+                </button>
             </div>
         </div>
         <div class="table-responsive">
@@ -70,7 +72,7 @@
                             {{($data->currentPage() * 10) - 10 + $loop->iteration}}</td>
                         <td class="text-center">
                             <input type="checkbox" class="check-item @error('selectid') is-invalid @enderror"
-                                name="selectid[]" value="{{$item->id}}">
+                                name="selectid[]" value="{{$item->id}}" form="form-mul-delete">
                         </td>
                         <td class="text-center">
                             <a href="/admin/holiday/{{$item->id}}/edit"
@@ -86,7 +88,6 @@
                     @endforeach
                 </tbody>
             </table>
-            </form>
             <div class="text-center">{{ $data->withQueryString()->links() }}</div>
         </div>
         <div class="row">

@@ -40,6 +40,7 @@ class AdminAuthDashboardController extends Controller
                 ->get();
             $data_poster = DB::table('sliders')->get();
             $data_rect = MasterRecruitment::paginate(5);
+
             return view('dashboard.admin',[
                 'data_poster'=>$data_poster,
                 'data_recruitment'=>$data_rect,

@@ -13,25 +13,25 @@
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Gaji</h3>
     </div>
+
+    <form action="{{url('/admin/salary')}}" method="POST" id="search-salary">@csrf</form>
+
     <div class="panel-body">
         <div class="row mar-btm" >
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <form action="{{url('/admin/salary')}}" method="POST" id="search-salary">
-                    @csrf
-                    <div id="pickadate">
-                        <div class="input-group date">
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
-                            </span>
-                            <input type="text" name="periode" placeholder="Cari Data Gaji" id="periode"
-                                class="form-control" autocomplete="off" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                        </span>
+                        <input type="text" name="periode" placeholder="Cari Data Gaji" id="periode"
+                            class="form-control" autocomplete="off" form="search-salary" readonly>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" id="btn-search" type="submit" form="search-salary"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="col-sm-4"></div>
         </div>

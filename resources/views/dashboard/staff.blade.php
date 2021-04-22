@@ -269,16 +269,7 @@
 </div>
 @endif
 <div class="row mt-5">
-        @if (session('status'))
-        <div class="flash-mess alert-success alert alert-dismissable">
-            {{session('status')}}
-            <button class="close" data-dismiss="alert">
-                <i class="fa fa-close"></i>
-            </button>
-        </div>
-        @endif
-        {{-- Charts Performance --}}
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}" Tahun

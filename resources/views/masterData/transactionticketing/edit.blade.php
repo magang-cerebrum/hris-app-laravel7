@@ -29,7 +29,7 @@
                 <label class="col-sm-1 control-label">Nama Pengirim:</label>
                 <div class="col-sm-4">
                     <input type="text" placeholder="Nama Shift" name="name" form="form_edit"
-                    class="form-control" value="{{$sender[0]->name}}" disabled>
+                    class="form-control" value="{{$sender[0]->name == null ? 'Anonim' : $sender[0]->name}}" disabled>
                 </div>
                 <div class="col-sm-1"></div>
             </div>

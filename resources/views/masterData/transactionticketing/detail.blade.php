@@ -88,6 +88,10 @@
             startView: 'months',
             orientation: 'bottom',
             forceParse: false,
+            endDate: '0',
+        });
+        $('#btn-search').on('click',function () {
+            $('.datepicker').hide();
         });
         
         $(document).on('click', '#detail_ticket', function () {

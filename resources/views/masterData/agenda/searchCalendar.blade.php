@@ -18,8 +18,8 @@
         @csrf
     </form>
 
-    <div class="panel-body">
-        <div class="row mar-btm" >
+    <div class="panel-body" style="padding-top: 20px">
+        <div class="row mar-btm">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <div id="pickadate">
@@ -35,7 +35,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4"></div>
         </div>
     </div>
 </div>

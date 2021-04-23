@@ -335,7 +335,26 @@
         );
     }
 
-    // function salary_increase(id,name,employee_status)
+    function salary_increase(id,name){
+        var url = "/admin/data-staff/promote/:id".replace(':id', id);
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Menaikan Gaji Staff',
+            text: 'Anda yakin ingin menaikan gaji staff "'+ name + '" ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                window.location.href = url;
+            } else {
+                return false;
+            }} 
+        );
+    }
 
 </script>
 @endsection

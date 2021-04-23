@@ -57,7 +57,7 @@ class InsertDataDummyToMasterUsers extends Migration
                 'start_work_date' => '2021/01/01',
                 'yearly_leave_remaining' => 12,
                 'division_id' => 1,
-                'position_id' => 4,
+                'position_id' => 11,
                 'role_id' => 2
             ],
             [
@@ -77,7 +77,7 @@ class InsertDataDummyToMasterUsers extends Migration
                 'start_work_date' => '2021/01/01',
                 'yearly_leave_remaining' => 12,
                 'division_id' => 1,
-                'position_id' => 4,
+                'position_id' => 11,
                 'role_id' => 2
             ],
             [

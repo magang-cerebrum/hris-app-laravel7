@@ -135,7 +135,7 @@
                                     @if ($row->employee_status == 'Tetap')
                                     <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
                                         data-container="body" data-placement="top" data-original-title="Naikan Gaji Staff"
-                                        type="button" onclick="salary_increase({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
+                                        type="button" onclick="salary_increase({{$row->id}},'{{$row->name}}')">
                                         <i class="pli-money-2"></i>
                                     </button>
                                     @else

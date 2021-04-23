@@ -207,15 +207,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
-            <div class="col-sm-4">
-                <input type="number" placeholder="Sisa cuti diisi hanya dengan jumlah hari"
-                    name="yearly_leave_remaining" form="form_create"
-                    class="form-control @error('yearly_leave_remaining') is-invalid @enderror"
-                    value="{{old('yearly_leave_remaining')}}">
-                @error('yearly_leave_remaining') <div class="text-danger invalid-feedback mt-3">
-                    Mohon isi sisa cuti hanya dengan angka.
-                </div> @enderror
+            <div class="row">
+                <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
+                <div class="col-sm-4">
+                    <input type="number" placeholder="Sisa cuti diisi hanya dengan jumlah hari"
+                        name="yearly_leave_remaining" form="form_create"
+                        class="form-control @error('yearly_leave_remaining') is-invalid @enderror"
+                        value="{{old('yearly_leave_remaining')}}">
+                    @error('yearly_leave_remaining') <div class="text-danger invalid-feedback mt-3">
+                        Mohon isi sisa cuti hanya dengan angka.
+                    </div> @enderror
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -242,20 +244,22 @@
                     class="form-control @error('credit_card_number') is-invalid @enderror"
                     value="{{old('credit_card_number')}}">
                     @error('credit_card_number') <div class="text-danger invalid-feedback mt-3">
-                        Mohon isi sisa cuti hanya dengan angka.
+                        Mohon isi nomor rekening hanya dengan angka.
                     </div> @enderror
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="salary">Gaji Pokok:</label>
-            <div class="col-sm-4">
-                <input type="text" placeholder="Gaji Pokok" name="salary" id="salary" form="form_create"
-                    class="form-control @error('salary') is-invalid @enderror"
-                    value="{{old('salary')}}" onkeyup="format_rp()">
-                @error('salary') <div class="text-danger invalid-feedback mt-3">
-                    Mohon isi gaji pokok.
-                </div> @enderror
+            <div class="row">
+                <label class="col-sm-2 control-label" for="salary">Gaji Pokok:</label>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Gaji Pokok" name="salary" id="salary" form="form_create"
+                        class="form-control @error('salary') is-invalid @enderror"
+                        value="{{old('salary')}}" onkeyup="format_rp()">
+                    @error('salary') <div class="text-danger invalid-feedback mt-3">
+                        Mohon isi gaji pokok.
+                    </div> @enderror
+                </div>
             </div>
         </div>
     </div>

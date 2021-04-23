@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\MasterPerformance;
+use App\MasterUser;
 
 class MasterAchievementController extends Controller
 {
@@ -33,16 +35,7 @@ class MasterAchievementController extends Controller
         
     }
 
-    public function indexChief(){
-        $user = Auth::user();
-        return view('masterData.achievement.chiefLeaderboard',[
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id,
- 
-            ]);
-    }
+   
 
     public function search(Request $request){
         if(Gate::denies('is_admin')){
@@ -67,6 +60,7 @@ class MasterAchievementController extends Controller
         
     }
 
+    
     public function ChiefSearch(Request $request){
        $user = Auth::user();
         $splitter = explode('/',$request->get('query'));
@@ -100,7 +94,7 @@ class MasterAchievementController extends Controller
             $data = DB::table('master_users')
             ->where('status','=','Aktif')
             ->where('division_id','!=',7)
-            ->where('position_id','!=',[11,3])
+            ->where('position_id','!=',[3])
             ->get();
             
             
@@ -156,6 +150,7 @@ class MasterAchievementController extends Controller
         
     }
 
+   
     public function chiefScoring(){
             $user = Auth::user();
             // dd($user->division_id);
@@ -287,6 +282,7 @@ class MasterAchievementController extends Controller
         ]);
     }
 
+   
     public function chief_chart_index(){
         $score = array();
         $average = array();
@@ -453,90 +449,59 @@ class MasterAchievementController extends Controller
         ]);
     }
 
-    public function Chiefsearchlist (Request $request){
-        if ($request->get('query') == null) {return redirect('/staff/achievement/charts');}
-        $user = Auth::user();
-        $check_user = DB::table('master_users')->select(['id','name'])
-        ->whereRaw("name LIKE '%" . $request->get('query') . "%'")
-        ->where('status','Aktif')
-        ->where('division_id',$user->division_id)
-        ->get();
-        foreach ($check_user as $item){
-            $ids[] = $item->id;
-        }
-
-        $score = array();
-        $average = array();
-        $max = array();
-        $min = array();
-
-        for ($i=1; $i <= 12; $i++) {
-            $sum_month = 0;
-            $avg_month = 0;
-            $max_month = 0;
-            $min_month = 100;
-            $data_month = MasterAchievement::
-            where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
-            ->where('year','=',date('Y'))
-            ->get();
-            if (count($data_month) == 0) {
-                $sum_month = 0;
-                $avg_month = 0;
-                $max_month = 0;
-                $min_month = 0;
-            } else {
-                //find average
-                for ($j=0; $j < count($data_month); $j++) { 
-                    $sum_month += $data_month[$j]->score;
-                }
-                $avg_month = $sum_month / count($data_month);
-                //find max
-                for ($j=0; $j < count($data_month); $j++) { 
-                    $temp_score = $data_month[$j]->score;
-                    if ($temp_score > $max_month) {
-                        $max_month = $temp_score;
-                    }
-                }
-                //find min
-                for ($j=0; $j < count($data_month); $j++) { 
-                    $temp_score = $data_month[$j]->score;
-                    if ($temp_score < $min_month) {
-                        $min_month = $temp_score;
-                    }
-                }
-                //insert score matches month
-                for ($j=0; $j < count($data_month); $j++) {
-                    for ($k=0; $k < count($ids); $k++) { 
-                        $data_user = MasterAchievement::
-                        where('month','=',switch_month($i / 10 < 1 ? '0'. $i : $i))
-                        ->where('year','=',date('Y'))
-                        ->where('achievement_user_id','=',$ids[$k])
-                        ->get();
-                        foreach ($data_user as $item) {
-                            $score[$i-1][$item->achievement_user_id] = $item->score;
-                        }
-                    } 
-                }
-            }
-            $average[$i-1] = $avg_month;
-            $max[$i-1] = $max_month;
-            $min[$i-1] = $min_month;
-        }
-        
-        $staff = DB::table('master_users')->where('status','Aktif')
-        ->whereIn('id',$ids)
-        ->whereNotIn('position_id',[1,2,3])
-        ->select(['id','name'])->paginate(10);
-        return view('masterdata.achievement.ChiefResultList',[
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id,
-            'staff' => $staff,
-            'score' => $score,
-            'average' => $average,
-            'max' => $max,
-            'min' => $min
-        ]);
+   public function eom(){
+    if(Gate::denies('is_admin')){
+        return abort(403,'Access Denied, Only Admin Can Access');
     }
+        $dataDate = date('m/Y');
+        $user = Auth::user();
+        $divisions = DB::table('master_divisions')
+        ->whereNotIn('id',[7])
+        ->get();
+        $data = DB::table('master_users')
+        ->whereNotIn('master_users.division_id',[7])
+        ->leftjoin('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_performances','master_users.id','=','master_performances.user_id')
+        ->where('master_users.status','Aktif')
+        ->where('master_divisions.status','Aktif')
+        ->where('position_id','!=',[3])
+        // ->where('master_users.division_id','master_divisions.id')
+        ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
+       ->get();
+    //    dd($data);
+        // dd($data->where('division_name','=','Operation'));
+        return view('masterData.achievement.eom',[
+        'name'=>$user->name,
+        'profile_photo'=>$user->profile_photo,
+        'email'=>$user->email,
+        'id'=>$user->id,
+        'data'=>$data,
+        'divisions'=>$divisions
+        // 'allData'=>$arrayDataDivision
+    ]);
+
+   }
+   public function chosedEom(Request $request){
+    //    dd($request);
+       $user_id = $request->radio_input_eom;
+       $explodedDate = explode('/',$request->date);
+       $month = switch_month($explodedDate[0]);
+       $year = $explodedDate[1];
+       $check = DB::table('master_eoms')
+       ->where('user_id',$user_id)
+       ->where('month',$month)
+       ->where('year',$year)->get();
+       if(count($check)>0){
+        foreach($check as $items){
+            DB::table('master_eoms')->where('id',$items->id)->update(['user_id'=>$user_id]);
+        }
+       }
+       DB::table('master_eoms')->insert([
+           'user_id'=>$user_id,
+            'month'=>$month,
+            'year'=>$year
+       ]);
+       return redirect('/admin/achievement/eom');
+   }
 }

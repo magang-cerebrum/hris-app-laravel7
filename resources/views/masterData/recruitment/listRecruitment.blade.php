@@ -5,7 +5,15 @@
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<style>
+    @media screen and (max-width: 600px) {
+        #btn_search{
+            margin-bottom: 10px;
+        }
+    }
+</style>
 @endsection
+
 @section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
@@ -18,16 +26,24 @@
         @csrf
     </form>
 
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         @if (count($data) == 0)
         <div class="text-center">
             <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
             <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
         </div>
         @else
-        <div class="row mar-btm" style="margin-top:-60px">
+        <div class="row" id="btn_search">
+            <div class="col-sm-8">
+                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" style="margin-bottom: 10px"
+                    type="submit" data-toggle="tooltip" data-container="body" data-placement="top"
+                    data-original-title="Hapus Data Pelamar" onclick="submit_delete()" form="form-mul-delete">
+                    <i class="btn-label fa fa-trash"></i>
+                    Hapus Data Terpilih
+                </button>
+            </div>
             <div class="col-sm-4">
-                <div class="input-group" style="position: relative;right:-710px;bottom:-48px">
+                <div class="input-group">
                     <input type="text" name="query" placeholder="Cari Pelamar (Nama / Posisi / Pendidikan)"
                         class="form-control" autocomplete="off" form="search">
                     <span class="input-group-btn">
@@ -36,19 +52,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" style="margin-bottom: 10px"
-                    type="submit" data-toggle="tooltip" data-container="body" data-placement="top"
-                    data-original-title="Hapus Data Pelamar" onclick="submit_delete()" form="form-mul-delete">
-                    <i class="btn-label fa fa-trash"></i>
-                    Hapus Data Terpilih
-                </button>
-            </div>
-        </div>
         <div class="table-responsive">
             <table id="masterdata-recruitment" class="table table-striped table-bordered no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 98%;" cellspacing="0">
+                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="sorting text-center" tabindex="0" style="width: 4%">No</th>

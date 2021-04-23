@@ -57,7 +57,7 @@
         @csrf
     </form>
 
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div class="separator mar-ver text-bold">Data pokok staff</div>
         <div class="form-group">
             <div class="row">

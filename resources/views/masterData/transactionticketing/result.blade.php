@@ -2,13 +2,25 @@
 @section('title','Sistem')
 @section('content-title','Sistem / Ticketing')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <!--Bootstrap Datepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
+<style>
+    @media screen and (max-width: 600px) {
+        #option_tabel {
+            margin-top: 10px;
+            margin-bottom: 10px; 
+        }
+        #option_label {
+            padding: 0;
+        }
+    }
+</style>
 @endsection
+
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Ticketing</h3>
@@ -20,46 +32,50 @@
         @method('put')     
     </form>
     
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="row mar-btm" style="margin-top:-60px">
-                    <div class="col-sm-5">
-                        <div id="pickadate" style="position: relative;right:-630px;bottom:-48px">
-                            <div class="input-group date">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-mint" type="button" style="z-index: 2"><i
-                                            class="fa fa-calendar"></i></button>
-                                </span>
-                                <input type="text" name="query" placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
-                                    class="form-control" autocomplete="off" form="form_search">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-mint" type="submit" form="form_search"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>
-                        </div>
+    <div class="panel-body" style="padding-top:20px">
+        <div class="row mar-btm">
+            <div class="col-sm-2">
+                <button id="btn-onprog" class="btn btn-primary  btn-labeled add-tooltip"
+                    data-toggle="tooltip" data-container="body" data-placement="top"
+                    data-original-title="Jadikan On Progress" onclick="submit_on_progress()" form="form-mul-onprog">
+                    <i class="btn-label fa fa-spinner"></i>
+                    Jadikan On Progress
+                </button>
+            </div>
+            <div class="col-sm-6" id="option_tabel">
+                <div class="radio mar-hor">
+                    <div class="col-sm-3">
+                        <label for="" id="option_label">Tabel Tiketing: </label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
+                            value="On">
+                        <label for="lihat_selesai_radio-1">Titeking Selesai</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
+                            value="Off">
+                        <label for="lihat_selesai_radio-2">Titeking Proses</label>
                     </div>
                 </div>
-                <div class="row mar-btm">
-                    <div class="col-sm-8">
-                        <button id="btn-onprog" class="btn btn-primary  btn-labeled add-tooltip"
-                            data-toggle="tooltip" data-container="body" data-placement="top"
-                            data-original-title="Jadikan On Progress" onclick="submit_on_progress()" form="form-mul-onprog">
-                            <i class="btn-label fa fa-spinner"></i>
-                            Jadikan On Progress
-                        </button>
-                        <div class="radio mar-hor" style="display: inline">
-                            <label for="">Lihat Ticket Selesai: </label>
-                            <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
-                                value="On">
-                            <label for="lihat_selesai_radio-1">On</label>
-                            <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
-                                value="Off">
-                            <label for="lihat_selesai_radio-2">Off</label>
-                        </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                        </span>
+                        <input type="text" name="query" placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
+                            class="form-control" autocomplete="off" form="form_search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="submit" form="form_search" id="btn-search"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
-                    <div class="col-sm-4"></div>
                 </div>
+            </div>
+        </div>
+        <div class="row mar-btm">
+            <div class="table-responsive">
                 <table id="masterdata-ticketing-full"
                     class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                     style="width: 100%;" width="100%" cellspacing="0">
@@ -112,7 +128,13 @@
                                     </a>
                                 </span>
                             </td>
-                            <td class="text-center">{{$row->name}}</td>
+                            <td class="text-center">
+                                @if ($row->name == null)
+                                Anonim
+                                @else
+                                {{$row->name}}
+                                @endif
+                            </td>
                             <td class="text-center">
                                 @if ($row->category == 'Keluhan')
                                 <span class="label label-primary">Keluhan</span>
@@ -191,7 +213,13 @@
                                     </a>
                                 </span>
                             </td>
-                            <td class="text-center">{{$row->name}}</td>
+                            <td class="text-center">
+                                @if ($row->name == null)
+                                Anonim
+                                @else
+                                {{$row->name}}
+                                @endif
+                            </td>
                             <td class="text-center">
                                 @if ($row->category == 'Keluhan')
                                 <span class="label label-primary">Keluhan</span>
@@ -217,8 +245,8 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div id="onprog-pagination" class="text-center">{{ $ticketing->withQueryString()->links() }}</div>
             </div>
+            <div id="onprog-pagination" class="text-center">{{ $ticketing->withQueryString()->links() }}</div>
         </div>
         <div class="row">
             <div class="col-sm-12 text-right">

@@ -3,7 +3,7 @@
 <style>
     .fc-left,
     .fc-right{
-        visibility: hidden;
+        display: none;
     }
     #container .fc-event{
         cursor: pointer;
@@ -11,12 +11,13 @@
     a.fc-more{
         font-weight: bold;
     }
+
 </style>
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Agenda Kerja Bulan '.switch_month(explode("-", $periode)[1]).' - '.explode("-", $periode)[0]}} </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div id='calendar'></div><br>
         @if ($data->isEmpty())
         <div class="text-center">

@@ -234,18 +234,16 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
-                <div class="col-sm-4">
-                    <input type="text" placeholder="Sisa cuti diisi hanya dengan angka"
-                        name="yearly_leave_remaining"
-                        class="form-control @error('yearly_leave_remaining') is-invalid @enderror"
-                        value="{{$data->yearly_leave_remaining}}">
-                    @error('yearly_leave_remaining') <div class="text-danger invalid-feedback mt-3">
-                        Mohon isi sisa cuti hanya dengan angka.
-                    </div> @enderror
+                    <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Sisa cuti diisi hanya dengan angka"
+                            name="yearly_leave_remaining"
+                            class="form-control @error('yearly_leave_remaining') is-invalid @enderror"
+                            value="{{$data->yearly_leave_remaining}}">
+                        @error('yearly_leave_remaining') <div class="text-danger invalid-feedback mt-3">
+                            Mohon isi sisa cuti hanya dengan angka.
+                        </div> @enderror
+                    </div>
                 </div>
             </div>
             @endif

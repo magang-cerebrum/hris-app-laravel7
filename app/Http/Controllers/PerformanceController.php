@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 use App\MasterPerformance;
 use App\MasterUser;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
-use stdClass;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PerformanceController extends Controller
 {
@@ -34,7 +33,7 @@ class PerformanceController extends Controller
          'year'=>$splitter[1]])
          ->leftjoin('master_users',
          'master_performances.user_id','=','master_users.id')
-         ->whereIn('master_performances.division_id',division_members($user->position_id))
+         ->where('master_performances.division_id',$user->division_id)
          ->orderBy('performance_score','desc')
          // ->where('position_id','=',11)
          ->get();
@@ -110,7 +109,6 @@ public function chiefScoring(){
 public function chiefScored(Request $request){
         global $datas;
         $datas=$request;
-        $checkPos = division_members(Auth::user()->position_id);
             for($i = 1; $i <=$request->count; $i++){
             global $datas;
             $user_id = 'user_id_'.$i;
@@ -211,7 +209,7 @@ public function chief_chart_index(){
         $min[$i-1] = $min_month;
     }
     $staff = DB::table('master_users')->where('status','Aktif')
-    ->whereIn('division_id',division_members($user->position_id))
+    ->where('division_id',$user->division_id)
     ->whereNotIn('position_id',[1,2,3])
     ->select(['id','name'])->paginate(10);
     return view('masterdata.achievement.Chieflistchart',[
@@ -234,7 +232,7 @@ public function Chiefsearchlist (Request $request){
     $check_user = DB::table('master_users')->select(['id','name'])
     ->whereRaw("name LIKE '%" . $request->get('query') . "%'")
     ->where('status','Aktif')
-    ->whereIn('division_id',division_members($user->position_id))
+    ->where('division_id',$user->division_id)
     ->get();
     foreach ($check_user as $item){
         $ids[] = $item->id;

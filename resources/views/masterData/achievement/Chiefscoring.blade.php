@@ -149,8 +149,6 @@ input[type=range]::-moz-range-track {
         var slider= document.getElementById('customRange_' + i)
         output.innerHTML = slider.value + '/100'
     }
-          
-      
 }
      $(document).ready(function () {
         $('#pickadate .input-group.date').datepicker({
@@ -165,6 +163,7 @@ input[type=range]::-moz-range-track {
         var url = '/staff/performance/ajx/pickdate'
 
         $('#pickadate').on('change',function(){
+            $('.scorethis').remove();
             periode = document.getElementById('query').value
             // console.log(periode)
             
@@ -201,6 +200,7 @@ input[type=range]::-moz-range-track {
                             dataoutDivId = response.data[data].division_id
                             var nodeDataOutDivId = document.createTextNode(dataOutId)
                             tr = document.createElement("tr")
+                            tr.setAttribute('class','scorethis')
                             firstTd = document.createElement("td")
                             scTd = document.createElement("td")
                             thrdTd = document.createElement("td")
@@ -224,7 +224,7 @@ input[type=range]::-moz-range-track {
                             slider.setAttribute('step','5')
                             slider.setAttribute('id','customRange_'+counted)
                             slider.setAttribute('value','0')
-                            slider.setAttribute('oninput','slidervalfunc()')
+                            slider.setAttribute('onchange','slidervalfunc()')
                             slider.setAttribute('name','score_'+counted)
                             // sliderhidden.setAttribute('type','hidden')
                             // sliderhidden.setAttribute('value',dataOutId)

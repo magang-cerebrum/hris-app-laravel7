@@ -30,7 +30,7 @@
         @csrf
     </form>
 
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div class="form-group">
             <div class="row">
                 <label class="col-sm-2 control-label">NIP:</label>

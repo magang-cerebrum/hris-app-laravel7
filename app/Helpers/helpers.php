@@ -166,9 +166,15 @@ function count_workday($date_start,$date_end){
     return $result;
 }
 
-// function pushData($division_id){
-//     $data = new stdClass();
-//     $data->division_id=$division_id;
-//     $data->scoring =0;
-//     return $data;
-// }
+function pushData($shifts,$user_id,$user_name){
+    $data = new stdClass();
+    $i = 1;
+    $data->user_id = $user_id;
+    $data->user_name = $user_name;
+    foreach ($shifts as $shift) {
+        $temp = 'day_' . $i;
+        $data->$temp = $shift;
+        $i++;
+    }
+    return $data;
+}

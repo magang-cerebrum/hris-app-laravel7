@@ -57,8 +57,8 @@ class AuthController extends Controller
                 $device = $agent->platform();
                 $browser = $agent->browser();
                 activity()->log($user.' Telah Login (Admin) pada platform ' . $device);
-                Alert::toast('Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser, 'success')
-                ->width(500)
+                Alert::toast('Selamat Datang di HRIS! Anda sekarang Login menggunakan Browser '.$browser, 'success')
+                ->width(460)
                 ->timerProgressBar()
                 ->background('#FFDB26');
                 return redirect()->intended('/admin/dashboard');
@@ -68,8 +68,8 @@ class AuthController extends Controller
                 $device = $agent->platform();
                 $browser = $agent->browser();
                 activity()->log($user.' Telah Login (Staff) pada platform ' . $device);
-                Alert::toast('Selamat Datang di HRIS! Anda sekarang sedang Login menggunakan Browser '.$browser, 'success')
-                ->width(500)
+                Alert::toast('Selamat Datang di HRIS! Anda sekarang Login menggunakan Browser '.$browser, 'success')
+                ->width(460)
                 ->timerProgressBar()
                 ->background('#FFDB26');
                 return redirect('/staff/dashboard');

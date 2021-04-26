@@ -372,7 +372,7 @@ Route::prefix('/staff/presence')->middleware('auth')->group(function () {
 //route staff presence division
 Route::prefix('/staff/presence/division')->middleware('auth')->group(function () {
     Route::get('/',[PresenceController::class,'chief_view']);
-    Route::post('/',[PresenceController::class,'chief_approv']);
+    Route::post('/',[PresenceController::class,'chief_approve']);
 });
 
 //route sistem poster

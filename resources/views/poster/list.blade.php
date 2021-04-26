@@ -3,9 +3,16 @@
 @section('content-title', 'Poster')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
-{{-- Sweetalert 2 --}}
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <style>
+        .table > tbody > tr > td,
+        .table > tbody > tr > th, 
+        .table > tfoot > tr > td, 
+        .table > tfoot > tr > th, 
+        .table > thead > tr > td, 
+        .table > thead > tr > th{
+            vertical-align:middle;
+        }
         #image_poster {
             width: 80%;
         }
@@ -55,9 +62,9 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="Poster"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
-                    aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                <table id="poster"
+                    class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
+                    style="width: 100%; " width="100%" cellspacing="0">
                     <thead>
                         <tr role="row">
                             <th class="sorting_asc text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 5%">No</th>
@@ -119,8 +126,9 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Hapus',
-                    cancelButtonText: 'Tidak'
-                    }
+                    cancelButtonText: 'Tidak',
+                    width: 600
+                }
                 ).then((result) => {
                     if (result.value == true) {
                         $("#form-mul-delete").submit();
@@ -140,7 +148,7 @@
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("cari-poster");
             filter = input.value.toUpperCase();
-            table = document.getElementById("Poster");
+            table = document.getElementById("poster");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
                 for (j = 3; j < 4; j++ ){

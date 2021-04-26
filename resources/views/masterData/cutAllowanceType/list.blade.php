@@ -2,11 +2,19 @@
 @section('content-title','Master Data / Tipe Potongan dan Tunjangan Gaji')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Tipe Potongan dan Tunjangan Gaji')
-@section('content')
 @section('head')
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    @media screen and (max-width: 600px) {
+        #btn-delete {
+            margin: 10px 0;
+        }
+    }
+</style>
 @endsection
+
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Tipe Potongan dan Tunjangan Gaji</h3>
@@ -18,96 +26,90 @@
         @method('delete')
     </form>
 
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="row mar-btm" style="margin-top:-60px">
-                    <div class="col-sm-4">
-                        <div id="pickadate" style="position: relative;right:-710px;bottom:-48px">
-                            <div class="input-group date">
-                                <input type="text" name="query" placeholder="Cari (nama/tipe/kategori)"
-                                    class="form-control" autocomplete="off" form="search">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-mint" type="submit" form="search"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>
-                        </div>
+    <div class="panel-body" style="padding-top: 20px">
+        <div class="row mar-btm">
+            <div class="col-sm-8">
+                <a href="{{url('/admin/cuts-allowances/add')}}" class="btn btn-primary btn-labeled add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Tipe Potongan / Tunjangan Gaji Baru">
+                    <i class="btn-label fa fa-plus"></i>
+                    Tambah Tipe Potongan / Tunjangan Gaji Baru
+                </a>
+                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
+                    data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()" form="form-mul-delete">
+                    <i class="btn-label fa fa-trash"></i>
+                    Hapus Data Terpilih
+                </button>
+                @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
+                    Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
+            </div>
+            <div class="col-sm-4">
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <input type="text" name="query" placeholder="Cari (nama/tipe/kategori)"
+                            class="form-control" autocomplete="off" form="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="submit" form="search"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
                 </div>
-                <div class="row mar-btm">
-                    <div class="col-sm-8">
-                        <a href="{{url('/admin/cuts-allowances/add')}}" class="btn btn-primary btn-labeled add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Tipe Potongan / Tunjangan Gaji Baru">
-                            <i class="btn-label fa fa-plus"></i>
-                            Tambah Tipe Potongan / Tunjangan Gaji Baru
-                        </a>
-                        <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                            data-container="body" data-placement="top" data-original-title="Hapus Data" onclick="submit_delete()" form="form-mul-delete">
-                            <i class="btn-label fa fa-trash"></i>
-                            Hapus Data Terpilih
-                        </button>
-                        @error('selectid') <span style="display:inline;" class="text-danger invalid-feedback mt-3">
-                            Maaf, tidak ada data terpilih untuk dihapus.</span> @enderror
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table id="masterdata-cuts-allowances"
-                        class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
-                        aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-                        <thead>
-                            <tr role="row">
-                                <th class="sorting_asc text-center" style="width: 5%">No</th>
-                                <th class="text-center" style="width: 6%">
-                                    All <input type="checkbox" id="check-all">
-                                </th>
-                                <th class="sorting text-center" style="width: 10%">Aksi</th>
-                                <th class="sorting text-center" style="width: 29%">Nama Potongan</th>
-                                <th class="sorting text-center" style="width: 20%">Tipe</th>
-                                <th class="sorting text-center" style="width: 20%">Kategori</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($cutallowancetype as $row)
-                            <tr>
-                                <td tabindex="0" class="sorting_1 text-center"> {{($cutallowancetype->currentPage() * 10) - 10 + $loop->iteration}}</td>
-                                <td class="text-center">
-                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
-                                </td>
-                                <td class="text-center">
-                                    <a href="{{url("/admin/cuts-allowances/$row->id/edit")}}"
-                                        class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Edit Tipe {{$row->category == 'Potongan' ? 'Potongan' : 'Tunjangan'}} Gaji"
-                                        type="button">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    @if ($row->status == 'Aktif')
-                                    <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Nonaktifkan {{$row->category}}"
-                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}','{{$row->category}}')">
-                                        <i class="pli-close"></i>
-                                    </button>
-                                    @else
-                                    <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Aktifkan {{$row->category}}"
-                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}','{{$row->category}}')">
-                                        <i class="pli-yes"></i>
-                                    </button>
-                                    @endif
-                                </td>
-                                <td class="text-center">{{$row->name}}
-                                    @if ($row->status == 'Non-Aktif')
-                                    <div class="label label-danger">Non-Aktif</div>
-                                    @endif
-                                </td>
-                                <td class="text-center">{{$row->type}}</td>
-                                <td class="text-center">{{$row->category}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-center">{{ $cutallowancetype->links() }}</div>
             </div>
         </div>
+        <div class="table-responsive">
+            <table id="masterdata-cuts-allowances"
+                class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
+                aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting_asc text-center" style="width: 5%">No</th>
+                        <th class="text-center" style="width: 6%">
+                            All <input type="checkbox" id="check-all">
+                        </th>
+                        <th class="sorting text-center" style="width: 10%">Aksi</th>
+                        <th class="sorting text-center" style="width: 29%">Nama Potongan</th>
+                        <th class="sorting text-center" style="width: 20%">Tipe</th>
+                        <th class="sorting text-center" style="width: 20%">Kategori</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cutallowancetype as $row)
+                    <tr>
+                        <td tabindex="0" class="sorting_1 text-center"> {{($cutallowancetype->currentPage() * 10) - 10 + $loop->iteration}}</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
+                        </td>
+                        <td class="text-center">
+                            <a href="{{url("/admin/cuts-allowances/$row->id/edit")}}"
+                                class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                data-container="body" data-placement="top" data-original-title="Edit Tipe {{$row->category == 'Potongan' ? 'Potongan' : 'Tunjangan'}} Gaji"
+                                type="button">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            @if ($row->status == 'Aktif')
+                            <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                data-container="body" data-placement="top" data-original-title="Nonaktifkan {{$row->category}}"
+                                type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}','{{$row->category}}')">
+                                <i class="pli-close"></i>
+                            </button>
+                            @else
+                            <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                data-container="body" data-placement="top" data-original-title="Aktifkan {{$row->category}}"
+                                type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}','{{$row->category}}')">
+                                <i class="pli-yes"></i>
+                            </button>
+                            @endif
+                        </td>
+                        <td class="text-center">{{$row->name}}
+                            @if ($row->status == 'Non-Aktif')
+                            <div class="label label-danger">Non-Aktif</div>
+                            @endif
+                        </td>
+                        <td class="text-center">{{$row->type}}</td>
+                        <td class="text-center">{{$row->category}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">{{ $cutallowancetype->links() }}</div>
     </div>
 </div>
 @endsection

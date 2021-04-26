@@ -24,15 +24,19 @@
             @endforeach
         </div>
         <div class="panel-body">
+            @if ($data_this_month->isEmpty())
+                <div class="text-center text-bold text-danger">Anda belum memiliki jadwal! Segera hubungi Chief untuk mendapatkan jadwal kerja!</div>
+            @else
             <div id='calendar-this-month'></div><br>
             <table><tr>
                 @foreach ($data_shift as $item)
                     <td style="width: 20px;height:20px;background-color:{{$item->calendar_color}}"></td><td class="break"></td><td>: {{$item->name}}</td><td class="break">
                 @endforeach
             <tr></table>
+            @endif
         </div>
 
-        @if (count($data_next_month) != 0) 
+        @if (!$data_next_month->isEmpty()) 
             <div class="panel-heading">
                 @foreach ($data_next_month as $item)
                 <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$item->month.' - '.$item->year}}</h3>

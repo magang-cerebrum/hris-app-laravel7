@@ -25,7 +25,9 @@ class MasterJobScheduleController extends Controller
     {
         $user = Auth::user();
         if($user->role_id == 1){
+            $data_division = DB::table('master_divisions')->whereNotIn('id',[7])->get();
             return view('masterData.schedule.list', [
+                'data_division' => $data_division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -632,13 +634,21 @@ class MasterJobScheduleController extends Controller
     {
         $user = Auth::user();
         $split = explode('/', $request->periode);
+        $division = ($request->division != 'Semua Divisi' ? true : false);
         $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-        ->where('month', '=',switch_month($split[0]))
-        ->where('year', '=', $split[1])
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->where('month', switch_month($split[0]))
+        ->where('year', $split[1])
         ->select(
             'master_job_schedules.*',
             'master_users.name as user_name'
-        )->get();
+        )
+        ->when($division,function ($query) use ($request){
+            return $query->where('master_divisions.name',$request->division);
+        },function ($query){
+            return $query;
+        })->get();
+
         $data_staff = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
         ->where('month', '=',switch_month($split[0]))
         ->where('year', '=', $split[1])

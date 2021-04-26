@@ -11,45 +11,47 @@
         <h3 class="panel-title">Form Tambah Potongan dan Tunjangan Gaji</h3>
     </div>
     
-    <form class="form-horizontal" action="{{url('/admin/cuts-allowances')}}" method="POST" id="create_type">
+    <form action="{{url('/admin/cuts-allowances')}}" method="POST" id="create_type">
         @csrf
     </form>
 
-    <div class="panel-body">
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 control-label" for="type">Tipe :</label>
-                <div class="col-sm-4">
-                    <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer" form="create_type">
-                        <option value=" " selected></option>
-                        <option value="Semua">Semua</option>
-                        <option value="Perorangan">Perorangan</option>
-                    </select>
+    <div class="panel-body" style="padding-top: 20px">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="type">Tipe :</label>
+                    <div class="col-sm-4">
+                        <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer" form="create_type">
+                            <option value=" " selected></option>
+                            <option value="Semua">Semua</option>
+                            <option value="Perorangan">Perorangan</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 control-label" for="type">Kategori :</label>
-                <div class="col-sm-4">
-                    <select class="selectpicker" data-style="btn-pink" name="category" id="category-changer" form="create_type">
-                        <option value=" " selected></option>
-                        <option value="Potongan">Potongan</option>
-                        <option value="Tunjangan">Tunjangan</option>
-                    </select>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="type">Kategori :</label>
+                    <div class="col-sm-4">
+                        <select class="selectpicker" data-style="btn-pink" name="category" id="category-changer" form="create_type">
+                            <option value=" " selected></option>
+                            <option value="Potongan">Potongan</option>
+                            <option value="Tunjangan">Tunjangan</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 control-label" for="name">Nama <span id="category-name"></span>:</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                        name="name" placeholder="Informasi potongan/tunjangan" id="name"
-                        value="{{old('name')}}" maxlength="25" onkeyup="limit_character(this.value)" form="create_type">
-                    @error('name') <div class="text-danger invalid-feedback mt-3">Mohon isi nama <span id="category-name"></span>.</div>
-                    @enderror
-                    <div id="info" class="text-danger"></div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="name">Nama <span id="category-name"></span>:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                            name="name" placeholder="Informasi potongan/tunjangan" id="name"
+                            value="{{old('name')}}" maxlength="25" onkeyup="limit_character(this.value)" form="create_type">
+                        @error('name') <div class="text-danger invalid-feedback mt-3">Mohon isi nama <span id="category-name"></span>.</div>
+                        @enderror
+                        <div id="info" class="text-danger"></div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,7 +6,25 @@
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    #btn_paid_leave {
+        display: inline;
+    }
+    #row_btn {
+        margin-bottom: 15px;
+    }
+    @media screen and (max-width: 600px) {
+        #btn_paid_leave {
+            display: block;
+            margin-bottom: 10px;
+        }
+        #row_btn {
+            margin-bottom: 0;
+        }
+    }
+</style>
 @endsection
+
 @section('content')
 
 <div class="panel panel-bordered panel-danger">
@@ -33,7 +51,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4"></div>
         </div>
     </div>
 </div>

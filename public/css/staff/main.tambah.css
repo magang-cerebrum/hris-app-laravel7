@@ -115,3 +115,6 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+.pace .pace-progress, .nano>.nano-pane>.nano-slider {
+    background-color: #070525;
+}

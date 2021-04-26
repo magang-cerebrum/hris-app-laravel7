@@ -2,7 +2,6 @@
 @section('title','Data Staff')
 @section('content-title','Data Staff / Daftar Pengajuan Cuti')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
@@ -24,6 +23,8 @@
     }
 </style>
 @endsection
+
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Pengajuan Cuti Staff</h3>
@@ -44,7 +45,7 @@
                     Riwayat Pengajuan
                 </a>
             </div>
-                @if (count($data) != 0)
+            @if (count($data) != 0)
                 <div id="btn_paid_leave">
                     <button id="btn-approve" class="btn btn-primary btn-labeled add-tooltip"
                         type="button" data-toggle="tooltip" data-container="body" data-placement="top"
@@ -61,7 +62,7 @@
                         Pending Data Terpilih
                     </button>
                 </div>
-                @endif
+            @endif
         </div>
         <div class="row mar-btn">
             @if (count($data) == 0)

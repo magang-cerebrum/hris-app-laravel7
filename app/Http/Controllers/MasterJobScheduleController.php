@@ -213,29 +213,28 @@ class MasterJobScheduleController extends Controller
             array_push($month, switch_month($temp_month));
         }
         
-        $data = DB::table('master_job_schedules')
-        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-        ->where('master_users.status','=','Aktif')
-        ->where('master_users.division_id',$user->division_id)
-        ->whereIn('master_job_schedules.month',$month)
-        ->whereIn('master_job_schedules.year',$year)
-        ->whereNotIn('master_users.division_id',[7])
-        ->select(
-            'master_job_schedules.id as id',
-            'master_job_schedules.month as month',
-            'master_job_schedules.year as year',
-            'master_users.id as user_id',
-            'master_users.nip as user_nip',
-            'master_users.name as user_name',
-            'master_users.division_id',
-            'master_users.position_id',
-            'master_divisions.name as division_name',
-            'master_positions.name as position_name'
-            )
-        ->get();
         if ($user->role_id == 1) {
+            $data = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->where('master_users.status','=','Aktif')
+            ->whereIn('master_job_schedules.month',$month)
+            ->whereIn('master_job_schedules.year',$year)
+            ->whereNotIn('master_users.division_id',[7])
+            ->select(
+                'master_job_schedules.id as id',
+                'master_job_schedules.month as month',
+                'master_job_schedules.year as year',
+                'master_users.id as user_id',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name',
+                'master_users.division_id',
+                'master_users.position_id',
+                'master_divisions.name as division_name',
+                'master_positions.name as position_name'
+                )
+            ->get();
             return view('masterData.schedule.editCreate', [
                 'data'=>$data,
                 'name'=>$user->name,
@@ -244,6 +243,28 @@ class MasterJobScheduleController extends Controller
                 'id'=>$user->id
             ]);
         } else {
+            $data = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->where('master_users.status','=','Aktif')
+            ->where('master_users.division_id',$user->division_id)
+            ->whereIn('master_job_schedules.month',$month)
+            ->whereIn('master_job_schedules.year',$year)
+            ->whereNotIn('master_users.division_id',[7])
+            ->select(
+                'master_job_schedules.id as id',
+                'master_job_schedules.month as month',
+                'master_job_schedules.year as year',
+                'master_users.id as user_id',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name',
+                'master_users.division_id',
+                'master_users.position_id',
+                'master_divisions.name as division_name',
+                'master_positions.name as position_name'
+                )
+            ->get();
             return view('staff.schedule.editCreate', [
                 'data'=>$data,
                 'name'=>$user->name,

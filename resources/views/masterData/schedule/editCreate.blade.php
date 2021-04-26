@@ -17,7 +17,7 @@
         @csrf
     </form>
 
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div class="row">
             <div class="col-sm-8">
                 <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"

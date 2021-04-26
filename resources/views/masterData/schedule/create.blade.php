@@ -2,20 +2,23 @@
 @section('title','Jadwal Kerja')
 @section('content-title','Jadwal Kerja / Pilih Staff untuk Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 @section('head')
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 @endsection
+
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Pilih Staff Untuk Jadwal Kerja</h3>
     </div>
+    
     <form action="{{ url('/admin/schedule/add-schedule')}}" method="POST" id="form-check-user-month" class="form-horizontal">
         @csrf
     </form>
-    <div class="panel-body">
+    
+    <div class="panel-body" style="padding-top: 20px">
         <div class="row">
             <div class="col-sm-8">
                 <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"

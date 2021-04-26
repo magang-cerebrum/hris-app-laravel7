@@ -49,7 +49,7 @@
         @csrf
     </form>
     
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <input name="count" value="{{count($data)}}" form="form-bulan-tahun" hidden>
         <div class="row mar-btm">
             <div class="col-sm-2">

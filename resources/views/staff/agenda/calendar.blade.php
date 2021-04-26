@@ -8,7 +8,7 @@
 <style>
     .fc-left,
     .fc-right{
-        visibility: hidden;
+        display: none;
     }
     #container .fc-event{
         cursor: pointer;
@@ -23,9 +23,8 @@
     <div class="panel-heading">
         <h3 class="panel-title">{{'Agenda Kerja Bulan '.switch_month(date('m')).' - '.date('Y')}} </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div id='calendar'></div><br>
-
     </div>
 </div>
 @endsection

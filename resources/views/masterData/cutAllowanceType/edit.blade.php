@@ -11,46 +11,48 @@
         <h3 class="panel-title">Form Tambah Potongan dan Tunjangan Gaji</h3>
     </div>
 
-    <form class="form-horizontal" action="{{url('/admin/cuts-allowances/'.$cutallowancetype->id)}}" method="POST" id="edit_type">
+    <form action="{{url('/admin/cuts-allowances/'.$cutallowancetype->id)}}" method="POST" id="edit_type">
         @csrf
         @method('put')
     </form>
     
-    <div class="panel-body">
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 control-label" for="type">Tipe :</label>
-                <div class="col-sm-4 mar-lft">
-                    <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer" form="edit_type">
-                        <option value=" "></option>
-                        <option value="Semua" {{$cutallowancetype->type == 'Semua' ? 'selected' : ''}}>Semua</option>
-                        <option value="Perorangan" {{$cutallowancetype->type == 'Perorangan' ? 'selected' : ''}}>Perorangan</option>
-                    </select>
+    <div class="panel-body" style="padding-top: 20px">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="type">Tipe :</label>
+                    <div class="col-sm-4 mar-lft">
+                        <select class="selectpicker" data-style="btn-purple" name="type" id="type-changer" form="edit_type">
+                            <option value=" "></option>
+                            <option value="Semua" {{$cutallowancetype->type == 'Semua' ? 'selected' : ''}}>Semua</option>
+                            <option value="Perorangan" {{$cutallowancetype->type == 'Perorangan' ? 'selected' : ''}}>Perorangan</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 control-label" for="type">Kategori :</label>
-                <div class="col-sm-4 mar-lft">
-                    <select class="selectpicker" data-style="btn-pink" name="category" id="category-changer" form="edit_type">
-                        <option value=" "></option>
-                        <option value="Potongan" {{$cutallowancetype->category == 'Potongan' ? 'selected' : ''}}>Potongan</option>
-                        <option value="Tunjangan" {{$cutallowancetype->category == 'Tunjangan' ? 'selected' : ''}}>Tunjangan</option>
-                    </select>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="type">Kategori :</label>
+                    <div class="col-sm-4 mar-lft">
+                        <select class="selectpicker" data-style="btn-pink" name="category" id="category-changer" form="edit_type">
+                            <option value=" "></option>
+                            <option value="Potongan" {{$cutallowancetype->category == 'Potongan' ? 'selected' : ''}}>Potongan</option>
+                            <option value="Tunjangan" {{$cutallowancetype->category == 'Tunjangan' ? 'selected' : ''}}>Tunjangan</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 control-label" for="name">Nama <span id="category-name"></span>:</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                        name="name" placeholder="Informasi potongan/tunjangan"
-                        value="{{$cutallowancetype->name}}" maxlength="25" onkeyup="limit_character(this.value)" form="edit_type">
-                    @error('name') <div class="text-danger invalid-feedback mt-3">Mohon isi nama <span id="category-name"></span>.</div>
-                    @enderror
-                    <div id="info" class="text-danger"></div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="name">Nama <span id="category-name"></span>:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                            name="name" placeholder="Informasi potongan/tunjangan"
+                            value="{{$cutallowancetype->name}}" maxlength="25" onkeyup="limit_character(this.value)" form="edit_type">
+                        @error('name') <div class="text-danger invalid-feedback mt-3">Mohon isi nama <span id="category-name"></span>.</div>
+                        @enderror
+                        <div id="info" class="text-danger"></div>
+                    </div>
                 </div>
             </div>
         </div>

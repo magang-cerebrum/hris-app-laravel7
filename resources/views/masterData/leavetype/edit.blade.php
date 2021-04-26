@@ -13,7 +13,7 @@
         @method('put')
     </form>
 
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div class="form-group">
             <label class="col-sm-2 control-label" for="name">Nama Tipe Cuti:
             </label>

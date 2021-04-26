@@ -7,7 +7,18 @@
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <!--Bootstrap Datepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
+<style>
+    #btn_mar {
+        margin-bottom: 15px;
+    }
+    @media screen and (max-width: 600px) {
+        #btn-delete {
+            margin: 10px 0;
+        }
+    }
+</style>
 @endsection
+
 @section('content')
 <div class="panel  panel-danger panel-bordered">
     <div class="panel-heading">
@@ -20,27 +31,9 @@
         @method('delete')
     </form>
 
-    <div class="panel-body">
-        <div class="row mar-btm" style="margin-top:-60px">
-            <div class="col-sm-4">
-                <div id="pickadate" style="position: relative;right:-710px;bottom:-48px">
-                    <div class="input-group date">
-                        <span class="input-group-btn">
-                            <button class="btn btn-mint" type="button" style="z-index: 2">
-                                <i class="fa fa-calendar"></i>
-                            </button>
-                        </span>
-                        <input type="text" name="query" placeholder="Cari Hari Libur (bulan / nama libur)"
-                            class="form-control" autocomplete="off" form="search">
-                        <span class="input-group-btn">
-                            <button class="btn btn-mint" type="submit" form="search"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12" style="margin-bottom:15px">
+    <div class="panel-body" style="padding-top: 20px">
+        <div id="btn_mar" class="row">
+            <div class="col-sm-8">
                 <a href="{{url('/admin/holiday/add')}}" class="btn btn-primary btn-labeled">
                     <i class="btn-label fa fa-plus"></i>
                     Tambah Hari Libur
@@ -51,6 +44,22 @@
                     <i class="btn-label fa fa-trash"></i>
                     Hapus Data Terpilih
                 </button>
+            </div>
+            <div class="col-sm-4">
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-mint" type="button" style="z-index: 2">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                        <input type="text" name="query" placeholder="Cari Hari Libur (bulan / nama libur)"
+                            class="form-control" autocomplete="off" form="search">
+                        <span class="input-group-btn">
+                            <button id="search_btn" class="btn btn-mint" type="submit" form="search"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="table-responsive">
@@ -115,7 +124,9 @@
             orientation: 'bottom',
             forceParse: false,
         });
-        // check all
+        $("#search_btn").click(function (){
+            $('.datepicker').hide();
+        });
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked", true);

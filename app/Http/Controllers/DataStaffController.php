@@ -86,6 +86,7 @@ class DataStaffController extends Controller
             'dob' => 'required',
             'phone_number' => 'numeric',
             'gender' => 'required',
+            'address' => 'required|max:200',
             'email' => 'email',
             'password' => 'required',
             'employee_status' => 'required',
@@ -96,7 +97,6 @@ class DataStaffController extends Controller
             'division_id' => 'numeric',
             'position_id' => 'numeric',
             'role_id' => 'numeric',
-            'credit_card_bank' => 'required',
             'credit_card_number' => 'required|numeric',
             'salary' => 'required'
         ]);
@@ -131,7 +131,6 @@ class DataStaffController extends Controller
             'end_work_date' => $end_work_date,
             'yearly_leave_remaining' => $request->yearly_leave_remaining,
             'salary' => $salary,
-            'credit_card_bank' => $request->credit_card_bank,
             'credit_card_number' => $request->credit_card_number,
             'division_id' => $request->division_id,
             'position_id' => $request->position_id,
@@ -172,6 +171,7 @@ class DataStaffController extends Controller
             'dob' => 'required',
             'phone_number' => 'numeric',
             'gender' => 'required',
+            'address' => 'required|max:200',
             'email' => 'email',
             'employee_status' => 'required',
             'employee_type' => 'required',
@@ -181,7 +181,6 @@ class DataStaffController extends Controller
             'division_id' => 'numeric',
             'position_id' => 'numeric',
             'role_id' => 'numeric',
-            'credit_card_bank' => 'required',
             'credit_card_number' => 'required|numeric',
             'salary' => 'required'
         ]);

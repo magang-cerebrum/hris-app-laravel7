@@ -4,9 +4,7 @@
 @section('title','Data Staff')
 @section('content')
 @section('head')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-<!--Bootstrap Select [ OPTIONAL ]-->
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <style>
     input::-webkit-outer-spin-button,
@@ -85,7 +83,7 @@
                     <label class="col-sm-2 control-label" for="textarea-input-address">Alamat:</label>
                     <div class="col-sm-10">
                         <textarea id="textarea-input-address" rows="2" class="form-control" form="edit"
-                            placeholder="Alamat Lengkap" name="address">{{$staff->address}}</textarea>
+                            placeholder="Alamat Lengkap" name="address" style="resize: none">{{$staff->address}}</textarea>
                     </div>
                 </div>
             </div>
@@ -226,21 +224,6 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <label class="col-sm-2 control-label" for="credit_card_bank">Bank:</label>
-                    <div class="col-sm-4">
-                        <select class="selectpicker" data-style="btn-mint" name="credit_card_bank" form="edit">
-                            <option value="BNI" {{$staff->credit_card_bank == 'BNI' ? 'selected' : ''}}>BNI</option>
-                            <option value="BCA" {{$staff->credit_card_bank == 'BCA' ? 'selected' : ''}}>BCA</option>
-                            <option value="BRI" {{$staff->credit_card_bank == 'BRI' ? 'selected' : ''}}>BRI</option>
-                            <option value="BJB" {{$staff->credit_card_bank == 'BJB' ? 'selected' : ''}}>BJB</option>
-                            <option value="Mandiri" {{$staff->credit_card_bank == 'Mandiri' ? 'selected' : ''}}>Mandiri</option>
-                            <option value="Mandiri Syariah" {{$staff->credit_card_bank == 'Mandiri Syariah' ? 'selected' : ''}}>Mandiri Syariah</option>
-                            <option value="BJB Syariah" {{$staff->credit_card_bank == 'BJB Syariah' ? 'selected' : ''}}>BJB Syariah</option>
-                            @error('credit_card_bank') <div class="text-danger invalid-feedback mt-3">
-                                Mohon pilih bank.
-                            </div> @enderror
-                        </select>
-                    </div>
                     <label class="col-sm-2 control-label" for="credit_card_number">No. Rekening:</label>
                     <div class="col-sm-4">
                         <input type="number" placeholder="Nomor Rekening tanpa Kode Bank"
@@ -251,17 +234,15 @@
                             Mohon isi sisa cuti hanya dengan angka.
                         </div> @enderror
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="salary">Gaji Pokok:</label>
-                <div class="col-sm-4">
-                    <input type="text" placeholder="Gaji Pokok" name="salary" id="salary" form="edit"
-                        class="form-control @error('salary') is-invalid @enderror"
-                        value="{{$staff->salary}}" onkeyup="format_rp()">
-                    @error('salary') <div class="text-danger invalid-feedback mt-3">
-                        Mohon isi gaji pokok.
-                    </div> @enderror
+                    <label class="col-sm-2 control-label" for="salary">Gaji Pokok:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Gaji Pokok" name="salary" id="salary" form="edit"
+                            class="form-control @error('salary') is-invalid @enderror"
+                            value="{{$staff->salary}}" onkeyup="format_rp()">
+                        @error('salary') <div class="text-danger invalid-feedback mt-3">
+                            Mohon isi gaji pokok.
+                        </div> @enderror
+                    </div>
                 </div>
             </div>
         </div>
@@ -271,9 +252,7 @@
     </div>
 </div>
 @section('script')
-<!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-<!--Bootstrap Select [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
 <script>

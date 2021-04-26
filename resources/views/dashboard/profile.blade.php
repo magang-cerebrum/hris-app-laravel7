@@ -1,7 +1,7 @@
 @extends($data->role_id == 1 ? 'layouts/templateAdmin' : 'layouts/templateStaff')
 @section('content-title','Profile User')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Profile Data Staff')
+@section('title','Profile')
 @section('content')
 <div class="panel panel-bordered {{$data->role_id == 1 ? 'panel-danger' : 'panel-primary'}}">
     <div class="panel-heading">
@@ -29,12 +29,12 @@
                     <div id="datepicker-edit-dob">
                         <div class="col-sm-4">
                             <input type="text" class="form-control" placeholder="Tanggal Lahir" name="dob"
-                                value="{{$data->dob}}" readonly>
+                                value="{{indonesian_date($data->dob)}}" readonly>
                         </div>
                     </div>
                     <label class="col-sm-2 control-label" for="textarea-input-address">Alamat:</label>
                     <div class="col-sm-4">
-                        <textarea id="textarea-input-address" rows="2" class="form-control" placeholder="Alamat Lengkap" name="address" readonly>{{$data->address}}</textarea>
+                        <textarea id="textarea-input-address" rows="2" class="form-control" placeholder="Alamat Lengkap" name="address" style="resize: none;" readonly>{{$data->address}}</textarea>
                     </div>
                     <label class="col-sm-2 control-label">Jenis Kelamin:</label>
                     <div class="col-sm-4">
@@ -64,15 +64,11 @@
                         <input type="text" placeholder="Status Karyawan" name="employee_status" class="form-control"
                             value="{{$data->employee_status}}" readonly>
                     </div>
-                    @if ($data->employee_status == 'Kontrak')
-                    <span id="input-contract_duration">
-                        <label class="col-sm-2 control-label">Durasi Kontrak:</label>
-                        <div class="col-sm-4">
-                            <input type="text" placeholder="Lama kontrak dalam satuan bulan"
-                                name="contract_duration" class="form-control" value="{{$data->contract_duration}}">
-                        </div>
-                    </span>
-                    @endif
+                    <label class="col-sm-2 control-label">Durasi Kontrak:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Lama kontrak dalam satuan bulan"
+                            name="contract_duration" class="form-control {{$data->employee_status == 'Tetap' ? 'text-info text-bold' : ''}}" value="{{$data->employee_status == 'Kontrak' || $data->employee_status == 'Probation' ? $data->contract_duration : 'Anda berstatus tetap'}}" readonly>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -95,14 +91,12 @@
                 <div class="row">
                     <label class="col-sm-2 control-label">Tanggal Mulai Bekerja:</label>
                     <div class="col-sm-4">
-                        <input type="text" placeholder="Tanggal Mulai Bekerja" name="start_work_date" class="form-control" value="{{$data->start_work_date}}" readonly>
+                        <input type="text" placeholder="Tanggal Mulai Bekerja" name="start_work_date" class="form-control" value="{{indonesian_date($data->start_work_date)}}" readonly>
                     </div>
-                    @if ($data->end_work_date != '')
                     <label class="col-sm-2 control-label">Tanggal Akhir Bekerja:</label>
                     <div class="col-sm-4">
-                        <input type="text" placeholder="Tanggal Akhir Bekerja" name="end_work_date" class="form-control" value="{{$data->end_work_date}}" readonly>
+                        <input type="text" placeholder="Tanggal Akhir Bekerja" name="end_work_date" class="form-control {{$data->employee_status == 'Tetap' ? 'text-info text-bold' : ''}}" value="{{$data->end_work_date != '' ? indonesian_date($data->end_work_date) : 'Anda berstatus tetap'}}" readonly>
                     </div>
-                    @endif
                 </div>
             </div>
             <div class="form-group">
@@ -123,14 +117,22 @@
                     <div class="col-sm-4">
                         <input type="text" placeholder="Hak Akses" name="role" class="form-control" value="{{$roles[0]->name}}" readonly>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
                     <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="Sisa cuti diisi hanya dengan angka"
                             name="yearly_leave_remaining" class="form-control" value="{{$data->yearly_leave_remaining}}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label">Nomor Rekening:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Nomor Rekening Bank" name="credit_card_number" class="form-control" value="{{$data->credit_card_number}}" readonly>
+                    </div>
+                    <label class="col-sm-2 control-label">Gaji Pokok:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Gaji Pokok" name="salary" class="form-control" value="{{rupiah($data->salary)}}" readonly>
                     </div>
                 </div>
             </div>

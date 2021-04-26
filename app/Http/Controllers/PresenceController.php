@@ -65,7 +65,7 @@ class PresenceController extends Controller
         ]);
     }
 
-    public function chief_approv(Request $request){
+    public function chief_approve(Request $request){
         foreach ($request->selectid as $item) {
 
             $data = DB::table('master_presences')->where('id',$item)->first();
@@ -215,19 +215,60 @@ class PresenceController extends Controller
             'end' => $end
         ]);
     }
+
     public function getProcessedPresenceView(){
         if(Gate::denies('is_admin')){
             Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.presence.views',[
+        $cal = CAL_GREGORIAN;
+        $days_in_month = cal_days_in_month($cal, date('m'), date('Y'));
+        $data = array();
+        $data_schedule = DB::table('master_job_schedules')
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->where('master_users.status','Aktif')
+        ->select([
+            'master_job_schedules.*',
+            'master_users.name as user_name'
+        ])
+        ->get();
+        foreach ($data_schedule as $user_schedule) {
+            $shifts = array();
+            for ($i=1; $i <= $days_in_month; $i++) { 
+                $temp = 'shift_' . $i;
+                $getShift = $user_schedule->$temp;
+                if ($getShift != 'Off' && $getShift != 'Cuti') {                    
+                    $data_presence = DB::table('master_presences')
+                    ->where('presence_date',date('Y') . '-' . date('m') . '-' . ($i / 10 < 1 ? '0'. $i : $i))
+                    ->where('user_id',$user_schedule->user_id)
+                    ->first();
+                    if ($data_presence == null) {
+                        $getShift = 'Kosong';
+                    } else {
+                        if ($data_presence->late_time == '00:00:00') {
+                            $getShift = 'Hadir';
+                        } else {
+                            $getShift = 'Telat';
+                        }
+                    }
+                }
+                array_push($shifts,$getShift);
+            }
+            array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
+        }
+        return view('masterdata.presence.list',[
+            'data'=>$data,
+            'day'=>$days_in_month,
+            'month'=>date('m'),
+            'year'=>date('Y'),
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
             'id'=>$user->id
         ]);
     }
+
     public function viewProcessedPresence(){
         $count =   count( DB::table('log_presences')->where('status','=',0)->get());
         while($count>0){
@@ -292,6 +333,7 @@ class PresenceController extends Controller
         return redirect()->back(); 
         
     }
+
     public function resetStats(){
         DB::table('log_presences')
         ->whereIn('id',range(1,16))

@@ -43,8 +43,9 @@ $(document).ready(function () {
         header:{
             center: 'title',
         },
-        defaultDate: "<?= date('Y') ?>-<?= date('m') ?>-01",
+        defaultDate: "<?= $year ?>-<?= $month ?>-01",
         eventLimit: true,
+        timeFormat: 'H:mm',
         eventRender: function(eventObj, $el) {
             $el.popover({
                 title: eventObj.title,
@@ -54,27 +55,26 @@ $(document).ready(function () {
                 container: 'body'
             });
         },
-        timeFormat: 'H:mm',
         events: [
-            <?php foreach ($data as $item) { 
-                $start_date = intval(explode('-',explode(' ',$item->start_event)[0])[2]);
-                $interval = date_diff(date_create($item->start_event), date_create($item->end_event))->format('%d');
-                for ($i=$start_date; $i <= ($start_date + $interval); $i++) { ?>
-                    <?php 
-                        $start = substr_replace(explode(" ", $item->start_event)[0],$i,9,2) . 'T' . explode(" ", $item->start_event)[1];
-                        $end = substr_replace(explode(" ", $item->start_event)[0],$i,9,2) . 'T' . explode(" ", $item->end_event)[1];
-                    ?>
-                    {
-                        title: '<?= $item->title ?>',
-                        description: '<?= $item->description ?>',
-                        start: "<?= $start ?>",
-                        end: "<?= $end ?>",
-                        color: '<?= $item->calendar_color ?>'
-                    },
+                <?php foreach ($data as $item) { 
+                    $start_date = intval(explode('-',explode(' ',$item->start_event)[0])[2]);                    
+                    $interval = date_diff(date_create($item->start_event), date_create($item->end_event))->format('%d');
+                    for ($i=$start_date; $i <= ($start_date + $interval); $i++) { ?>
+                        <?php
+                            $i < 10 ? $pos = 9 : $pos = 8;
+                            $start = substr_replace(explode(" ", $item->start_event)[0],$i,$pos,2) . 'T' . explode(" ", $item->start_event)[1];
+                            $end = substr_replace(explode(" ", $item->start_event)[0],$i,$pos,2) . 'T' . explode(" ", $item->end_event)[1];
+                        ?>
+                        {
+                            title: '<?= $item->title ?>',
+                            description: '<?= $item->description ?>',
+                            start: "<?= $start ?>",
+                            end: "<?= $end ?>",
+                            color: '<?= $item->calendar_color ?>'
+                        },
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
-        ]
-        
+            ]
     });
 });
 </script>

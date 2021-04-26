@@ -1,7 +1,7 @@
 @extends($data->role_id == 1 ? 'layouts/templateAdmin' : 'layouts/templateStaff')
 @section('content-title','Profile User')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('title','Edit Data Staff')
+@section('title','Edit Profile')
 @section('content')
 @section('head')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
@@ -19,9 +19,6 @@
         @csrf
         @method('put')
         <div class="panel-body">
-            <input type="hidden" name="password" class="form-control invisible" value="{{$data->password}}">
-            <input type="hidden" name="profile_photo" class="form-control invisible"
-                value="{{$data->profile_photo}}">
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label">Nama Staff:</label>
@@ -32,9 +29,18 @@
                             Mohon isi nama lengkap.
                         </div> @enderror
                     </div>
+                    @if($data->role_id == 1)
+                    <label class="col-sm-2 control-label">NIP:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="NIP" name="nip"
+                            class="form-control @error('nip') is-invalid @enderror" value="{{$data->nip}}">
+                        @error('nip') <div class="text-danger invalid-feedback mt-3">
+                            Mohon isi NIP.
+                        </div> @enderror
+                    </div>
+                    @endif
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label">Tanggal Lahir:</label>
@@ -67,8 +73,9 @@
                 <div class="row">
                     <label class="col-sm-2 control-label" for="textarea-input-address">Alamat:</label>
                     <div class="col-sm-10">
-                        <textarea id="textarea-input-address" rows="2" class="form-control"
+                        <textarea style="resize: none;" id="textarea-input-address" rows="2" class="form-control @error('address') is-invalid @enderror"
                             placeholder="Alamat Lengkap" name="address">{{$data->address}}</textarea>
+                            @error('address') <div class="text-danger invalid-feedback mt-3">{{$message}}</div> @enderror
                     </div>
                 </div>
             </div>
@@ -90,14 +97,6 @@
                         @error('email') <div class="text-danger invalid-feedback mt-3">
                             {{$message}}
                         </div> @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-2 control-label text-center">Foto Profil:</label>
-                    <div class="col-sm-4 text-center offset">
-                        <img src="{{asset('img/profile-photos/'.$data->profile_photo)}}" alt="Foto Profil Tidak Tersedia">
                     </div>
                 </div>
             </div>
@@ -210,7 +209,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <label class="col-sm-2 control-label" for="division_id">Jabatan:</label>
+                    <label class="col-sm-2 control-label" for="position_id">Jabatan:</label>
                     <div class="col-sm-4">
                         <select class="selectpicker" data-style="btn-success" name="position_id">
                             @foreach ($positions as $item)
@@ -224,7 +223,7 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <label class="col-sm-2 control-label" for="division_id">Hak akses:</label>
+                    <label class="col-sm-2 control-label" for="role_id">Hak akses:</label>
                     <div class="col-sm-4">
                         <select class="selectpicker" data-style="btn-purple" name="role_id">
                             @foreach ($roles as $item)
@@ -247,6 +246,31 @@
                 </div>
             </div>
             @endif
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="credit_card_number">Nomor Rekening:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Nomor Rekening"
+                            name="credit_card_number"
+                            class="form-control @error('credit_card_number') is-invalid @enderror"
+                            value="{{$data->credit_card_number}}">
+                        @error('credit_card_number') <div class="text-danger invalid-feedback mt-3">
+                            Mohon isi nomor rekening.
+                        </div> @enderror
+                    </div>
+                    @if($data->role_id == 1)
+                    <label class="col-sm-2 control-label">Gaji Pokok:</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Gaji pokok"
+                            name="salary" id="salary" class="form-control @error('salary') is-invalid @enderror"
+                            value="{{$data->salary}}" onkeyup="format_rp()">
+                        @error('salary') <div class="text-danger invalid-feedback mt-3">
+                            Mohon isi gaji pokok.
+                        </div> @enderror
+                    </div>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="panel-footer text-right">
             <button class="btn btn-mint" type="submit">Simpan</button>
@@ -267,6 +291,23 @@
             document.getElementById('input-contract_duration').style.display = 'block';
         }
     };
+
+    function format_rp() {
+        var angka = document.getElementById("salary").value;
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        document.getElementById("salary").value = 'Rp. ' + rupiah;
+    }
 
     $(document).ready(function () {
         $('#datepicker-editprof-dob .input-group.date').datepicker({

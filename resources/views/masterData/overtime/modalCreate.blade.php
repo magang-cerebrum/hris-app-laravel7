@@ -1,8 +1,4 @@
-<div class="modal fade" id="modal-create-overtime" tabindex="-1" role="dialog" style="overflow-x: auto !important">
-    <form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal"
-        id="form-overtime">
-        @csrf
-    </form>
+<div class="modal fade" id="modal-create-overtime" role="dialog" style="overflow-x: auto !important">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,6 +6,10 @@
                 <h5 class="modal-title text-bold text-center">Form Tambah Lembur "<span id="name-title"></span>"</h5>
             </div>
             <div class="modal-body">
+                <form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal"
+                    id="form-overtime">
+                    @csrf
+                </form>
                 <input type="hidden" name="user_id" id="user_id" form="form-overtime">
                 <input type="hidden" name="salary" id="salary" form="form-overtime">
                 <input type="hidden" name="user_hour" id="user_hour" form="form-overtime">
@@ -56,10 +56,14 @@
     </div>
 </div>
 @section('script')
+<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#filter').selectpicker({
+            dropupAuto: false
+        });
         $(document).on('click', '#create_overtime', function () {
             var id = $(this).data('id');
             var nip = $(this).data('nip');
@@ -126,5 +130,28 @@
         document.getElementById('payment').value = payment;
     }
 
+    function filter_division() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter");
+        filter = input.value.toUpperCase();
+        if(filter == ' '){$("#overtime-create").addClass("hidden");}
+        else{$("#overtime-create").removeClass("hidden");}
+        table = document.getElementById("overtime-create");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            for (j = 2; j < 3; j++ ){
+                    td = tr[i].getElementsByTagName("td")[j];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
 </script>
 @endsection

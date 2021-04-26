@@ -65,6 +65,10 @@ class OvertimeController extends Controller
         ->where('year',$request->year)
         ->select(['user_id'])
         ->get();
+        $data_division = DB::table('master_divisions')
+        ->whereNotIn('id',[7])
+        ->select(['name'])
+        ->get();
         foreach ($data_overtime as $item) {
             foreach ($data_user as $ids) {
                 if($item->user_id == $ids->id){
@@ -81,6 +85,7 @@ class OvertimeController extends Controller
         }
         $data =  DB::table('master_users')
         ->leftJoin('master_job_schedules','master_users.id','=','master_job_schedules.user_id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->where('master_users.status','Aktif')
         ->whereNotIn('master_users.division_id',[7])
         ->whereNotIn('master_users.id',$user_overtime)
@@ -90,11 +95,13 @@ class OvertimeController extends Controller
             'master_users.nip as user_nip',
             'master_users.name as user_name',
             'master_users.salary as user_salary',
-            'master_job_schedules.total_hour as user_hour'
+            'master_job_schedules.total_hour as user_hour',
+            'master_divisions.name as division_name'
         ])
         ->get();
         return view('masterdata.overtime.create', [
             'data' => $data,
+            'data_division' => $data_division,
             'month' => $request->month,
             'year' => $request->year,
             'name'=>$user->name,

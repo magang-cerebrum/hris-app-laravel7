@@ -6,7 +6,12 @@
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <style>
         .img-presence {
-            width: 50%
+            width: 50%;
+        }
+        @media screen and (max-width: 600px) {
+            .img-presence {
+                width: 150px;
+            }
         }
     </style>
 @endsection
@@ -20,7 +25,7 @@
             @csrf
         </form>
 
-        <div class="panel-body">
+        <div class="panel-body" style="padding-top: 20px">
             <button id="btn-presence" class="btn btn-success btn-labeled add-tooltip" type="button"
                 data-toggle="tooltip" data-container="body" data-placement="top"
                 data-original-title="Terima Presensi Terpilih" onclick="check_data()" form="accept_presence" style="margin-bottom: 10px">

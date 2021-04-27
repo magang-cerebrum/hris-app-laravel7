@@ -28,20 +28,20 @@
         <div class="row mar-btm">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                    <div id="pickadate">
-                        <div class="input-group date">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button" style="z-index: 2">
-                                    <i class="fa fa-calendar"></i>
-                                </button>
-                            </span>
-                            <input type="text" name="query" placeholder="Masukan Tanggal untuk mencari Jadwal"
-                                class="form-control" autocomplete="off" id="query" form="schedule-search" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" id="btn-search" type="submit" form="schedule-search"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" style="z-index: 2">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                        <input type="text" name="query" placeholder="Masukan Tanggal untuk mencari Jadwal"
+                            class="form-control" autocomplete="off" id="query" form="schedule-search" readonly>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" id="btn-search" type="submit" form="schedule-search"><i class="fa fa-search"></i></button>
+                        </span>
                     </div>
+                </div>
             </div>
         </div>
     </div>

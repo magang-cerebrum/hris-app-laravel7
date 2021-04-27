@@ -2,13 +2,21 @@
 @section('title','Jadwal Kerja Divisi')
 @section('content-title','Jadwal Kerja Divisi / Edit Jadwal / Pilih Staff untuk Jadwal Kerja')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
-@section('content')
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
+<style>
+    @media screen and (max-width: 600px) {
+        #btn_search {
+            margin-top: 10px
+        }
+    }
+</style>
 @endsection
+
+@section('content')
 <div class="panel panel-primary panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Pilih Staff Untuk Edit Jadwal Kerja</h3>
@@ -18,39 +26,39 @@
         @csrf
     </form>
     
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-sm-12">
+                <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
+                    data-container="body" data-placement="top" data-original-title="Edit Jadwal Kerja" onclick="submit_add()" form="form-chek-user-month">
+                    <i class="btn-labeled fa fa-pencil"></i>
+                    Edit Jadwal Kerja
+                </button>
+                <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-1 control-label" for="query">Periode : </label>
+            <div class="col-sm-4">
+                <div id="pickadate">
+                    <div class="input-group date">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
+                        </span>
+                        <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
+                            autocomplete="off" id="periode" readonly onchange="filter_schedule()" form="form-chek-user-month">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4" id="btn_search">
+                <div class="form-group float-right">
+                    <input type="text" id="cari-divisi" class="form-control"
+                        placeholder="Cari Staff" onkeyup="filter_schedule()">
+                </div>
+            </div>
+        </div>
         <div class="table-responsive">
-            <div class="row">
-                <div class="col-sm-12">
-                    <button id="btn-post" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
-                        data-container="body" data-placement="top" data-original-title="Edit Jadwal Kerja" onclick="submit_add()" form="form-chek-user-month">
-                        <i class="btn-labeled fa fa-pencil"></i>
-                        Edit Jadwal Kerja
-                    </button>
-                    <span class="text-muted text-danger mar-hor">Pilih dahulu staff yang jadwalnya akan diatur melalui checkbox!</span>
-                </div>
-            </div>
-            <div class="row mar-btm">
-                <label class="col-sm-1 control-label" for="query">Periode : </label>
-                <div class="col-sm-4">
-                    <div id="pickadate">
-                        <div class="input-group date">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
-                            </span>
-                            <input type="text" name="periode" placeholder="Masukan Periode Jadwal Kerja" class="form-control"
-                                autocomplete="off" id="periode" readonly onchange="filter_schedule()" form="form-chek-user-month">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-4">
-                    <div class="form-group float-right">
-                        <input type="text" id="cari-divisi" class="form-control"
-                            placeholder="Cari Staff" onkeyup="filter_schedule()">
-                    </div>
-                </div>
-            </div>
             <table id="staff-filter-schedule"
             class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
             role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"

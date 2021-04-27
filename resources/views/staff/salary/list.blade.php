@@ -12,7 +12,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">{{'Daftar Gaji '.$name}}</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="padding-top: 20px">
             <div class="row mar-btm">
                 <label class="col-sm-1 control-label" for="query">Periode : </label>
                 <div class="col-sm-4">
@@ -28,59 +28,60 @@
                 </div>
             </div>
             @if(!$data->isEmpty())
-            <table id="salary-result" class="table table-striped table-bordered no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-                <thead>
-                    <tr role="row">
-                        @if ($data[0] == null)
-                        <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data gaji ditemukan!</th>
-                        @else
-                        <th class="sorting_asc text-center">File Slip Gaji</th>
-                        <th class="sorting_asc text-center">Nama</th>
-                        <th class="sorting_asc text-center">Divisi</th>
-                        <th class="sorting_asc text-center">Periode</th>
-                        <th class="sorting_asc text-center">Total Jam Kerja Seharusnya</th>
-                        <th class="sorting_asc text-center">Total Jam Kerja</th>
-                        <th class="sorting_asc text-center">Total Keterlambatan</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data as $item)
-                        @if ($item->status == "Accepted")
-                            <tr>
-                                <?php
-                                    $string_time_work = split_time($item->total_work_time);
-                                    $string_time_late = split_time($item->total_late_time);
-                                    $default_salary = rupiah($item->default_salary);
-                                    $total_fine = rupiah($item->total_fine);
-                                    $total_salary_allowance = rupiah($item->total_salary_allowance);
-                                    $total_salary_cut = rupiah($item->total_salary_cut);
-                                    $total_salary = rupiah($item->total_salary);
-                                ?>
-                                <td class="text-center">
-                                    <a href="{{ asset('/file_slip/'.$item->file_salary)}}" target="blank">
-                                        <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip"
-                                            data-toggle="tooltip" data-container="body" data-placement="top"
-                                            data-original-title="Buka CV">
-                                            <i class="fa fa-file icon-lg"></i>
-                                        </button>
-                                    </a>
-                                </td>
-                                <td class="text-center">{{$item->user_name}}</td>
-                                <td class="text-center">{{$item->division}}</td>
-                                <td class="text-center">{{$item->month . ' - ' . $item->year}}</td>
-                                <td class="text-center">{{$item->total_default_hour.' Jam'}}</td>
-                                <td class="text-center">{{$string_time_work}}</td>
-                                <td class="text-center">{{$string_time_late}}</td>
-                            </tr>
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
-        
+            <div class="table-responsive">
+                <table id="salary-result" class="table table-striped table-bordered no-footer dtr-inline collapsed"
+                    role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                    <thead>
+                        <tr role="row">
+                            @if ($data[0] == null)
+                            <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data gaji ditemukan!</th>
+                            @else
+                            <th class="sorting_asc text-center">File Slip Gaji</th>
+                            <th class="sorting_asc text-center">Nama</th>
+                            <th class="sorting_asc text-center">Divisi</th>
+                            <th class="sorting_asc text-center">Periode</th>
+                            <th class="sorting_asc text-center">Total Jam Kerja Seharusnya</th>
+                            <th class="sorting_asc text-center">Total Jam Kerja</th>
+                            <th class="sorting_asc text-center">Total Keterlambatan</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $item)
+                            @if ($item->status == "Accepted")
+                                <tr>
+                                    <?php
+                                        $string_time_work = split_time($item->total_work_time);
+                                        $string_time_late = split_time($item->total_late_time);
+                                        $default_salary = rupiah($item->default_salary);
+                                        $total_fine = rupiah($item->total_fine);
+                                        $total_salary_allowance = rupiah($item->total_salary_allowance);
+                                        $total_salary_cut = rupiah($item->total_salary_cut);
+                                        $total_salary = rupiah($item->total_salary);
+                                    ?>
+                                    <td class="text-center">
+                                        <a href="{{ asset('/file_slip/'.$item->file_salary)}}" target="blank">
+                                            <button type="button" class="btn btn-pink btn-icon btn-circle add-tooltip"
+                                                data-toggle="tooltip" data-container="body" data-placement="top"
+                                                data-original-title="Buka CV">
+                                                <i class="fa fa-file icon-lg"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">{{$item->user_name}}</td>
+                                    <td class="text-center">{{$item->division}}</td>
+                                    <td class="text-center">{{$item->month . ' - ' . $item->year}}</td>
+                                    <td class="text-center">{{$item->total_default_hour.' Jam'}}</td>
+                                    <td class="text-center">{{$string_time_work}}</td>
+                                    <td class="text-center">{{$string_time_late}}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             @else
-            <div class="text-center text-danger text-bold">Ma'af, tidak ada data gaji ditemukan untuk periode {{switch_month($month) . ' - ' . $year}}</div>
+            <div class="text-center text-danger text-bold">Ma'af anda belum memiliki data gaji</div>
             @endif
         </div>
     </div>

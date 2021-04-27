@@ -49,11 +49,11 @@
         @csrf
     </form>
     
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <input name="count" value="{{count($data)}}" hidden>
         <div class="row mar-btm">
             <div class="col-sm-2">
-                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
                     data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal Yang Telah Di Edit" onclick="submit_add()" form="form-bulan-tahun">
                     <i class="btn-label fa fa-send-o"></i>
                     Edit Jadwal
@@ -105,7 +105,7 @@
                                 $name_days = change_name_day(date('l', strtotime($check_this_day)));
                             ?>
                             <td class="text-center">
-                                <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span>
+                                <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span><br>
                                 <select class="selectpicker {{'sub-master_'.$i}} {{$name_shift == '' ? 'hidden' : ''}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
                                     <option value=" "> </option>
                                     @foreach ($data_shift as $shift)

@@ -55,7 +55,7 @@
                     </button>
                 </div>
                 <div id="btn_paid_leave">
-                    <button id="btn-pending btn_paid_leave" class="btn btn-warning btn-labeled add-tooltip"
+                    <button id="btn-pending" class="btn btn-warning btn-labeled add-tooltip"
                         type="button" data-toggle="tooltip" data-container="body" data-placement="top"
                         data-original-title="Pending Pengajuan Cuti" onclick="submit_pending()" form="form-approve-pending">
                         <i class="btn-label fa fa-spinner"></i>

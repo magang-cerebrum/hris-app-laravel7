@@ -23,7 +23,7 @@
                 <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$item->month.' - '.$item->year}}</h3>
             @endforeach
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="padding-top: 20px">
             @if ($data_this_month->isEmpty())
                 <div class="text-center text-bold text-danger">Anda belum memiliki jadwal! Segera hubungi Chief untuk mendapatkan jadwal kerja!</div>
             @else

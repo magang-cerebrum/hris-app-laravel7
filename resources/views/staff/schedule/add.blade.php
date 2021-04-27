@@ -49,13 +49,13 @@
         @csrf
     </form>
     
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <input name="count" value="{{count($data_user)}}" form="form-bulan-tahun" hidden>
         <input name="month" value="{{$month}}" form="form-bulan-tahun" hidden>
         <input name="year" value="{{$year}}" form="form-bulan-tahun" hidden>
         <div class="row mar-btm">
             <div class="col-sm-2">
-                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" style="margin-bottom: 10px" type="submit" data-toggle="tooltip"
+                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
                     data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal" form="form-bulan-tahun">
                     <i class="btn-label fa fa-send-o"></i>
                     Kirim Jadwal

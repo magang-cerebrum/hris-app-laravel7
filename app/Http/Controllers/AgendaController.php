@@ -179,7 +179,6 @@ class AgendaController extends Controller
                 ->orWhereRaw("end_event LIKE '" . date('Y-m') . "%'");
         })
         ->get();
-        
         return view('staff.agenda.calendar',[
             'month'=>date('m'),
             'year'=>date('Y'),

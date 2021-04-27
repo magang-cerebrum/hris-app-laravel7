@@ -123,3 +123,6 @@
     color: white;
     background-color: #C0C0C0; 
 }
+.pace .pace-progress, .nano>.nano-pane>.nano-slider {
+    background-color: #070525;
+}

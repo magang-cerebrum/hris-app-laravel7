@@ -5,23 +5,50 @@
 @section('head')
 {{-- Sweetalert 2 --}}
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+<style>
+    @media screen and (max-width: 600px){
+        #btn-delete {
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+    }
+</style>
 @endsection
+
 @section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Lowongan Tersedia</h3>
     </div>
     
-    <form action="{{url('/admin/job/search')}}" method="get" id="search"></form>\
+    <form action="{{url('/admin/job/search')}}" method="get" id="search"></form>
     <form action="{{ url('/admin/job/delete')}}" method="POST" id="form-mul-delete">
         @method('delete')
         @csrf
     </form>
 
-    <div class="panel-body">
-        <div class="row mar-btm" style="margin-top:-60px">
+    <div class="panel-body" style="padding-top: 20px">
+        <div class="row mar-btm">
+            <div class="col-sm-8">
+                <a href="{{url('/admin/job/add')}}" class="btn btn-primary btn-labeled add-tooltip"
+                    data-toggle="tooltip" data-container="body" data-placement="top"
+                    data-original-title="Tambah Lowongan Baru">
+                    <i class="btn-label fa fa-plus"></i>
+                    Tambah Lowongan
+                </a>
+                @if (count($dataJob) != 0)
+                <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
+                    data-toggle="tooltip" data-container="body" data-placement="top"
+                    data-original-title="Hapus Lowongan" onclick="submit_delete()" form="form-mul-delete">
+                    <i class="btn-label fa fa-trash"></i>
+                    Hapus Data Terpilih
+                </button>
+                @else
+                <div id="btn-delete"></div>
+                @endif
+            </div>
             <div class="col-sm-4">
-                <div class="input-group" style="position: relative;right:-710px;bottom:-48px">
+                <div class="input-group">
                     <input type="text" name="query" placeholder="Cari Lowongan (Posisi / Deskripsi / Persyaratan)"
                         class="form-control" autocomplete="off" form="search">
                     <span class="input-group-btn">
@@ -30,31 +57,12 @@
                 </div>
             </div>
         </div>
-        <div class="row mar-btm">
-            <div class="col-sm-2 mar-rgt">
-                <a href="{{url('/admin/job/add')}}" class="btn btn-primary btn-labeled add-tooltip"
-                    data-toggle="tooltip" data-container="body" data-placement="top"
-                    data-original-title="Tambah Lowongan Baru">
-                    <i class="btn-label fa fa-plus"></i>
-                    Tambah Lowongan
-                </a>
-            </div>
-            @if (count($dataJob) == 0)
-        </div>
+        @if (count($dataJob) == 0)
         <div class="text-center">
             <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
             <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
         </div>
         @else
-        <div class="col-sm-2">
-            <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
-                data-toggle="tooltip" data-container="body" data-placement="top"
-                data-original-title="Hapus Lowongan" onclick="submit_delete()" form="form-mul-delete">
-                <i class="btn-label fa fa-trash"></i>
-                Hapus Data Terpilih
-            </button>
-        </div>
-    </div>
         <div class="table-responsive">
             <table id="masterdata-job" class="table table-striped table-bordered no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
@@ -87,7 +95,7 @@
         <div class="text-center">{{ $dataJob->withQueryString()->links() }}</div>
         <div class="row">
             <div class="col-sm-12 text-right">
-                <a href="{{url('/admin/salary-cut')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Potongan Gaji</a>
+                <a href="{{url('/admin/job')}}" class="btn btn-warning btn-labeled text-center">Tampilkan Semua Potongan Gaji</a>
             </div>
         </div>
         @endif

@@ -1,4 +1,3 @@
-<!-- modal -->
 <div class="modal fade" id="modal-detail-staff" tabindex="-1" role="dialog" style="overflow-x: auto !important">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -67,12 +66,8 @@
                             <td><span id="position_name"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="cc_bank">Bank: </label></td>
-                            <td><span id="cc_bank"></span></td>
                             <td><label for="cc_number">No. Rekening: </label></td>
                             <td><span id="cc_number"></span></td>
-                        </tr>
-                        <tr>
                             <td><label for="salary">Gaji Pokok: </label></td>
                             <td><span id="salary"></span></td>
                         </tr>
@@ -89,25 +84,8 @@
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
-    function toogle_nonaktif() {
-            if (document.getElementById('toogle-nonaktif-radio-2').checked) {
-                document.getElementById('masterdata-staff').style.display = 'none';
-                document.getElementById('masterdata-staff-active').style.display = '';
-                document.getElementById('count-all').style.display = 'none';
-                document.getElementById('count-active').style.display = '';
-                document.getElementById('nactive-pagination').style.display = 'none';
-                document.getElementById('active-pagination').style.display = '';
-            } else {
-                document.getElementById('masterdata-staff').style.display = '';
-                document.getElementById('masterdata-staff-active').style.display = 'none';
-                document.getElementById('count-all').style.display = '';
-                document.getElementById('count-active').style.display = 'none';
-                document.getElementById('nactive-pagination').style.display = '';
-                document.getElementById('active-pagination').style.display = 'none';
-            }
-        };
 
-    $(document).ready(function () {
+$(document).ready(function () {
         $("#masterdata-staff").hide();
         $("#count-all").hide();
         $("#nactive-pagination").hide();
@@ -131,13 +109,11 @@
             var division_name = $(this).data('division_name');
             var position_name = $(this).data('position_name');
             var role_name = $(this).data('role_name');
-            var cc_bank = $(this).data('cc_bank');
             var cc_number = $(this).data('cc_number');
             var salary = $(this).data('salary');
 
             var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
-            //format durasi kontrak
             if (contract_duration == '') {
                 contract_duration = '-'
             } else {
@@ -166,19 +142,16 @@
             $('#division_name').text(division_name);
             $('#position_name').text(position_name);
             $('#role_name').text(role_name);
-            $('#cc_bank').text(cc_bank);
             $('#cc_number').text(cc_number);
             $('#salary').text(format_rupiah(salary));
         });
         
-        // check all
         $("#check-all").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item").prop("checked", true);
             else
                 $(".check-item").prop("checked", false);
         });
-        // check all
         $("#check-all-active").click(function () {
             if ($(this).is(":checked"))
                 $(".check-item-active").prop("checked", true);
@@ -186,8 +159,25 @@
                 $(".check-item-active").prop("checked", false);
         });
     });
-    
-    // Sweetalert 2
+
+    function toogle_nonaktif() {
+        if (document.getElementById('toogle-nonaktif-radio-2').checked) {
+            document.getElementById('masterdata-staff').style.display = 'none';
+            document.getElementById('masterdata-staff-active').style.display = '';
+            document.getElementById('count-all').style.display = 'none';
+            document.getElementById('count-active').style.display = '';
+            document.getElementById('nactive-pagination').style.display = 'none';
+            document.getElementById('active-pagination').style.display = '';
+        } else {
+            document.getElementById('masterdata-staff').style.display = '';
+            document.getElementById('masterdata-staff-active').style.display = 'none';
+            document.getElementById('count-all').style.display = '';
+            document.getElementById('count-active').style.display = 'none';
+            document.getElementById('nactive-pagination').style.display = '';
+            document.getElementById('active-pagination').style.display = 'none';
+        }
+    };
+
     function submit_delete(){
         event.preventDefault();
         var check1 = document.querySelector('.check-item:checked');
@@ -335,7 +325,26 @@
         );
     }
 
-    // function salary_increase(id,name,employee_status)
+    function salary_increase(id,name){
+        var url = "/admin/data-staff/promote/:id".replace(':id', id);
+        Swal.fire({
+            width: 600,
+            title: 'Konfirmasi Menaikan Gaji Staff',
+            text: 'Anda yakin ingin menaikan gaji staff "'+ name + '" ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                window.location.href = url;
+            } else {
+                return false;
+            }} 
+        );
+    }
 
 </script>
 @endsection

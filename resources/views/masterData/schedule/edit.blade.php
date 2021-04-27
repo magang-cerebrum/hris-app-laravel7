@@ -49,7 +49,7 @@
         @csrf
     </form>
     
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <input name="count" value="{{count($data)}}" form="form-bulan-tahun" hidden>
         <div class="row mar-btm">
             <div class="col-sm-2">
@@ -105,7 +105,7 @@
                                 $name_days = change_name_day(date('l', strtotime($check_this_day)));
                             ?>
                             <td class="text-center">
-                                <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span>
+                                <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span><br>
                                 <select class="selectpicker {{'sub-master_'.$i}} {{$name_shift == '' ? 'hidden' : ''}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
                                     <option value=" "> </option>
                                     @foreach ($data_shift as $shift)

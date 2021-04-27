@@ -111,7 +111,9 @@ class AdminAuthDashboardController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'nip' => 'required',
             'dob' => 'required',
+            'address' => 'required|max:200',
             'phone_number' => 'numeric',
             'gender' => 'required',
             'email' => 'email',
@@ -123,18 +125,20 @@ class AdminAuthDashboardController extends Controller
             'yearly_leave_remaining' => 'numeric',
             'division_id' => 'numeric',
             'position_id' => 'numeric',
-            'role_id' => 'numeric'
+            'role_id' => 'numeric',
+            'credit_card_number' => 'numeric',
+            'salary' => 'required'
         ]);
+        $salary = preg_replace('/[Rp. ]/','',$request->salary);
         MasterUser::where('id', $user->id)
             ->update([
                 'name' => $request->name,
+                'nip' => $request->nip,
                 'dob' => $request->dob,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
                 'gender' => $request->gender,
                 'email' => $request->email,
-                'password' => $request->password,
-                'profile_photo' => $request->profile_photo,
                 'employee_status' => $request->employee_status,
                 'employee_type' => $request->employee_type,
                 'status' => $request->status,
@@ -144,7 +148,9 @@ class AdminAuthDashboardController extends Controller
                 'yearly_leave_remaining' => $request->yearly_leave_remaining,
                 'division_id' => $request->division_id,
                 'position_id' => $request->position_id,
-                'role_id' => $request->role_id
+                'role_id' => $request->role_id,
+                'credit_card_number' => $request->credit_card_number,
+                'salary' => $salary
             ]);
             Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/admin/profile');

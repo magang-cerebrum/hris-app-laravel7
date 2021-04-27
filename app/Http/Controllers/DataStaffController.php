@@ -86,6 +86,7 @@ class DataStaffController extends Controller
             'dob' => 'required',
             'phone_number' => 'numeric',
             'gender' => 'required',
+            'address' => 'required|max:200',
             'email' => 'email',
             'password' => 'required',
             'employee_status' => 'required',
@@ -96,7 +97,6 @@ class DataStaffController extends Controller
             'division_id' => 'numeric',
             'position_id' => 'numeric',
             'role_id' => 'numeric',
-            'credit_card_bank' => 'required',
             'credit_card_number' => 'required|numeric',
             'salary' => 'required'
         ]);
@@ -131,7 +131,6 @@ class DataStaffController extends Controller
             'end_work_date' => $end_work_date,
             'yearly_leave_remaining' => $request->yearly_leave_remaining,
             'salary' => $salary,
-            'credit_card_bank' => $request->credit_card_bank,
             'credit_card_number' => $request->credit_card_number,
             'division_id' => $request->division_id,
             'position_id' => $request->position_id,
@@ -172,6 +171,7 @@ class DataStaffController extends Controller
             'dob' => 'required',
             'phone_number' => 'numeric',
             'gender' => 'required',
+            'address' => 'required|max:200',
             'email' => 'email',
             'employee_status' => 'required',
             'employee_type' => 'required',
@@ -181,7 +181,6 @@ class DataStaffController extends Controller
             'division_id' => 'numeric',
             'position_id' => 'numeric',
             'role_id' => 'numeric',
-            'credit_card_bank' => 'required',
             'credit_card_number' => 'required|numeric',
             'salary' => 'required'
         ]);
@@ -306,9 +305,54 @@ class DataStaffController extends Controller
             return back();
         }
         $user = Auth::user();
+        if ($staff->employee_status == 'Tetap') {
+            //ambil bulan setaun dari mulai tanggal kerja
+            $months = array();
+            $periode = array();
+            $month_of_work = explode('-',$staff->start_work_date)[1];
+            for ($i=0; $i < 12; $i++) { 
+                $months[$i] = switch_month($month_of_work);
+                if ($month_of_work == 12) {
+                    $month_of_work = 1;
+                } else {
+                    $month_of_work++;
+                }
+            }
+            //ambil data performanya
+            $data_performance = array();
+            $year = date('Y') - 1;
+            for ($i=0; $i < 12; $i++) { 
+                $get_data_score = DB::table('master_performances')
+                ->where('month',$months[$i])
+                ->where('year',$year)
+                ->where('user_id',$staff->id)
+                ->select('performance_score')
+                ->get();
+
+                if ($get_data_score->isEmpty()) {
+                    $data_performance[$i] = null;
+                } else {
+                    $data_performance[$i] = $get_data_score[0]->performance_score;
+                }
+                $periode[$i] = $months[$i] . ' - ' . $year;
+                if ($months[$i] == 'Desember') {
+                    $year++;
+                }
+            }
+            $total_score = array_sum($data_performance);
+            $average_score = round($total_score / count($data_performance),1);
+        } else {
+            $periode = null;
+            $data_performance = null;
+            $total_score = null;
+            $average_score = null;
+        }
         return view('masterdata.datastaff.promote',[
-            
             'staff' => $staff,
+            'periode' => $periode,
+            'performance' => $data_performance,
+            'total' => $total_score,
+            'average' => $average_score,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -341,16 +385,25 @@ class DataStaffController extends Controller
             'direct_add' => 'required_if:salary_raise_type,Penambahan',
             'salary_after' => 'required'
         ]);
-        $salary_after = preg_replace('/[Rp. ]/','',$request->salary_after);
-        $end_work_date = date_add(date_create(date('Y/m/d')),date_interval_create_from_date_string('12 months'));
-        
-        MasterUser::where('nip',$request->nip)->update([
-            'employee_status' => $request->new_employee_status,
-            'contract_duration' => ($request->new_employee_status == 'Kontrak' ? 12 : null),
-            'end_work_date' => ($request->new_employee_status == 'Kontrak' ? $end_work_date : null),
-            'salary' => $salary_after
-        ]);
-        Alert::success('Berhasil!', 'Staff ' . $request->name . ' berhasil dipromosikan!');
+
+        if ($request->status_befpre == 'Tetap') {
+            $salary_after = preg_replace('/[Rp. ]/','',$request->salary_after);
+            MasterUser::where('nip',$request->nip)->update([
+                'salary' => $salary_after
+            ]);
+            Alert::success('Berhasil!', 'Kenaikan gaji staff "' . $request->name . '" berhasil!');
+        } else {
+            $salary_after = preg_replace('/[Rp. ]/','',$request->salary_after);
+            $end_work_date = date_add(date_create(date('Y/m/d')),date_interval_create_from_date_string('12 months'));
+            
+            MasterUser::where('nip',$request->nip)->update([
+                'employee_status' => $request->new_employee_status,
+                'contract_duration' => ($request->new_employee_status == 'Kontrak' ? 12 : null),
+                'end_work_date' => ($request->new_employee_status == 'Kontrak' ? $end_work_date : null),
+                'salary' => $salary_after
+            ]);
+            Alert::success('Berhasil!', 'Staff ' . $request->name . ' berhasil dipromosikan!');
+        }
         return redirect('/admin/data-staff');
     }
 }

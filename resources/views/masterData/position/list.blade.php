@@ -2,11 +2,19 @@
 @section('content-title','Master Data / Jabatan')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('title','Master Data')
-@section('content')
 @section('head')
 <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    @media screen and (max-width: 600px) {
+        #btn-delete {
+            margin: 10px 0;
+        }
+    }
+</style>
 @endsection
+
+@section('content')
 <div class="panel panel-danger panel-bordered">
     <div class="panel-heading">
         <h3 class="panel-title">Daftar Jabatan</h3>
@@ -17,7 +25,7 @@
         @method('delete')
     </form>
 
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row">

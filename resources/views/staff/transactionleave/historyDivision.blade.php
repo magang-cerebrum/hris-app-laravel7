@@ -7,12 +7,12 @@
     <div class="panel-heading">
         <h3 class="panel-title">Riwayat Pengajuan Cuti Staff</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         @if (count($data) == 0)
-        <div class="text-center">
-            <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
-            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
-        </div>
+            <div class="text-center">
+                <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
+                <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+            </div>
         @else
             <div class="table-responsive">
                 <table id="masterdata-history-cuti"
@@ -51,15 +51,15 @@
                     </tbody>
                 </table>
             </div>
-        <div class="row" style="margin-top: -50px">
-            <div class="col-sm-5"></div>
-            <div class="col-sm-2">
-                <ul class="pagination">
-                    {{ $data->links() }}
-                </ul>
+            <div class="row" style="margin-top: -50px">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2">
+                    <ul class="pagination">
+                        {{ $data->links() }}
+                    </ul>
+                </div>
+                <div class="col-sm-5"></div>
             </div>
-            <div class="col-sm-5"></div>
-        </div>
         @endif
     </div>
 </div>

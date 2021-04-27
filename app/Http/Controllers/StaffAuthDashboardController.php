@@ -431,6 +431,7 @@ class StaffAuthDashboardController extends Controller
   
         
     
+    
     public function profile()
     {
         if(Gate::denies('is_staff')){
@@ -478,10 +479,10 @@ class StaffAuthDashboardController extends Controller
         $request->validate([
             'name' => 'required',
             'dob' => 'required',
+            'address' => 'required|max:200',
             'phone_number' => 'numeric',
             'gender' => 'required',
             'email' => 'email',
-            'password' => 'required'
         ]);
         MasterUser::where('id', $user->id)
             ->update([
@@ -491,7 +492,7 @@ class StaffAuthDashboardController extends Controller
                 'phone_number' => $request->phone_number,
                 'gender' => $request->gender,
                 'email' => $request->email,
-                'profile_photo' => $request->profile_photo,
+                'credit_card_number' => $request->credit_card_number
             ]);
         Alert::success('Berhasil!', 'Info profil anda berhasil di rubah!');
         return redirect('/staff/profile');

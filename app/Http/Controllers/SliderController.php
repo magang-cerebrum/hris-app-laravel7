@@ -110,7 +110,7 @@ class SliderController extends Controller
         $tujuan_upload = 'img/poster';
         $poster->move($tujuan_upload, $poster_name);
 
-        DB::table('sliders')->where('id',$poster->id)->update(['file'=>$poster_name]);
+        DB::table('sliders')->where('id',$past[0]->id)->update(['file'=>$poster_name]);
 
         Alert::success('Berhasil!', 'Poster '. $past[0]->name . ' telah diganti !');
         return redirect('/admin/poster');

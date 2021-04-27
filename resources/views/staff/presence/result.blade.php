@@ -1,8 +1,9 @@
 <div class="panel panel-bordered panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Hasil Pencarian Presensi | {{indonesian_date($start)}} hingga {{indonesian_date($end)}}</h3>
+    <div class="panel-heading" id="panel_heading">
+        <h3 class="panel-title">Hasil Pencarian Presensi <span id="panel_head_1">| {{indonesian_date($start)}} hingga {{indonesian_date($end)}}</span></h3>
+        <h3 class="panel-title" id="panel_head_2">{{indonesian_date($start)}} hingga {{indonesian_date($end)}}</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div class="table-responsive">
             <table id="presensi-result"
                 class="table table-striped table-responsive table-bordered no-footer dtr-inline collapsed" role="grid"

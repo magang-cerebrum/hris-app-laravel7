@@ -1688,7 +1688,7 @@
 		format: 'mm/dd/yyyy',
 		keepEmptyValues: false,
 		keyboardNavigation: true,
-		language: 'en',
+		language: 'id',
 		minViewMode: 0,
 		maxViewMode: 4,
 		multidate: false,
@@ -1729,6 +1729,16 @@
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear",
+			titleFormat: "MM yyyy"
+		},
+		id: {
+			days:["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"],
+			daysShort:["Mgu","Sen","Sel","Rab","Kam","Jum","Sab"],
+			daysMin:["Mg","Sn","Sl","Ra","Ka","Ju","Sa"],
+			months:["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"],
+			monthsShort:["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Ags","Sep","Okt","Nov","Des"],
+			today:"Hari Ini",
+			clear:"Kosongkan",
 			titleFormat: "MM yyyy"
 		}
 	};

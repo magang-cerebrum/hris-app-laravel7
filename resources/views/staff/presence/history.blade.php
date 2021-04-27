@@ -80,7 +80,6 @@
 @section('script')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-<script src="{{asset("plugins/bootstrap-datepicker/locales/bootstrap-datepicker.id.min.js")}}" charset="UTF-8"></script>
 {{-- Sweetalert 2 --}}
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
@@ -108,8 +107,7 @@
             todayBtn: "linked",
             autoclose: true,
             todayHighlight: true,
-            endDate: '0d',
-            language: 'id'
+            endDate: '0d'
         });
         $('#input-presence').on('click',function () {
             var presence = {!!json_encode($bool_presence) !!}

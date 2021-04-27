@@ -13,6 +13,8 @@
 
     <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
+    {{-- Sweetalert 2 --}}
+    <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
 
     <script type="text/javascript" src="{{asset('plugins/webcam/webcam.js')}}"></script>
     <style type="text/css">
@@ -87,6 +89,7 @@
     <script src="{{ asset('js/jquery.min.js')}}"></script>
     <script src="{{ asset('js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('js/nifty.min.js')}}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
     
     <script>
         function take_snapshot() {
@@ -127,7 +130,7 @@
                     $('#take_presence').submit();
             }
             else {
-                if (jarak <= 10 ) {
+                if (jarak <= 10000 ) {
                     take_snapshot()
                     $('#take_presence').submit();
                 }

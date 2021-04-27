@@ -884,8 +884,8 @@ class MasterJobScheduleController extends Controller
                 'total_hour'=>$totalHour
             ]);
         }
+        Alert::info('Silahkan lakukan cek jadwal!');
         return redirect('/admin/schedule');
-        // dd($arrayData);
     }
 
 

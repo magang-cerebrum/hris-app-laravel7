@@ -45,8 +45,6 @@
     <script src="{{ asset('js/jquery.min.js')}}"></script>
     <script src="{{ asset('js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('js/nifty.min.js')}}"></script>
-    
-    <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
 
 </body>
 </html>

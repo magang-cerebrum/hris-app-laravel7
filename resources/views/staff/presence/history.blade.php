@@ -42,10 +42,10 @@
                 <div class="col-sm-11">
                     <div class="input-group input-daterange">
                         <input type="text" class="form-control @error('start') is-invalid @enderror"
-                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off" form="cari-presensi">
+                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off" form="cari-presensi" onchange="toToday()">
                         <span class="input-group-addon">sampai</span>
                         <input type="text" class="form-control @error('end') is-invalid @enderror"
-                            placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}" autocomplete="off" form="cari-presensi">
+                            placeholder="Tanggal Berakhir" id="end" name="end" value="{{old('end')}}" autocomplete="off" form="cari-presensi">
                     </div>
                 </div>
             </div>
@@ -63,6 +63,7 @@
 @section('script')
 <!--Bootstrap Timepicker [ OPTIONAL ]-->
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
+<script src="{{asset("plugins/bootstrap-datepicker/locales/bootstrap-datepicker.id.min.js")}}" charset="UTF-8"></script>
 {{-- Sweetalert 2 --}}
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
@@ -90,7 +91,8 @@
             todayBtn: "linked",
             autoclose: true,
             todayHighlight: true,
-            endDate: '0d'
+            endDate: '0d',
+            language: 'id'
         });
         $('#input-presence').on('click',function () {
             var presence = {!!json_encode($bool_presence) !!}
@@ -126,5 +128,14 @@
             }
         });
     });
-    </script>
+
+    function toToday(){
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '/' + mm + '/' +  dd;
+        document.getElementById('end').value = today;
+    }
+</script>
 @endsection

@@ -88,7 +88,6 @@
     <script src="{{ asset('js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('js/nifty.min.js')}}"></script>
     
-    <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
     <script>
         function take_snapshot() {
             Webcam.snap(function(data_uri) {

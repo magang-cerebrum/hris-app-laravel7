@@ -3,6 +3,7 @@
 @section('content-title','Pencapaian / Karyawan Terbaik')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 @section('head')
+<link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset("css/footable.core.css")}}">
     <style>
         .hiddenRow{
@@ -18,7 +19,17 @@
     </div>
     <div class="panel-body">
         <form action="/admin/achievement/eom/chosed" method="POST">
-            <input type="hidden" name="date" value="{{date('m/Y')}}">
+            <div id="pickadate">
+                <div class="input-group date">
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button" style="z-index: 2"><i
+                                class="fa fa-calendar"></i></button>
+                    </span>
+                    <input type="text" name="date" id="first_periode"  placeholder="Pilih Tanggal" 
+                        class="form-control" autocomplete="off" readonly>
+                </div>
+            </div>
+            {{-- <input type="hidden" name="date" value="{{date('m/Y')}}"> --}}
             @csrf
         <table class="table table-hover table-vcenter">
             <thead>
@@ -75,6 +86,7 @@
 
 @endsection
 @section('script')
+<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     {{-- <script src="{{asset("/js/footable.all.min.js")}}"></script>
     $(document).ready(function(){
         $('#accordion_table').footable().on('footable_row_expanded', function(e) {
@@ -85,7 +97,17 @@
         
     }); --}}
     <script>
-    
+    $('#pickadate .input-group.date').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            minViewMode: 'months',
+            maxViewMode: 'years',
+            startView: 'months',
+            orientation: 'bottom',
+            forceParse: false,
+            startDate:'-1m',
+            endDate:'0d'
+        });
     </script>
     
 @endsection

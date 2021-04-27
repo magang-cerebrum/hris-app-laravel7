@@ -31,12 +31,14 @@ class StaffAuthDashboardController extends Controller
             $browser = $device->platform();
             $actualEOM =DB::table('master_eoms')->where('user_id',Auth::user()->id)->get(); 
             //Achievement Data
+
             $sum_all_score = DB::table('master_achievements')
             ->leftjoin('master_users',
             'master_achievements.achievement_user_id','=','master_users.id')
             ->where('year',$year)
             ->where('name',Auth::user()->name)
             ->sum('score');
+
         $current_month_achievement =DB::table('master_achievements')
         ->leftjoin('master_users',
         'master_achievements.achievement_user_id','=','master_users.id')
@@ -56,7 +58,6 @@ class StaffAuthDashboardController extends Controller
         ->where('master_divisions.id',Auth::user()->division_id)
         ->orderBy('score','desc')
         ->take(3)->get();
-        // dd($current_month_achievement);
         
         $before_current_month_achievement =DB::table('master_achievements')
         ->leftjoin('master_users',
@@ -77,41 +78,7 @@ class StaffAuthDashboardController extends Controller
         ->orderBy('score','desc')
         ->take(3)->get();
 
-        $userCMAch = DB::table('master_achievements')
-        ->leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
-        ->leftJoin('master_divisions',
-        'master_users.division_id','=','master_divisions.id')
-        ->select([
-            'master_achievements.score',
-            'master_achievements.month',
-            'master_achievements.year',
-            'master_users.name',
-            'master_users.profile_photo',
-            'master_divisions.name as division_name'
-        ])
-        ->where('master_users.name',$user->name)
-        ->where('year',$this_year)
-        ->where('month',$current_month)->get();
         
-        $userLMAch = DB::table('master_achievements')
-        ->leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
-        ->leftJoin('master_divisions',
-        'master_users.division_id','=','master_divisions.id')
-        ->select([
-            'master_achievements.score',
-            'master_achievements.month',
-            'master_achievements.year',
-            'master_users.name',
-            'master_users.profile_photo',
-            'master_divisions.name as division_name'
-
-        ])
-        ->where('master_users.name',$user->name)
-        ->where('year',$this_year)
-        ->where('month',$before_current_month)->get();
-
         $positionLastMonth =DB::table('master_achievements')
         ->leftjoin('master_users',
         'master_achievements.achievement_user_id','=','master_users.id')
@@ -149,7 +116,7 @@ class StaffAuthDashboardController extends Controller
                 $max_score=0;
                 $temp[$i] = 0;
             } else {
-                // //insert score matches month
+                // insert score matches month
                 foreach($data_month_user as $dmu){
                     $temp[$i] = $dmu->score;
                 }
@@ -180,7 +147,7 @@ class StaffAuthDashboardController extends Controller
             // dd($scoreAchievement);
         }
         $data_poster = DB::table('sliders')->get();
-        $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
+        $year_list_achievement = DB::table('master_achievements')->select('year')->distinct()->get();
 
             //Performace Data
             $sum_all_score_performance = DB::table('master_performances')
@@ -209,8 +176,6 @@ class StaffAuthDashboardController extends Controller
             ->where('master_divisions.id',Auth::user()->division_id)
             ->orderBy('performance_score','desc')
             ->take(3)->get();
-            // dump($current_month_performance);
-            // die;
 
             $before_current_month_performance =DB::table('master_performances')
             ->leftjoin('master_users',
@@ -231,41 +196,6 @@ class StaffAuthDashboardController extends Controller
             ->orderBy('performance_score','desc')
             ->take(3)->get();
             
-            $userCMPerf = DB::table('master_performances')
-            ->leftjoin('master_users',
-            'master_performances.user_id','=','master_users.id')
-            ->leftJoin('master_divisions',
-            'master_users.division_id','=','master_divisions.id')
-            ->select([
-                'master_performances.performance_score',
-                'master_performances.month',
-                'master_performances.year',
-                'master_users.name',
-                'master_users.profile_photo',
-                'master_divisions.name as division_name'
-            ])
-            ->where('master_users.name',$user->name)
-            ->where('year',$this_year)
-            ->where('month',$current_month)->get();
-            // dd($userCMPerf);
-            $userLMPerf = DB::table('master_performances')
-            ->leftjoin('master_users',
-            'master_performances.user_id','=','master_users.id')
-            ->leftJoin('master_divisions',
-            'master_users.division_id','=','master_divisions.id')
-            ->select([
-                'master_performances.performance_score',
-                'master_performances.month',
-                'master_performances.year',
-                'master_users.name',
-                'master_users.profile_photo',
-                'master_divisions.name as division_name'
-
-            ])
-            ->where('master_users.name',$user->name)
-            ->where('year',$this_year)
-            ->where('month',$before_current_month)->get();
-
             $positionLastMonthPerformances =DB::table('master_performances')
             ->leftjoin('master_users',
             'master_performances.user_id','=','master_users.id')
@@ -334,8 +264,7 @@ class StaffAuthDashboardController extends Controller
             }
             $data_poster = DB::table('sliders')->get();
             $year_list_performance = DB::table('master_performances')->select('year')->distinct()->get();
-            // dd($count_current_month_achievement);
-            // dump($current_month_performance);
+            
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
                 'name'=>$user->name,
@@ -345,7 +274,8 @@ class StaffAuthDashboardController extends Controller
                 'scorePerformance'=>$scorePerformance,
                 'scoreAchievement'=>$scoreAchievement,
                 'current_year'=>$this_year,
-                'year_list'=>$year_list_performance,
+                'year_list_performance'=>$year_list_performance,
+                'year_list_achievement'=>$year_list_achievement,
                 'sum_of_eom'=>$sum_of_eom,
                 'month_of_eom'=>$month_of_eom,
                 'last_month_name'=>$before_current_month,
@@ -359,8 +289,8 @@ class StaffAuthDashboardController extends Controller
                 'rankLMPerformance'=>$rankLastMonthPerformances,
                 'all_score_performance'=>$sum_all_score_performance,
                 'all_score_achievements'=>$sum_all_score,
-                'user_lmPerformance'=>$userLMPerf,
-                'user_cmPerformance'=>$userCMPerf,
+                // 'user_lmPerformance'=>$userLMPerf,
+                // 'user_cmPerformance'=>$userCMPerf,
                 'actualEomCount'=>count($actualEOM),
                 'actualEom'=>$actualEOM,
                 'current_month_achievement'=>$current_month_achievement,
@@ -368,11 +298,8 @@ class StaffAuthDashboardController extends Controller
             ]);
         }
     }
-    public function ajx(Request $request){
-        //Achievement
-        
+    public function ajxperf(Request $request){
         //Performance
-        $scorePerformance = array();
         $month_of_eom = array();
         $year = $request->input('year');
         $user =Auth::user()->name;
@@ -428,6 +355,64 @@ class StaffAuthDashboardController extends Controller
             'all_score'=>$sum_all_score_performance
         ]);
         }
+
+    public function ajxAch(Request $request){
+        $user =Auth::user()->name;
+        $id = Auth::user()->id;
+        $yearach = $request->input('yearach');
+        // dd($yearach);
+        $month_of_eom = array();
+        $sum_all_score = DB::table('master_achievements')
+        ->leftjoin('master_users',
+            'master_achievements.achievement_user_id','=','master_users.id')
+        ->where('year',$yearach)
+        ->where('name',$user)
+        ->sum('score');
+        for ($k = 1 ; $k<=12;$k++){
+            $max_score=0;
+            $data_month =DB::table('master_achievements')
+            ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$yearach)->get();
+            $data_month_user =DB::table('master_achievements')
+            ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$yearach)
+            ->where('achievement_user_id','=',$id)->get();
+            
+            if(count($data_month) == 0){
+                $max_score=0;
+                $temp[$k] = 0;
+            } else {
+                // //insert score matches month
+                $temp[$k] = $data_month_user[0]->score;
+                
+                //search max
+                for($l=0;$l<count($data_month);$l++){
+                    $temp_max = $data_month[$l]->score;
+                    if($temp_max>$max_score){
+                        $max_score =$temp_max;
+                    }
+                }
+                // if max score matches user score on that month
+                if($max_score == $data_month_user[0]->score){
+                    $month_of_eom[] = $data_month_user[0]->month;
+                    // $sum_of_eom++;
+                }                
+            }
+            // if score on a month exists, insert too score array
+            if (array_key_exists($k,$temp)) {
+                $scoreAch[$k-1] = $temp[$k];
+            } else {
+                $scoreAch[$k-1] = 0;
+            }
+        }
+
+        return response()
+        ->json([
+            'year'=>$yearach,
+            // 'sum_of_eom'=>$sum_of_eom,
+            // 'month_of_eom'=>$month_of_eom,
+            'scoreAch' => $scoreAch,
+            'all_score'=>$sum_all_score
+        ]);
+    }
   
         
     

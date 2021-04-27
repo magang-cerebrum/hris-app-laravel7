@@ -274,7 +274,7 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}" Tahun
-                    <span id="textval">{{$current_year}}</span> @if ($actualEomCount == 0)
+                    <span id="textvalperf">{{$current_year}}</span> @if ($actualEomCount == 0)
                     <i></i>
                     @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
                         title="Anda mendapatkan Employee of the month pada tahun ini"></i>
@@ -285,7 +285,7 @@
                 <div id="years">
                     <select name="select" id="year-finder-performance" class="selectpicker" data-style="btn-primary"
                         onchange="showChangePerformanceYear()">
-                        @foreach ($year_list as $item)
+                        @foreach ($year_list_performance as $item)
                         @if ($item->year == $current_year)
                         <option value="{{$item->year}}" selected>{{$item->year}}</option>
                         @else <option value="{{$item->year}}">{{$item->year}}</option>
@@ -309,7 +309,7 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Achievement "{{$name}}" Tahun
-                    <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
+                    <span id="textvalach">{{$current_year}}</span> @if ($sum_of_eom == 0)
                     <i></i>
                     @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
                         title="Anda mendapatkan Employee of the month pada tahun ini"></i>
@@ -320,7 +320,7 @@
                 <div id="years">
                     <select name="select" id="year-finder-achievement" class="selectpicker" data-style="btn-primary"
                         onchange="showChangeAchievementYear()">
-                        @foreach ($year_list as $item)
+                        @foreach ($year_list_achievement as $item)
                         @if ($item->year == $current_year)
                         <option value="{{$item->year}}" selected>{{$item->year}}</option>
                         @else <option value="{{$item->year}}">{{$item->year}}</option>
@@ -661,7 +661,14 @@
         $('#year-finder-performance').on('change', function (e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
-            document.getElementById("textval").innerText = valueSelected;
+            document.getElementById("textvalperf").innerText = valueSelected;
+        });
+    }
+    function showChangeAchievementYear() {
+        $('#year-finder-achievement').on('change', function (e) {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            document.getElementById("textvalach").innerText = valueSelected;
         });
     }
 
@@ -861,7 +868,7 @@
     $('#year-finder-performance').on('change', function (e) {
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
-        var url_ = "{{route('ajx')}}";
+        var url_ = "{{route('ajxperf')}}";
         $.ajax({
             type: "GET",
             data: {
@@ -870,7 +877,7 @@
             url: url_,
             dataType: 'json',
             success: function (response) {
-                console.log(response)
+                
 
                 var pageviews = [
                     [1, response.performance_score[0] ? response.performance_score[0] : 0],
@@ -973,38 +980,39 @@
 
 
     $('#year-finder-achievement').on('change', function (e) {
-        var optionSelected = $("option:selected", this);
-        var valueSelected = this.value;
-        var url_ = "{{route('ajx')}}";
+        var optionSelectedach = $("option:selected", this);
+        var valueSelectedach = this.value;
+        // console.log(valueSelectedach)
+        var url_ = "{{route('ajxach')}}";
         $.ajax({
             type: "GET",
             data: {
-                year: valueSelected
+                yearach: valueSelectedach
             },
             url: url_,
             dataType: 'json',
             success: function (response) {
-                console.log(response)
+                
 
                 var pageviews = [
-                    [1, response.performance_score[0] ? response.performance_score[0] : 0],
-                    [2, response.performance_score[1] ? response.performance_score[1] : 0],
-                    [3, response.performance_score[2] ? response.performance_score[2] : 0],
-                    [4, response.performance_score[3] ? response.performance_score[3] : 0],
-                    [5, response.performance_score[4] ? response.performance_score[4] : 0],
-                    [6, response.performance_score[5] ? response.performance_score[5] : 0],
-                    [7, response.performance_score[6] ? response.performance_score[6] : 0],
-                    [8, response.performance_score[7] ? response.performance_score[7] : 0],
-                    [9, response.performance_score[8] ? response.performance_score[8] : 0],
-                    [10, response.performance_score[9] ? response.performance_score[9] : 0],
-                    [11, response.performance_score[10] ? response.performance_score[10] : 0],
-                    [12, response.performance_score[11] ? response.performance_score[11] : 0]
+                    [1, response.scoreAch[0] ? response.scoreAch[0] : 0],
+                    [2, response.scoreAch[1] ? response.scoreAch[1] : 0],
+                    [3, response.scoreAch[2] ? response.scoreAch[2] : 0],
+                    [4, response.scoreAch[3] ? response.scoreAch[3] : 0],
+                    [5, response.scoreAch[4] ? response.scoreAch[4] : 0],
+                    [6, response.scoreAch[5] ? response.scoreAch[5] : 0],
+                    [7, response.scoreAch[6] ? response.scoreAch[6] : 0],
+                    [8, response.scoreAch[7] ? response.scoreAch[7] : 0],
+                    [9, response.scoreAch[8] ? response.scoreAch[8] : 0],
+                    [10, response.scoreAch[9] ? response.scoreAch[9] : 0],
+                    [11, response.scoreAch[10] ? response.scoreAch[10] : 0],
+                    [12, response.scoreAch[11] ? response.scoreAch[11] : 0]
                 ];
                
-                document.getElementById('total_score_performance').innerHTML = "Total Score : " + response.all_score
+                document.getElementById('total_score_achievement').innerHTML = "Total Score : " + response.all_score
                 
                 $(document).ready(function () {
-                    $.plot('#staff-charts-performance', [{
+                    $.plot('#staff-charts-achievement', [{
                             data: pageviews,
                             lines: {
                                 show: true,

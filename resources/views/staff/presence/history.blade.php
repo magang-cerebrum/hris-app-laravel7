@@ -23,6 +23,23 @@
     #Saved {
         background:rgb(255,255,55);
     }
+    @media screen and (min-width: 600px) {
+        #panel_head_2 {
+            display: none;
+        }
+    }
+    @media screen and (max-width: 600px) {
+        #panel_heading {
+            height: 65px !important;
+        }
+        #panel_head_1 {
+            display: none;
+        }
+        #panel_head_2 {
+            position: relative;
+            top: -20px;
+        }
+    }
 </style>
 @endsection
 
@@ -36,7 +53,7 @@
         @csrf
     </form>
     
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
             <label class="col-sm-1 control-label">Tanggal:</label>
             <div id="datepicker-input-cari">
                 <div class="col-sm-11">

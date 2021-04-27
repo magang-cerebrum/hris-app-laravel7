@@ -7,7 +7,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">Riwayat Pengajuan WFH</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         @if (count($data) == 0)
         <div class="text-center">
             <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>

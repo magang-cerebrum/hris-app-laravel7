@@ -9,7 +9,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">{{'Jadwal Kerja Divisi Bulan '.switch_month($month).' - '.$year}} </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding-top: 20px">
         <div id='calendar'></div><br>
         <table><tr>
             @foreach ($data_shift as $item)

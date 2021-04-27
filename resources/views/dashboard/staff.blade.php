@@ -268,12 +268,13 @@
     </div>
 </div>
 @endif
+{{-- Charts Performa --}}
 <div class="row mt-5">
-    <div class="col-md-12">
+    <div class="col-md-6" id="grafikPerforma">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}" Tahun
-                    <span id="textval">{{$current_year}}</span> @if ($sum_of_eom == 0)
+                    <span id="textval">{{$current_year}}</span> @if ($actualEomCount == 0)
                     <i></i>
                     @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
                         title="Anda mendapatkan Employee of the month pada tahun ini"></i>
@@ -282,8 +283,8 @@
             </div>
             <div class="panel-body" id="charts">
                 <div id="years">
-                    <select name="select" id="year-finder" class="selectpicker" data-style="btn-primary"
-                        onchange="showChange()">
+                    <select name="select" id="year-finder-performance" class="selectpicker" data-style="btn-primary"
+                        onchange="showChangePerformanceYear()">
                         @foreach ($year_list as $item)
                         @if ($item->year == $current_year)
                         <option value="{{$item->year}}" selected>{{$item->year}}</option>
@@ -297,21 +298,7 @@
                 <div id="eom_message">
                     <p id="text_eom_0" class="text-danger"></p>
                     {{-- {{dd($act)}} --}}
-                    @if ($actualEomCount == 0)
-                    <p class="text-danger">Anda Belum mendapatkan Employee of the Month pada Tahun ini</p>
-                    <p id="total_score" class="text-info">Total Score : {{$all_score_performance}}</p>
-                    @else
-                    <p id="total_score" class="text-info">Total Score : {{$all_score_performance}}</p>
-                    <p id="text_eom" class="text-success">Jumlah Employee of the month yang anda dapatkan adalah
-                        {{$actualEomCount}} yaitu bulan
-                        @foreach ($actualEom as $item)
-                        @if ($loop->last)
-                        {{$item->month}}
-                        @else {{$item->month}},&nbsp;
-                        @endif
-                        @endforeach
-                    </p>
-                    @endif
+                    <p id="total_score_performance" class="text-info">Total Score : {{$all_score_performance}}</p>
                 </div>
             </div>
         </div>
@@ -331,8 +318,8 @@
             </div>
             <div class="panel-body" id="charts">
                 <div id="years">
-                    <select name="select" id="year-finder" class="selectpicker" data-style="btn-primary"
-                        onchange="showChange()">
+                    <select name="select" id="year-finder-achievement" class="selectpicker" data-style="btn-primary"
+                        onchange="showChangeAchievementYear()">
                         @foreach ($year_list as $item)
                         @if ($item->year == $current_year)
                         <option value="{{$item->year}}" selected>{{$item->year}}</option>
@@ -346,7 +333,7 @@
                 <div id="eom_message">
                     <p id="text_eom_0" class="text-danger"></p>
                   
-                    <p id="total_score" class="text-info">Total Score : {{$all_score_achievements}}</p>
+                    <p id="total_score_achievement" class="text-info">Total Score : {{$all_score_achievements}}</p>
                     
                
                 </div>
@@ -355,179 +342,310 @@
     </div>
 </div>
 
-@if ($last_month->isEmpty() && $current_month->isEmpty())
+@if ($last_month_performance->isEmpty() && $current_month_performance->isEmpty())
 
 @else
 <div class="row mt-10">
-    <div class="col-md-12">
-        @if ($count_current_month_ach == 0)
+    <div class="col-md-4">
+        @if ($count_current_month_perf == 0)
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Top Scored Employee ({{$last_month_name}} {{$rankLMPerformance}})</h3>
+                <h3 class="panel-title">Top Scored Performance Employee ({{$last_month_name}}) <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup></h3>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-1 col-md-1"></div>
-                    <div class="col-sm-4 col-md-3">
-                        <div id="second">
-                            <div class="panel pos-rel">
-                                <div class="ribbon"><span>#2</span></div>
-                                <div class="pad-all text-center">
-                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
-                                        src="{{asset('img/profile-photos/'.$last_month[1]->profile_photo)}}">
-                                    <p class="text-lg text-semibold mar-no text-main">{{$last_month[1]->name}}</p>
-                                    <p class="text-sm">{{$last_month[1]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$last_month[1]->score}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!---------------------------------->
-                    </div>
-                    <div class="col-sm-4 col-md-4">
-                        <div id="first">
-                            <div class="panel pos-rel">
-                                <div class="ribbon"><span>#1</span></div>
-                                <div class="pad-all text-center">
-                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
-                                        src="{{asset('img/profile-photos/'.$last_month[0]->profile_photo)}}">
-                                    <p class="text-lg text-semibold mar-no text-main">{{$last_month[0]->name}}</p>
-                                    <p class="text-sm">{{$last_month[0]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$last_month[0]->score}}</p>
-                                    <br>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-md-3">
-                        <div id="third">
-                            <div class="panel pos-rel">
-                                <div class="ribbon"><span>#3</span></div>
-                                <div class="pad-all text-center">
-                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
-                                        src="{{asset('img/profile-photos/'.$last_month[2]->profile_photo)}}">
-                                    <p class="text-lg text-semibold mar-no text-main">{{$last_month[2]->name}}</p>
-                                    <p class="text-sm">{{$last_month[2]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$last_month[2]->score}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!---------------------------------->
-                    </div>
-                    <div class="col-sm-1 col-md-1"></div>
-                </div>
-                <div class="pos row" id="pot">
-                    @if ($rankLMPerformance == 1 || $rankLMPerformance == 2 || $rankLMPerformance ==3)
-                    <p></p>
-                    @else
-                    @foreach ($user_lm as $item)
-                    <div class="col-sm-2 col-md-2"></div>
-                    <div class="col-sm-8 col-md-8">
-                        <div class="panel panel-primary panel-colorful ">
+                    @foreach ($last_month_performance as $lmpItem)
+                        @if ($loop->iteration == 1)
+                        <div class="panel panel-warning panel-colorful">    
                             <div class="pad-all">
                                 <div class="media">
-                                    <div class="media-left">
-                                        <img alt="Profile Picture" class="img-md img-circle"
-                                            src="{{asset('img/profile-photos/'.$item->profile_photo)}}">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$lmpItem->profile_photo)}}"
+                                        alt="Profile Picture">
                                     </div>
                                     <div class="media-body pad-top">
-                                        <span class="text-lg text-semibold">{{$item->name}}</span> <span
-                                            class="text-lg text-right">#{{$rankLMPerformance}}</span>
-                                        <p class="text-sm">Score : {{$item->score}}/100</p>
+                                        <span class="text-lg text-semibold">{{$lmpItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$lmpItem->performance_score}}/100</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-2 col-md-2"></div>
+                        @elseif($loop->iteration == 2)
+                        <div class="panel panel-secondary panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$lmpItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$lmpItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$lmpItem->performance_score}}/100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <div class="panel panel-brown panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$lmpItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$lmpItem->name}} #{{$loop->iteration}}</span>
+                                        {{-- @foreach ($user_cmPerformance as $item) --}}
+                                        <p>Score : {{$lmpItem->performance_score}}/100</p>
+                                        {{-- @endforeach --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     @endforeach
-                    @endif
-                </div>
-            </div>
-        </div>
-        @else
-        <div class="panel panel-bordered panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Top Scored Employee ({{$current_month_name}})</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-1 col-md-1"></div>
-                    <div class="col-sm-4 col-md-3">
-                        @if (array_key_exists(1,$current_month))
-                        <div id="second">
-                            <div class="panel pos-rel">
-                                <div class="ribbon"><span title="Top 2">#2</span></div>
-                                <div class="pad-all text-center">
-                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
-                                        src="{{asset('img/profile-photos/'.$current_month[1]->profile_photo)}}">
-                                    <p class="text-lg text-semibold mar-no text-main">{{$current_month[1]->name}}</p>
-                                    <p class="text-sm">{{$current_month[1]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$current_month[1]->performance_score}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                    <div class="col-sm-4 col-md-4">
-                        <div id="first">
-                            <div class="panel pos-rel">
-                                <div class="ribbon"><span title="Top 1">#1</span></div>
-                                <div class="pad-all text-center">
-                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
-                                        src="{{asset('img/profile-photos/'.$current_month[0]->profile_photo)}}">
-                                    <p class="text-lg text-semibold mar-no text-main">{{$current_month[0]->name}}</p>
-                                    <p class="text-sm">{{$current_month[0]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$current_month[0]->performance_score}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-md-3">
-                        @if (array_key_exists(2,$current_month))
-                        <div id="third">
-                            <div class="panel pos-rel">
-                                <div class="ribbon"><span title="Top 3">#3</span></div>
-                                <div class="pad-all text-center">
-                                    <img alt="Profile Picture" class="img-lg img-circle mar-ver"
-                                        src="{{asset('img/profile-photos/'.$current_month[2]->profile_photo)}}">
-                                    <p class="text-lg text-semibold mar-no text-main">{{$current_month[2]->name}}</p>
-                                    <p class="text-sm">{{$current_month[2]->division_name}}</p>
-                                    <p class="text-sm">Score : {{$current_month[2]->score}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
+                        
                     <div class="col-sm-1 col-md-1"></div>
                 </div>
                 <div class="pos" id="pot">
                     @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
                     <p></p>
                     @else
-                    <div class="panel panel-success panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 8%">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.Auth::user()->profile_photo)}}"
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+        @else
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Top Scored Performance Employee ({{$current_month_name}}) <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1"></div>
+                    @foreach ($current_month_performance as $cmpItem)
+                        @if ($loop->iteration == 1)
+                        <div class="panel panel-warning panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$cmpItem->profile_photo)}}"
                                         alt="Profile Picture">
-                                </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{Auth::user()->name}} #{{$rankCMPerformance}}</span>
-                                    @foreach ($user_cmPerformance as $item)
-                                    <p>Score : {{$item->performance_score}}/100</p>
-                                    @endforeach
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$cmpItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$cmpItem->performance_score}}/100</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        @elseif($loop->iteration == 2)
+                        <div class="panel panel-secondary panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$cmpItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$cmpItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$cmpItem->performance_score}}/100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <div class="panel panel-brown panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$cmpItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$cmpItem->name}} #{{$loop->iteration}}</span>
+                                        {{-- @foreach ($user_cmPerformance as $item) --}}
+                                        <p>Score : {{$cmpItem->performance_score}}/100</p>
+                                        {{-- @endforeach --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
+                        
+                    <div class="col-sm-1 col-md-1"></div>
+                </div>
+                <div class="pos" id="pot">
+                    @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
+                    <p></p>
+                    @else
                     @endif
                 </div>
             </div>
         </div>
         @endif
     </div>
+    @if ($count_current_month_ach == 0)
+        
+    <div class="col-md-4">
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Top Scored Achievement Employee ({{$last_month_name}}) <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1"></div>
+                    @foreach ($before_current_month_achievement as $lmaItem)
+                    {{-- {{dump($cmpItem)}} --}}
+                        @if ($loop->iteration == 1)
+                        <div class="panel panel-warning panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$lmaItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$lmaItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$lmaItem->score}}/100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @elseif($loop->iteration == 2)
+                        <div class="panel panel-secondary panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$lmaItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$lmaItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$lmaItem->score}}/100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <div class="panel panel-brown panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$lmaItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$lmaItem->name}} #{{$loop->iteration}}</span>
+                                        {{-- @foreach ($user_cmPerformance as $item) --}}
+                                        <p>Score : {{$lmaItem->score}}/100</p>
+                                        {{-- @endforeach --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
+                    <div class="col-sm-1 col-md-1"></div>
+                </div>
+                <div class="pos" id="pot">
+                    @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
+                    <p></p>
+                    @else
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @else
+    <div class="col-md-4">
+        <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Top Scored Achievement Employee ({{$current_month_name}}) <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1"></div>
+                    @foreach ($current_month_achievement as $cmaItem)
+                    {{-- {{dump($cmpItem)}} --}}
+                        @if ($loop->iteration == 1)
+                        <div class="panel panel-warning panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$cmaItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$cmaItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$cmaItem->score}}/100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @elseif($loop->iteration == 2)
+                        <div class="panel panel-secondary panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$cmaItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$cmaItem->name}} #{{$loop->iteration}}</span>
+                                        <p>Score : {{$cmaItem->score}}/100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <div class="panel panel-brown panel-colorful">    
+                            <div class="pad-all">
+                                <div class="media">
+                                    <div class="media-left" style="width: 30%;">
+                                        <img class="img-md img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$cmaItem->profile_photo)}}"
+                                        alt="Profile Picture">
+                                    </div>
+                                    <div class="media-body pad-top">
+                                        <span class="text-lg text-semibold">{{$cmaItem->name}} #{{$loop->iteration}}</span>
+                                        {{-- @foreach ($user_cmPerformance as $item) --}}
+                                        <p>Score : {{$cmaItem->score}}/100</p>
+                                        {{-- @endforeach --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
+                    <div class="col-sm-1 col-md-1"></div>
+                </div>
+                <div class="pos" id="pot">
+                    @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
+                    <p></p>
+                    @else
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @endif
 </div>
 @endif
 @endsection
@@ -539,8 +657,8 @@
         $(".flash-mess").slideUp(500);
     });
 
-    function showChange() {
-        $('#year-finder').on('change', function (e) {
+    function showChangePerformanceYear() {
+        $('#year-finder-performance').on('change', function (e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
             document.getElementById("textval").innerText = valueSelected;
@@ -548,6 +666,7 @@
     }
 
     var dataPerformance = {!!json_encode($scorePerformance) !!}
+    // console.log(dataPerformance)
     var pageviewsPerformance = [
         [1, dataPerformance[0] ? dataPerformance[0] : 0],
         [2, dataPerformance[1] ? dataPerformance[1] : 0],
@@ -739,7 +858,7 @@
         }
     });
 
-    $('#year-finder').on('change', function (e) {
+    $('#year-finder-performance').on('change', function (e) {
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
         var url_ = "{{route('ajx')}}";
@@ -751,38 +870,27 @@
             url: url_,
             dataType: 'json',
             success: function (response) {
+                console.log(response)
 
                 var pageviews = [
-                    [1, response.score[0] ? response.score[0] : 0],
-                    [2, response.score[1] ? response.score[1] : 0],
-                    [3, response.score[2] ? response.score[2] : 0],
-                    [4, response.score[3] ? response.score[3] : 0],
-                    [5, response.score[4] ? response.score[4] : 0],
-                    [6, response.score[5] ? response.score[5] : 0],
-                    [7, response.score[6] ? response.score[6] : 0],
-                    [8, response.score[7] ? response.score[7] : 0],
-                    [9, response.score[8] ? response.score[8] : 0],
-                    [10, response.score[9] ? response.score[9] : 0],
-                    [11, response.score[10] ? response.score[10] : 0],
-                    [12, response.score[11] ? response.score[11] : 0]
+                    [1, response.performance_score[0] ? response.performance_score[0] : 0],
+                    [2, response.performance_score[1] ? response.performance_score[1] : 0],
+                    [3, response.performance_score[2] ? response.performance_score[2] : 0],
+                    [4, response.performance_score[3] ? response.performance_score[3] : 0],
+                    [5, response.performance_score[4] ? response.performance_score[4] : 0],
+                    [6, response.performance_score[5] ? response.performance_score[5] : 0],
+                    [7, response.performance_score[6] ? response.performance_score[6] : 0],
+                    [8, response.performance_score[7] ? response.performance_score[7] : 0],
+                    [9, response.performance_score[8] ? response.performance_score[8] : 0],
+                    [10, response.performance_score[9] ? response.performance_score[9] : 0],
+                    [11, response.performance_score[10] ? response.performance_score[10] : 0],
+                    [12, response.performance_score[11] ? response.performance_score[11] : 0]
                 ];
-                if (response.sum_of_eom == 0) {
-                    document.getElementById('text_eom_0').innerHTML =
-                        "Anda Belum mendapatkan Employee of the Month pada Tahun ini";
-                    document.getElementById('text_eom').innerHTML = " ";
-                    document.getElementById('eom_i_test').className = " "
-                } else {
-                    document.getElementById('text_eom_0').innerHTML = " "
-                    document.getElementById('eom_i_test').className = "fa fa-trophy"
-                    document.getElementById('total_score').innerHTML = "Total Score : " + response
-                        .all_score;
-                    document.getElementById('text_eom').innerHTML =
-                        "Jumlah Employee of the month yang anda dapatkan adalah " + response
-                        .sum_of_eom + " yaitu bulan " + response.month_of_eom;
-                }
-                console.log(response);
+               
+                document.getElementById('total_score_performance').innerHTML = "Total Score : " + response.all_score
+                
                 $(document).ready(function () {
-                    $.plot('#staff-charts', [{
+                    $.plot('#staff-charts-performance', [{
                             data: pageviews,
                             lines: {
                                 show: true,
@@ -833,18 +941,18 @@
                         xaxis: {
 
                             ticks: [
-                                [1, ' January'],
-                                [2, 'February'],
-                                [3, 'Maret'],
-                                [4, 'April'],
+                                [1, 'Jan'],
+                                [2, 'Feb'],
+                                [3, 'Mar'],
+                                [4, 'Apr'],
                                 [5, 'Mei'],
-                                [6, 'Juni'],
-                                [7, 'July'],
-                                [8, 'Agustus'],
-                                [9, 'September'],
-                                [10, 'Oktober'],
-                                [11, 'November'],
-                                [12, 'Desember']
+                                [6, 'Jun'],
+                                [7, 'Jul'],
+                                [8, 'Agu'],
+                                [9, 'Sep'],
+                                [10, 'Okt'],
+                                [11, 'Nov'],
+                                [12, 'Des']
                             ],
                             tickColor: 'transparent',
                             tickSize: 14,
@@ -855,9 +963,120 @@
                         }
                     });
                 });
-                // console.log(pageviews)
-                // console.log(response.data)
-                // console.log(response.year)
+
+            },
+            error: function (jXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        })
+    })
+
+
+    $('#year-finder-achievement').on('change', function (e) {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        var url_ = "{{route('ajx')}}";
+        $.ajax({
+            type: "GET",
+            data: {
+                year: valueSelected
+            },
+            url: url_,
+            dataType: 'json',
+            success: function (response) {
+                console.log(response)
+
+                var pageviews = [
+                    [1, response.performance_score[0] ? response.performance_score[0] : 0],
+                    [2, response.performance_score[1] ? response.performance_score[1] : 0],
+                    [3, response.performance_score[2] ? response.performance_score[2] : 0],
+                    [4, response.performance_score[3] ? response.performance_score[3] : 0],
+                    [5, response.performance_score[4] ? response.performance_score[4] : 0],
+                    [6, response.performance_score[5] ? response.performance_score[5] : 0],
+                    [7, response.performance_score[6] ? response.performance_score[6] : 0],
+                    [8, response.performance_score[7] ? response.performance_score[7] : 0],
+                    [9, response.performance_score[8] ? response.performance_score[8] : 0],
+                    [10, response.performance_score[9] ? response.performance_score[9] : 0],
+                    [11, response.performance_score[10] ? response.performance_score[10] : 0],
+                    [12, response.performance_score[11] ? response.performance_score[11] : 0]
+                ];
+               
+                document.getElementById('total_score_performance').innerHTML = "Total Score : " + response.all_score
+                
+                $(document).ready(function () {
+                    $.plot('#staff-charts-performance', [{
+                            data: pageviews,
+                            lines: {
+                                show: true,
+                                lineWidth: 0,
+                                fill: true,
+                                fillColor: {
+                                    colors: ["#05032D", "#27257C", {
+                                        opacity: 0.7
+                                    }, {
+                                        opacity: 2
+                                    }]
+                                }
+                            },
+                            points: {
+                                show: true,
+                                radius: 2,
+                                fillColor: '#ffffffff'
+                                // symbol : "square"
+                            },
+                        },
+
+
+                    ], {
+                        series: {
+                            lines: {
+                                show: false
+                            },
+                            points: {
+                                show: true,
+                                fillColor: '#f5bc00'
+                                // symbol:"square"
+                            },
+                            shadowSize: 0 // Drawing is faster without shadows
+                        },
+                        colors: ['#05032D'],
+
+                        grid: {
+                            borderWidth: 0,
+                            hoverable: true,
+                            clickable: true
+                        },
+                        yaxis: {
+                            ticks: 9,
+                            min: 0,
+                            max: 100,
+                            tickColor: 'rgba(0,0,0,.1)'
+                        },
+                        xaxis: {
+
+                            ticks: [
+                                [1, 'Jan'],
+                                [2, 'Feb'],
+                                [3, 'Mar'],
+                                [4, 'Apr'],
+                                [5, 'Mei'],
+                                [6, 'Jun'],
+                                [7, 'Jul'],
+                                [8, 'Agu'],
+                                [9, 'Sep'],
+                                [10, 'Okt'],
+                                [11, 'Nov'],
+                                [12, 'Des']
+                            ],
+                            tickColor: 'transparent',
+                            tickSize: 14,
+                        },
+                        tooltip: {
+                            show: true,
+                            content: 'Bulan: %x, Score: %y'
+                        }
+                    });
+                });
 
             },
             error: function (jXHR, textStatus, errorThrown) {

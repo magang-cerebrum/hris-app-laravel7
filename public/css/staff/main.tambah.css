@@ -115,3 +115,11 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+.panel-brown{
+    color: white;
+    background-color: #cd7f32;
+}
+.panel-secondary{
+    color: white;
+    background-color: #C0C0C0; 
+}

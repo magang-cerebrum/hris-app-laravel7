@@ -246,13 +246,33 @@ class PresenceController extends Controller
                     if ($data_presence == null) {
                         $getShift = 'Kosong';
                     } else {
-                        if ($data_presence->late_time == '00:00:00') {
+                        if ($data_presence->in_time != null) {
+                            if ($data_presence->out_time != '00:00:00') {
+                                $getShift = 'Absen Masuk';
+                            } elseif ($data_presence->out_time == '00:00:00') {
+                                $getShift = 'Kosong';
+                                goto insertImmediately;
+                            }
+                        } 
+                        if ($data_presence->late_time == '00:00:00'){
                             $getShift = 'Hadir';
-                        } else {
+                        } elseif ($data_presence->late_time == null) {
+                            $getShiftTime = DB::table('master_shifts')
+                            ->where('name',$data_presence->shift_name)
+                            ->select('start_working_time')
+                            ->first();
+                            $isLateIn = (date_create($data_presence->in_time) > date_create($getShiftTime->start_working_time) ? true : false);
+                            if ($isLateIn) {
+                                $getShift = 'Telat Masuk';
+                            } else {
+                                $getShift = 'Absen Masuk';
+                            }
+                        } else{
                             $getShift = 'Telat';
                         }
                     }
                 }
+                insertImmediately:
                 array_push($shifts,$getShift);
             }
             array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));

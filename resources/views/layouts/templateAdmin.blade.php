@@ -220,7 +220,7 @@
 						
 						                <!--Submenu-->
 						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Data</a></li>
+                                            <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Informasi Staff</a></li>
                                             <li><a href="{{ url('admin/presence')}}"><i class="psi-checked-user"></i>Presensi</a></li>
 											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
                                             <li><a href="{{ url('admin/wfh')}}"><i class="psi-monitor-laptop"></i>Work From Home</a></li>
@@ -386,8 +386,6 @@
 	<script src="{{ asset('plugins/flot-charts/jquery.flot.resize.min.js')}}"></script>
     <script src="{{ asset('plugins/flot-charts/jquery.flot.tooltip.min.js')}}"></script>
     
-    <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
-
     <script>
         $(document).ready(function(){
 

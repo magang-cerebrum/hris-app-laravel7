@@ -197,8 +197,6 @@
     <script src="{{ asset('js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('js/nifty.min.js')}}"></script>
     
-    <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
-
     <script src="{{ asset('plugins/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script>
         $(document).ready(function () {

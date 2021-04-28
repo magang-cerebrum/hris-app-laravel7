@@ -264,7 +264,31 @@ class StaffAuthDashboardController extends Controller
             }
             $data_poster = DB::table('sliders')->get();
             $year_list_performance = DB::table('master_performances')->select('year')->distinct()->get();
-            
+            // dd($count_current_month_achievement);
+            // dump($current_month_performance);
+
+            $staff_late = DB::table('master_salaries')
+            ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('month', $current_month)
+            ->where('year',$this_year)
+            ->orderBy('total_late_time', 'asc')
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_salaries.total_late_time as late'
+            ])->first();
+
+            $eom = DB::table('master_eoms')
+            ->leftjoin('master_users','master_eoms.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('month', $current_month)
+            ->where('year',$this_year)
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division'
+            ])->first();
+
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
                 'name'=>$user->name,

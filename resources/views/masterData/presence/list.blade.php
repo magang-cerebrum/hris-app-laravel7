@@ -28,7 +28,7 @@
             <table><tr>
                     <td style="width: 20px;height:20px;background-color:#2B323A"></td><td class="break"></td><td>: Kosong(Tidak Absen)</td><td class="break">
                     <td style="width: 20px;height:20px;background-color:#79AF3A"></td><td class="break"></td><td>: Hadir(Sudah Absen Masuk/Keluar)</td><td class="break">
-                    <td style="width: 20px;height:20px;background-color:#DB9A00"></td><td class="break"></td><td>: Telat(Sudah Absen Masuk/Keluar)</td><td class="break">
+                    <td style="width: 20px;height:20px;background-color:#DB9A00"></td><td class="break"></td><td>: Terlambat(Sudah Absen Masuk/Keluar)</td><td class="break">
                     <td style="width: 20px;height:20px;background-color:#F22314"></td><td class="break"></td><td>: Off(Tidak Absen)</td><td class="break">
                     <td style="width: 20px;height:20px;background-color:#1F897F"></td><td class="break"></td><td>: Cuti(Tidak Absen)</td><td class="break">
             <tr></table>

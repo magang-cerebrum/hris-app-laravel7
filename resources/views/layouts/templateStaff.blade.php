@@ -410,8 +410,6 @@
 	<script src="{{ asset('plugins/flot-charts/jquery.flot.resize.min.js')}}"></script>
     <script src="{{ asset('plugins/flot-charts/jquery.flot.tooltip.min.js')}}"></script>
     
-    <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
-
     <script>
         $(document).ready(function(){
 

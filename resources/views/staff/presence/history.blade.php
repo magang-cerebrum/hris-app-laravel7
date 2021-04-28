@@ -59,10 +59,10 @@
                 <div class="col-sm-11">
                     <div class="input-group input-daterange">
                         <input type="text" class="form-control @error('start') is-invalid @enderror"
-                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off" form="cari-presensi">
+                            placeholder="Tanggal Mulai" name="start" value="{{old('start')}}" autocomplete="off" form="cari-presensi" onchange="toToday()">
                         <span class="input-group-addon">sampai</span>
                         <input type="text" class="form-control @error('end') is-invalid @enderror"
-                            placeholder="Tanggal Berakhir" name="end" value="{{old('end')}}" autocomplete="off" form="cari-presensi">
+                            placeholder="Tanggal Berakhir" id="end" name="end" value="{{old('end')}}" autocomplete="off" form="cari-presensi">
                     </div>
                 </div>
             </div>
@@ -143,5 +143,14 @@
             }
         });
     });
-    </script>
+
+    function toToday(){
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '/' + mm + '/' +  dd;
+        document.getElementById('end').value = today;
+    }
+</script>
 @endsection

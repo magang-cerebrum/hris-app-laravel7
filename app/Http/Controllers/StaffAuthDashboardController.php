@@ -53,9 +53,10 @@ class StaffAuthDashboardController extends Controller
             'master_divisions.name as division_name'
 
         ])
+        ->where('master_divisions.id',Auth::user()->division_id)
         ->orderBy('score','desc')
         ->take(3)->get();
-        // dd(count($current_month_achievement));
+        // dd($current_month_achievement);
         
         $before_current_month_achievement =DB::table('master_achievements')
         ->leftjoin('master_users',
@@ -176,6 +177,7 @@ class StaffAuthDashboardController extends Controller
             } else {
                 $scoreAchievement[$i-1] = 0;
             }
+            // dd($scoreAchievement);
         }
         $data_poster = DB::table('sliders')->get();
         $year_list = DB::table('master_achievements')->select('year')->distinct()->get();
@@ -207,6 +209,9 @@ class StaffAuthDashboardController extends Controller
             ->where('master_divisions.id',Auth::user()->division_id)
             ->orderBy('performance_score','desc')
             ->take(3)->get();
+            
+            // dump($current_month_performance);
+            // die;
 
             $before_current_month_performance =DB::table('master_performances')
             ->leftjoin('master_users',
@@ -243,7 +248,7 @@ class StaffAuthDashboardController extends Controller
             ->where('master_users.name',$user->name)
             ->where('year',$this_year)
             ->where('month',$current_month)->get();
-            
+            // dd($userCMPerf);
             $userLMPerf = DB::table('master_performances')
             ->leftjoin('master_users',
             'master_performances.user_id','=','master_users.id')
@@ -273,7 +278,7 @@ class StaffAuthDashboardController extends Controller
             $datrankLastMonthPerformances = $positionLastMonthPerformances->where('user_id','=',Auth::user()->id);
             $rankLastMonthPerformances = $datrankLastMonthPerformances->keys()->first()+1;
             
-            $positionCurrentMonth= DB::table('master_performances')
+            $positionCurrentMonthPerformance= DB::table('master_performances')
             ->leftjoin('master_users',
             'master_performances.user_id','=','master_users.id')
             ->where('month',$current_month)
@@ -281,35 +286,35 @@ class StaffAuthDashboardController extends Controller
             ->orderBy('performance_score','desc')
             ->get();
             
-            $datrankCurrentMonth = $positionCurrentMonth->where('user_id','=',Auth::user()->id);
-            $rankCurrentMonth = $datrankCurrentMonth->keys()->first()+1;
+            $datrankCurrentMonthPerformance = $positionCurrentMonthPerformance->where('user_id','=',Auth::user()->id);
+            $rankCurrentMonthPerformance = $datrankCurrentMonthPerformance->keys()->first()+1;
             
             $count_current_month_performance = count($current_month_performance);
             $count_before_current_month_performance = count($before_current_month_performance);
             
-            for ($i = 1 ; $i<=12;$i++){
-                $max_score=0;
+            for ($k = 1 ; $k<=12;$k++){
+                $max_score_performance=0;
                 $data_month_Performance =DB::table('master_performances')
-                ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)->get();
+                ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$year)->get();
                 $data_month_user_Performance =DB::table('master_performances')
-                ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)
+                ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$year)
                 ->where('user_id','=',$user->id)->get();
                 
                 if(count($data_month_Performance) == 0){
-                    $max_score=0;
-                    $temp[$i] = 0;
+                    $max_score_performance=0;
+                    $temp_performance[$k] = 0;
                 } else {
                     // //insert score matches month
                     foreach($data_month_user_Performance as $dmup){
-                        $temp[$i] = $dmup->performance_score;
+                        $temp_performance[$k] = $dmup->performance_score;
                     }
                     
                     
                     //search max
-                    for($j=0;$j<count($data_month_Performance);$j++){
-                        $temp_max = $data_month_Performance[$j]->performance_score;
-                        if($temp_max>$max_score){
-                            $max_score =$temp_max;
+                    for($l=0;$l<count($data_month_Performance);$l++){
+                        $temp_max_performance = $data_month_Performance[$l]->performance_score;
+                        if($temp_max_performance>$max_score_performance){
+                            $max_score_performance =$temp_max_performance;
                         }
                     }
                     // if max score matches user score on that month
@@ -322,15 +327,39 @@ class StaffAuthDashboardController extends Controller
                     }
                 }
                 // if score on a month exists, insert too score array
-                if (array_key_exists($i,$temp)) {
-                    $scorePerformance[$i-1] = $temp[$i];
+                if (array_key_exists($k,$temp_performance)) {
+                    $scorePerformance[$k-1] = $temp_performance[$k];
                 } else {
-                    $scorePerformance[$i-1] = 0;
+                    $scorePerformance[$k-1] = 0;
                 }
             }
             $data_poster = DB::table('sliders')->get();
             $year_list_performance = DB::table('master_performances')->select('year')->distinct()->get();
-            // dd($actualEOM);
+            // dd($count_current_month_achievement);
+            // dump($current_month_performance);
+
+            $staff_late = DB::table('master_salaries')
+            ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('month', $current_month)
+            ->where('year',$this_year)
+            ->orderBy('total_late_time', 'asc')
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_salaries.total_late_time as late'
+            ])->first();
+
+            $eom = DB::table('master_eoms')
+            ->leftjoin('master_users','master_eoms.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('month', $current_month)
+            ->where('year',$this_year)
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division'
+            ])->first();
+
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
                 'name'=>$user->name,
@@ -345,10 +374,11 @@ class StaffAuthDashboardController extends Controller
                 'month_of_eom'=>$month_of_eom,
                 'last_month_name'=>$before_current_month,
                 'current_month_name'=>$current_month,
-                'last_month'=>$before_current_month_performance,
-                'current_month'=>$current_month_performance,
-                'count_last_month_ach'=>$count_before_current_month_performance,
-                'count_current_month_ach'=>$count_current_month_performance,
+                'last_month_performance'=>$before_current_month_performance,
+                'current_month_performance'=>$current_month_performance,
+                'count_last_month_perf'=>$count_before_current_month_performance,
+                'count_current_month_perf'=>$count_current_month_performance,
+                'count_current_month_ach'=>$count_current_month_achievement,
                 'rankCMPerformance'=>$rankCurrentMonth,
                 'rankLMPerformance'=>$rankLastMonthPerformances,
                 'all_score_performance'=>$sum_all_score_performance,
@@ -356,49 +386,53 @@ class StaffAuthDashboardController extends Controller
                 'user_lmPerformance'=>$userLMPerf,
                 'user_cmPerformance'=>$userCMPerf,
                 'actualEomCount'=>count($actualEOM),
-                'actualEom'=>$actualEOM
+                'actualEom'=>$actualEOM,
+                'current_month_achievement'=>$current_month_achievement,
+                'before_current_month_achievement'=>$before_current_month_achievement
             ]);
         }
     }
     public function ajx(Request $request){
-        $score = array();
-        $sum_of_eom= 0;
+        //Achievement
+        
+        //Performance
+        $scorePerformance = array();
         $month_of_eom = array();
         $year = $request->input('year');
         $user =Auth::user()->name;
         $id = Auth::user()->id;
-        $sum_all_score = DB::table('master_achievements')
+        $sum_all_score_performance = DB::table('master_performances')
         ->leftjoin('master_users',
-            'master_achievements.achievement_user_id','=','master_users.id')
+                    'master_performances.user_id','=','master_users.id')
         ->where('year',$year)
         ->where('name',$user)
-        ->sum('score');
+        ->sum('performance_score');
         for ($i = 1 ; $i<=12;$i++){
-            $max_score=0;
-            $data_month =DB::table('master_achievements')
+            $max_score_performance=0;
+            $data_month_performance =DB::table('master_performances')
             ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)->get();
-            $data_month_user =DB::table('master_achievements')
+            $data_month_user_performance =DB::table('master_performances')
             ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)
-            ->where('achievement_user_id','=',$id)->get();
+            ->where('user_id','=',$id)->get();
             
-            if(count($data_month) == 0){
-                $max_score=0;
+            if(count($data_month_performance) == 0){
+                $max_score_performance=0;
                 $temp[$i] = 0;
             } else {
                 // //insert score matches month
-                $temp[$i] = $data_month_user[0]->score;
+                $temp[$i] = $data_month_user_performance[0]->performance_score;
                 
                 //search max
-                for($j=0;$j<count($data_month);$j++){
-                    $temp_max = $data_month[$j]->score;
-                    if($temp_max>$max_score){
+                for($j=0;$j<count($data_month_performance);$j++){
+                    $temp_max = $data_month_performance[$j]->performance_score;
+                    if($temp_max>$max_score_performance){
                         $max_score =$temp_max;
                     }
                 }
                 // if max score matches user score on that month
-                if($max_score == $data_month_user[0]->score){
-                    $month_of_eom[] = $data_month_user[0]->month;
-                    $sum_of_eom++;
+                if($max_score_performance == $data_month_user_performance[0]->performance_score){
+                    $month_of_eom[] = $data_month_user_performance[0]->month;
+                    // $sum_of_eom++;
                 }                
             }
             // if score on a month exists, insert too score array
@@ -412,12 +446,15 @@ class StaffAuthDashboardController extends Controller
         return response()
         ->json([
             'year'=>$year,
-            'sum_of_eom'=>$sum_of_eom,
+            // 'sum_of_eom'=>$sum_of_eom,
             'month_of_eom'=>$month_of_eom,
-            'score' => $score,
-            'all_score'=>$sum_all_score
+            'performance_score' => $score,
+            'all_score'=>$sum_all_score_performance
         ]);
-    }
+        }
+  
+        
+    
     
     public function profile()
     {

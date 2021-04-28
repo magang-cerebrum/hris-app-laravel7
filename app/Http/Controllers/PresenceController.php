@@ -49,7 +49,7 @@ class PresenceController extends Controller
         $data = DB::table('master_presences')
         ->leftJoin('master_users','master_presences.user_id','=','master_users.id')
         ->where('master_users.division_id',$user->division_id)
-        ->whereNotNull('file_in')->whereNotNull('file_out')->where('check_chief',0)
+        ->whereNotNull('file_in')->where('check_chief',0)
         ->select([
             'master_presences.*',
             'master_users.name as name'
@@ -74,11 +74,7 @@ class PresenceController extends Controller
             $file_path_file = public_path($path_file);
             unlink($file_path_file);
 
-            $path_file = 'img-presensi/pulang/'.$data->file_out;
-            $file_path_file = public_path($path_file);
-            unlink($file_path_file);
-
-            DB::table('master_presences')->where('id',$item)->update(['file_in'=>null, 'file_out'=>null, 'check_chief'=>1]);
+            DB::table('master_presences')->where('id',$item)->update(['file_in'=>null,  'check_chief'=>1]);
         }
 
         return redirect('/staff/presence/division');
@@ -120,23 +116,40 @@ class PresenceController extends Controller
     public function add_presence(Request $request) {
         $date = date('Y-m-d');
         $time = date('H:i:s');
-
-        $image = $request->image;
-        $image_array_1 = explode(";", $image);
-        $image_array_2 = explode(",", $image_array_1[1]);
-        $data = base64_decode($image_array_2[1]);
-        $image_name = $date.'_'. Auth::user()->name . '.jpeg';
         
         $master_shift = DB::table('master_shifts')->get();
 
         if ($request->bool_presence == 0) {
+            $last_presence = DB::table('master_presences')
+            ->where('user_id', $request->user_id)
+            ->orderBy('presence_date', 'desc')->first();
+            if ($last_presence) {
+                if (!$last_presence->out_time) {
+                    DB::table('master_presences')
+                    ->where('id', $last_presence->id)
+                    ->update([
+                        'out_time'=> "00:00:00",
+                        'inaday_time'=> "00:00:00",
+                        'late_time'=> "00:00:00",
+                        'fine'=> 0
+                    ]);
+                }
+            }
+
             $data_shift = DB::table('master_job_schedules')
             ->where('month', switch_month(date('m', strtotime($date))))
             ->where('year', date('Y', strtotime($date)))
             ->where('user_id',$request->user_id)->first();
+            
+            $image = $request->image;
+            $image_array_1 = explode(";", $image);
+            $image_array_2 = explode(",", $image_array_1[1]);
+            $data = base64_decode($image_array_2[1]);
+            $image_name = $date.'_'. Auth::user()->name . '.jpeg';
 
             $temp_name = 'shift_'.date('j', strtotime($date));
             $shift = $data_shift->$temp_name;
+
             $hour_shift = 0;
             foreach($master_shift as $item_shift) {
                 if ($item_shift->name == $shift) {
@@ -184,17 +197,13 @@ class PresenceController extends Controller
             }
             $fine = (intval($lateInMinute/5))*20000;
 
-            $image_path = 'img-presensi/pulang/' . $image_name;
-            file_put_contents($image_path, $data);
-
             DB::table('master_presences')
             ->where('id', $data_presence->id)
             ->update([
                 'out_time'=>$time,
                 'inaday_time'=> $inadayTime,
                 'late_time'=> $late,
-                'fine'=> $fine,
-                'file_out'=> $image_name
+                'fine'=> $fine
             ]);
         }
         return redirect('/staff/presence');

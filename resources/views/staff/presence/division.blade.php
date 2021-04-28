@@ -41,7 +41,6 @@
                             <th class="sorting_asc text-center">Nama Staff</th>
                             <th class="sorting_asc text-center">Tanggal</th>
                             <th class="sorting_asc text-center">Foto Masuk</th>
-                            <th class="sorting_asc text-center">Foto Keluar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +53,6 @@
                                 <td class="text-center">{{$item->name}}</td>
                                 <td class="text-center">{{$item->presence_date}}</td>
                                 <td class="text-center"><img class="img-presence" src="{{asset ('img-presensi/masuk/'.$item->file_in)}}"></td>
-                                <td class="text-center"><img class="img-presence" src="{{asset ('img-presensi/pulang/'.$item->file_out)}}"></td>
                             </tr>
                         @endforeach
                     </tbody>

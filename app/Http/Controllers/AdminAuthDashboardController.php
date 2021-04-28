@@ -18,12 +18,17 @@ class AdminAuthDashboardController extends Controller
         }
         else if(Gate::allows('is_admin')){
             $user = Auth::user();
+            $this_year = date('Y');
+            $current_month = switch_month(date('m'));
+
             $data_paid = DB::table('transaction_paid_leaves')
-            ->where('transaction_paid_leaves.status', '=', 'Diajukan')
+            ->where('transaction_paid_leaves.status', '=', 'Diterima-Chief')
             ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->select(
                 'transaction_paid_leaves.*',
                 'master_users.name as user_name',
+                'master_divisions.name as division',
                 'master_users.nip as user_nip'
                 )
             ->paginate(5);
@@ -50,6 +55,30 @@ class AdminAuthDashboardController extends Controller
                 'master_divisions.name as division'
             ])->where('working_time','<',date('H:i:s'))->get();
 
+            $staff_late = DB::table('master_salaries')
+            ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('month', $current_month)
+            ->where('year',$this_year)
+            ->orderBy('total_late_time', 'asc')
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_users.profile_photo as photo',
+                'master_salaries.total_late_time as late'
+            ])->first();
+
+            $eom = DB::table('master_eoms')
+            ->leftjoin('master_users','master_eoms.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('month', $current_month)
+            ->where('year',$this_year)
+            ->select([
+                'master_users.name as name',
+                'master_users.profile_photo as photo',
+                'master_divisions.name as division'
+            ])->first();
+
             return view('dashboard.admin',[
                 'data_absensi'=>$data_absensi,
                 'data_poster'=>$data_poster,
@@ -58,6 +87,8 @@ class AdminAuthDashboardController extends Controller
                 'data_user_active'=>$user_act,
                 'data_user_non_active'=>$user_nact,
                 'data_ticket'=> $data_ticket,
+                'staff_late'=> $staff_late,
+                'eom'=> $eom,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

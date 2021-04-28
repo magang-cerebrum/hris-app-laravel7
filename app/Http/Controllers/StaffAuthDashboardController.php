@@ -347,6 +347,7 @@ class StaffAuthDashboardController extends Controller
             ->select([
                 'master_users.name as name',
                 'master_divisions.name as division',
+                'master_users.profile_photo as photo',
                 'master_salaries.total_late_time as late'
             ])->first();
 
@@ -357,6 +358,7 @@ class StaffAuthDashboardController extends Controller
             ->where('year',$this_year)
             ->select([
                 'master_users.name as name',
+                'master_users.profile_photo as photo',
                 'master_divisions.name as division'
             ])->first();
 
@@ -388,7 +390,9 @@ class StaffAuthDashboardController extends Controller
                 'actualEomCount'=>count($actualEOM),
                 'actualEom'=>$actualEOM,
                 'current_month_achievement'=>$current_month_achievement,
-                'before_current_month_achievement'=>$before_current_month_achievement
+                'before_current_month_achievement'=>$before_current_month_achievement,
+                'staff_late'=>$staff_late,
+                'eom'=>$eom
             ]);
         }
     }

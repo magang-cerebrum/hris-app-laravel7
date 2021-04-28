@@ -33,6 +33,7 @@
                     <td style="width: 15px;height: 15px;background-color:#953CA4"></td><td class="break"></td><td>: Terlambat Masuk</td><td class="break">
                     <td style="width: 15px;height: 15px;background-color:#F22314"></td><td class="break"></td><td>: Off</td><td class="break">
                     <td style="width: 15px;height: 15px;background-color:#ED417B"></td><td class="break"></td><td>: Cuti</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#290657"></td><td class="break"></td><td>: Sakit</td><td class="break">
             <tr></table>
         </div>
     </div>
@@ -84,6 +85,9 @@
                                     break;
                                 case 'Cuti':
                                     $color = '#ED417B';
+                                    break;
+                                case 'Sakit':
+                                    $color = '#290657';
                                     break;
                             }
                         ?>

@@ -27,7 +27,6 @@ class CreateMasterPresencesTable extends Migration
             $table->integer('shift_default_hour')->nullable();
             $table->boolean('status')->default(false);
             $table->string('file_in')->nullable();
-            $table->string('file_out')->nullable();
             $table->boolean('check_chief')->default(false);
             
             $table->foreign('user_id')->references('id')->on('master_users')->onUpdate('cascade')->onDelete('set null');

@@ -141,7 +141,7 @@ class SalaryController extends Controller
 
                 for ($x = 1; $x <= $days_in_month; $x++) {
                     $data_user = DB::table('master_presences')
-                    ->where('user_id',$user_id)->where('presence_date', $year.'-'.$month.'-' ($x / 10 < 1 ? '0'.$x : $x))
+                    ->where('user_id',$user_id)->where('presence_date', $year.'-'.$month.'-'.($x / 10 < 1 ? '0'.$x : $x))
                     ->where('status', 0)->first();
 
                     if ($data_user) {
@@ -427,7 +427,25 @@ class SalaryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $data = DB::table('master_salaries')->where('master_salaries.id',$id)
+        ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->select([
+            'master_salaries.*',
+            'master_users.name as name',
+            'master_divisions.name as division',
+            'master_positions.name as position'
+        ])->first();
+
+        return view('masterdata.salary.edit',[
+            'data'=>$data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -439,7 +457,11 @@ class SalaryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::table('master_salaries')->where('id', $id)->update([
+            'total_fine'=>$request->total_fine,
+        ]);
+
+        return redirect('/admin/salary');
     }
 
     /**

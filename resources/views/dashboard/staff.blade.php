@@ -636,39 +636,43 @@
         </div>
 
         <div class="col-md-4">
-            <div class="panel panel-success panel-colorful">    
-                <div class="pad-all">
-                    <div class="media">
-                        <div class="media-left" style="width: 30%;">
-                            <img class="img-lg img-circle img-responsive"
-                            src="{{asset('img/profile-photos/'.$eom->photo)}}"
-                            alt="Profile Picture">
-                        </div>
-                        <div class="media-body" style="padding-top: 7px">
-                            <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
-                            <span class="text-lg text-semibold">{{$eom->name}}</span>
-                            <p>Division : {{$eom->division}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-danger panel-colorful">    
-                <div class="pad-all">
-                    <div class="media">
-                        <div class="media-left" style="width: 30%;">
-                            <img class="img-lg img-circle img-responsive"
-                            src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
-                            alt="Profile Picture">
-                        </div>
-                        <div class="media-body" style="padding-top: 7px">
-                            <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
-                            <span class="text-lg text-semibold">{{$staff_late->name}}</span>
-                            <p>Division : {{$staff_late->division}}</p>
+            @if ($eom)
+                <div class="panel panel-success panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 30%;">
+                                <img class="img-lg img-circle img-responsive"
+                                src="{{asset('img/profile-photos/'.$eom->photo)}}"
+                                alt="Profile Picture">
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
+                                <span class="text-lg text-semibold">{{$eom->name}}</span>
+                                <p>Division : {{$eom->division}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+            
+            @if ($staff_late)
+                <div class="panel panel-danger panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 30%;">
+                                <img class="img-lg img-circle img-responsive"
+                                src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
+                                alt="Profile Picture">
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
+                                <span class="text-lg text-semibold">{{$staff_late->name}}</span>
+                                <p>Division : {{$staff_late->division}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endif

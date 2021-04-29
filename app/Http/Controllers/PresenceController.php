@@ -247,7 +247,7 @@ class PresenceController extends Controller
             for ($i=1; $i <= $days_in_month; $i++) { 
                 $temp = 'shift_' . $i;
                 $getShift = $user_schedule->$temp;
-                if ($getShift != 'Off' && $getShift != 'Cuti') {                    
+                if ($getShift != 'Off' && $getShift != 'Cuti' && $getShift != 'Sakit') {                    
                     $data_presence = DB::table('master_presences')
                     ->where('presence_date',date('Y') . '-' . date('m') . '-' . ($i / 10 < 1 ? '0'. $i : $i))
                     ->where('user_id',$user_schedule->user_id)

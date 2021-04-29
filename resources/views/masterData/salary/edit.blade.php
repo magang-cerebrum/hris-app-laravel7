@@ -25,7 +25,7 @@
                     <label class="col-sm-2 control-label" for="information">Periode :</label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="Periode" name="periode" form="form_edit"
-                            class="form-control is-invalid" value="{{$data->month . ' - ' . $data->year}}" readonly>
+                            class="form-control is-invalid" value="{{switch_month($data->month) . ' - ' . $data->year}}" readonly>
                     </div>
                 </div>
             </div>

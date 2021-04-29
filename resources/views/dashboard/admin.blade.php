@@ -102,47 +102,65 @@
     </div>
 
     <div class="row mt-10">
-        @if ($eom)
-            <div class="col-md-6" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
-                <div class="panel panel-success panel-colorful">    
-                    <div class="pad-all">
-                        <div class="media">
-                            <div class="media-left" style="width: 20%;">
+        <div class="col-md-6" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+            <div class="panel panel-success panel-colorful">    
+                <div class="pad-all">
+                    <div class="media">
+                        <div class="media-left" style="width: 20%;">
+                            @if ($eom)
                                 <img class="img-lg img-circle img-responsive"
-                                src="{{asset('img/profile-photos/'.$eom->photo)}}"
-                                alt="Profile Picture">
-                            </div>
-                            <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
+                                    src="{{asset('img/profile-photos/'.$eom->photo)}}"
+                                    alt="Profile Picture">
+                            @else
+                                <img class="img-lg img-circle img-responsive"
+                                    src="{{asset('img/title-cerebrum.png')}}"
+                                    alt="Profile Picture">
+                            @endif
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            <h3 class="h4" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.switch_month($eom->month).' - '.$eom->year : '')}}</h3>
+                            @if ($eom)
                                 <span class="text-lg text-semibold">{{$eom->name}}</span>
                                 <p>Division : {{$eom->division}}</p>
-                            </div>
+                            @else
+                                <span class="text-lg text-semibold">Data Staff Of The Month Belum Tersedia</span>
+                                <p>PT. Cerebrum Edukanesia Nusantara</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
         
-        @if ($staff_late)
-            <div class="col-md-6" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
-                <div class="panel panel-danger panel-colorful">    
-                    <div class="pad-all">
-                        <div class="media">
-                            <div class="media-left" style="width: 20%;">
+        <div class="col-md-6" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+            <div class="panel panel-danger panel-colorful">    
+                <div class="pad-all">
+                    <div class="media">
+                        <div class="media-left" style="width: 20%;">
+                            @if ($staff_late)
                                 <img class="img-lg img-circle img-responsive"
                                 src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
                                 alt="Profile Picture">
-                            </div>
-                            <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
+                            @else
+                                <img class="img-lg img-circle img-responsive"
+                                src="{{asset('img/title-cerebrum.png')}}"
+                                alt="Profile Picture">
+                            @endif
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            <h3 class="h4" style="color: #fff">{{'Staff Paling Telat'.($staff_late ? ' Periode '.switch_month($staff_late->month).' - '.$staff_late->year : '')}}</h3>
+                            @if ($staff_late)
                                 <span class="text-lg text-semibold">{{$staff_late->name}}</span>
                                 <p>Division : {{$staff_late->division}}</p>
-                            </div>
+                            @else
+                                <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                <p>PT. Cerebrum Edukanesia Nusantara</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
     </div>
 
     <div class="row mt-10">

@@ -69,6 +69,8 @@
                             <th class="sorting_asc text-center">Total Jam Kerja</th>
                             <th class="sorting_asc text-center">Total Keterlambatan</th>
                             <th class="sorting_asc text-center">Total Absen</th>
+                            <th class="sorting_asc text-center">Total Sakit</th>
+                            <th class="sorting_asc text-center">Total Cuti</th>
                             @endif
                         </tr>
                     </thead>
@@ -97,7 +99,8 @@
                                     data-name="{{$item->user_name}}" data-division_name="{{$item->division}}"
                                     data-position_name="{{$item->position}}" data-periode="{{$item->month . ' - ' . $item->year}}"
                                     data-total_hour="{{$item->total_default_hour.' Jam'}}" data-work_hour="{{$string_time_work}}"
-                                    data-absen="{{$item->total_absen}}" data-late="{{$string_time_late}}" data-salary="{{$default_salary}}"
+                                    data-absen="{{$item->total_absen}}" data-sick="{{$item->total_sick}}" data-paid_leave="{{$item->total_paid_leave}}" 
+                                    data-late="{{$string_time_late}}" data-salary="{{$default_salary}}"
                                     data-fine="{{$total_fine}}" data-allowance="{{$total_salary_allowance}}"
                                     data-cut="{{$total_salary_cut}}" data-total_salary="{{$total_salary}}">
                                     <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
@@ -130,6 +133,8 @@
                             <td class="text-center">{{$string_time_work}}</td>
                             <td class="text-center">{{$string_time_late}}</td>
                             <td class="text-center">{{$item->total_absen . ' hari'}}</td>
+                            <td class="text-center">{{$item->total_sick . ' hari'}}</td>
+                            <td class="text-center">{{$item->total_paid_leave . ' hari'}}</td>
                         </tr>
                         @endforeach
                     </tbody>

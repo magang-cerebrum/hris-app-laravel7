@@ -39,6 +39,12 @@
                             <td><label for="late" class="text-bold">Total Absen: </label></td>
                             <td><span id="absen"></span></td>
                         </tr>
+                        <tr>
+                            <td><label for="sick" class="text-bold">Total Sakit: </label></td>
+                            <td><span id="sick"></span></td>
+                            <td><label for="paid_leave" class="text-bold">Total Cuti: </label></td>
+                            <td><span id="paid_leave"></span></td>
+                        </tr>
                         <tr style="background-color: #2B323A; color: #FFFFFF; font-weight: bold; margin-bottom: 10px"><td colspan="4">Keterangan Gaji</td></tr>
                         <tr>
                             <td><label for="salary" class="text-bold">Gaji Pokok: </label></td>
@@ -78,6 +84,8 @@
             var work_hour = $(this).data('work_hour');
             var late = $(this).data('late');
             var absen = $(this).data('absen');
+            var sick = $(this).data('sick');
+            var paid_leave = $(this).data('paid_leave');
             var salary = $(this).data('salary');
             var fine = $(this).data('fine');
             var allowance = $(this).data('allowance');
@@ -94,6 +102,8 @@
             $('#work_hour').text(work_hour);
             $('#late').text(late);
             $('#absen').text(absen);
+            $('#sick').text(sick);
+            $('#paid_leave').text(paid_leave);
             $('#salary').text(salary);
             $('#fine').text(fine);
             $('#allowance').text(allowance);

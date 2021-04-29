@@ -35,9 +35,9 @@
                         </tr>
                         <tr>
                             <td><label for="late" class="text-bold">Total Jam Keterlambatan: </label></td>
-                            <td colspan="3"><span id="late"></span></td>
+                            <td><span id="late"></span></td>
                             <td><label for="late" class="text-bold">Total Absen: </label></td>
-                            <td colspan="3"><span id="absen"></span></td>
+                            <td><span id="absen"></span></td>
                         </tr>
                         <tr style="background-color: #2B323A; color: #FFFFFF; font-weight: bold; margin-bottom: 10px"><td colspan="4">Keterangan Gaji</td></tr>
                         <tr>

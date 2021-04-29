@@ -24,6 +24,8 @@ class CreateMasterSalariesTable extends Migration
             $table->string('total_work_time',25)->nullable();
             $table->string('total_late_time',25)->nullable();
             $table->integer('total_absen')->nullable();
+            $table->integer('total_sick')->nullable();
+            $table->integer('total_paid_leave')->nullable();
             $table->bigInteger('total_fine')->nullable();
             $table->bigInteger('default_salary')->nullable();
             $table->bigInteger('total_salary_cut')->nullable();

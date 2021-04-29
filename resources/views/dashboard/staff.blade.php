@@ -342,208 +342,187 @@
 </div>
 
 <div class="row mt-10">
-@if ($monthDecidePerformance->isEmpty())
-
-@else
     <div class="col-md-4">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Top Scored Performance Employee ({{$monthName}}) <sup><i
-                            class="fa fa-info"
-                            title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
+                <h3 class="panel-title">
+                    Top Scored Performance Employee ({{$monthName}}) 
+                    <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
                 </h3>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-1 col-md-1"></div>
-                    @foreach ($monthDecidePerformance as $mdpItem)
-                    @if ($loop->iteration == 1)
-                    <div class="panel panel-warning panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 30%;">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.$mdpItem->profile_photo)}}"
-                                        alt="Profile Picture">
+            <div class="panel-body" style="min-height: 403px">
+                @if ($monthDecidePerformance->isEmpty())
+
+                @else
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1"></div>
+                        @foreach ($monthDecidePerformance as $mdpItem)
+                            @if ($loop->iteration == 1)
+                                <div class="panel panel-warning panel-colorful">
+                                    <div class="pad-all">
+                                        <div class="media">
+                                            <div class="media-left" style="width: 30%;">
+                                                <img class="img-md img-circle img-responsive"
+                                                    src="{{asset('img/profile-photos/'.$mdpItem->profile_photo)}}"
+                                                    alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-top">
+                                                <span class="text-lg text-semibold">{{$mdpItem->name}} #{{$loop->iteration}}</span>
+                                                <p>Score : {{$mdpItem->performance_score}}/100</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{$mdpItem->name}} #{{$loop->iteration}}</span>
-                                    <p>Score : {{$mdpItem->performance_score}}/100</p>
+                            @elseif($loop->iteration == 2)
+                                <div class="panel panel-secondary panel-colorful">
+                                    <div class="pad-all">
+                                        <div class="media">
+                                            <div class="media-left" style="width: 30%;">
+                                                <img class="img-md img-circle img-responsive"
+                                                    src="{{asset('img/profile-photos/'.$mdpItem->profile_photo)}}"
+                                                    alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-top">
+                                                <span class="text-lg text-semibold">{{$mdpItem->name}} #{{$loop->iteration}}</span>
+                                                <p>Score : {{$mdpItem->performance_score}}/100</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            @else
+                                <div class="panel panel-brown panel-colorful">
+                                    <div class="pad-all">
+                                        <div class="media">
+                                            <div class="media-left" style="width: 30%;">
+                                                <img class="img-md img-circle img-responsive"
+                                                    src="{{asset('img/profile-photos/'.$mdpItem->profile_photo)}}"
+                                                    alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-top">
+                                                <span class="text-lg text-semibold">{{$mdpItem->name}} #{{$loop->iteration}}</span>
+                                                <p>Score : {{$mdpItem->performance_score}}/100</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
-                    @elseif($loop->iteration == 2)
-                    <div class="panel panel-secondary panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 30%;">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.$mdpItem->profile_photo)}}"
-                                        alt="Profile Picture">
-                                </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{$mdpItem->name}} #{{$loop->iteration}}</span>
-                                    <p>Score : {{$mdpItem->performance_score}}/100</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @else
-                    <div class="panel panel-brown panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 30%;">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.$mdpItem->profile_photo)}}"
-                                        alt="Profile Picture">
-                                </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{$mdpItem->name}} #{{$loop->iteration}}</span>
-                                    {{-- @foreach ($user_cmPerformance as $item) --}}
-                                    <p>Score : {{$mdpItem->performance_score}}/100</p>
-                                    {{-- @endforeach --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    @endforeach
-                    <div class="col-sm-1 col-md-1"></div>
-                </div>
-                <div class="pos" id="pot">
-                    @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
-                    <p></p>
-                    @else
-                    @endif
-                </div>
+                @endif
             </div>
-            
         </div>
     </div>
-@endif
 
-@if ($monthDecideAchievement->isEmpty())
-
-@else
     <div class="col-md-4">
         <div class="panel panel-bordered panel-primary">
-            {{-- @if ($count_current_month_ach == 0) --}}
             <div class="panel-heading">
-                <h3 class="panel-title">Top Scored Achievement Employee ({{$monthNameAchievement}}) <sup><i
-                            class="fa fa-info"
-                            title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup></h3>
+                <h3 class="panel-title">
+                    Top Scored Achievement Employee ({{$monthNameAchievement}}) 
+                    <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
+                </h3>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-1 col-md-1"></div>
-                    @foreach ($monthDecideAchievement as $mdaItem)
-                    {{-- {{dump($cmpItem)}} --}}
-                    @if ($loop->iteration == 1)
-                    <div class="panel panel-warning panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 30%;">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.$mdaItem->profile_photo)}}"
-                                        alt="Profile Picture">
-                                </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{$mdaItem->name}} #{{$loop->iteration}}</span>
-                                    <p>Score : {{$mdaItem->score}}/100</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @elseif($loop->iteration == 2)
-                    <div class="panel panel-secondary panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 30%;">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.$mdaItem->profile_photo)}}"
-                                        alt="Profile Picture">
-                                </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{$mdaItem->name}} #{{$loop->iteration}}</span>
-                                    <p>Score : {{$mdaItem->score}}/100</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @else
-                    <div class="panel panel-brown panel-colorful">
-                        <div class="pad-all">
-                            <div class="media">
-                                <div class="media-left" style="width: 30%;">
-                                    <img class="img-md img-circle img-responsive"
-                                        src="{{asset('img/profile-photos/'.$mdaItem->profile_photo)}}"
-                                        alt="Profile Picture">
-                                </div>
-                                <div class="media-body pad-top">
-                                    <span class="text-lg text-semibold">{{$mdaItem->name}} #{{$loop->iteration}}</span>
-                                    {{-- @foreach ($user_cmPerformance as $item) --}}
-                                    <p>Score : {{$mdaItem->score}}/100</p>
-                                    {{-- @endforeach --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    @endforeach
-                    <div class="col-sm-1 col-md-1"></div>
-                </div>
-                <div class="pos" id="pot">
-                    @if ($rankCMPerformance == 1 || $rankCMPerformance == 2 || $rankCMPerformance ==3)
-                    <p></p>
-                    @else
-                    @endif
-                </div>
-            </div>
-           
-        </div>
+            <div class="panel-body" style="min-height: 403px">
+                @if ($monthDecideAchievement->isEmpty())
 
-        <div class="col-md-4">
-            @if ($eom)
-                <div class="panel panel-success panel-colorful">    
-                    <div class="pad-all">
-                        <div class="media">
-                            <div class="media-left" style="width: 30%;">
-                                <img class="img-lg img-circle img-responsive"
-                                src="{{asset('img/profile-photos/'.$eom->photo)}}"
-                                alt="Profile Picture">
-                            </div>
-                            <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
-                                <span class="text-lg text-semibold">{{$eom->name}}</span>
-                                <p>Division : {{$eom->division}}</p>
-                            </div>
-                        </div>
+                @else
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1"></div>
+                        @foreach ($monthDecideAchievement as $mdaItem)
+                            @if ($loop->iteration == 1)
+                                <div class="panel panel-warning panel-colorful">
+                                    <div class="pad-all">
+                                        <div class="media">
+                                            <div class="media-left" style="width: 30%;">
+                                                <img class="img-md img-circle img-responsive"
+                                                    src="{{asset('img/profile-photos/'.$mdaItem->profile_photo)}}"
+                                                    alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-top">
+                                                <span class="text-lg text-semibold">{{$mdaItem->name}} #{{$loop->iteration}}</span>
+                                                <p>Score : {{$mdaItem->score}}/100</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif($loop->iteration == 2)
+                                <div class="panel panel-secondary panel-colorful">
+                                    <div class="pad-all">
+                                        <div class="media">
+                                            <div class="media-left" style="width: 30%;">
+                                                <img class="img-md img-circle img-responsive"
+                                                    src="{{asset('img/profile-photos/'.$mdaItem->profile_photo)}}"
+                                                    alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-top">
+                                                <span class="text-lg text-semibold">{{$mdaItem->name}} #{{$loop->iteration}}</span>
+                                                <p>Score : {{$mdaItem->score}}/100</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="panel panel-brown panel-colorful">
+                                    <div class="pad-all">
+                                        <div class="media">
+                                            <div class="media-left" style="width: 30%;">
+                                                <img class="img-md img-circle img-responsive"
+                                                    src="{{asset('img/profile-photos/'.$mdaItem->profile_photo)}}"
+                                                    alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-top">
+                                                <span class="text-lg text-semibold">{{$mdaItem->name}} #{{$loop->iteration}}</span>
+                                                <p>Score : {{$mdaItem->score}}/100</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
-                </div>
-            @endif
-            
-            @if ($staff_late)
-                <div class="panel panel-danger panel-colorful">    
-                    <div class="pad-all">
-                        <div class="media">
-                            <div class="media-left" style="width: 30%;">
-                                <img class="img-lg img-circle img-responsive"
-                                src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
-                                alt="Profile Picture">
-                            </div>
-                            <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
-                                <span class="text-lg text-semibold">{{$staff_late->name}}</span>
-                                <p>Division : {{$staff_late->division}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+                @endif
+            </div>
         </div>
     </div>
-@endif
+
+    <div class="col-md-4">
+        @if ($eom)
+            <div class="panel panel-success panel-colorful">    
+                <div class="pad-all">
+                    <div class="media">
+                        <div class="media-left" style="width: 30%;">
+                            <img class="img-lg img-circle img-responsive"
+                            src="{{asset('img/profile-photos/'.$eom->photo)}}"
+                            alt="Profile Picture">
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
+                            <span class="text-lg text-semibold">{{$eom->name}}</span>
+                            <p>Division : {{$eom->division}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+        
+        @if ($staff_late)
+            <div class="panel panel-danger panel-colorful">    
+                <div class="pad-all">
+                    <div class="media">
+                        <div class="media-left" style="width: 30%;">
+                            <img class="img-lg img-circle img-responsive"
+                            src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
+                            alt="Profile Picture">
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
+                            <span class="text-lg text-semibold">{{$staff_late->name}}</span>
+                            <p>Division : {{$staff_late->division}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
 </div>
 
 @endsection

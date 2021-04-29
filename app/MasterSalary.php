@@ -14,6 +14,8 @@ class MasterSalary extends Model
         'total_work_time',
         'total_late_time',
         'total_absen',
+        'total_sick',
+        'total_paid_leave',
         'total_fine',
         'default_salary',
         'total_salary_cut',

@@ -138,6 +138,8 @@ class SalaryController extends Controller
                 $total_late_time = [ 0, 0, 0 ];
                 $total_fine = 0;
                 $absen = 0;
+                $sick = 0;
+                $paid_leave = 0;
 
                 for ($x = 1; $x <= $days_in_month; $x++) {
                     $data_user = DB::table('master_presences')
@@ -168,6 +170,12 @@ class SalaryController extends Controller
 
                         if ($shift_user != 'Off' && $shift_user != 'Cuti' && $shift_user != 'Sakit') {
                             $absen++;
+                        }
+                        else if ($shift_user == 'Sakit') {
+                            $sick++;
+                        }
+                        else if ($shift_user == 'Cuti') {
+                            $paid_leave++;
                         }
                     }
                 }
@@ -236,6 +244,8 @@ class SalaryController extends Controller
                     'total_work_time'=>$total_work_time[0].":".$total_work_time[1].":".$total_work_time[2],
                     'total_late_time'=>$total_late_time[0].":".$total_late_time[1].":".$total_late_time[2],
                     'total_absen'=>$absen,
+                    'total_sick'=>$sick,
+                    'total_paid_leave'=>$paid_leave,
                     'total_fine'=>$total_fine,
                     'default_salary'=>$master_user->salary,
                     'total_salary_cut'=>$total_cut_salary,
@@ -459,6 +469,7 @@ class SalaryController extends Controller
     {
         DB::table('master_salaries')->where('id', $id)->update([
             'total_fine'=>$request->total_fine,
+            'total_salary'=>$request->total_salary
         ]);
 
         return redirect('/admin/salary');

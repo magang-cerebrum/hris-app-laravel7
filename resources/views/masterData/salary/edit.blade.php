@@ -73,6 +73,20 @@
             </div>
             <div class="form-group">
                 <div class="row">
+                    <label class="col-sm-2 control-label" for="information">Total Sakit (hari) :</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Total Sakit" name="total_sick" form="form_edit"
+                            class="form-control is-invalid" value="{{$data->total_sick}}" readonly>
+                    </div>
+                    <label class="col-sm-2 control-label" for="information">Total Cuti (hari) :</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Total Cuti" name="total_paid_leave" form="form_edit"
+                            class="form-control is-invalid" value="{{$data->total_paid_leave}}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
                     <label class="col-sm-2 control-label" for="information">Gaji Pokok :</label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="Gaji Pokok" name="default_salary" form="form_edit"

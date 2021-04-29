@@ -126,23 +126,36 @@ public function chiefScored(Request $request){
                         'division_id'=>$dataDivId,
                         'user_id'=>$data_id
                         ]);
-                        $average = MasterPerformance::where('division_id',Auth::user()->division_id)
-                        ->avg('performance_score');
-                        $chief_user_id = MasterUser::where('division_id',Auth::user()->division_id)
-                        ->where('position_id','!=',11)
-                        ->select('id')->get();
-                        foreach($chief_user_id as $chief_id){
-                            MasterPerformance::create([
-                                'performance_score'=>round($average,1),
-                                'month'  =>switch_month($split[0]),
-                                'year' =>$split[1],
-                                'division_id'=>Auth::user()->division_id,
-                                'user_id'=>$chief_id->id
-                            ]);
-
-                        }
+                        
                 
             
+        }
+        $average = MasterPerformance::where('division_id',Auth::user()->division_id)
+        ->avg('performance_score');
+        $chief_user_id = MasterUser::where('division_id',Auth::user()->division_id)
+        ->where('position_id','!=',11)
+        ->select('id')->get();
+        // dd($chief_user_id);
+        if(count($chief_user_id)>1){
+            foreach($chief_user_id as $chief_id){
+                MasterPerformance::create([
+                    'performance_score'=>round($average,1),
+                    'month'  =>switch_month($split[0]),
+                    'year' =>$split[1],
+                    'division_id'=>Auth::user()->division_id,
+                    'user_id'=>$chief_id->id
+                ]);
+            }
+            
+        }
+        else{
+            MasterPerformance::create([
+                'performance_score'=>round($average,1),
+                'month'  =>switch_month($split[0]),
+                'year' =>$split[1],
+                'division_id'=>Auth::user()->division_id,
+                'user_id'=>$chief_user_id[0]->id
+            ]);
         }
         // dd($average);
         Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');

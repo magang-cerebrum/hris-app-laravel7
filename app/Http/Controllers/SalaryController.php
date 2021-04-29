@@ -102,6 +102,7 @@ class SalaryController extends Controller
         $day = date('j');
         $month = $request->month;
         $year = $request->year;
+        $days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
         $data_check_presence = DB::table('master_presences')
         ->leftJoin('master_users','master_presences.user_id','=','master_users.id')
@@ -125,32 +126,50 @@ class SalaryController extends Controller
             ->where('status', 0)->get();
     
             while (count($data_presences) > 0) {
-                $data_presences_by_user_id = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->first();
+                $data_presences_by_user_id = DB::table('master_presences')
+                ->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->first();
+
                 global $user_id;
                 $user_id = $data_presences_by_user_id->user_id;
-                $data_user = DB::table('master_presences')->where('user_id',$user_id)->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
+
+                $default_schedule = DB::table('master_job_schedules')->where('month',switch_month($month))->where('year',$year)->where('user_id',$user_id)->first();
+               
                 $total_work_time = [ 0, 0, 0 ];
                 $total_late_time = [ 0, 0, 0 ];
                 $total_fine = 0;
-    
-                foreach ($data_user as $item_user) {
-                    $work_hour = date('H', strtotime($item_user->inaday_time));
-                    $work_minute = date('i', strtotime($item_user->inaday_time));
-                    $work_seconds = date('s', strtotime($item_user->inaday_time));
-                    $late_hour = date('H', strtotime($item_user->late_time));
-                    $late_minute = date('i', strtotime($item_user->late_time));
-                    $late_seconds = date('s', strtotime($item_user->late_time));
-    
-                    $total_work_time[0] += $work_hour;
-                    $total_work_time[1] += $work_minute;
-                    $total_work_time[2] += $work_seconds;
-                    $total_late_time[0] += $late_hour;
-                    $total_late_time[1] += $late_minute;
-                    $total_late_time[2] += $late_seconds;
-    
-                    $total_fine += $item_user->fine;
-    
-                    DB::table('master_presences')->where('id',$item_user->id)->update(['status'=>1]);
+                $absen = 0;
+
+                for ($x = 1; $x <= $days_in_month; $x++) {
+                    $data_user = DB::table('master_presences')
+                    ->where('user_id',$user_id)->where('presence_date', $year.'-'.$month.'-'.($x / 10 < 1 ? '0'.$x : $x))
+                    ->where('status', 0)->first();
+
+                    if ($data_user) {
+                        $work_hour = date('H', strtotime($data_user->inaday_time));
+                        $work_minute = date('i', strtotime($data_user->inaday_time));
+                        $work_seconds = date('s', strtotime($data_user->inaday_time));
+                        $late_hour = date('H', strtotime($data_user->late_time));
+                        $late_minute = date('i', strtotime($data_user->late_time));
+                        $late_seconds = date('s', strtotime($data_user->late_time));
+        
+                        $total_work_time[0] += $work_hour;
+                        $total_work_time[1] += $work_minute;
+                        $total_work_time[2] += $work_seconds;
+                        $total_late_time[0] += $late_hour;
+                        $total_late_time[1] += $late_minute;
+                        $total_late_time[2] += $late_seconds;
+        
+                        $total_fine += $data_user->fine;
+                        DB::table('master_presences')->where('id',$data_user->id)->update(['status'=>1]);
+                    }
+                    else {
+                        $temp_shift = 'shift_'.$x;
+                        $shift_user = $default_schedule->$temp_shift;
+
+                        if ($shift_user != 'Off' && $shift_user != 'Cuti' && $shift_user != 'Sakit') {
+                            $absen++;
+                        }
+                    }
                 }
     
                 if ( $total_work_time[2] >= 60 ) {
@@ -170,8 +189,6 @@ class SalaryController extends Controller
                     $total_late_time[0] += intval($total_late_time[1]/60);
                     $total_late_time[1] = intval($total_late_time[1]%60);
                 }
-    
-                $default_schedule = DB::table('master_job_schedules')->where('month',switch_month($month))->where('year',$year)->where('user_id',$user_id)->first();
                 
                 $master_user = DB::table('master_users')->where('id',$user_id)->first();
     
@@ -218,6 +235,7 @@ class SalaryController extends Controller
                     'total_default_hour'=>$default_schedule->total_hour,
                     'total_work_time'=>$total_work_time[0].":".$total_work_time[1].":".$total_work_time[2],
                     'total_late_time'=>$total_late_time[0].":".$total_late_time[1].":".$total_late_time[2],
+                    'total_absen'=>$absen,
                     'total_fine'=>$total_fine,
                     'default_salary'=>$master_user->salary,
                     'total_salary_cut'=>$total_cut_salary,
@@ -409,7 +427,25 @@ class SalaryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $data = DB::table('master_salaries')->where('master_salaries.id',$id)
+        ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+        ->select([
+            'master_salaries.*',
+            'master_users.name as name',
+            'master_divisions.name as division',
+            'master_positions.name as position'
+        ])->first();
+
+        return view('masterdata.salary.edit',[
+            'data'=>$data,
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id
+        ]);
     }
 
     /**
@@ -421,7 +457,11 @@ class SalaryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::table('master_salaries')->where('id', $id)->update([
+            'total_fine'=>$request->total_fine,
+        ]);
+
+        return redirect('/admin/salary');
     }
 
     /**

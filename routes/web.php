@@ -197,6 +197,8 @@ Route::prefix('/admin/salary')->middleware('auth')->group(function(){
     Route::get('/',[SalaryController::class,'index']);
     Route::post('/',[SalaryController::class,'list_data']);
     Route::post('/slip',[SalaryController::class,'create_slip']);
+    Route::get('/{id}/edit', [SalaryController::class, 'edit']);
+    Route::put('/{id}/update', [SalaryController::class, 'update']);
     Route::post('/processed',[SalaryController::class,'get_salary']);
     Route::post('/reset',[SalaryController::class,'reset_salary']);
 });

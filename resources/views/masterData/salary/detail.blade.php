@@ -35,7 +35,9 @@
                         </tr>
                         <tr>
                             <td><label for="late" class="text-bold">Total Jam Keterlambatan: </label></td>
-                            <td colspan="3"><span id="late"></span></td>
+                            <td><span id="late"></span></td>
+                            <td><label for="late" class="text-bold">Total Absen: </label></td>
+                            <td><span id="absen"></span></td>
                         </tr>
                         <tr style="background-color: #2B323A; color: #FFFFFF; font-weight: bold; margin-bottom: 10px"><td colspan="4">Keterangan Gaji</td></tr>
                         <tr>
@@ -75,6 +77,7 @@
             var total_hour = $(this).data('total_hour');
             var work_hour = $(this).data('work_hour');
             var late = $(this).data('late');
+            var absen = $(this).data('absen');
             var salary = $(this).data('salary');
             var fine = $(this).data('fine');
             var allowance = $(this).data('allowance');
@@ -90,6 +93,7 @@
             $('#total_hour').text(total_hour);
             $('#work_hour').text(work_hour);
             $('#late').text(late);
+            $('#absen').text(absen);
             $('#salary').text(salary);
             $('#fine').text(fine);
             $('#allowance').text(allowance);

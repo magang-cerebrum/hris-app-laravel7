@@ -26,11 +26,14 @@
         <div class="row">
             <div id='calendar'></div><br>
             <table><tr>
-                    <td style="width: 20px;height:20px;background-color:#2B323A"></td><td class="break"></td><td>: Kosong(Tidak Absen)</td><td class="break">
-                    <td style="width: 20px;height:20px;background-color:#79AF3A"></td><td class="break"></td><td>: Hadir(Sudah Absen Masuk/Keluar)</td><td class="break">
-                    <td style="width: 20px;height:20px;background-color:#DB9A00"></td><td class="break"></td><td>: Terlambat(Sudah Absen Masuk/Keluar)</td><td class="break">
-                    <td style="width: 20px;height:20px;background-color:#F22314"></td><td class="break"></td><td>: Off(Tidak Absen)</td><td class="break">
-                    <td style="width: 20px;height:20px;background-color:#1F897F"></td><td class="break"></td><td>: Cuti(Tidak Absen)</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#2B323A"></td><td class="break"></td><td>: Tidak Hadir</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#79AF3A"></td><td class="break"></td><td>: Hadir</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#1F897F"></td><td class="break"></td><td>: Absen Masuk</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#FF8806"></td><td class="break"></td><td>: Terlambat</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#953CA4"></td><td class="break"></td><td>: Terlambat Masuk</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#F22314"></td><td class="break"></td><td>: Off</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#ED417B"></td><td class="break"></td><td>: Cuti</td><td class="break">
+                    <td style="width: 15px;height: 15px;background-color:#290657"></td><td class="break"></td><td>: Sakit</td><td class="break">
             <tr></table>
         </div>
     </div>
@@ -55,7 +58,7 @@
                 right: 'month,basicWeek'
             },
             defaultDate: '<?= $year ?>-<?= $month ?>-01',
-            eventLimit: true, // allow "more" link when too many events
+            eventLimit: true,
             events: [
                 <?php foreach ($data as $item) { 
                     for ($i=1; $i <= $day; $i++) { ?>
@@ -69,13 +72,22 @@
                                     $color = '#79AF3A';
                                     break;
                                 case 'Telat':
-                                    $color = '#DB9A00';
+                                    $color = '#FF8806';
+                                    break;
+                                case 'Telat Masuk':
+                                    $color = '#953CA4';
+                                    break;
+                                case 'Absen Masuk':
+                                    $color = '#1F897F';
                                     break;
                                 case 'Off':
                                     $color = '#F22314';
                                     break;
                                 case 'Cuti':
-                                    $color = '#1F897F';
+                                    $color = '#ED417B';
+                                    break;
+                                case 'Sakit':
+                                    $color = '#290657';
                                     break;
                             }
                         ?>

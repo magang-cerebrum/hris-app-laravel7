@@ -235,43 +235,44 @@
 @endsection
 @section('content')
 @if (count($data_poster) > 0)
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-carousel">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    @foreach ($data_poster as $item_poster)
-                    <li data-target="#myCarousel" data-slide-to="{{$loop->iteration}}"
-                        class="{{$loop->iteration  == 1 ? "active" : ""}}"></li>
-                    @endforeach
-                </ol>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-carousel">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        @foreach ($data_poster as $item_poster)
+                        <li data-target="#myCarousel" data-slide-to="{{$loop->iteration}}"
+                            class="{{$loop->iteration  == 1 ? "active" : ""}}"></li>
+                        @endforeach
+                    </ol>
 
-                <!-- deklarasi carousel -->
-                <div class="carousel-inner" role="listbox">
-                    @foreach ($data_poster as $item_poster)
-                    <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
-                        <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
+                    <!-- deklarasi carousel -->
+                    <div class="carousel-inner" role="listbox">
+                        @foreach ($data_poster as $item_poster)
+                        <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
+                            <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
+                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
-                </div>
 
-                <!-- membuat panah next dan previous -->
-                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="fa fa-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                    <span class="fa fa-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                    <!-- membuat panah next dan previous -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                        <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endif
-{{-- Charts Performa --}}
+
 <div class="row mt-5">
+    {{-- Charts Performa --}}
     <div class="col-md-6" id="grafikPerforma">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
@@ -299,7 +300,6 @@
                 <br>
                 <div id="eom_message">
                     <p id="text_eom_0" class="text-danger"></p>
-                    {{-- {{dd($act)}} --}}
                     <p id="total_score_performance" class="text-info">Total Score : {{$all_score_performance}}</p>
                 </div>
             </div>
@@ -334,10 +334,7 @@
                 <br>
                 <div id="eom_message">
                     <p id="text_eom_0" class="text-danger"></p>
-
                     <p id="total_score_achievement" class="text-info">Total Score : {{$all_score_achievements}}</p>
-
-
                 </div>
             </div>
         </div>
@@ -504,6 +501,46 @@
                 </div>
             </div>
            
+        </div>
+
+        <div class="col-md-4">
+            @if ($eom)
+                <div class="panel panel-success panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 30%;">
+                                <img class="img-lg img-circle img-responsive"
+                                src="{{asset('img/profile-photos/'.$eom->photo)}}"
+                                alt="Profile Picture">
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
+                                <span class="text-lg text-semibold">{{$eom->name}}</span>
+                                <p>Division : {{$eom->division}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            
+            @if ($staff_late)
+                <div class="panel panel-danger panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 30%;">
+                                <img class="img-lg img-circle img-responsive"
+                                src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
+                                alt="Profile Picture">
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
+                                <span class="text-lg text-semibold">{{$staff_late->name}}</span>
+                                <p>Division : {{$staff_late->division}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endif

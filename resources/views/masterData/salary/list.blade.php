@@ -20,7 +20,7 @@
             <div id="btn_paid_leave">
                 <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="get_salary"
-                    data-original-title="Tambah Lembur Baru" type="submit" {{$bool_check_day == false ? 'disabled' : ''}}>
+                    data-original-title="Ambil Data Gaji Baru" type="submit" {{$bool_check_day == false ? 'disabled' : ''}}>
                     <i class="btn-label fa fa-plus"></i>
                     Ambil Data Gaji Baru
                 </button>
@@ -28,7 +28,7 @@
             <div id="btn_paid_leave">
                 <button class="btn btn-success btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="slip"
-                    data-original-title="Tambah Lembur Baru" type="submit">
+                    data-original-title="Cetak Slip Gaji Data Terpilih" type="submit">
                     <i class="btn-label fa fa-check"></i>
                     Cetak Slip Gaji Data Terpilih
                 </button>
@@ -36,7 +36,7 @@
             <div id="btn_paid_leave">
                 <button class="btn btn-danger btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="reset"
-                    data-original-title="Tambah Lembur Baru" type="submit">
+                    data-original-title="Reset Log Salary" type="submit">
                     <i class="btn-label fa fa-check"></i>
                     Reset Log Salary
                 </button>
@@ -68,6 +68,7 @@
                             <th class="sorting_asc text-center">Total Jam Kerja Seharusnya</th>
                             <th class="sorting_asc text-center">Total Jam Kerja</th>
                             <th class="sorting_asc text-center">Total Keterlambatan</th>
+                            <th class="sorting_asc text-center">Total Absen</th>
                             @endif
                         </tr>
                     </thead>
@@ -96,7 +97,7 @@
                                     data-name="{{$item->user_name}}" data-division_name="{{$item->division}}"
                                     data-position_name="{{$item->position}}" data-periode="{{$item->month . ' - ' . $item->year}}"
                                     data-total_hour="{{$item->total_default_hour.' Jam'}}" data-work_hour="{{$string_time_work}}"
-                                    data-late="{{$string_time_late}}" data-salary="{{$default_salary}}"
+                                    data-absen="{{$item->total_absen}}" data-late="{{$string_time_late}}" data-salary="{{$default_salary}}"
                                     data-fine="{{$total_fine}}" data-allowance="{{$total_salary_allowance}}"
                                     data-cut="{{$total_salary_cut}}" data-total_salary="{{$total_salary}}">
                                     <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
@@ -128,6 +129,7 @@
                             <td class="text-center">{{$item->total_default_hour.' Jam'}}</td>
                             <td class="text-center">{{$string_time_work}}</td>
                             <td class="text-center">{{$string_time_late}}</td>
+                            <td class="text-center">{{$item->total_absen . ' hari'}}</td>
                         </tr>
                         @endforeach
                     </tbody>

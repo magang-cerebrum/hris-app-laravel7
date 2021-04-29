@@ -58,25 +58,27 @@ class AdminAuthDashboardController extends Controller
             $staff_late = DB::table('master_salaries')
             ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
             ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->where('month', $current_month)
-            ->where('year',$this_year)
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
             ->orderBy('total_late_time', 'asc')
             ->select([
                 'master_users.name as name',
                 'master_divisions.name as division',
                 'master_users.profile_photo as photo',
-                'master_salaries.total_late_time as late'
+                'master_salaries.total_late_time as late',
+                'master_salaries.month as month',
+                'master_salaries.year as year',
             ])->first();
 
             $eom = DB::table('master_eoms')
             ->leftjoin('master_users','master_eoms.user_id','=','master_users.id')
             ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->where('month', $current_month)
-            ->where('year',$this_year)
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
             ->select([
                 'master_users.name as name',
                 'master_users.profile_photo as photo',
-                'master_divisions.name as division'
+                'master_divisions.name as division',
+                'master_eoms.month as month',
+                'master_eoms.year as year',
             ])->first();
 
             return view('dashboard.admin',[

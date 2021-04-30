@@ -78,6 +78,44 @@ class AdminAuthDashboardController extends Controller
                 'master_users.profile_photo as photo',
                 'master_divisions.name as division'
             ])->first();
+            $data_max_performance = array();
+            $data_max_achievement = array();
+            
+            $division_data = DB::table('master_divisions')->whereNotIn('id',[7])->select('id')->get();
+    
+            foreach ($division_data as $division) {
+                $data = DB::table('master_performances')
+                ->leftJoin('master_users','master_performances.user_id','=','master_users.id')
+                ->leftJoin('master_divisions','master_performances.division_id','=','master_divisions.id')
+                ->where('master_performances.division_id',$division->id)
+                ->select([
+                    'master_users.name as user_name',
+                    'master_divisions.name as division_name',
+                    'master_performances.performance_score as score',
+                    'month',
+                    'year'
+                ])
+                ->orderBy('performance_score','desc')
+                ->first();
+                array_push($data_max_performance,$data);
+            }
+            
+            foreach ($division_data as $division) {
+                $data = DB::table('master_achievements')
+                ->leftJoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
+                ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+                ->where('master_users.division_id',$division->id)
+                ->select([
+                    'master_users.name as user_name',
+                    'master_divisions.name as division_name',
+                    'master_achievements.score as score',
+                    'month',
+                    'year'
+                ])
+                ->orderBy('score','desc')
+                ->first();
+                array_push($data_max_achievement,$data);
+            }
 
             return view('dashboard.admin',[
                 'data_absensi'=>$data_absensi,
@@ -89,6 +127,8 @@ class AdminAuthDashboardController extends Controller
                 'data_ticket'=> $data_ticket,
                 'staff_late'=> $staff_late,
                 'eom'=> $eom,
+                'data_max_achievement' => $data_max_achievement,
+                'data_max_performance' => $data_max_performance,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

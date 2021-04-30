@@ -49,7 +49,15 @@ input[type=range]::-moz-range-track {
   border-radius: 25px;
   border: 0px solid #000101;
 }
-
+input[type=range]::-moz-range-thumb {
+        box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+        border: 0px solid #000000;
+        height: 20px;
+        width: 39px;
+        border-radius: 7px;
+        background: #090735;
+        cursor: pointer;
+    }
 
 
 

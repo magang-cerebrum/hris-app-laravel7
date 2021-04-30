@@ -420,4 +420,4 @@ Route::prefix('/admin/presence')->middleware('auth')->group(function () {
 
 //route testing
 Route::view('/test', 'kamera');
-Route::get('/test/hitung',[TransactionPaidLeaveController::class,'test']);
+Route::get('/test/hitung',[UserController::class,'test']);

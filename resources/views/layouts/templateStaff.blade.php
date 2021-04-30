@@ -333,7 +333,7 @@
                                             <ul class="collapse">
                                                 <li><a href="/staff/performance"><i class="fa fa-cubes"></i>Leaderboard</a></li>
                                                 <li><a href="/staff/performance/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
-                                                <li><a href="/staff/performance/charts"><i class="fa fa-bar-chart"></i>Charts</a></li>                                
+                                                <li><a href="/staff/performance/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>                                
                                             </ul>
                     
                                         </li>

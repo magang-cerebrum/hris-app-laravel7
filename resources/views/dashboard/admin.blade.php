@@ -46,7 +46,7 @@
             </div>
         </div>
     @endif
-    <div class="row mt-10">
+    <div class="row mt-10 mh-byrow">
         <div class="col-md-3">
             <div class="panel panel-warning panel-colorful media middle pad-all">
                 <div class="media-left">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="panel panel-info panel-colorful media middle pad-all">
+            <div class="panel panel-primary panel-colorful media middle pad-all">
                 <div class="media-left">
                     <div class="pad-hor">
                         <i class="pli-remove-user icon-3x"></i>
@@ -101,8 +101,8 @@
         </div>
     </div>
 
-    <div class="row mt-10">
-        <div class="col-md-4" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+    <div class="row mt-10 mh-byrow">
+        <div class="col-md-4">
             <div class="panel panel-success panel-colorful">    
                 <div class="pad-all">
                     <h3 class="h4" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.switch_month($eom->month).' - '.$eom->year : '')}}</h3>
@@ -120,10 +120,10 @@
                         </div>
                         <div class="media-body" style="padding-top: 7px">
                             @if ($eom)
-                                <span class="text-lg text-semibold">{{$eom->name}}</span>
+                                <span class="text-md text-semibold">{{$eom->name}}</span>
                                 <p>Division : {{$eom->division}}</p>
                             @else
-                                <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                <span class="text-md text-semibold">Data Belum Tersedia</span>
                                 <p>PT. Cerebrum Edukanesia Nusantara</p>
                             @endif
                         </div>
@@ -132,7 +132,7 @@
             </div>
         </div>
 
-        <div class="col-md-4" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+        <div class="col-md-4">
             <div class="panel panel-info panel-colorful">    
                 <div class="pad-all">
                     <h3 class="h4" style="color: #fff">{{'Staff Jarang Telat'.($staff_min_late ? ' Periode '.switch_month($staff_min_late->month).' - '.$staff_min_late->year : '')}}</h3>
@@ -150,10 +150,10 @@
                         </div>
                         <div class="media-body" style="padding-top: 7px">
                             @if ($staff_min_late)
-                                <span class="text-lg text-semibold">{{$staff_min_late->name}}</span>
+                                <span class="text-md text-semibold">{{$staff_min_late->name}}</span>
                                 <p>Division : {{$staff_min_late->division}}</p>
                             @else
-                                <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                <span class="text-md text-semibold">Data Belum Tersedia</span>
                                 <p>PT. Cerebrum Edukanesia Nusantara</p>
                             @endif
                         </div>
@@ -162,7 +162,7 @@
             </div>
         </div>
         
-        <div class="col-md-4" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+        <div class="col-md-4">
             <div class="panel panel-danger panel-colorful">    
                 <div class="pad-all">
                     <h3 class="h4" style="color: #fff">{{'Staff Paling Telat'.($staff_late ? ' Periode '.switch_month($staff_late->month).' - '.$staff_late->year : '')}}</h3>
@@ -173,7 +173,7 @@
                                 src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
                                 alt="Profile Picture">
                             @else
-                                <img class="img-lg img-circle img-responsive"
+                                <img class="img-md img-circle img-responsive"
                                 src="{{asset('img/title-cerebrum.png')}}"
                                 alt="Profile Picture">
                             @endif
@@ -193,9 +193,9 @@
         </div>
     </div>
 
-    <div class="row mt-10">
+    <div class="row mt-10 mh-byrow">
         <div class="col-md-6">
-            <div class="panel media middle panel-bordered panel-danger" style="min-height: 400px">
+            <div class="panel media middle panel-bordered panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title">Daftar Pengajuan Cuti</h3>
                 </div>
@@ -249,12 +249,12 @@
         </div>
 
         <div class="col-md-6">
-            <div class="panel media middle panel-bordered panel-danger" style="min-height: 400px">
+            <div class="panel media middle panel-bordered panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title">Daftar Pengajuan WFH</h3>
                 </div>
                 <div class="panel-body" style="padding-top: 20px">
-                    @if (count($data_paid_leave) == 0)
+                    @if (count($data_wfh) == 0)
                         <div class="text-center">
                             <h1 class="h3">Data Tidak Tersedia</h1>
                             <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 230px">
@@ -354,4 +354,21 @@
     @endif
 
     @include('dashboard/modalPresence')
+@endsection
+
+@section('script')
+    <script src="{{asset('plugins/jquery-match-height/jquery-match-height.min.js')}}"></script>
+    <script>
+        $(document).on('nifty.ready', function () {
+            $('.mh-byrow').each(function() {
+                $(this).find('.panel').matchHeight({
+                    byRow: true
+                });
+            });
+            $('#mh-box').matchHeight({
+                target: $('#mh-target')
+            });
+                
+        });
+    </script>
 @endsection

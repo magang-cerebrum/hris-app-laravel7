@@ -97,7 +97,7 @@
                                 <span id="detail_salary_staff" data-toggle="modal" data-target="#modal-salary-staff"
                                     style="display: inline;" data-nip="{{$item->nip}}"
                                     data-name="{{$item->user_name}}" data-division_name="{{$item->division}}"
-                                    data-position_name="{{$item->position}}" data-periode="{{$item->month . ' - ' . $item->year}}"
+                                    data-position_name="{{$item->position}}" data-periode="{{switch_month($item->month) . ' - ' . $item->year}}"
                                     data-total_hour="{{$item->total_default_hour.' Jam'}}" data-work_hour="{{$string_time_work}}"
                                     data-absen="{{$item->total_absen}}" data-sick="{{$item->total_sick}}" data-paid_leave="{{$item->total_paid_leave}}" 
                                     data-late="{{$string_time_late}}" data-salary="{{$default_salary}}"
@@ -128,7 +128,7 @@
                             </td>
                             <td class="text-center">{{$item->user_name}}</td>
                             <td class="text-center">{{$item->division}}</td>
-                            <td class="text-center">{{$item->month . ' - ' . $item->year}}</td>
+                            <td class="text-center">{{switch_month($item->month) . ' - ' . $item->year}}</td>
                             <td class="text-center">{{$item->total_default_hour.' Jam'}}</td>
                             <td class="text-center">{{$string_time_work}}</td>
                             <td class="text-center">{{$string_time_late}}</td>

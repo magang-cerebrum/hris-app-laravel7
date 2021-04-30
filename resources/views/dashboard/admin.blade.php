@@ -102,47 +102,95 @@
     </div>
 
     <div class="row mt-10">
-        @if ($eom)
-            <div class="col-md-6" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
-                <div class="panel panel-success panel-colorful">    
-                    <div class="pad-all">
-                        <div class="media">
-                            <div class="media-left" style="width: 20%;">
-                                <img class="img-lg img-circle img-responsive"
-                                src="{{asset('img/profile-photos/'.$eom->photo)}}"
-                                alt="Profile Picture">
-                            </div>
-                            <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h4" style="color: #fff">Staff Of The Month</h3>
+        <div class="col-md-4" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+            <div class="panel panel-success panel-colorful">    
+                <div class="pad-all">
+                    <h3 class="h4" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.switch_month($eom->month).' - '.$eom->year : '')}}</h3>
+                    <div class="media">
+                        <div class="media-left" style="min-width: 90px">
+                            @if ($eom)
+                                <img class="img-md img-circle img-responsive"
+                                    src="{{asset('img/profile-photos/'.$eom->photo)}}"
+                                    alt="Profile Picture">
+                            @else
+                                <img class="img-md img-circle img-responsive"
+                                    src="{{asset('img/title-cerebrum.png')}}"
+                                    alt="Profile Picture">
+                            @endif
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            @if ($eom)
                                 <span class="text-lg text-semibold">{{$eom->name}}</span>
                                 <p>Division : {{$eom->division}}</p>
-                            </div>
+                            @else
+                                <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                <p>PT. Cerebrum Edukanesia Nusantara</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
+
+        <div class="col-md-4" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+            <div class="panel panel-info panel-colorful">    
+                <div class="pad-all">
+                    <h3 class="h4" style="color: #fff">{{'Staff Jarang Telat'.($staff_min_late ? ' Periode '.switch_month($staff_min_late->month).' - '.$staff_min_late->year : '')}}</h3>
+                    <div class="media">
+                        <div class="media-left" style="min-width: 90px">
+                            @if ($staff_min_late)
+                                <img class="img-md img-circle img-responsive"
+                                src="{{asset('img/profile-photos/'.$staff_min_late->photo)}}"
+                                alt="Profile Picture">
+                            @else
+                                <img class="img-md img-circle img-responsive"
+                                src="{{asset('img/title-cerebrum.png')}}"
+                                alt="Profile Picture">
+                            @endif
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            @if ($staff_min_late)
+                                <span class="text-lg text-semibold">{{$staff_min_late->name}}</span>
+                                <p>Division : {{$staff_min_late->division}}</p>
+                            @else
+                                <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                <p>PT. Cerebrum Edukanesia Nusantara</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        @if ($staff_late)
-            <div class="col-md-6" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
-                <div class="panel panel-danger panel-colorful">    
-                    <div class="pad-all">
-                        <div class="media">
-                            <div class="media-left" style="width: 20%;">
-                                <img class="img-lg img-circle img-responsive"
+        <div class="col-md-4" data-toggle="modal" data-target="#modal-presence" style="cursor: pointer">
+            <div class="panel panel-danger panel-colorful">    
+                <div class="pad-all">
+                    <h3 class="h4" style="color: #fff">{{'Staff Paling Telat'.($staff_late ? ' Periode '.switch_month($staff_late->month).' - '.$staff_late->year : '')}}</h3>
+                    <div class="media">
+                        <div class="media-left" style="min-width: 90px">
+                            @if ($staff_late)
+                                <img class="img-md img-circle img-responsive"
                                 src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
                                 alt="Profile Picture">
-                            </div>
-                            <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h4" style="color: #fff">Staff Paling Telat</h3>
-                                <span class="text-lg text-semibold">{{$staff_late->name}}</span>
+                            @else
+                                <img class="img-lg img-circle img-responsive"
+                                src="{{asset('img/title-cerebrum.png')}}"
+                                alt="Profile Picture">
+                            @endif
+                        </div>
+                        <div class="media-body" style="padding-top: 7px">
+                            @if ($staff_late)
+                                <span class="text-md text-semibold">{{$staff_late->name}}</span>
                                 <p>Division : {{$staff_late->division}}</p>
-                            </div>
+                            @else
+                                <span class="text-md text-semibold">Data Belum Tersedia</span>
+                                <p>PT. Cerebrum Edukanesia Nusantara</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
     </div>
 
     <div class="row mt-10">
@@ -199,18 +247,71 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="panel media middle panel-bordered panel-danger" style="min-height: 400px">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Daftar Rekruitasi</h3>
+                    <h3 class="panel-title">Daftar Pengajuan WFH</h3>
                 </div>
                 <div class="panel-body" style="padding-top: 20px">
-                    @if (count($data_recruitment) == 0)
+                    @if (count($data_paid_leave) == 0)
                         <div class="text-center">
                             <h1 class="h3">Data Tidak Tersedia</h1>
                             <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 230px">
                         </div>
                     @else
+                        <div class="table-responsive">
+                            <table id="masterdata-division"
+                            class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
+                            role="grid" aria-describedby="demo-dt-basic_info" width="100%"
+                            cellspacing="0">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting text-center" tabindex="0">No</th>
+                                        <th class="sorting text-center" tabindex="0">NIP</th>
+                                        <th class="sorting text-center" tabindex="0">Nama</th>
+                                        <th class="sorting text-center" tabindex="0">Divisi</th>
+                                        <th class="sorting text-center" tabindex="0">Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data_wfh as $item)
+                                        <tr>
+                                            <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
+                                            <td class="text-center">{{$item->user_nip}}</td>
+                                            <td class="text-center">{{$item->user_name}}</td>
+                                            <td class="text-center">{{$item->division }}</td>
+                                            <td class="text-center">{{$item->needs}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-2">
+                                <a href="{{url('/admin/wfh')}}" class="btn btn-primary btn-labeled"
+                                        style="margin: 15px 0">
+                                        Detail
+                                </a>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    @if (count($data_recruitment) != 0)
+        <div class="row mt-10">
+            <div class="col-md-12">
+                <div class="panel media middle panel-bordered panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Daftar Rekruitasi</h3>
+                    </div>
+                    <div class="panel-body" style="padding-top: 20px">
                         <div class="table-responsive">
                             <table id="masterdata-division"
                             class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
@@ -245,11 +346,12 @@
                                 </a>
                             </div>
                             <div class="col-sm-5"></div>
-                        </div>
-                    @endif    
-                </div>            
+                        </div>    
+                    </div>            
+                </div>
             </div>
         </div>
-    </div>
+    @endif
+
     @include('dashboard/modalPresence')
 @endsection

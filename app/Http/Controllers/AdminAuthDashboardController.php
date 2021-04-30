@@ -111,7 +111,7 @@ class AdminAuthDashboardController extends Controller
             $data_max_performance = array();
             $data_max_achievement = array();
             
-            $division_data = DB::table('master_divisions')->whereNotIn('id',[7])->select('id')->get();
+            $division_data = DB::table('master_divisions')->whereNotIn('id',[7])->where('master_divisions.status','Aktif')->select('id')->get();
     
             foreach ($division_data as $division) {
                 $data = DB::table('master_performances')
@@ -120,11 +120,14 @@ class AdminAuthDashboardController extends Controller
                 ->where('master_performances.division_id',$division->id)
                 ->select([
                     'master_users.name as user_name',
+                    'master_users.profile_photo',
                     'master_divisions.name as division_name',
                     'master_performances.performance_score as score',
                     'month',
                     'year'
                 ])
+                ->orderBy('year','desc')
+                ->orderBy('month','desc')
                 ->orderBy('performance_score','desc')
                 ->first();
                 array_push($data_max_performance,$data);
@@ -137,11 +140,14 @@ class AdminAuthDashboardController extends Controller
                 ->where('master_users.division_id',$division->id)
                 ->select([
                     'master_users.name as user_name',
+                    'master_users.profile_photo',
                     'master_divisions.name as division_name',
                     'master_achievements.score as score',
                     'month',
                     'year'
                 ])
+                ->orderBy('year','desc')
+                ->orderBy('month','desc')
                 ->orderBy('score','desc')
                 ->first();
                 array_push($data_max_achievement,$data);

@@ -272,7 +272,7 @@
 @endif
 
 @if (Auth::user()->position_id != 11)
-    <div class="row">
+    <div class="row mh-byrow">
         <div class="col-md-4">
             <div class="panel panel-dark panel-colorful media middle pad-all">
                 <div class="media-left">
@@ -315,7 +315,7 @@
     </div>
 @endif
 
-<div class="row mt-5">
+<div class="row mt-5 mh-byrow">
     {{-- Charts Performa --}}
     <div class="col-md-6" id="grafikPerforma">
         <div class="panel panel-bordered panel-primary">
@@ -619,7 +619,20 @@
 
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+<script src="{{asset('plugins/jquery-match-height/jquery-match-height.min.js')}}"></script>
 <script>
+    $(document).on('nifty.ready', function () {
+        $('.mh-byrow').each(function() {
+            $(this).find('.panel').matchHeight({
+                byRow: true
+            });
+        });
+        $('#mh-box').matchHeight({
+            target: $('#mh-target')
+        });
+            
+    });
+
     $(".flash-mess").fadeTo(2000, 500).slideUp(500, function () {
         $(".flash-mess").slideUp(500);
     });

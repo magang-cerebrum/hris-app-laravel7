@@ -15,6 +15,7 @@
         </div>
     </div>
 </div>
+
 <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 <script>
     var d_score = {!!json_encode($score) !!}
@@ -115,13 +116,6 @@
                         show: true,
                         lineWidth: 2,
                         fill: false,
-                        // fillColor: {
-                        //     colors: [{
-                        //         opacity: 0.5
-                        //     }, {
-                        //         opacity: 0.5
-                        //     }]
-                        // }
                     },
                     points: {
                         show: true,
@@ -134,13 +128,6 @@
                         show: true,
                         lineWidth: 2,
                         fill: false,
-                        // fillColor: {
-                        //     colors: [{
-                        //         opacity: 0.5
-                        //     }, {
-                        //         opacity: 0.5
-                        //     }]
-                        // }
                     },
                     points: {
                         show: true,
@@ -153,13 +140,6 @@
                         show: true,
                         lineWidth: 2,
                         fill: false,
-                        // fillColor: {
-                        //     colors: [{
-                        //         opacity: 0.5
-                        //     }, {
-                        //         opacity: 0.5
-                        //     }]
-                        // }
                     },
                     points: {
                         show: true,
@@ -240,5 +220,4 @@
             }
         }
     }
-
 </script>

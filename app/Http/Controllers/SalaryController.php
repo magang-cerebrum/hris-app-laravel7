@@ -43,8 +43,8 @@ class SalaryController extends Controller
         ->leftJoin('master_users','master_salaries.user_id','=','master_users.id')
         ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-        ->where('month',switch_month($month))
-        ->where('year', $year)
+        ->where('month',$month)
+        ->where('year',$year)
         ->select([
             'master_salaries.*',
             'master_users.name as user_name',
@@ -62,8 +62,8 @@ class SalaryController extends Controller
 
         return view('masterdata.salary.list', [
             'data' => $data,
-            'month' => explode('-',$request->periode)[1],
-            'year' => explode('-',$request->periode)[0],
+            'month' => $month,
+            'year' => $year,
             'bool_check_day' => $bool_check_day,
             'next_date' => explode('-',$next_day)[2].'-'.explode('-',$next_day)[1].'-'.explode('-',$next_day)[0]
         ]);
@@ -238,7 +238,7 @@ class SalaryController extends Controller
     
                 DB::table('master_salaries')->insert([
                     'user_id'=>$user_id,
-                    'month'=>switch_month($month),
+                    'month'=>$month,
                     'year'=>$year,
                     'total_default_hour'=>$default_schedule->total_hour,
                     'total_work_time'=>$total_work_time[0].":".$total_work_time[1].":".$total_work_time[2],

@@ -56,7 +56,9 @@
 
             <div class="message" style="padding: 10px;">
                 @yield('message')
+                
             </div>
+            @yield('url')
         </div>
     </body>
 </html>

@@ -193,26 +193,61 @@ class StaffAuthDashboardController extends Controller
             $staff_late = DB::table('master_salaries')
             ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
             ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->where('month', $current_month)
-            ->where('year',$this_year)
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
             ->orderBy('total_late_time', 'asc')
             ->select([
                 'master_users.name as name',
                 'master_divisions.name as division',
                 'master_users.profile_photo as photo',
-                'master_salaries.total_late_time as late'
+                'master_salaries.total_late_time as late',
+                'master_salaries.month as month',
+                'master_salaries.year as year',
+            ])->first();
+
+            $staff_min_late = DB::table('master_salaries')
+            ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
+            ->orderBy('total_late_time', 'desc')
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_users.profile_photo as photo',
+                'master_salaries.total_late_time as late',
+                'master_salaries.month as month',
+                'master_salaries.year as year',
             ])->first();
 
             $eom = DB::table('master_eoms')
             ->leftjoin('master_users','master_eoms.user_id','=','master_users.id')
             ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->where('month', $current_month)
-            ->where('year',$this_year)
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
             ->select([
                 'master_users.name as name',
                 'master_users.profile_photo as photo',
-                'master_divisions.name as division'
+                'master_divisions.name as division',
+                'master_eoms.month as month',
+                'master_eoms.year as year',
             ])->first();
+
+            $data_presence = DB::table('master_presences')
+            ->leftJoin('master_users','master_presences.user_id','=','master_users.id')
+            ->where('master_users.division_id', $user->division_id)
+            ->where('check_chief', 0)->get();
+
+            $data_paid = DB::table('transaction_paid_leaves')
+            ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
+            ->whereIn('transaction_paid_leaves.status', ['Diajukan','Pending-Chief'])
+            ->where('master_users.division_id', $user->division_id)
+            ->select('transaction_paid_leaves.id')
+            ->get();
+
+            $data_wfh = DB::table('work_from_homes')
+            ->leftJoin('master_users','work_from_homes.user_id','=','master_users.id')
+            ->whereIn('work_from_homes.status', ['Diajukan','Pending-Chief'])
+            ->where('master_users.division_id', $user->division_id)
+            ->select('work_from_homes.id')
+            ->get();
 
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
@@ -236,7 +271,11 @@ class StaffAuthDashboardController extends Controller
                 'monthDecidePerformance'=>$monthDecidePerformance,
                 'monthDecideAchievement'=>$monthDecideAchievement,
                 'staff_late'=>$staff_late,
-                'eom'=>$eom
+                'staff_min_late'=>$staff_min_late,
+                'eom'=>$eom,
+                'data_presence'=>$data_presence,
+                'data_paid_leave'=>$data_paid,
+                'data_wfh'=>$data_wfh,
             ]);
         }
     }

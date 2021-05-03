@@ -22,7 +22,7 @@ class AdminAuthDashboardController extends Controller
             $current_month = switch_month(date('m'));
 
             $data_paid = DB::table('transaction_paid_leaves')
-            ->where('transaction_paid_leaves.status', '=', 'Diterima-Chief')
+            ->whereIn('transaction_paid_leaves.status', ['Diterima-Chief','Pending'])
             ->leftJoin('master_users','transaction_paid_leaves.user_id','=','master_users.id')
             ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->select(
@@ -32,6 +32,19 @@ class AdminAuthDashboardController extends Controller
                 'master_users.nip as user_nip'
                 )
             ->paginate(5);
+
+            $data_wfh = DB::table('work_from_homes')
+            ->whereIn('work_from_homes.status', ['Diterima-Chief','Pending'])
+            ->leftJoin('master_users','work_from_homes.user_id','=','master_users.id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->select(
+                'work_from_homes.*',
+                'master_users.name as user_name',
+                'master_divisions.name as division',
+                'master_users.nip as user_nip'
+                )
+            ->paginate(5);
+
             $user_act = DB::table('master_users')
                 ->where('status', '=', 'aktif')
                 ->get();
@@ -44,6 +57,7 @@ class AdminAuthDashboardController extends Controller
                 ->orWhere('status','=','On Progress')
                 ->get();
             $data_poster = DB::table('sliders')->get();
+
             $data_rect = MasterRecruitment::paginate(5);
 
             $data_absensi = DB::table('master_check_presences')
@@ -58,37 +72,101 @@ class AdminAuthDashboardController extends Controller
             $staff_late = DB::table('master_salaries')
             ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
             ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->where('month', $current_month)
-            ->where('year',$this_year)
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
             ->orderBy('total_late_time', 'asc')
             ->select([
                 'master_users.name as name',
                 'master_divisions.name as division',
                 'master_users.profile_photo as photo',
-                'master_salaries.total_late_time as late'
+                'master_salaries.total_late_time as late',
+                'master_salaries.month as month',
+                'master_salaries.year as year',
+            ])->first();
+
+            $staff_min_late = DB::table('master_salaries')
+            ->leftjoin('master_users','master_salaries.user_id','=','master_users.id')
+            ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
+            ->orderBy('total_late_time', 'desc')
+            ->select([
+                'master_users.name as name',
+                'master_divisions.name as division',
+                'master_users.profile_photo as photo',
+                'master_salaries.total_late_time as late',
+                'master_salaries.month as month',
+                'master_salaries.year as year',
             ])->first();
 
             $eom = DB::table('master_eoms')
             ->leftjoin('master_users','master_eoms.user_id','=','master_users.id')
             ->leftjoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->where('month', $current_month)
-            ->where('year',$this_year)
+            ->orderBy('year', 'desc')->orderBy('month', 'desc')
             ->select([
                 'master_users.name as name',
                 'master_users.profile_photo as photo',
-                'master_divisions.name as division'
+                'master_divisions.name as division',
+                'master_eoms.month as month',
+                'master_eoms.year as year',
             ])->first();
+            $data_max_performance = array();
+            $data_max_achievement = array();
+            
+            $division_data = DB::table('master_divisions')->whereNotIn('id',[7])->where('master_divisions.status','Aktif')->select('id')->get();
+    
+            foreach ($division_data as $division) {
+                $data = DB::table('master_performances')
+                ->leftJoin('master_users','master_performances.user_id','=','master_users.id')
+                ->leftJoin('master_divisions','master_performances.division_id','=','master_divisions.id')
+                ->where('master_performances.division_id',$division->id)
+                ->select([
+                    'master_users.name as user_name',
+                    'master_users.profile_photo',
+                    'master_divisions.name as division_name',
+                    'master_performances.performance_score as score',
+                    'month',
+                    'year'
+                ])
+                ->orderBy('year','desc')
+                ->orderBy('month','desc')
+                ->orderBy('performance_score','desc')
+                ->first();
+                array_push($data_max_performance,$data);
+            }
+            
+            foreach ($division_data as $division) {
+                $data = DB::table('master_achievements')
+                ->leftJoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
+                ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+                ->where('master_users.division_id',$division->id)
+                ->select([
+                    'master_users.name as user_name',
+                    'master_users.profile_photo',
+                    'master_divisions.name as division_name',
+                    'master_achievements.score as score',
+                    'month',
+                    'year'
+                ])
+                ->orderBy('year','desc')
+                ->orderBy('month','desc')
+                ->orderBy('score','desc')
+                ->first();
+                array_push($data_max_achievement,$data);
+            }
 
             return view('dashboard.admin',[
                 'data_absensi'=>$data_absensi,
                 'data_poster'=>$data_poster,
                 'data_recruitment'=>$data_rect,
                 'data_paid_leave'=>$data_paid,
+                'data_wfh'=>$data_wfh,
                 'data_user_active'=>$user_act,
                 'data_user_non_active'=>$user_nact,
                 'data_ticket'=> $data_ticket,
                 'staff_late'=> $staff_late,
+                'staff_min_late'=>$staff_min_late,
                 'eom'=> $eom,
+                'data_max_achievement' => $data_max_achievement,
+                'data_max_performance' => $data_max_performance,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

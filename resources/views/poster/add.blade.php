@@ -29,9 +29,12 @@
                     <label class="col-sm-2 control-label" for="file-upload">File Poster : </label>
                     <div class="col-sm-10">
                         <span class="btn btn-primary btn-file">
-                            Pilih File ... <input type="file" class="form-control" name="file" id="file-upload" form="form_add">
+                            Pilih File ... <input type="file" class="form-control @error('file') is-invalid @enderror" name="file" id="file-upload" form="form_add">
                         </span>
                         <span id="file-label" class="mar-lft"></span>
+                        @error('file') <div class="text-danger invalid-feedback mt-3">
+                            Anda belum memasukan file untuk dijadikan poster.
+                        </div> @enderror
                     </div>
                 </div>
             </div>

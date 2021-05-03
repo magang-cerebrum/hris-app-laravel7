@@ -334,27 +334,27 @@ class MasterAchievementController extends Controller
         // 'allData'=>$arrayDataDivision
     ]);
 
-   }
-   public function chosedEom(Request $request){
-    //    dd($request);
-       $user_id = $request->radio_input_eom;
-       $explodedDate = explode('/',$request->date);
-       $month = $explodedDate[0];
-       $year = $explodedDate[1];
-       $check = DB::table('master_eoms')
-       ->where('user_id',$user_id)
-       ->where('month',$month)
-       ->where('year',$year)->get();
-       if(count($check)>0){
-        foreach($check as $items){
-            DB::table('master_eoms')->where('id',$items->id)->update(['user_id'=>$user_id]);
+}
+    public function chosedEom(Request $request){
+        $user_id = $request->radio_input_eom;
+        $explodedDate = explode('/',$request->date);
+        $month = $explodedDate[0];
+        $year = $explodedDate[1];
+        $check = DB::table('master_eoms')
+        ->where('user_id',$user_id)
+        ->where('month',$month)
+        ->where('year',$year)->get();
+        if(count($check)>0){
+            foreach($check as $items){
+                DB::table('master_eoms')->where('id',$items->id)->update(['user_id'=>$user_id]);
+            }
         }
-       }
-       DB::table('master_eoms')->insert([
-           'user_id'=>$user_id,
-            'month'=>$month,
-            'year'=>$year
-       ]);
-       return redirect('/admin/achievement/eom');
-   }
+        DB::table('master_eoms')->insert([
+            'user_id'=>$user_id,
+                'month'=>$month,
+                'year'=>$year
+        ]);
+        Alert::success('Berhasil','Employee of the month berhasil terpilih!');
+        return redirect('/admin/achievement/eom');
+    }
 }

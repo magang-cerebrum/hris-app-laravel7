@@ -17,9 +17,9 @@
             @endforeach
         <tr></table>
         @if ($data->isEmpty())
-        <div class="text-right">
-            <a href="{{url('/admin/schedule/add')}}" class="btn btn-warning">Klik disini untuk menambahkan jadwal kerja!</a>
-        </div>
+            <div class="text-right">
+                <a href="{{url('/admin/schedule/add')}}" class="btn btn-warning">Klik disini untuk menambahkan jadwal kerja!</a>
+            </div>
         @endif
     </div>
 </div>

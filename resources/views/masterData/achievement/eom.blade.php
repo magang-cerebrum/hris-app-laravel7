@@ -2,6 +2,7 @@
 @section('title','Pencapaian')
 @section('content-title','Pencapaian / Karyawan Terbaik')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+
 @section('head')
 <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
 <style>
@@ -22,8 +23,9 @@
             <div id="pickadate">
                 <div class="input-group date">
                     <span class="input-group-btn">
-                        <button class="btn btn-danger" type="button" style="z-index: 2"><i
-                                class="fa fa-calendar"></i></button>
+                        <button class="btn btn-danger" type="button" style="z-index: 2">
+                            <i class="fa fa-calendar"></i>
+                        </button>
                     </span>
                     <input type="text" name="date" id="periode" placeholder="Pilih Tanggal" class="form-control"
                         autocomplete="off" readonly>
@@ -76,9 +78,8 @@
             <button type="button" class="btn btn-danger" id="btn-submit">Pilih</button>
         </form>
     </div>
-</div>
-
 @endsection
+
 @section('script')
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script src="{{asset("js/helpers.js")}}"></script>

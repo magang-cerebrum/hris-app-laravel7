@@ -76,22 +76,22 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $row)
-                        <tr>
-                            <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
-                            <td class="text-center">
-                                <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
-                            </td>
-                            <td class="text-center">
-                                <a href="/admin/poster/{{$row->id}}/edit"
-                                    class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Edit Poster" type="button">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            </td>
-                            <td class="text-center">{{$row->name}}</td>
-                            <td class="text-center">
-                                <img src="{{ asset('/img/poster/'.$row->file)}}" alt="{{$row->name}}" id="image_poster">
-                            </td>
-                        </tr>
+                            <tr>
+                                <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
+                                </td>
+                                <td class="text-center">
+                                    <a href="/admin/poster/{{$row->id}}/edit"
+                                        class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Edit Poster" type="button">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">{{$row->name}}</td>
+                                <td class="text-center">
+                                    <img src="{{ asset('/img/poster/'.$row->file)}}" alt="{{$row->name}}" id="image_poster">
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

@@ -109,20 +109,20 @@
                                 <select class="selectpicker {{'sub-master_'.$i}} {{$name_shift == '' ? 'hidden' : ''}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
                                     <option value=" "> </option>
                                     @foreach ($data_shift as $shift)
-                                    <option value="{{$shift->id}}"
-                                        class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
-                                        style="{{
-                                            (
-                                                (($name_shift != 'Cuti') && ($name_shift != 'WFH')) ? ($loop->iteration == 2 ? "display: none" : ($loop->iteration == 4) ? "display: none" : "") :
-                                                ($name_shift == 'Cuti' ? ($shift->name == $name_shift ? '': 'display: none') : ($name_shift == 'WFH' ? ($shift->name == $name_shift ? '': 'display: none'): ''))
-                                            )
-                                        }}"
-                                        {{
-                                            ($shift->name == $name_shift ? 'selected': '')
-                                        }}
-                                        >
-                                        {{$shift->name}}
-                                    </option>
+                                        <option value="{{$shift->id}}"
+                                            class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
+                                            style="{{
+                                                (
+                                                    (($name_shift != 'Cuti') && ($name_shift != 'WFH')) ? ($loop->iteration == 2 ? "display: none" : ($loop->iteration == 4) ? "display: none" : "") :
+                                                    ($name_shift == 'Cuti' ? ($shift->name == $name_shift ? '': 'display: none') : ($name_shift == 'WFH' ? ($shift->name == $name_shift ? '': 'display: none'): ''))
+                                                )
+                                            }}"
+                                            {{
+                                                ($shift->name == $name_shift ? 'selected': '')
+                                            }}
+                                            >
+                                            {{$shift->name}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </td>

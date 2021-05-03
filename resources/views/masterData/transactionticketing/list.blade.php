@@ -44,17 +44,17 @@
                 <div class="col-sm-6" id="option_tabel">
                     <div class="radio mar-hor">
                         <div class="col-sm-3">
-                            <label for="" id="option_label">Tabel Tiketing: </label>
+                            <label for="" id="option_label">Tabel Ticketing: </label>
                         </div>
                         <div class="col-sm-3">
                             <input id="lihat_selesai_radio-1" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
                             value="On">
-                            <label for="lihat_selesai_radio-1">Titeking Selesai</label>
+                            <label for="lihat_selesai_radio-1">Ticketing Selesai</label>
                         </div>
                         <div class="col-sm-4">
                             <input id="lihat_selesai_radio-2" class="magic-radio toogle_selesai" type="radio" name="lihat_selesai" form="form-mul-onprog"
                             value="Off">
-                            <label for="lihat_selesai_radio-2">Titeking Proses</label>
+                            <label for="lihat_selesai_radio-2">Ticketing Proses</label>
                         </div>
                     </div>
                 </div>

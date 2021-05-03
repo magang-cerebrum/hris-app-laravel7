@@ -52,11 +52,12 @@
 
                     <!-- deklarasi carousel -->
                     <div class="carousel-inner" role="listbox">
-                        @foreach ($data_poster as $item_poster)
-                        <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
-                            <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
-                        </div>
-                        @endforeach
+                            @foreach ($data_poster as $item_poster)
+                            <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">d
+                                <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
+                            </div>
+                            @endforeach
+                        
                     </div>
 
                     <!-- membuat panah next dan previous -->

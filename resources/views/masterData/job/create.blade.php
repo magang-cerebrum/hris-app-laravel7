@@ -2,6 +2,7 @@
 @section('title', 'Rekruitasi')
 @section('content-title', 'Rekruitasi / Tambah Data Lowongan')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
+
 @section('content')
     <div class="panel panel-danger panel-bordered">
         <div class="panel-heading">

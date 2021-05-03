@@ -80,271 +80,271 @@
         </div>
     </div>
 </div>
+
 @section('script')
-<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<script src="{{ asset('js/helpers.js')}}"></script>
-<script type="text/javascript">
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('js/helpers.js')}}"></script>
+    <script type="text/javascript">
 
-$(document).ready(function () {
-        $("#masterdata-staff").hide();
-        $("#count-all").hide();
-        $("#nactive-pagination").hide();
-        // modal
-        $(document).on('click', '#detail_staff', function () {
-            var nip = $(this).data('nip');
-            var name = $(this).data('name');
-            var dob = $(this).data('dob');
-            var address = $(this).data('address');
-            var phone_number = $(this).data('phone_number');
-            var gender = $(this).data('gender');
-            var email = $(this).data('email');
-            var profile_photo = $(this).data('profile_photo');
-            var employee_status = $(this).data('employee_status');
-            var employee_type = $(this).data('employee_type');
-            var status = $(this).data('status');
-            var contract_duration = $(this).data('contract_duration');
-            var start_work_date = $(this).data('start_work_date');
-            var end_work_date = $(this).data('end_work_date');
-            var yearly_leave_remaining = $(this).data('yearly_leave_remaining');
-            var division_name = $(this).data('division_name');
-            var position_name = $(this).data('position_name');
-            var role_name = $(this).data('role_name');
-            var cc_number = $(this).data('cc_number');
-            var salary = $(this).data('salary');
+    $(document).ready(function () {
+            $("#masterdata-staff").hide();
+            $("#count-all").hide();
+            $("#nactive-pagination").hide();
+            // modal
+            $(document).on('click', '#detail_staff', function () {
+                var nip = $(this).data('nip');
+                var name = $(this).data('name');
+                var dob = $(this).data('dob');
+                var address = $(this).data('address');
+                var phone_number = $(this).data('phone_number');
+                var gender = $(this).data('gender');
+                var email = $(this).data('email');
+                var profile_photo = $(this).data('profile_photo');
+                var employee_status = $(this).data('employee_status');
+                var employee_type = $(this).data('employee_type');
+                var status = $(this).data('status');
+                var contract_duration = $(this).data('contract_duration');
+                var start_work_date = $(this).data('start_work_date');
+                var end_work_date = $(this).data('end_work_date');
+                var yearly_leave_remaining = $(this).data('yearly_leave_remaining');
+                var division_name = $(this).data('division_name');
+                var position_name = $(this).data('position_name');
+                var role_name = $(this).data('role_name');
+                var cc_number = $(this).data('cc_number');
+                var salary = $(this).data('salary');
 
-            var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
+                var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
-            if (contract_duration == '') {
-                contract_duration = '-'
-            } else {
-                contract_duration = contract_duration + ' bulan'
-            }
+                if (contract_duration == '') {
+                    contract_duration = '-'
+                } else {
+                    contract_duration = contract_duration + ' bulan'
+                }
 
+                
+                //show image
+                $("#img-modal").attr("src", join);
+
+                //show data to html
+                $('#nip').text(nip);
+                $('#name').text(name);
+                $('#dob').text(indonesian_date(dob));
+                $('#address').text(address);
+                $('#gender').text(gender);
+                $('#email').text(email);
+                $('#phone_number').text(phone_number);
+                $('#employee_status').text(employee_status);
+                $('#employee_type').text(employee_type);
+                $('#status').text(status);
+                $('#contract_duration').text(contract_duration);
+                $('#start_work_date').text(indonesian_date(start_work_date));
+                $('#end_work_date').text(indonesian_date(end_work_date));
+                $('#yearly_leave_remaining').text(yearly_leave_remaining);
+                $('#division_name').text(division_name);
+                $('#position_name').text(position_name);
+                $('#role_name').text(role_name);
+                $('#cc_number').text(cc_number);
+                $('#salary').text(format_rupiah(salary));
+            });
             
-            //show image
-            $("#img-modal").attr("src", join);
+            $("#check-all").click(function () {
+                if ($(this).is(":checked"))
+                    $(".check-item").prop("checked", true);
+                else
+                    $(".check-item").prop("checked", false);
+            });
+            $("#check-all-active").click(function () {
+                if ($(this).is(":checked"))
+                    $(".check-item-active").prop("checked", true);
+                else
+                    $(".check-item-active").prop("checked", false);
+            });
+        });
 
-            //show data to html
-            $('#nip').text(nip);
-            $('#name').text(name);
-            $('#dob').text(indonesian_date(dob));
-            $('#address').text(address);
-            $('#gender').text(gender);
-            $('#email').text(email);
-            $('#phone_number').text(phone_number);
-            $('#employee_status').text(employee_status);
-            $('#employee_type').text(employee_type);
-            $('#status').text(status);
-            $('#contract_duration').text(contract_duration);
-            $('#start_work_date').text(indonesian_date(start_work_date));
-            $('#end_work_date').text(indonesian_date(end_work_date));
-            $('#yearly_leave_remaining').text(yearly_leave_remaining);
-            $('#division_name').text(division_name);
-            $('#position_name').text(position_name);
-            $('#role_name').text(role_name);
-            $('#cc_number').text(cc_number);
-            $('#salary').text(format_rupiah(salary));
-        });
-        
-        $("#check-all").click(function () {
-            if ($(this).is(":checked"))
-                $(".check-item").prop("checked", true);
-            else
-                $(".check-item").prop("checked", false);
-        });
-        $("#check-all-active").click(function () {
-            if ($(this).is(":checked"))
-                $(".check-item-active").prop("checked", true);
-            else
-                $(".check-item-active").prop("checked", false);
-        });
-    });
+        function toogle_nonaktif() {
+            if (document.getElementById('toogle-nonaktif-radio-2').checked) {
+                document.getElementById('masterdata-staff').style.display = 'none';
+                document.getElementById('masterdata-staff-active').style.display = '';
+                document.getElementById('count-all').style.display = 'none';
+                document.getElementById('count-active').style.display = '';
+                document.getElementById('nactive-pagination').style.display = 'none';
+                document.getElementById('active-pagination').style.display = '';
+            } else {
+                document.getElementById('masterdata-staff').style.display = '';
+                document.getElementById('masterdata-staff-active').style.display = 'none';
+                document.getElementById('count-all').style.display = '';
+                document.getElementById('count-active').style.display = 'none';
+                document.getElementById('nactive-pagination').style.display = '';
+                document.getElementById('active-pagination').style.display = 'none';
+            }
+        };
 
-    function toogle_nonaktif() {
-        if (document.getElementById('toogle-nonaktif-radio-2').checked) {
-            document.getElementById('masterdata-staff').style.display = 'none';
-            document.getElementById('masterdata-staff-active').style.display = '';
-            document.getElementById('count-all').style.display = 'none';
-            document.getElementById('count-active').style.display = '';
-            document.getElementById('nactive-pagination').style.display = 'none';
-            document.getElementById('active-pagination').style.display = '';
-        } else {
-            document.getElementById('masterdata-staff').style.display = '';
-            document.getElementById('masterdata-staff-active').style.display = 'none';
-            document.getElementById('count-all').style.display = '';
-            document.getElementById('count-active').style.display = 'none';
-            document.getElementById('nactive-pagination').style.display = '';
-            document.getElementById('active-pagination').style.display = 'none';
+        function submit_delete(){
+            event.preventDefault();
+            var check1 = document.querySelector('.check-item:checked');
+            var check2 = document.querySelector('.check-item-active:checked');
+            if (check1 != null || check2 != null){
+                Swal.fire({
+                    title: 'Anda yakin ingin menghapus data terpilih?',
+                    text: "Data yang sudah di hapus tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Tidak'
+                    }).then((result) => {
+                    if (result.value == true) {
+                        $("#form-mul-delete").submit();
+                    }}
+                );
+            } else {
+                Swal.fire({
+                    title: 'Sepertinya ada kesalahan...',
+                    text: "Tidak ada data yang dipilih untuk dihapus!",
+                    icon: 'error',
+                })
+            }
         }
-    };
 
-    function submit_delete(){
-        event.preventDefault();
-        var check1 = document.querySelector('.check-item:checked');
-        var check2 = document.querySelector('.check-item-active:checked');
-        if (check1 != null || check2 != null){
+        function reset_pass(id,name){
+            var url = "/admin/data-staff/:id/password".replace(':id', id);
             Swal.fire({
-                title: 'Anda yakin ingin menghapus data terpilih?',
-                text: "Data yang sudah di hapus tidak bisa dikembalikan!",
+                width: 600,
+                title: 'Lakukan reset password untuk user ' + name + '?',
+                text: "Informasikan kepada staff agar mengganti passwordnya segera!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Hapus',
+                confirmButtonText: 'Ya',
                 cancelButtonText: 'Tidak'
                 }).then((result) => {
                 if (result.value == true) {
-                    $("#form-mul-delete").submit();
-                }}
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: url,
+                        type: 'PUT',
+                        data: {id : id, name: name},
+                        success: function(response) {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Berhasil!',
+                                text: "Password untuk user dengan nama " + response.name + " berhasil direset! (password default : cerebrum)",
+                                icon: 'success',
+                            });
+                        },
+                        error: function (jXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: errorThrown,
+                            text: "Reset Password gagal!",
+                            icon: 'error',
+                            width: 600
+                        });
+                    }
+                    });
+                } else {
+                    return false;
+                }} 
             );
-        } else {
-            Swal.fire({
-                title: 'Sepertinya ada kesalahan...',
-                text: "Tidak ada data yang dipilih untuk dihapus!",
-                icon: 'error',
-            })
         }
-    }
 
-    function reset_pass(id,name){
-        var url = "/admin/data-staff/:id/password".replace(':id', id);
-        Swal.fire({
-            width: 600,
-            title: 'Lakukan reset password untuk user ' + name + '?',
-            text: "Informasikan kepada staff agar mengganti passwordnya segera!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak'
+        function toogle_status(id,name,status){
+            var url = "/admin/data-staff/:id/status".replace(':id', id);
+            if (status == 'Aktif') { var word = 'menonaktifkan'}
+            else { var word = 'mengaktifkan'}
+            Swal.fire({
+                width: 600,
+                title: 'Konfirmasi Perubahan Status ',
+                text: 'Anda yakin ingin ' + word + ' staff dengan nama '+ name + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
             }).then((result) => {
-            if (result.value == true) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: url,
-                    type: 'PUT',
-                    data: {id : id, name: name},
-                    success: function(response) {
-                        Swal.fire({
-                            width: 600,
-                            title: 'Berhasil!',
-                            text: "Password untuk user dengan nama " + response.name + " berhasil direset! (password default : cerebrum)",
-                            icon: 'success',
-                        });
-                    },
-                    error: function (jXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        title: errorThrown,
-                        text: "Reset Password gagal!",
-                        icon: 'error',
-                        width: 600
+                if (result.value == true) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
                     });
-                }
-                });
-            } else {
-                return false;
-            }} 
-        );
-    }
-
-    function toogle_status(id,name,status){
-        var url = "/admin/data-staff/:id/status".replace(':id', id);
-        if (status == 'Aktif') { var word = 'menonaktifkan'}
-        else { var word = 'mengaktifkan'}
-        Swal.fire({
-            width: 600,
-            title: 'Konfirmasi Perubahan Status ',
-            text: 'Anda yakin ingin ' + word + ' staff dengan nama '+ name + '?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak'
-        }).then((result) => {
-            if (result.value == true) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: url,
-                    type: 'PUT',
-                    data: {id : id, name: name, status:status},
-                    success: function(response) {
+                    $.ajax({
+                        url: url,
+                        type: 'PUT',
+                        data: {id : id, name: name, status:status},
+                        success: function(response) {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Berhasil!',
+                                text: "User dengan nama " + response.name + " saat ini berstatus " + response.status,
+                                icon: 'success',
+                                timer: 2000
+                            });
+                            window.location.reload();
+                        },
+                        error: function (jXHR, textStatus, errorThrown) {
                         Swal.fire({
-                            width: 600,
-                            title: 'Berhasil!',
-                            text: "User dengan nama " + response.name + " saat ini berstatus " + response.status,
-                            icon: 'success',
-                            timer: 2000
+                            title: errorThrown,
+                            text: "Penggantian status gagal!",
+                            icon: 'error',
+                            width: 600
                         });
-                        window.location.reload();
-                    },
-                    error: function (jXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        title: errorThrown,
-                        text: "Penggantian status gagal!",
-                        icon: 'error',
-                        width: 600
+                    }
                     });
-                }
-                });
-            } else {
-                return false;
-            }} 
-        );
-    }
+                } else {
+                    return false;
+                }} 
+            );
+        }
 
-    function promote(id,name,employee_status){
-        var url = "/admin/data-staff/promote/:id".replace(':id', id);
-        if (employee_status == 'Probation') { var word = 'Kontrak'}
-        else { var word = 'Tetap'}
-        Swal.fire({
-            width: 600,
-            title: 'Konfirmasi Promosi Staff',
-            text: 'Anda yakin ingin mempromosikan staff "'+ name + '" dari status karyawan ' + employee_status + ' menjadi ' + word + '?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak'
-        }).then((result) => {
-            if (result.value == true) {
-                window.location.href = url;
-            } else {
-                return false;
-            }} 
-        );
-    }
+        function promote(id,name,employee_status){
+            var url = "/admin/data-staff/promote/:id".replace(':id', id);
+            if (employee_status == 'Probation') { var word = 'Kontrak'}
+            else { var word = 'Tetap'}
+            Swal.fire({
+                width: 600,
+                title: 'Konfirmasi Promosi Staff',
+                text: 'Anda yakin ingin mempromosikan staff "'+ name + '" dari status karyawan ' + employee_status + ' menjadi ' + word + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value == true) {
+                    window.location.href = url;
+                } else {
+                    return false;
+                }} 
+            );
+        }
 
-    function salary_increase(id,name){
-        var url = "/admin/data-staff/promote/:id".replace(':id', id);
-        Swal.fire({
-            width: 600,
-            title: 'Konfirmasi Menaikan Gaji Staff',
-            text: 'Anda yakin ingin menaikan gaji staff "'+ name + '" ?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak'
-        }).then((result) => {
-            if (result.value == true) {
-                window.location.href = url;
-            } else {
-                return false;
-            }} 
-        );
-    }
-
-</script>
+        function salary_increase(id,name){
+            var url = "/admin/data-staff/promote/:id".replace(':id', id);
+            Swal.fire({
+                width: 600,
+                title: 'Konfirmasi Menaikan Gaji Staff',
+                text: 'Anda yakin ingin menaikan gaji staff "'+ name + '" ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value == true) {
+                    window.location.href = url;
+                } else {
+                    return false;
+                }} 
+            );
+        }
+    </script>
 @endsection

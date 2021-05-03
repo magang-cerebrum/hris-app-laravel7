@@ -40,22 +40,20 @@
 
         <div class="panel-body" style="padding-top: 20px">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-8">
                     <a href="{{url('/admin/poster/add')}}" class="btn btn-primary btn-labeled"
-                        style="margin-bottom:15px" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Poster Baru">
+                        data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Tambah Poster Baru">
                         <i class="btn-label fa fa-plus"></i>
                         Tambah Poster
                     </a>
-                </div>
-                <div class="col-sm-6">
                     <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
                         data-container="body" data-placement="top" data-original-title="Hapus Poster" onclick="submit_delete()" form="form-mul-delete">
                         <i class="btn-label fa fa-trash"></i>
                         Hapus Poster Terpilih
                     </button>
                 </div>
-                <div class="col-sm-4" id="input_search">
-                    <div class="form-group float-right">
+                <div class="col-sm-4">
+                    <div class="form-group">
                         <input type="text" name="cari-poster" id="cari-poster" class="form-control"
                             placeholder="Cari Poster" onkeyup="search_poster()">
                     </div>

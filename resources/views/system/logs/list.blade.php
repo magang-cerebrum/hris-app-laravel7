@@ -30,7 +30,7 @@
     
     <div class="panel-body" style="padding-top: 20px">
         <div class="row mar-btm">
-            <div class="col-sm-7">
+            <div class="col-sm-8">
                 <button id="btn-delete" class="btn btn-danger btn-labeled add-tooltip" type="submit"
                     data-toggle="tooltip" data-container="body" data-placement="top"
                     data-original-title="Hapus Data" onclick="submit_delete()" form="form-mul-delete">

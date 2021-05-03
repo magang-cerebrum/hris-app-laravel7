@@ -80,7 +80,7 @@
             </div>
             <div class="table-responsive">
                 <table id="masterdata-staff-active"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
+                    class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                     aria-describedby="demo-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                     <thead>
                         <tr role="row">
@@ -169,7 +169,7 @@
                     </tbody>
                 </table>
                 <table id="masterdata-staff"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
+                    class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                     aria-describedby="demo-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                     <thead>
                         <tr role="row">

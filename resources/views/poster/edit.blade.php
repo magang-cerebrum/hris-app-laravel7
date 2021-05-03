@@ -4,17 +4,19 @@
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('content')
-    <div class="panel panel-danger panel-bordered">
-        <div class="panel-heading">
-            <h3 class="panel-title">Edit Poster Dashboard</h3>
-        </div>
-        
-        <form class="form-horizontal" action="{{ url('/admin/poster/'.$poster->id)}}" method="POST" enctype="multipart/form-data" id="form_edit">
+<div class="panel panel-danger panel-bordered">
+    <div class="panel-heading">
+        <h3 class="panel-title">Edit Poster Dashboard</h3>
+    </div>
+
+
+
+    <div class="panel-body">
+        <form class="form-horizontal" action="{{ url('/admin/poster/'.$poster->id)}}" method="POST"
+            enctype="multipart/form-data" id="form_edit">
             @csrf
             @method('put')
-        </form>
 
-        <div class="panel-body">
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label" for="hor-inputposterbaru">Nama Poster:</label>
@@ -29,17 +31,28 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <label class="col-sm-2 control-label">Ganti Poster:</label>
+                    <label class="col-sm-2 control-label" for="file-upload">File Poster : </label>
                     <div class="col-sm-10">
-                        <span class="pull-left btn btn-primary btn-file">
-                        Pilih File ... <input type="file" name="file" form="form_edit">
+                        <span class="btn btn-primary btn-file">
+                            Pilih File ... <input type="file" class="form-control" name="file" id="file-upload" form="form_edit">
                         </span>
+                        <span id="file-label" class="mar-lft">{{$poster->file}}</span>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel-footer text-right">
-            <button class="btn btn-mint" type="submit" form="form_edit">Simpan</button>
-        </div>
+        </form>
     </div>
+    <div class="panel-footer text-right">
+        <button class="btn btn-mint" type="submit" form="form_edit">Simpan</button>
+    </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+        $('#file-upload').change(function() {
+            var file = $('#file-upload')[0].files[0].name;
+            $('#file-label').text(file);
+        });
+    </script>
 @endsection

@@ -23,12 +23,11 @@ class StaffAuthDashboardController extends Controller
             $user = Auth::user();
             $month_of_eom = array();
             $year = date('Y');
-            $current_month = switch_month(date('m'));
-            $before_current_month =switch_month(date('m',strtotime('-1 month')));
+            $current_month = date('m');
+            $before_current_month =date('m',strtotime('-1 month'));
             $this_year = date('Y');
             $user = Auth::user(); 
             $device = new Agent();
-            $browser = $device->platform();
             $actualEOM =DB::table('master_eoms')->where('user_id',Auth::user()->id)->get(); 
             //Achievement Data
 
@@ -39,76 +38,13 @@ class StaffAuthDashboardController extends Controller
             ->where('name',Auth::user()->name)
             ->sum('score');
 
-        $current_month_achievement =DB::table('master_achievements')
-        ->leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
-        ->where('month',$current_month)
-        ->where('year',$this_year)
-        ->leftJoin('master_divisions',
-        'master_users.division_id','=','master_divisions.id')
-        ->select([
-            'master_achievements.score',
-            'master_achievements.month',
-            'master_achievements.year',
-            'master_users.name',
-            'master_users.profile_photo',
-            'master_divisions.name as division_name'
-
-        ])
-        ->where('master_divisions.id',Auth::user()->division_id)
-        ->orderBy('score','desc')
-        ->take(3)->get();
-        
-        $before_current_month_achievement =DB::table('master_achievements')
-        ->leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
-        ->leftJoin('master_divisions',
-        'master_users.division_id','=','master_divisions.id')
-        ->select([
-            'master_achievements.score',
-            'master_achievements.month',
-            'master_achievements.year',
-            'master_users.name',
-            'master_users.profile_photo',
-            'master_divisions.name as division_name'
-
-        ])
-        ->where('month',$before_current_month)
-        ->where('year',$this_year)
-        ->orderBy('score','desc')
-        ->take(3)->get();
-
-        
-        $positionLastMonth =DB::table('master_achievements')
-        ->leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
-        ->where('month',$before_current_month)
-        ->where('year',$this_year)
-        ->orderBy('score','desc')
-        ->get();
-        
-        $datrankLastMonth = $positionLastMonth->where('achievement_user_id','=',Auth::user()->id);
-        $rankLastMonth = $datrankLastMonth->keys()->first()+1;
-        
-        $positionCurrentMonth= DB::table('master_achievements')
-        ->leftjoin('master_users',
-        'master_achievements.achievement_user_id','=','master_users.id')
-        ->where('month',$current_month)
-        ->where('year',$this_year)
-        ->orderBy('score','desc')
-        ->get();
-        
-        $datrankCurrentMonth = $positionCurrentMonth->where('achievement_user_id','=',Auth::user()->id);
-        $rankCurrentMonth = $datrankCurrentMonth->keys()->first()+1;
-        
-        $count_current_month_achievement = count($current_month_achievement);
         
         for ($i = 1 ; $i<=12;$i++){
             $max_score=0;
             $data_month =DB::table('master_achievements')
-            ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)->get();
+            ->where('month','=',$i/10 < 1 ? "0".$i : $i)->where('year',$year)->get();
             $data_month_user =DB::table('master_achievements')
-            ->where('month','=',switch_month($i/10 < 1 ? "0".$i : $i))->where('year',$year)
+            ->where('month','=',$i/10 < 1 ? "0".$i : $i)->where('year',$year)
             ->where('achievement_user_id','=',$user->id)->get();
             
             if(count($data_month) == 0){
@@ -143,7 +79,7 @@ class StaffAuthDashboardController extends Controller
             } else {
                 $scoreAchievement[$i-1] = 0;
             }
-            // dd($scoreAchievement);
+           
         }
         $data_poster = DB::table('sliders')->get();
         $year_list_achievement = DB::table('master_achievements')->select('year')->distinct()->get();
@@ -156,11 +92,18 @@ class StaffAuthDashboardController extends Controller
                 ->where('name',Auth::user()->name)
                 ->sum('performance_score');
 
-            $current_month_performance =DB::table('master_performances')
+            
+            $latestPeriodPerformances = DB::table('master_performances')
+            ->select('month','year')
+            ->orderByDesc('year')
+            ->orderByDesc('month')
+            ->first();
+
+            $monthDecidePerformance = DB::table('master_performances')
             ->leftjoin('master_users',
             'master_performances.user_id','=','master_users.id')
-            ->where('month',$current_month)
-            ->where('year',$this_year)
+            ->where('month',$latestPeriodPerformances->month)
+            ->where('year',$latestPeriodPerformances->year)
             ->leftJoin('master_divisions',
             'master_users.division_id','=','master_divisions.id')
             ->select([
@@ -170,154 +113,44 @@ class StaffAuthDashboardController extends Controller
                 'master_users.name',
                 'master_users.profile_photo',
                 'master_divisions.name as division_name'
-
             ])
             ->where('master_divisions.id',Auth::user()->division_id)
             ->orderBy('performance_score','desc')
-            ->take(3)->get();
-
-            $count_current_month_performance = count($current_month_performance);
-            if($count_current_month_performance > 0){
-                $monthName = $current_month ;
-                $monthDecidePerformance = DB::table('master_performances')
-                ->leftjoin('master_users',
-                'master_performances.user_id','=','master_users.id')
-                ->where('month',$current_month)
-                ->where('year',$this_year)
-                ->leftJoin('master_divisions',
-                'master_users.division_id','=','master_divisions.id')
-                ->select([
-                    'master_performances.performance_score',
-                    'master_performances.month',
-                    'master_performances.year',
-                    'master_users.name',
-                    'master_users.profile_photo',
-                    'master_divisions.name as division_name'
-    
-                ])
-                ->where('master_divisions.id',Auth::user()->division_id)
-                ->orderBy('performance_score','desc')
-                ->take(3)->get();
-            }else{
-                $monthName = $before_current_month;
-                $monthDecidePerformance = DB::table('master_performances')
-                ->leftjoin('master_users',
-                'master_performances.user_id','=','master_users.id')
-                ->leftJoin('master_divisions',
-                'master_users.division_id','=','master_divisions.id')
-                ->select([
-                    'master_performances.performance_score',
-                    'master_performances.month',
-                    'master_performances.year',
-                    'master_users.name',
-                    'master_users.profile_photo',
-                    'master_divisions.name as division_name'
-    
-                ])
-                ->where('month',$before_current_month)
-                ->where('year',$this_year)
-                ->orderBy('performance_score','desc')
-                ->take(3)->get();
-            }
-            $count_before_current_month_achievement = count($before_current_month_achievement);
-
-            // dd($current_month_achievement);
-            if($count_current_month_achievement == 0){
-                $monthNameAchievement = $before_current_month;
-                $monthDecideAchievement = DB::table('master_achievements')
-                ->leftjoin('master_users',
-                'master_achievements.achievement_user_id','=','master_users.id')
-                ->leftJoin('master_divisions',
-                'master_users.division_id','=','master_divisions.id')
-                ->select([
-                    'master_achievements.score',
-                    'master_achievements.month',
-                    'master_achievements.year',
-                    'master_users.name',
-                    'master_users.profile_photo',
-                    'master_divisions.name as division_name'
-        
-                ])
-                ->where('month',$before_current_month)
-                ->where('year',$this_year)
-                ->orderBy('score','desc')
-                ->take(3)->get();
-            }else{
-                $monthNameAchievement = $current_month;
-                $monthDecideAchievement = DB::table('master_achievements')
-                ->leftjoin('master_users',
-                'master_achievements.achievement_user_id','=','master_users.id')
-                ->leftJoin('master_divisions',
-                'master_users.division_id','=','master_divisions.id')
-                ->select([
-                    'master_achievements.score',
-                    'master_achievements.month',
-                    'master_achievements.year',
-                    'master_users.name',
-                    'master_users.profile_photo',
-                    'master_divisions.name as division_name'
-        
-                ])
-                ->where('month',$current_month)
-                ->where('year',$this_year)
-                ->orderBy('score','desc')
-                ->take(3)->get();
-            }
-            // dd($monthDecideAchievement);
-
-
-
-
-
-
-            $before_current_month_performance =DB::table('master_performances')
+            ->get();
+            
+            $latestPeriodAchievement = DB::table('master_achievements')
+            ->select('month','year')
+            ->orderByDesc('year')
+            ->orderByDesc('month')
+            ->first();
+            
+            $monthDecideAchievement = DB::table('master_achievements')
             ->leftjoin('master_users',
-            'master_performances.user_id','=','master_users.id')
+            'master_achievements.achievement_user_id','=','master_users.id')
             ->leftJoin('master_divisions',
             'master_users.division_id','=','master_divisions.id')
             ->select([
-                'master_performances.performance_score',
-                'master_performances.month',
-                'master_performances.year',
+                'master_achievements.score',
+                'master_achievements.month',
+                'master_achievements.year',
                 'master_users.name',
                 'master_users.profile_photo',
                 'master_divisions.name as division_name'
-
+    
             ])
-            ->where('month',$before_current_month)
-            ->where('year',$this_year)
-            ->orderBy('performance_score','desc')
-            ->take(3)->get();
-            
-            $positionLastMonthPerformances =DB::table('master_performances')
-            ->leftjoin('master_users',
-            'master_performances.user_id','=','master_users.id')
-            ->where('month',$before_current_month)
-            ->where('year',$this_year)
-            ->orderBy('performance_score','desc')
+            ->where('month',$latestPeriodAchievement->month)
+            ->where('year',$latestPeriodAchievement->year)
+            ->orderBy('score','desc')
             ->get();
-            
-            $datrankLastMonthPerformances = $positionLastMonthPerformances->where('user_id','=',Auth::user()->id);
-            $rankLastMonthPerformances = $datrankLastMonthPerformances->keys()->first()+1;
-            
-            $positionCurrentMonthPerformance= DB::table('master_performances')
-            ->leftjoin('master_users',
-            'master_performances.user_id','=','master_users.id')
-            ->where('month',$current_month)
-            ->where('year',$this_year)
-            ->orderBy('performance_score','desc')
-            ->get();
-            
-            $datrankCurrentMonthPerformance = $positionCurrentMonthPerformance->where('user_id','=',Auth::user()->id);
-            $rankCurrentMonthPerformance = $datrankCurrentMonthPerformance->keys()->first()+1;
-            
+
+            // dd($monthDecideAchievement->take(3));
             
             for ($k = 1 ; $k<=12;$k++){
                 $max_score_performance=0;
                 $data_month_Performance =DB::table('master_performances')
-                ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$year)->get();
+                ->where('month','=',$k/10 < 1 ? "0".$k : $k)->where('year',$year)->get();
                 $data_month_user_Performance =DB::table('master_performances')
-                ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$year)
+                ->where('month','=',$k/10 < 1 ? "0".$k : $k)->where('year',$year)
                 ->where('user_id','=',$user->id)->get();
                 
                 if(count($data_month_Performance) == 0){
@@ -396,25 +229,12 @@ class StaffAuthDashboardController extends Controller
                 'month_of_eom'=>$month_of_eom,
                 'last_month_name'=>$before_current_month,
                 'current_month_name'=>$current_month,
-                'last_month_performance'=>$before_current_month_performance,
-                'current_month_performance'=>$current_month_performance,
-                // 'count_last_month_perf'=>$count_before_current_month_performance,
-                // 'count_current_month_perf'=>$count_current_month_performance,
-                'count_current_month_ach'=>$count_current_month_achievement,
-                'rankCMPerformance'=>$rankCurrentMonth,
-                'rankLMPerformance'=>$rankLastMonthPerformances,
                 'all_score_performance'=>$sum_all_score_performance,
                 'all_score_achievements'=>$sum_all_score,
-                // 'user_lmPerformance'=>$userLMPerf,
-                // 'user_cmPerformance'=>$userCMPerf,
                 'actualEomCount'=>count($actualEOM),
                 'actualEom'=>$actualEOM,
-                'current_month_achievement'=>$current_month_achievement,
-                'before_current_month_achievement'=>$before_current_month_achievement,
                 'monthDecidePerformance'=>$monthDecidePerformance,
                 'monthDecideAchievement'=>$monthDecideAchievement,
-                'monthName'=>$monthName,
-                'monthNameAchievement'=>$monthNameAchievement,
                 'staff_late'=>$staff_late,
                 'eom'=>$eom
             ]);
@@ -435,9 +255,9 @@ class StaffAuthDashboardController extends Controller
         for ($k = 1 ; $k<=12;$k++){
             $max_score=0;
             $data_month =DB::table('master_performances')
-            ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$year)->get();
+            ->where('month','=',$k/10 < 1 ? "0".$k : $k)->where('year',$year)->get();
             $data_month_user =DB::table('master_performances')
-            ->where('month','=',switch_month($k/10 < 1 ? "0".$k : $k))->where('year',$year)
+            ->where('month','=',$k/10 < 1 ? "0".$k : $k)->where('year',$year)
             ->where('user_id','=',$id)->get();
             // dd($data_month);
             if(count($data_month) == 0){

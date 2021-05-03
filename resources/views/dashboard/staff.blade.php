@@ -276,11 +276,11 @@
     <div class="col-md-6" id="grafikPerforma">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Grafik Performa "{{$name}}" Tahun
-                    <span id="textvalperf">{{$current_year}}</span> @if ($actualEomCount == 0)
-                    <i></i>
-                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
-                        title="Anda mendapatkan Employee of the month pada tahun ini"></i>
+                <h3 class="panel-title">Grafik Performa "{{$name}}"
+                    
+                    @if ($monthDecidePerformance->isEmpty())
+                    @else
+                    <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
             </div>
@@ -310,11 +310,10 @@
     <div class="col-md-6">
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Grafik Achievement "{{$name}}" Tahun
-                    <span id="textvalach">{{$current_year}}</span> @if ($sum_of_eom == 0)
-                    <i></i>
-                    @else <i class="fa fa-trophy" id="eom_i_test" style="color:gold"
-                        title="Anda mendapatkan Employee of the month pada tahun ini"></i>
+                <h3 class="panel-title">Grafik Achievement "{{$name}}"
+                    @if ($monthDecideAchievement->isEmpty())
+                    @else
+                    <span id="textvalperf">Tahun {{$monthDecideAchievement[0]->year}}</span> 
                     @endif
                 </h3>
             </div>
@@ -346,7 +345,11 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    Top Scored Performance Employee ({{$monthName}}) 
+                    Top Scored Performance  
+                    @if ($monthDecidePerformance->isEmpty())
+                    @else
+                    <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                    @endif
                     <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
                 </h3>
             </div>
@@ -356,7 +359,7 @@
                 @else
                     <div class="row">
                         <div class="col-sm-1 col-md-1"></div>
-                        @foreach ($monthDecidePerformance as $mdpItem)
+                        @foreach ($monthDecidePerformance->take(3) as $mdpItem)
                             @if ($loop->iteration == 1)
                                 <div class="panel panel-warning panel-colorful">
                                     <div class="pad-all">
@@ -417,7 +420,12 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    Top Scored Achievement Employee ({{$monthNameAchievement}}) 
+                    Top Scored Achievement
+                    @if ($monthDecideAchievement->isEmpty())
+                    @else
+                    <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
+
+                    @endif
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
                 </h3>
             </div>
@@ -427,7 +435,7 @@
                 @else
                     <div class="row">
                         <div class="col-sm-1 col-md-1"></div>
-                        @foreach ($monthDecideAchievement as $mdaItem)
+                        @foreach ($monthDecideAchievement->take(3) as $mdaItem)
                             @if ($loop->iteration == 1)
                                 <div class="panel panel-warning panel-colorful">
                                     <div class="pad-all">
@@ -634,7 +642,7 @@
                 min: 0,
                 max: 100,
                 tickColor: 'rgba(0,0,0,.1)',
-                tickDecimals: 1,
+                // tickDecimals: 1,
             },
             xaxis: {
 
@@ -657,7 +665,7 @@
             },
             tooltip: {
                 show: true,
-                content: 'Bulan: %x, Score: %y'
+                content: 'Bulan: %x, Score: %y.1'
             }
         });
 
@@ -709,7 +717,7 @@
                 min: 0,
                 max: 100,
                 tickColor: 'rgba(0,0,0,.1)',
-                tickDecimals: 1,
+                // tickDecimals: 1,
             },
             xaxis: {
 
@@ -732,7 +740,7 @@
             },
             tooltip: {
                 show: true,
-                content: 'Bulan: %x, Score: %y'
+                content: 'Bulan: %x, Score: %y.1'
             }
         });
 
@@ -827,7 +835,7 @@
                             min: 0,
                             max: 100,
                             tickColor: 'rgba(0,0,0,.1)',
-                            tickDecimals: 1,
+                            // tickDecimals: 1,
                         },
                         xaxis: {
 
@@ -850,7 +858,7 @@
                         },
                         tooltip: {
                             show: true,
-                            content: 'Bulan: %x, Score: %y'
+                            content: 'Bulan: %x, Score: %y.1'
                         }
                     });
                 });
@@ -944,7 +952,7 @@
                             min: 0,
                             max: 100,
                             tickColor: 'rgba(0,0,0,.1)',
-                            tickDecimals: 1,
+                            // tickDecimals: 1,
                         },
                         xaxis: {
 
@@ -967,7 +975,7 @@
                         },
                         tooltip: {
                             show: true,
-                            content: 'Bulan: %x, Score: %y'
+                            content: 'Bulan: %x, Score: %y.1'
                         }
                     });
                 });

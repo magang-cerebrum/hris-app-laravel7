@@ -130,7 +130,10 @@ class AdminAuthDashboardController extends Controller
                 ->orderBy('month','desc')
                 ->orderBy('performance_score','desc')
                 ->first();
-                array_push($data_max_performance,$data);
+
+                if($data){
+                    array_push($data_max_performance,$data);
+                }
             }
             
             foreach ($division_data as $division) {
@@ -150,7 +153,10 @@ class AdminAuthDashboardController extends Controller
                 ->orderBy('month','desc')
                 ->orderBy('score','desc')
                 ->first();
-                array_push($data_max_achievement,$data);
+
+                if($data) {
+                    array_push($data_max_achievement,$data);
+                }
             }
 
             return view('dashboard.admin',[

@@ -57,122 +57,119 @@
         </div>
     </div>
 </div>
+
 @section('script')
-<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<!--Bootstrap Datepicker [ OPTIONAL ]-->
-<script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#masterdata-ticketing-full").hide();
-        $("#done-pagination").hide();
-        // $("#masterdata-ticketing").hide();
-        // $("#onprog-pagination").hide();
-        $('.toogle_selesai').on('change',function () {
-            if (document.getElementById('lihat_selesai_radio-2').checked) {
-                document.getElementById('masterdata-ticketing').style.display = '';
-                document.getElementById('masterdata-ticketing-full').style.display = 'none';
-                document.getElementById('onprog-pagination').style.display = '';
-                document.getElementById('done-pagination').style.display = 'none';
-            } else {
-                document.getElementById('masterdata-ticketing').style.display = 'none';
-                document.getElementById('masterdata-ticketing-full').style.display = '';
-                document.getElementById('onprog-pagination').style.display = 'none';
-                document.getElementById('done-pagination').style.display = '';
-            }
-        })
-        $('#pickadate .input-group.date').datepicker({
-            format: 'mm/yyyy',
-            autoclose: true,
-            minViewMode: 'months',
-            maxViewMode: 'years',
-            startView: 'months',
-            orientation: 'bottom',
-            forceParse: false,
-            endDate: '0',
-        });
-        $('#btn-search').on('click',function () {
-            $('.datepicker').hide();
-        });
-        
-        $(document).on('click', '#detail_ticket', function () {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            var category = $(this).data('category');
-            var message = $(this).data('message');
-            var response = $(this).data('response');
-            var status = $(this).data('status');
-            var diajukan = $(this).data('diajukan');
-            var direspon = $(this).data('direspon');
-
-            var join = `{{ url('/admin/ticketing/`+ id + `/edit')}}`;
-
-            if (status == 'Selesai') {
-                $("#kirim-resp").attr("href", '');
-                $("#kirim-resp").text('Ticket telah selesai diproses');
-                $("#kirim-resp").addClass('disabled');
-            } else{
-                $("#kirim-resp").attr("href", join);
-                $("#kirim-resp").text('Kirim Respon');
-                $("#kirim-resp").removeClass('disabled');
-            }
-
-            $('#id').text(id);
-            $('#name').text(name);
-            $('#category').text(category);
-            $('#message').text(message);
-            $('#response').text(response);
-            $('#status').text(status);
-            $('#diajukan').text(diajukan);
-            $('#direspon').text(direspon);
-        });
-
-        // check all
-        $("#check-all").click(function () {
-            if ($(this).is(":checked"))
-                $(".check-item").prop("checked", true);
-            else
-                $(".check-item").prop("checked", false);
-        });
-        // check all
-        $("#check-all-full").click(function () {
-            if ($(this).is(":checked"))
-                $(".check-item-full").prop("checked", true);
-            else
-                $(".check-item-full").prop("checked", false);
-        });
-    });
-    //lihat selesai
-    
-    // Sweetalert 2
-    function submit_on_progress(){
-        event.preventDefault();
-        var check1 = document.querySelector('.check-item:checked');
-        var check2 = document.querySelector('.check-item-full:checked');
-        if (check1 != null || check2 != null){
-            Swal.fire({
-                title: 'Anda yakin ingin mengubah status ticket terpilih menjadi On Progress?',
-                text: "Ticket yang sudah berstatus Selesai akan kembali berubah menjadi On Progress!",
-                icon: 'warning',
-                width: 600,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Konfirmasi',
-                cancelButtonText: 'Tidak'
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#masterdata-ticketing-full").hide();
+            $("#done-pagination").hide();
+            $('.toogle_selesai').on('change',function () {
+                if (document.getElementById('lihat_selesai_radio-2').checked) {
+                    document.getElementById('masterdata-ticketing').style.display = '';
+                    document.getElementById('masterdata-ticketing-full').style.display = 'none';
+                    document.getElementById('onprog-pagination').style.display = '';
+                    document.getElementById('done-pagination').style.display = 'none';
+                } else {
+                    document.getElementById('masterdata-ticketing').style.display = 'none';
+                    document.getElementById('masterdata-ticketing-full').style.display = '';
+                    document.getElementById('onprog-pagination').style.display = 'none';
+                    document.getElementById('done-pagination').style.display = '';
                 }
-            ).then((result) => {
-                if (result.value == true) {
-                    $("#form-mul-onprog").submit();
-                }}
-            );
-        } else {
-            Swal.fire({
-                title: 'Sepertinya ada kesalahan...',
-                text: "Tidak ada data yang dipilih untuk diubah!",
-                icon: 'error',
             })
-        }
-    }
+            $('#pickadate .input-group.date').datepicker({
+                format: 'mm/yyyy',
+                autoclose: true,
+                minViewMode: 'months',
+                maxViewMode: 'years',
+                startView: 'months',
+                orientation: 'bottom',
+                forceParse: false,
+                endDate: '0',
+            });
+            $('#btn-search').on('click',function () {
+                $('.datepicker').hide();
+            });
+            
+            $(document).on('click', '#detail_ticket', function () {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var category = $(this).data('category');
+                var message = $(this).data('message');
+                var response = $(this).data('response');
+                var status = $(this).data('status');
+                var diajukan = $(this).data('diajukan');
+                var direspon = $(this).data('direspon');
 
-</script>
+                var join = `{{ url('/admin/ticketing/`+ id + `/edit')}}`;
+
+                if (status == 'Selesai') {
+                    $("#kirim-resp").attr("href", '');
+                    $("#kirim-resp").text('Ticket telah selesai diproses');
+                    $("#kirim-resp").addClass('disabled');
+                } else{
+                    $("#kirim-resp").attr("href", join);
+                    $("#kirim-resp").text('Kirim Respon');
+                    $("#kirim-resp").removeClass('disabled');
+                }
+
+                $('#id').text(id);
+                $('#name').text(name);
+                $('#category').text(category);
+                $('#message').text(message);
+                $('#response').text(response);
+                $('#status').text(status);
+                $('#diajukan').text(diajukan);
+                $('#direspon').text(direspon);
+            });
+
+            // check all
+            $("#check-all").click(function () {
+                if ($(this).is(":checked"))
+                    $(".check-item").prop("checked", true);
+                else
+                    $(".check-item").prop("checked", false);
+            });
+            // check all
+            $("#check-all-full").click(function () {
+                if ($(this).is(":checked"))
+                    $(".check-item-full").prop("checked", true);
+                else
+                    $(".check-item-full").prop("checked", false);
+            });
+        });
+        //lihat selesai
+        
+        // Sweetalert 2
+        function submit_on_progress(){
+            event.preventDefault();
+            var check1 = document.querySelector('.check-item:checked');
+            var check2 = document.querySelector('.check-item-full:checked');
+            if (check1 != null || check2 != null){
+                Swal.fire({
+                    title: 'Anda yakin ingin mengubah status ticket terpilih menjadi On Progress?',
+                    text: "Ticket yang sudah berstatus Selesai akan kembali berubah menjadi On Progress!",
+                    icon: 'warning',
+                    width: 600,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Konfirmasi',
+                    cancelButtonText: 'Tidak'
+                    }
+                ).then((result) => {
+                    if (result.value == true) {
+                        $("#form-mul-onprog").submit();
+                    }}
+                );
+            } else {
+                Swal.fire({
+                    title: 'Sepertinya ada kesalahan...',
+                    text: "Tidak ada data yang dipilih untuk diubah!",
+                    icon: 'error',
+                })
+            }
+        }
+    </script>
 @endsection

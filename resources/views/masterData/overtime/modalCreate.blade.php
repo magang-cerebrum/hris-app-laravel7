@@ -1,3 +1,7 @@
+<form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal" id="form-overtime">
+    @csrf
+</form>
+
 <div class="modal fade" id="modal-create-overtime" role="dialog" style="overflow-x: auto !important">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -6,10 +10,6 @@
                 <h5 class="modal-title text-bold text-center">Form Tambah Lembur "<span id="name-title"></span>"</h5>
             </div>
             <div class="modal-body">
-                <form action="{{url('/admin/overtime/store')}}" method="POST" class="form-horizontal"
-                    id="form-overtime">
-                    @csrf
-                </form>
                 <input type="hidden" name="user_id" id="user_id" form="form-overtime">
                 <input type="hidden" name="salary" id="salary" form="form-overtime">
                 <input type="hidden" name="user_hour" id="user_hour" form="form-overtime">
@@ -55,103 +55,102 @@
         </div>
     </div>
 </div>
+
 @section('script')
-<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
-<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<script src="{{ asset('js/helpers.js')}}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#filter').selectpicker({
-            dropupAuto: false
+    <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('js/helpers.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#filter').selectpicker({
+                dropupAuto: false
+            });
+            $(document).on('click', '#create_overtime', function () {
+                var id = $(this).data('id');
+                var nip = $(this).data('nip');
+                var name = $(this).data('name');
+                var salary = $(this).data('salary');
+                var user_hour = $(this).data('user_hour');
+
+                document.getElementById('user_id').value = id;
+                document.getElementById('nip').value = nip;
+                document.getElementById('name').value = name;
+                document.getElementById('salary').value = salary;
+                document.getElementById('user_hour').value = user_hour;
+                document.getElementById('hour').value = '';
+                document.getElementById('information').innerHTML = '';
+                $('#name-title').text(name);
+            });
+            $(document).on('click', '#btn-submit', function () {
+                event.preventDefault();
+                if (document.getElementById('hour').value != '') {
+                    Swal.fire({
+                        width: 600,
+                        title: 'Anda yakin dengan data yang akan di tambahkan?',
+                        text: "Data yang sudah dimasukan tidak dapat dirubah kembali!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya',
+                        cancelButtonText: 'Tidak'
+                    }).then((result) => {
+                        if (result.value == true) {
+                            $('#form-overtime').submit();
+                        } else {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Dibatalkan!',
+                                text: "Pastikan data diisi dengan benar terlebih dahulu!",
+                                icon: 'error',
+                            });
+                        }
+                    })
+                } else {
+                    Swal.fire({
+                        width: 600,
+                        title: 'Error',
+                        text: 'Mohon isi jam lembur terlebih dahulu',
+                        icon: 'error'
+                    });
+                }
+            })
         });
-        $(document).on('click', '#create_overtime', function () {
-            var id = $(this).data('id');
-            var nip = $(this).data('nip');
-            var name = $(this).data('name');
-            var salary = $(this).data('salary');
-            var user_hour = $(this).data('user_hour');
 
-            document.getElementById('user_id').value = id;
-            document.getElementById('nip').value = nip;
-            document.getElementById('name').value = name;
-            document.getElementById('salary').value = salary;
-            document.getElementById('user_hour').value = user_hour;
-            document.getElementById('hour').value = '';
-            document.getElementById('information').innerHTML = '';
+        function calculate(hour) {
+            hour.replace(/[^,\d]/g, '').toString();
+            document.getElementById("hour").value = hour;
 
-            $('#name-title').text(name);
-        });
-        $(document).on('click', '#btn-submit', function () {
-            event.preventDefault();
-            if (document.getElementById('hour').value != '') {
-                Swal.fire({
-                    width: 600,
-                    title: 'Anda yakin dengan data yang akan di tambahkan?',
-                    text: "Data yang sudah dimasukan tidak dapat dirubah kembali!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya',
-                    cancelButtonText: 'Tidak'
-                }).then((result) => {
-                    if (result.value == true) {
-                        $('#form-overtime').submit();
-                    } else {
-                        Swal.fire({
-                            width: 600,
-                            title: 'Dibatalkan!',
-                            text: "Pastikan data diisi dengan benar terlebih dahulu!",
-                            icon: 'error',
-                        });
-                    }
-                })
-            } else {
-                Swal.fire({
-                    width: 600,
-                    title: 'Error',
-                    text: 'Mohon isi jam lembur terlebih dahulu',
-                    icon: 'error'
-                });
-            }
-        })
-    });
+            var salary = document.getElementById('salary').value;
+            var user_hour = document.getElementById('user_hour').value;
+            var payment = Math.round((salary / user_hour) * hour);
+            document.getElementById('information').innerHTML = 'Upah Lembur sebesar <strong>"' + format_rupiah(payment) +
+                '"</strong> dihitung dari <strong>"' + hour + '"</strong> jam lembur';
+            document.getElementById('payment').value = payment;
+        }
 
-    function calculate(hour) {
-
-        hour.replace(/[^,\d]/g, '').toString();
-        document.getElementById("hour").value = hour;
-
-        var salary = document.getElementById('salary').value;
-        var user_hour = document.getElementById('user_hour').value;
-        var payment = Math.round((salary / user_hour) * hour);
-        document.getElementById('information').innerHTML = 'Upah Lembur sebesar <strong>"' + format_rupiah(payment) +
-            '"</strong> dihitung dari <strong>"' + hour + '"</strong> jam lembur';
-        document.getElementById('payment').value = payment;
-    }
-
-    function filter_division() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("filter");
-        filter = input.value.toUpperCase();
-        if(filter == ' '){$("#overtime-create").addClass("hidden");}
-        else{$("#overtime-create").removeClass("hidden");}
-        table = document.getElementById("overtime-create");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            for (j = 2; j < 3; j++ ){
-                    td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        break;
-                    } else {
-                        tr[i].style.display = "none";
+        function filter_division() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("filter");
+            filter = input.value.toUpperCase();
+            if(filter == ' '){$("#overtime-create").addClass("hidden");}
+            else{$("#overtime-create").removeClass("hidden");}
+            table = document.getElementById("overtime-create");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                for (j = 2; j < 3; j++ ){
+                        td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
                     }
                 }
             }
         }
-    }
-</script>
+    </script>
 @endsection

@@ -232,65 +232,69 @@
                     </div>
                 @else
                     <div style="text-align: center !important">
-                        <a href="#collapseAchievement" data-toggle="collapse">
-                            <div class="separator mar-btm text-bold">Karyawan dengan penilaian Achievement Tertinggi pada
-                                setiap Divisi</div>
-                        </a>
-                        <div class="collapse" id="collapseAchievement">
-                            @foreach($data_max_achievement as $max_achievement)
-                                <div class="col-md-4"
-                                    style="display: inline-block; float:none; text-align:left; margin-right: -4px">
-                                    <div class="panel panel-purple panel-colorful">
-                                        <div class="pad-all">
-                                            <h4 style="color:#fff">#{{$max_achievement->division_name}}
-                                                ({{switch_month($max_achievement->month) . ' - ' . $max_achievement->year}})
-                                            </h4>
-                                            <div class="media">
-                                                <div class="media-left" style="width: 30%;">
-                                                    <img class="img-md img-circle img-responsive"
-                                                        src="{{asset('img/profile-photos/'.$max_achievement->profile_photo)}}"
-                                                        alt="Profile Picture">
-                                                </div>
-                                                <div class="media-body pad-top">
-                                                    <span class="text-lg text-semibold">{{$max_achievement->user_name}}</span>
-                                                    <p>Score : {{$max_achievement->score}}/100</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <a href="#collapsePerformance" data-toggle="collapse">
-                            <div class="separator mar-btm text-bold">Karyawan dengan penilaian Performa Tertinggi pada
-                                setiap Divisi</div>
-                        </a>
-                        <div class="collapse" id="collapsePerformance">
-                            @foreach($data_max_performance as $max_performance)
-                                <div class="col-md-4"
-                                    style="display: inline-block; float:none; text-align:left; margin-right: -4px">
-                                    <div class="panel panel-pink panel-colorful">
-                                        <div class="pad-all">
-                                            <h4 style="color:#fff">#{{$max_performance->division_name}}
-                                                ({{switch_month($max_performance->month) . ' - ' . $max_performance->year}})
-                                            </h4>
-                                            <div class="media">
-                                                <div class="media-left" style="width: 30%;">
-                                                    <img class="img-md img-circle img-responsive"
-                                                        src="{{asset('img/profile-photos/'.$max_performance->profile_photo)}}"
-                                                        alt="Profile Picture">
-                                                </div>
-                                                <div class="media-body pad-top">
-                                                    <span
-                                                        class="text-lg text-semibold">{{$max_performance->user_name}}</span>
-                                                    <p>Score : {{$max_performance->score}}/100</p>
+                        @if (count($data_max_achievement) != 0)
+                            <a href="#collapseAchievement" data-toggle="collapse">
+                                <div class="separator mar-btm text-bold">Karyawan dengan penilaian Achievement Tertinggi pada
+                                    setiap Divisi</div>
+                            </a>
+                            <div class="collapse" id="collapseAchievement">
+                                @foreach($data_max_achievement as $max_achievement)
+                                    <div class="col-md-4"
+                                        style="display: inline-block; float:none; text-align:left; margin-right: -4px">
+                                        <div class="panel panel-purple panel-colorful">
+                                            <div class="pad-all">
+                                                <h4 style="color:#fff">#{{$max_achievement->division_name}}
+                                                    ({{switch_month($max_achievement->month) . ' - ' . $max_achievement->year}})
+                                                </h4>
+                                                <div class="media">
+                                                    <div class="media-left" style="width: 30%;">
+                                                        <img class="img-md img-circle img-responsive"
+                                                            src="{{asset('img/profile-photos/'.$max_achievement->profile_photo)}}"
+                                                            alt="Profile Picture">
+                                                    </div>
+                                                    <div class="media-body pad-top">
+                                                        <span class="text-lg text-semibold">{{$max_achievement->user_name}}</span>
+                                                        <p>Score : {{$max_achievement->score}}/100</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if (count($data_max_performance) != 0)
+                            <a href="#collapsePerformance" data-toggle="collapse">
+                                <div class="separator mar-btm text-bold">Karyawan dengan penilaian Performa Tertinggi pada
+                                    setiap Divisi</div>
+                            </a>
+                            <div class="collapse" id="collapsePerformance">
+                                @foreach($data_max_performance as $max_performance)
+                                    <div class="col-md-4"
+                                        style="display: inline-block; float:none; text-align:left; margin-right: -4px">
+                                        <div class="panel panel-pink panel-colorful">
+                                            <div class="pad-all">
+                                                <h4 style="color:#fff">#{{$max_performance->division_name}}
+                                                    ({{switch_month($max_performance->month) . ' - ' . $max_performance->year}})
+                                                </h4>
+                                                <div class="media">
+                                                    <div class="media-left" style="width: 30%;">
+                                                        <img class="img-md img-circle img-responsive"
+                                                            src="{{asset('img/profile-photos/'.$max_performance->profile_photo)}}"
+                                                            alt="Profile Picture">
+                                                    </div>
+                                                    <div class="media-body pad-top">
+                                                        <span
+                                                            class="text-lg text-semibold">{{$max_performance->user_name}}</span>
+                                                        <p>Score : {{$max_performance->score}}/100</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 @endif
             </div>

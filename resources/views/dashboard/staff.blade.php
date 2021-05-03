@@ -387,7 +387,7 @@
 
 <div class="row mt-10">
     <div class="col-md-4">
-        <div class="panel panel-bordered panel-primary">
+        <div class="mh-box panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Performance Employee ({{$monthName}}) 
@@ -395,9 +395,7 @@
                 </h3>
             </div>
             <div class="panel-body" style="min-height: 383px; padding-top: 20px; padding-bottom: 20px">
-                @if ($monthDecidePerformance->isEmpty())
-
-                @else
+                @if ($monthDecidePerformance)
                     <div class="row">
                         <div class="col-sm-1 col-md-1"></div>
                         @foreach ($monthDecidePerformance as $mdpItem)
@@ -458,17 +456,15 @@
     </div>
 
     <div class="col-md-4">
-        <div class="panel panel-bordered panel-primary">
+        <div class="mh-box panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Achievement Employee ({{$monthNameAchievement}}) 
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
                 </h3>
             </div>
-            <div class="panel-body" style="min-height: 383px; padding-top: 20px; padding-bottom: 20px">
-                @if ($monthDecideAchievement->isEmpty())
-
-                @else
+            <div class="panel-body" style=" padding-top: 20px; padding-bottom: 20px">
+                @if ($monthDecideAchievement)
                     <div class="row">
                         <div class="col-sm-1 col-md-1"></div>
                         @foreach ($monthDecideAchievement as $mdaItem)
@@ -528,89 +524,93 @@
         </div>
     </div>
 
-    <div class="col-md-4" style="padding-top: 5px">
-        <div class="panel panel-success panel-colorful">    
-            <div class="pad-all">
-                <div class="media">
-                    <div class="media-left" style="width: 20%; min-width: 115px">
-                        @if ($eom)
-                            <img class="img-lg img-circle img-responsive"
-                                src="{{asset('img/profile-photos/'.$eom->photo)}}"
-                                alt="Profile Picture">
-                        @else
-                            <img class="img-lg img-circle img-responsive"
-                                src="{{asset('img/title-cerebrum.png')}}"
-                                alt="Profile Picture">
-                        @endif
-                    </div>
-                    <div class="media-body" style="padding-top: 7px">
-                        <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.$eom->month.' - '.$eom->year : '')}}</h3>
-                        @if ($eom)
-                            <span class="text-lg text-semibold">{{$eom->name}}</span>
-                            <p>Division : {{$eom->division}}</p>
-                        @else
-                            <span class="text-lg text-semibold">Data Belum Tersedia</span>
-                            <p>PT. Cerebrum Edukanesia Nusantara</p>
-                        @endif
+    <div class="col-md-4">
+        <div id="mh-target" class="panel" style="background: transparent !important">
+            {{-- <div class="panel-body"> --}}
+                <div class="panel panel-success panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 20%; min-width: 115px">
+                                @if ($eom)
+                                    <img class="img-lg img-circle img-responsive"
+                                        src="{{asset('img/profile-photos/'.$eom->photo)}}"
+                                        alt="Profile Picture">
+                                @else
+                                    <img class="img-lg img-circle img-responsive"
+                                        src="{{asset('img/title-cerebrum.png')}}"
+                                        alt="Profile Picture">
+                                @endif
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.$eom->month.' - '.$eom->year : '')}}</h3>
+                                @if ($eom)
+                                    <span class="text-lg text-semibold">{{$eom->name}}</span>
+                                    <p>Division : {{$eom->division}}</p>
+                                @else
+                                    <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                    <p>PT. Cerebrum Edukanesia Nusantara</p>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="panel panel-info panel-colorful">    
-            <div class="pad-all">
-                <div class="media">
-                    <div class="media-left" style="width: 20%; min-width: 115px">
-                        @if ($staff_min_late)
-                            <img class="img-lg img-circle img-responsive"
-                            src="{{asset('img/profile-photos/'.$staff_min_late->photo)}}"
-                            alt="Profile Picture">
-                        @else
-                            <img class="img-lg img-circle img-responsive"
-                            src="{{asset('img/title-cerebrum.png')}}"
-                            alt="Profile Picture">
-                        @endif
-                    </div>
-                    <div class="media-body" style="padding-top: 7px">
-                        <h3 class="h5" style="color: #fff">{{'Staff Jarang Telat'.($staff_min_late ? ' Periode '.switch_month($staff_min_late->month).' - '.$staff_min_late->year : '')}}</h3>
-                        @if ($staff_min_late)
-                            <span class="text-lg text-semibold">{{$staff_min_late->name}}</span>
-                            <p>Division : {{$staff_min_late->division}}</p>
-                        @else
-                            <span class="text-lg text-semibold">Data Belum Tersedia</span>
-                            <p>PT. Cerebrum Edukanesia Nusantara</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="panel panel-danger panel-colorful">    
-            <div class="pad-all">
-                <div class="media">
-                    <div class="media-left" style="width: 20%; min-width: 115px">
-                        @if ($staff_late)
-                            <img class="img-lg img-circle img-responsive"
-                            src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
-                            alt="Profile Picture">
-                        @else
-                            <img class="img-lg img-circle img-responsive"
-                            src="{{asset('img/title-cerebrum.png')}}"
-                            alt="Profile Picture">
-                        @endif
-                    </div>
-                    <div class="media-body" style="padding-top: 7px">
-                        <h3 class="h5" style="color: #fff">{{'Staff Paling Telat'.($staff_late ? ' Periode '.switch_month($staff_late->month).' - '.$staff_late->year : '')}}</h3>
-                        @if ($staff_late)
-                            <span class="text-lg text-semibold">{{$staff_late->name}}</span>
-                            <p>Division : {{$staff_late->division}}</p>
-                        @else
-                            <span class="text-lg text-semibold">Data Belum Tersedia</span>
-                            <p>PT. Cerebrum Edukanesia Nusantara</p>
-                        @endif
+                <div class="panel panel-info panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 20%; min-width: 115px">
+                                @if ($staff_min_late)
+                                    <img class="img-lg img-circle img-responsive"
+                                    src="{{asset('img/profile-photos/'.$staff_min_late->photo)}}"
+                                    alt="Profile Picture">
+                                @else
+                                    <img class="img-lg img-circle img-responsive"
+                                    src="{{asset('img/title-cerebrum.png')}}"
+                                    alt="Profile Picture">
+                                @endif
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h5" style="color: #fff">{{'Staff Jarang Telat'.($staff_min_late ? ' Periode '.switch_month($staff_min_late->month).' - '.$staff_min_late->year : '')}}</h3>
+                                @if ($staff_min_late)
+                                    <span class="text-lg text-semibold">{{$staff_min_late->name}}</span>
+                                    <p>Division : {{$staff_min_late->division}}</p>
+                                @else
+                                    <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                    <p>PT. Cerebrum Edukanesia Nusantara</p>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                
+                <div class="panel panel-danger panel-colorful">    
+                    <div class="pad-all">
+                        <div class="media">
+                            <div class="media-left" style="width: 20%; min-width: 115px">
+                                @if ($staff_late)
+                                    <img class="img-lg img-circle img-responsive"
+                                    src="{{asset('img/profile-photos/'.$staff_late->photo)}}"
+                                    alt="Profile Picture">
+                                @else
+                                    <img class="img-lg img-circle img-responsive"
+                                    src="{{asset('img/title-cerebrum.png')}}"
+                                    alt="Profile Picture">
+                                @endif
+                            </div>
+                            <div class="media-body" style="padding-top: 7px">
+                                <h3 class="h5" style="color: #fff">{{'Staff Paling Telat'.($staff_late ? ' Periode '.switch_month($staff_late->month).' - '.$staff_late->year : '')}}</h3>
+                                @if ($staff_late)
+                                    <span class="text-lg text-semibold">{{$staff_late->name}}</span>
+                                    <p>Division : {{$staff_late->division}}</p>
+                                @else
+                                    <span class="text-lg text-semibold">Data Belum Tersedia</span>
+                                    <p>PT. Cerebrum Edukanesia Nusantara</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- </div> --}}
         </div>
     </div>
 </div>
@@ -627,7 +627,7 @@
                 byRow: true
             });
         });
-        $('#mh-box').matchHeight({
+        $('.mh-box').matchHeight({
             target: $('#mh-target')
         });
             

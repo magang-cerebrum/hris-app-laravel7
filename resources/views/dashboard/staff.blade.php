@@ -125,10 +125,8 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}"
-
                     @if ($monthDecidePerformance)
-
-                    <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
+                        <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
             </div>
@@ -137,10 +135,11 @@
                     <select name="select" id="year-finder-performance" class="selectpicker" data-style="btn-primary"
                         onchange="showChangePerformanceYear()">
                         @foreach ($year_list_performance as $item)
-                        @if ($item->year == $current_year)
-                        <option value="{{$item->year}}" selected>{{$item->year}}</option>
-                        @else <option value="{{$item->year}}">{{$item->year}}</option>
-                        @endif
+                            @if ($item->year == $current_year)
+                                <option value="{{$item->year}}" selected>{{$item->year}}</option>
+                            @else 
+                                <option value="{{$item->year}}">{{$item->year}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -194,12 +193,12 @@
                 <h3 class="panel-title">
                     Top Scored Performance 
                     @if ($monthDecidePerformance)
-                    <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                        <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                        <span data-toggle="modal" data-target="#modal-detail-top-scored-performance" style="cursor: pointer">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored"></i>
+                        </span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
-                    <span data-toggle="modal" data-target="#modal-detail-top-scored-performance">
-                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored"></i>
-                    </span>
                 </h3>
             </div>
             <div class="panel-body" style="min-height: 383px; padding-top: 20px; padding-bottom: 20px">
@@ -270,11 +269,11 @@
                     Top Scored Achievement
                     @if ($monthDecideAchievement)
                         <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
+                        <span data-toggle="modal" data-target="#modal-detail-top-scored-achievement" style="cursor: pointer">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
+                        </span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
-                    <span data-toggle="modal" data-target="#modal-detail-top-scored-achievement">
-                        <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
-                </span>
                 </h3>
             </div>
             <div class="panel-body" style=" padding-top: 20px; padding-bottom: 20px">
@@ -897,6 +896,6 @@
 </script>
 @endsection
 
-@include('staff/performance-chief/DetailedTopScoredPerformanceModal')
-@include('masterData/achievement/DetailedTopScoredAchievementModal')
+@include('dashboard/DetailedTopScoredPerformanceModal')
+@include('dashboard/DetailedTopScoredAchievementModal')
 @endsection

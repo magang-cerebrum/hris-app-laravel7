@@ -17,28 +17,28 @@
                         </thead>
                         <tbody>
                             
-                            @if ($monthDecideAchievement)
-                                @foreach ($monthDecideAchievement as $mdaItem)
-                                <tr>
-                                        <td class="text-center"> {{$loop->iteration}}</td>
-                                        <td class="text-center">{{$mdaItem->name}}</td> 
-                                        <td class="text-center text-semibold" style="
-                                        @if ($loop->iteration == 1)
-                                            color : #FFD700;
-                                        @elseif($loop->iteration == 2)
-                                            color:#C0C0C0;
-                                        @elseif($loop->iteration == 3)
-                                            color:#cd7f32;
-                                        @else
-                                            color:#800000
-                                        @endif
-                                        ">
-                                            
-                                            {{$mdaItem->score}}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                        @if ($monthDecideAchievement)
+                            @foreach ($monthDecideAchievement as $mdaItem)
+                               <tr>
+                                    <td class="text-center"> {{$loop->iteration}}</td>
+                                    <td class="text-center">{{$mdaItem->name}}</td> 
+                                    <td class="text-center text-semibold" style="
+                                    @if ($loop->iteration == 1)
+                                        color : #FFD700;
+                                    @elseif($loop->iteration == 2)
+                                        color:#C0C0C0;
+                                    @elseif($loop->iteration == 3)
+                                        color:#cd7f32;
+                                    @else
+                                        color:#800000
+                                    @endif
+                                    ">
+                                        
+                                        {{$mdaItem->score}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                    @endif
                         </tbody>
                     </table>
                 </div>

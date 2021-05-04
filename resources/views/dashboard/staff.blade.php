@@ -125,9 +125,9 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}"
-                    
-                    @if ($monthDecidePerformance->isEmpty())
-                    @else
+
+                    @if ($monthDecidePerformance)
+
                     <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
@@ -193,8 +193,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Performance 
-                    @if ($monthDecidePerformance->isEmpty())
-                    @else
+                    @if ($monthDecidePerformance)
                     <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>

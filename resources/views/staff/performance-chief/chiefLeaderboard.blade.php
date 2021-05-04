@@ -18,7 +18,7 @@
             <div class="row mar-btm" >
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <form action="{{url('/staff/achievement/search')}}" method="POST" id="cari-achievement">
+                    <form action="{{url('/staff/performance/search')}}" method="POST" id="cari-achievement">
                         @csrf
                         <div id="pickadate">
                             <div class="input-group date">
@@ -79,13 +79,23 @@
                         $("#panel-output").html(data);
                     },
                     error: function (jXHR, textStatus, errorThrown) {
-                        // console.log(textStatus)
+                        // console.log(jXHR)
                         Swal.fire({
                             title: errorThrown,
                             text: "Form belum diisi dengan benar / Tidak ada data achievement untuk bulan atau tahun terpilih",
                             icon: 'error',
                             width: 600
                         });
+                    },
+                    statusCode:{
+                        500:function(){
+                            Swal.fire({
+                            title: 'Error 500',
+                            text: "Data Tidak Tersedia",
+                            icon: 'error',
+                            width: 600
+                        });
+                        }
                     }
                 });
             });

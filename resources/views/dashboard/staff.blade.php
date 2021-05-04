@@ -5,6 +5,8 @@
 @section('head')
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <link href="{{asset("css/slider/slide.css")}}" rel="stylesheet">
+<link href="{{asset("plugins/themify-icons/themify-icons.css")}}" rel="stylesheet">
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     #staff-charts-performance {
@@ -31,206 +33,8 @@
         width: 80px;
     }
 
-    #first .pos-rel {
-        background-color: #fedb37;
-        /* height: 250px; */
-    }
 
-    #second .pos-rel {
-        background-color: #e6e8e9
-    }
-
-    #third .pos-rel p {
-        color: white
-    }
-
-    #third .pos-rel {
-
-        background-color: #b1560f;
-    }
-
-    @keyframes shine {
-        10% {
-            opacity: 1;
-            top: -0%;
-            left: -25%;
-            transition-property: left, top, opacity;
-            transition-duration: 0.7s, 0.7s, 0.15s;
-            transition-timing-function: linear;
-        }
-
-        100% {
-            opacity: 0;
-            top: -0%;
-            left: -10%;
-            transition-property: left, top, opacity;
-        }
-    }
-
-    #second .pos-rel:after {
-        content: "";
-        position: absolute;
-        top: 0%;
-        left: -210%;
-        width: 200%;
-        height: 100%;
-        opacity: 0;
-
-
-        animation: shine 2s linear infinite;
-        animation-fill-mode: forwards;
-        background: rgba(255, 255, 255, 0.13);
-        background: linear-gradient(to right,
-                rgba(255, 255, 255, 0.13) 0%,
-                rgba(255, 255, 255, 0.13) 77%,
-                rgba(255, 255, 255, 0.5) 95%,
-                rgba(255, 255, 255, 0.0) 100%);
-    }
-
-    #second .pos-rel:active:after {
-        opacity: 0;
-    }
-
-    #first .pos-rel:after {
-        content: "";
-        position: absolute;
-        top: 0%;
-        left: -210%;
-        width: 188%;
-        height: 100%;
-        opacity: 0;
-        animation: shine 2s linear infinite;
-        animation-fill-mode: forwards;
-        background: rgba(255, 255, 255, 0.13);
-        background: linear-gradient(to right,
-                rgba(255, 255, 255, 0.13) 0%,
-                rgba(255, 255, 255, 0.13) 77%,
-                rgba(255, 255, 255, 0.5) 92%,
-                rgba(255, 255, 255, 0.0) 100%);
-    }
-
-    #first .pos-rel:active:after {
-        opacity: 0;
-    }
-
-    #third .pos-rel:after {
-        content: "";
-        position: absolute;
-        top: 0%;
-        left: -210%;
-        width: 188%;
-        height: 100%;
-        opacity: 0;
-        animation: shine 2s linear infinite;
-        animation-fill-mode: forwards;
-        background: rgba(255, 255, 255, 0.13);
-        background: linear-gradient(to right,
-                rgba(255, 255, 255, 0.13) 0%,
-                rgba(255, 255, 255, 0.13) 77%,
-                rgba(255, 255, 255, 0.5) 92%,
-                rgba(255, 255, 255, 0.0) 100%);
-    }
-
-    #third .pos-rel:active:after {
-        opacity: 0;
-    }
-
-    #first .ribbon span {
-        background: #fedb37;
-        color: black;
-    }
-
-    #first .ribbon span::before {
-        content: "";
-        position: absolute;
-        left: 0px;
-        top: 100%;
-        z-index: -1;
-        border-left: 2px solid #fedb37;
-        border-right: 3px solid transparent;
-        border-bottom: 3px solid transparent;
-        border-top: 3px solid #fedb37;
-    }
-
-    #first .ribbon span::after {
-        content: "";
-        position: absolute;
-        right: 0px;
-        top: 100%;
-        z-index: -1;
-        border-left: 3px solid transparent;
-        border-right: 3px solid #fedb37;
-        border-bottom: 3px solid transparent;
-        border-top: 3px solid #fedb37;
-    }
-
-    #second .ribbon span {
-        background: #e6e8e9;
-        color: black;
-    }
-
-    #second .ribbon span::before {
-        content: "";
-        position: absolute;
-        left: 0px;
-        top: 100%;
-        z-index: -1;
-        border-left: 2px solid #e6e8e9;
-        border-right: 3px solid transparent;
-        border-bottom: 3px solid transparent;
-        border-top: 3px solid #e6e8e9;
-    }
-
-    #second .ribbon span::after {
-        content: "";
-        position: absolute;
-        right: 0px;
-        top: 100%;
-        z-index: -1;
-        border-left: 3px solid transparent;
-        border-right: 3px solid #e6e8e9;
-        border-bottom: 3px solid transparent;
-        border-top: 3px solid #e6e8e9;
-    }
-
-    #third .ribbon span {
-        background: #b1560f;
-        color: black;
-    }
-
-    #third .ribbon span::before {
-        content: "";
-        position: absolute;
-        left: 0px;
-        top: 100%;
-        z-index: -1;
-        border-left: 2px solid #b1560f;
-        border-right: 3px solid transparent;
-        border-bottom: 3px solid transparent;
-        border-top: 3px solid #b1560f;
-    }
-
-    #third .ribbon span::after {
-        content: "";
-        position: absolute;
-        right: 0px;
-        top: 100%;
-        z-index: -1;
-        border-left: 3px solid transparent;
-        border-right: 3px solid #b1560f;
-        border-bottom: 3px solid transparent;
-        border-top: 3px solid #b1560f;
-    }
-
-    .fc-left,
-    .fc-right {
-        visibility: hidden;
-    }
-
-    #container .fc-event {
-        cursor: pointer;
-    }
-
+    
 </style>
 @endsection
 @section('content')
@@ -389,12 +193,15 @@
         <div class="mh-box panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    Top Scored Performance  
+                    Top Scored Performance 
                     @if ($monthDecidePerformance->isEmpty())
                     @else
                     <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
+                    <span data-toggle="modal" data-target="#modal-detail-top-scored-performance">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored"></i>
+                    </span>
                 </h3>
             </div>
             <div class="panel-body" style="min-height: 383px; padding-top: 20px; padding-bottom: 20px">
@@ -469,6 +276,9 @@
 
                     @endif
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
+                    <span data-toggle="modal" data-target="#modal-detail-top-scored-achievement">
+                        <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
+                </span>
                 </h3>
             </div>
             <div class="panel-body" style=" padding-top: 20px; padding-bottom: 20px">
@@ -622,8 +432,6 @@
         </div>
     </div>
 </div>
-
-@endsection
 
 @section('script')
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
@@ -1091,4 +899,8 @@
     })
 
 </script>
+@endsection
+
+@include('staff/performance-chief/DetailedTopScoredPerformanceModal')
+@include('masterData/achievement/DetailedTopScoredAchievementModal')
 @endsection

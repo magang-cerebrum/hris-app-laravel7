@@ -131,6 +131,8 @@ public function chiefScored(Request $request){
             
         }
         $average = MasterPerformance::where('division_id',Auth::user()->division_id)
+        ->where('month',$split[0])
+        ->where('year',$split[1])
         ->avg('performance_score');
         $chief_user_id = MasterUser::where('division_id',Auth::user()->division_id)
         ->where('position_id','!=',11)

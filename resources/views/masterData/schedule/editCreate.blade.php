@@ -35,12 +35,9 @@
                 <div class="col-sm-3">
                     <select class="selectpicker" data-style="btn-info" id="filter" onchange="filter_division()" form="form-check-user-month">
                         <option value=" "></option>
-                        <option value="Devtech">Devtech</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Academic">Academic</option>
-                        <option value="Quality Control">Quality Control</option>
-                        <option value="Operation">Operation</option>
+                        @foreach ($data_division as $division)
+                            <option value="{{$division->name}}">{{$division->name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <label class="col-sm-1 control-label" for="query">Periode : </label>

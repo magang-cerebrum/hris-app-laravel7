@@ -336,7 +336,7 @@ Route::prefix('/staff/ticketing')->middleware('auth')->group(function (){
 
 //route achievement ==ADMIN==
 Route::prefix('/admin/achievement')->middleware('auth')->group(function () {
-    Route::get('/', [App\Http\Controllers\MasterAchievementController::class,'index']);
+    Route::get('/', [MasterAchievementController::class,'index']);
     Route::get('/scoring',[MasterAchievementController::class,'scoring']);
     Route::get('/searchlist',[MasterAchievementController::class,'searchlist']);
     Route::post('/scoring',[MasterAchievementController::class,'scored']);
@@ -344,6 +344,8 @@ Route::prefix('/admin/achievement')->middleware('auth')->group(function () {
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
     Route::get('/eom',[MasterAchievementController::class,'eom']);
     Route::post('/eom/chosed',[MasterAchievementController::class,'chosedEom']);
+    Route::get('/ajx/pickdate',[MasterAchievementController::class,'pickDateResult']);
+
 });
 
 //Route Achievement ==Chief==

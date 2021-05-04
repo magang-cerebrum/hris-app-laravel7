@@ -159,9 +159,8 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Achievement "{{$name}}"
-                    @if ($monthDecideAchievement->isEmpty())
-                    @else
-                    <span id="textvalperf">Tahun {{$monthDecideAchievement[0]->year}}</span> 
+                    @if ($monthDecideAchievement)
+                        <span id="textvalperf">Tahun {{$monthDecideAchievement[0]->year}}</span> 
                     @endif
                 </h3>
             </div>
@@ -270,10 +269,8 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Achievement
-                    @if ($monthDecideAchievement->isEmpty())
-                    @else
-                    <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
-
+                    @if ($monthDecideAchievement)
+                        <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
                     <span data-toggle="modal" data-target="#modal-detail-top-scored-achievement">

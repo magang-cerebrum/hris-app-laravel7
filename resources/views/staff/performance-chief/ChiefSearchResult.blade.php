@@ -10,35 +10,26 @@
             <thead>
                 <tr role="row">
                     @if ($data[0] == null)
-                    <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data achievement ditemukan!</th>
+                        <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data achievement ditemukan!</th>
                     @else
-                    <th class="sorting_asc text-center" tabindex="0">No</th>
-                    <th class="sorting_asc text-center">Nama</th>
-                    <th class="sorting text-center">Score</th>
-                    <th class="sorting text-center">Bulan</th>
-                    <th class="sorting text-center">Tahun</th>
+                        <th class="sorting_asc text-center" tabindex="0">No</th>
+                        <th class="sorting_asc text-center">Nama</th>
+                        <th class="sorting text-center">Score</th>
+                        <th class="sorting text-center">Bulan</th>
+                        <th class="sorting text-center">Tahun</th>
                     @endif
                 </tr>
             </thead>
             <tbody>
-                {{-- @for ($i = 0; $i < $count; $i++) --}}
                 @foreach($data as $dataItems)
-                
-                  <tr>
-                    <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
-                    {{-- @if ($data[$i]->performance_score == $employee_of_the_month) --}}
-                    {{-- <td class="text-center"><i class="fa fa-star" title="Employee of The Month" style="color : gold"></i> {{$data[$i]->name}} <i class="fa fa-star" title="Employee of The Month" style="color : gold"></i></td> --}}
-                   {{-- @else --}}<td class="text-center">{{$dataItems->name}}</td>
-                    {{-- @endif --}}
-                    <td class="text-center">{{$dataItems->performance_score}}</td>
-                    <td class="text-center">{{$dataItems->month}}</td>
-                    <td class="text-center">{{$dataItems->year}}</td>
-                    {{-- <td class="text-center">{{$row->late_time}}</td> --}}
-                        </tr>
+                    <tr>
+                        <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td><td class="text-center">{{$dataItems->name}}</td>
+                        <td class="text-center">{{$dataItems->performance_score}}</td>
+                        <td class="text-center">{{$dataItems->month}}</td>
+                        <td class="text-center">{{$dataItems->year}}</td>
+                    </tr>
                 @endforeach
-                {{-- @endfor --}}
             </tbody>
         </table>
-        
     </div>
 </div>

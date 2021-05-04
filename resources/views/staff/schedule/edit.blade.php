@@ -40,100 +40,100 @@
 @endsection
 
 @section('content')
-<div class="panel panel-primary panel-bordered">
-    <div class="panel-heading">
-        <h3 class="panel-title">Form Edit Jadwal Kerja</h3>
-    </div>
-    
-    <form action="{{ url('/staff/schedule/edit-post')}}" method="POST" class="form-horizontal" id="form-bulan-tahun">
-        @csrf
-    </form>
-    
-    <div class="panel-body" style="padding-top: 20px">
-        <input name="count" value="{{count($data)}}" hidden>
-        <div class="row mar-btm">
-            <div class="col-sm-2">
-                <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
-                    data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal Yang Telah Di Edit" onclick="submit_add()" form="form-bulan-tahun">
-                    <i class="btn-label fa fa-send-o"></i>
-                    Edit Jadwal
-                </button>
+    <div class="panel panel-primary panel-bordered">
+        <div class="panel-heading">
+            <h3 class="panel-title">Form Edit Jadwal Kerja</h3>
+        </div>
+        
+        <form action="{{ url('/staff/schedule/edit-post')}}" method="POST" class="form-horizontal" id="form-bulan-tahun">
+            @csrf
+        </form>
+        
+        <div class="panel-body" style="padding-top: 20px">
+            <input name="count" value="{{count($data)}}" hidden>
+            <div class="row mar-btm">
+                <div class="col-sm-2">
+                    <button id="btn-delete" class="btn btn-primary btn-labeled add-tooltip" type="submit" data-toggle="tooltip"
+                        data-container="body" data-placement="top" data-original-title="Kirimkan Jadwal Yang Telah Di Edit" onclick="submit_add()" form="form-bulan-tahun">
+                        <i class="btn-label fa fa-send-o"></i>
+                        Edit Jadwal
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive" style="padding-bottom: 170px">
+                <table id="schedule-add"
+                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
+                    role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%" width="100%"
+                    cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="4">Identitas</th>
+                            @for ($i = 1; $i <= 31; $i++)
+                                <th class="sorting text-center th-date" tabindex="0">{{'tanggal '.$i}}</th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="sorting text-center" tabindex="0">
+                            <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
+                            <th class="sorting text-center th-nip" tabindex="0">Periode</th>
+                            <th class="sorting text-center th-nip" tabindex="0">NIP</th>
+                            <th class="sorting text-center th-name" tabindex="0">Nama</th>
+                            @for ($i = 1; $i <= 31; $i++)
+                                <td class="sorting text-center" tabindex="0">
+                                    <input type="checkbox" id="{{'master_'.$i}}" checked>
+                                </td>
+                            @endfor
+                        </tr>
+                        @foreach ($data as $item)
+                            <?php
+                                $month = switch_month($item->month, false);
+                            ?>
+                            <tr class="sorting text-center" tabindex="0">
+                                <td class="sorting text-center" tabindex="0">
+                                    {{$loop->iteration}}
+                                    <input type="text" value="{{$item->id}}" name="{{'id_'.$loop->iteration}}" form="form-bulan-tahun" hidden>
+                                </td>
+                                <td class="text-center">{{$item->month.' - '.$item->year}}</td>
+                                <td class="text-center">{{$item->user_nip}}</td>
+                                <td class="text-center">{{$item->user_name}}</td>
+                                @for ($i = 1; $i <= 31; $i++)
+                                    <?php
+                                        $temp_name = 'shift_'.$i;
+                                        $name_shift = $item->$temp_name;
+                                        $check_this_day = $item->year.'/'.$month.'/'.($i/10 < 1 ? '0'.$i : $i);
+                                        $name_days = change_name_day(date('l', strtotime($check_this_day)));
+                                    ?>
+                                    <td class="text-center">
+                                        <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span><br>
+                                        <select class="selectpicker {{'sub-master_'.$i}} {{$name_shift == '' ? 'hidden' : ''}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
+                                            <option value=" "> </option>
+                                            @foreach ($data_shift as $shift)
+                                                <option value="{{$shift->id}}"
+                                                    class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
+                                                    style="{{
+                                                        (
+                                                            (($name_shift != 'Cuti') && ($name_shift != 'WFH')) ? ($loop->iteration == 2 ? "display: none" : ($loop->iteration == 4) ? "display: none" : "") :
+                                                            ($name_shift == 'Cuti' ? ($shift->name == $name_shift ? '': 'display: none') : ($name_shift == 'WFH' ? ($shift->name == $name_shift ? '': 'display: none'): ''))
+                                                        )
+                                                    }}"
+                                                    {{
+                                                        ($shift->name == $name_shift ? 'selected': '')
+                                                    }}
+                                                    >
+                                                    {{$shift->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                @endfor
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="table-responsive" style="padding-bottom: 170px">
-        <table id="schedule-add"
-            class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
-            role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%" width="100%"
-            cellspacing="0">
-            <thead>
-                <tr>
-                    <th class="text-center" colspan="4">Identitas</th>
-                    @for ($i = 1; $i <= 31; $i++)
-                        <th class="sorting text-center th-date" tabindex="0">{{'tanggal '.$i}}</th>
-                    @endfor
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="sorting text-center" tabindex="0">
-                    <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                    <th class="sorting text-center th-nip" tabindex="0">Periode</th>
-                    <th class="sorting text-center th-nip" tabindex="0">NIP</th>
-                    <th class="sorting text-center th-name" tabindex="0">Nama</th>
-                    @for ($i = 1; $i <= 31; $i++)
-                        <td class="sorting text-center" tabindex="0">
-                            <input type="checkbox" id="{{'master_'.$i}}" checked>
-                        </td>
-                    @endfor
-                </tr>
-                @foreach ($data as $item)
-                    <?php
-                        $month = switch_month($item->month, false);
-                    ?>
-                    <tr class="sorting text-center" tabindex="0">
-                        <td class="sorting text-center" tabindex="0">
-                            {{$loop->iteration}}
-                            <input type="text" value="{{$item->id}}" name="{{'id_'.$loop->iteration}}" form="form-bulan-tahun" hidden>
-                        </td>
-                        <td class="text-center">{{$item->month.' - '.$item->year}}</td>
-                        <td class="text-center">{{$item->user_nip}}</td>
-                        <td class="text-center">{{$item->user_name}}</td>
-                        @for ($i = 1; $i <= 31; $i++)
-                            <?php
-                                $temp_name = 'shift_'.$i;
-                                $name_shift = $item->$temp_name;
-                                $check_this_day = $item->year.'/'.$month.'/'.($i/10 < 1 ? '0'.$i : $i);
-                                $name_days = change_name_day(date('l', strtotime($check_this_day)));
-                            ?>
-                            <td class="text-center">
-                                <span class="{{$name_shift == '' ? 'hidden' : ''}}">{{$name_days}}</span><br>
-                                <select class="selectpicker {{'sub-master_'.$i}} {{$name_shift == '' ? 'hidden' : ''}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
-                                    <option value=" "> </option>
-                                    @foreach ($data_shift as $shift)
-                                    <option value="{{$shift->id}}"
-                                        class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
-                                        style="{{
-                                            (
-                                                (($name_shift != 'Cuti') && ($name_shift != 'WFH')) ? ($loop->iteration == 2 ? "display: none" : ($loop->iteration == 4) ? "display: none" : "") :
-                                                ($name_shift == 'Cuti' ? ($shift->name == $name_shift ? '': 'display: none') : ($name_shift == 'WFH' ? ($shift->name == $name_shift ? '': 'display: none'): ''))
-                                            )
-                                        }}"
-                                        {{
-                                            ($shift->name == $name_shift ? 'selected': '')
-                                        }}
-                                        >
-                                        {{$shift->name}}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        @endfor
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
     </div>
-</div>
-</div>
 @endsection
 
 @section('script')
@@ -151,8 +151,6 @@
                     $(".sub-master_" + index).selectpicker('refresh');   
                 });
             }
-
-            
         });
     </script>
 @endsection

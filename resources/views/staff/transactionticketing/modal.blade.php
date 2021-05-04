@@ -64,42 +64,42 @@
                 <h5 class="modal-title text-bold text-center">Input Ticket Baru</h5>
             </div>
             <div class="modal-body">
-                    <div class="panel-body">
-                        <input type="hidden" name="user_id" value="{{$id}}" form="form_modal">
-                        <input type="hidden" name="status" value="Diajukan" form="form_modal">
-                        <div class="form-group">
-                            <div class="row">
-                                <label class="col-sm-2 control-label">Kategori:</label>
-                                <div class="col-sm-4">
-                                    <select class="selectpicker" data-style="btn-mint" name="category" form="form_modal">
-                                        <option value="Keluhan">Keluhan</option>
-                                        <option value="Masukan">Masukan</option>
-                                        <option value="Bug Aplikasi">Bug Aplikasi</option>
-                                        <option value="Kesalahan Informasi">Kesalahan Informasi</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label class="col-sm-2 control-label" for="textarea-edit-message">Pesan:</label>
-                                <div class="col-sm-10">
-                                    <textarea id="textarea-edit-message" rows="2" class="form-control"
-                                        placeholder="Masukan keterangan tambahan anda disini" name="message" form="form_modal"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-10">
-                                    <input type="checkbox" class="magic-checkbox" name="anon" id="anon" form="form_modal">
-                                    <label for="anon" class="text-bold">Kirim secara anonim (opsional)</label>
-                                    <div class="text-danger mar-ver" id="information"></div>
-                                </div>
+                <div class="panel-body">
+                    <input type="hidden" name="user_id" value="{{$id}}" form="form_modal">
+                    <input type="hidden" name="status" value="Diajukan" form="form_modal">
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-2 control-label">Kategori:</label>
+                            <div class="col-sm-4">
+                                <select class="selectpicker" data-style="btn-mint" name="category" form="form_modal">
+                                    <option value="Keluhan">Keluhan</option>
+                                    <option value="Masukan">Masukan</option>
+                                    <option value="Bug Aplikasi">Bug Aplikasi</option>
+                                    <option value="Kesalahan Informasi">Kesalahan Informasi</option>
+                                </select>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-2 control-label" for="textarea-edit-message">Pesan:</label>
+                            <div class="col-sm-10">
+                                <textarea id="textarea-edit-message" rows="2" class="form-control"
+                                    placeholder="Masukan keterangan tambahan anda disini" name="message" form="form_modal"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <input type="checkbox" class="magic-checkbox" name="anon" id="anon" form="form_modal">
+                                <label for="anon" class="text-bold">Kirim secara anonim (opsional)</label>
+                                <div class="text-danger mar-ver" id="information"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-success add-tooltip" type="submit" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Kirim Ticket" form="form_modal">Kirim Ticket</button>
@@ -108,39 +108,39 @@
         </div>
     </div>
 </div>
+
 @section('script')
-<script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
-<script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        // modal
-        $(document).on('click', '#detail_ticket', function () {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            var category = $(this).data('category');
-            var message = $(this).data('message');
-            var response = $(this).data('response');
-            var status = $(this).data('status');
-            var diajukan = $(this).data('diajukan');
+    <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // modal
+            $(document).on('click', '#detail_ticket', function () {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var category = $(this).data('category');
+                var message = $(this).data('message');
+                var response = $(this).data('response');
+                var status = $(this).data('status');
+                var diajukan = $(this).data('diajukan');
 
-            var join = `{{ url('/admin/ticketing/` + id + `/edit')}}`;
+                var join = `{{ url('/admin/ticketing/` + id + `/edit')}}`;
 
-            $('#id').text(id);
-            $('#name').text(name);
-            $('#category').text(category);
-            $('#message').text(message);
-            $('#response').text(response);
-            $('#status').text(status);
-            $('#diajukan').text(diajukan);
+                $('#id').text(id);
+                $('#name').text(name);
+                $('#category').text(category);
+                $('#message').text(message);
+                $('#response').text(response);
+                $('#status').text(status);
+                $('#diajukan').text(diajukan);
+            });
+
+            $("#anon").click(function () {
+                if ($(this).is(":checked"))
+                    $("#information").text('Mengirim tiket secara anonim tidak akan tersimpan di history pengajuan ticket!');
+                else
+                    $("#information").text("");
+            });
         });
-
-        $("#anon").click(function () {
-            if ($(this).is(":checked"))
-                $("#information").text('Mengirim tiket secara anonim tidak akan tersimpan di history pengajuan ticket!');
-            else
-                $("#information").text("");
-        });
-    });
-
-</script>
+    </script>
 @endsection

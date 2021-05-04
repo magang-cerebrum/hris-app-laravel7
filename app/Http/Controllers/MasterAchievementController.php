@@ -357,4 +357,44 @@ class MasterAchievementController extends Controller
         Alert::success('Berhasil','Employee of the month berhasil terpilih!');
         return redirect('/admin/achievement/eom');
     }
+
+
+    public function pickDateResult(Request $request){
+        $user = Auth::user();
+        $userAvailable = array();
+        $data = DB::table('master_users')
+            ->where('status','=','Aktif')
+            ->where('division_id',$user->division_id)
+            ->where('position_id','=',11)
+            ->select('id')
+            ->get();
+
+        $month = $request->periode;
+        $explodeMonth = explode('/',$month);
+        // dd($month);
+        $dataPerfMonth = MasterAchievement::where('month',$explodeMonth[0])
+        ->where('year',$explodeMonth[1])
+        ->select('achievement_user_id')
+        ->get();
+
+        foreach($dataPerfMonth as $items){
+            foreach($data as $datausers){
+                if($items->user_id == $datausers->id){
+                    $userAvailable[]=$items->user_id;
+                }
+            }
+        }
+            $datas = MasterUser::whereNotIn('id',$userAvailable)
+            ->where('status','=','Aktif')
+                ->where('division_id',$user->division_id)
+                ->where('position_id','=',11)
+            ->select([
+                'name','id','division_id'
+            ])->get();
+            dd($datas,count($datas));
+            return response()->json([
+                'data'=>$datas,
+                'countData'=>count($datas)
+            ]);
+    }
 }

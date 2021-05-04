@@ -123,7 +123,7 @@
             </div>
             <table id="scoring" class="table table-striped table-bordered no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-                <thead>
+                <thead id="headerTable" hidden>
                     <tr role="row">
                         <th class="sorting_asc text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1"
                             colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">
@@ -136,23 +136,8 @@
                             aria-label="Position: activate to sort column ascending">Value </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <input type="hidden" name="count" value="{{count($data)}}">
-                    @foreach ($data as $item)
-                        <tr>
-                            <input type="hidden" name="user_id_{{$loop->iteration}}" value="{{$item->id}}" form="submit-achievement">
-                            <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
-                            <td class="text-center">{{$item->name}}</td>
-                            <td class="text-center">
-                                <input type="range" class="form-range" min="0" max="100" id="customRange_{{$loop->iteration}}" form="submit-achievement"
-                                    name="score_{{$loop->iteration}}" value="0" oninput="slidervalfunc()">
-                                <input type="hidden" name="id-{{$item->id}}" value="{{$item->id}}" form="submit-achievement">
-                            </td>
-                            <td>
-                                <span id="val_{{$loop->iteration}}"></span>
-                            </td>
-                        </tr>
-                    @endforeach
+                <tbody  id="achievements_body_table">
+                   
                 </tbody>
             </table>
         </div>
@@ -186,6 +171,103 @@
                 orientation: 'bottom',
                 forceParse: false,
             });
+
+
+            var url = '/admin/achievement/ajx/pickdate'
+
+            $('#pickadate').on('change',function(){
+                $('.scorethis').remove();
+                periode = document.getElementById('query').value
+                console.log(periode)
+                var data
+                var dataOutName
+                var dataOutId
+                var dataoutDivId
+                var firstTd
+                var tr
+                var scTd
+                var thrdTd
+                var frthTd
+                var counterData
+                $.ajax({
+                    url: url,
+                    type : 'GET',
+                    data : {
+                        periode :periode
+                    },
+                    dataType:'json', 
+                    success:function(response){
+                        $('#headerTable').show()
+                        let count = 0
+                        
+                        for(data in response.data){
+                            var counted =count+=1
+                            var iteration = document.createTextNode(counted)
+                            dataOutName = response.data[data].name
+                            var nodeDataOutName = document.createTextNode(dataOutName)
+                            dataOutId = response.data[data].id
+                            var nodeDataOutId = document.createTextNode(dataOutId)
+                            dataoutDivId = response.data[data].division_id
+                            var nodeDataOutDivId = document.createTextNode(dataOutId)
+                            tr = document.createElement("tr")
+                            tr.setAttribute('class','scorethis')
+                            firstTd = document.createElement("td")
+                            scTd = document.createElement("td")
+                            thrdTd = document.createElement("td")
+                            counterData=document.createElement('input')
+                            counterData.setAttribute('type','hidden')
+                            counterData.setAttribute('name','count')
+                            counterData.setAttribute('value',response.countData)
+                            var slider = document.createElement('input')
+                            frthTd = document.createElement("td")
+                            var spanOnFourthTD = document.createElement("span")
+                            firstTd.setAttribute('class','sorting_1 text-center')
+                            firstTd.setAttribute('tabindex','0')
+                            firstTd.appendChild(iteration)
+                            scTd.setAttribute('class','text-center')
+                            scTd.appendChild(nodeDataOutName)
+                            slider.setAttribute('type','range')
+                            slider.setAttribute('class','form-range')
+                            slider.setAttribute('min','0')
+                            slider.setAttribute('max','100')
+                            slider.setAttribute('step','5')
+                            slider.setAttribute('id','customRange_'+counted)
+                            slider.setAttribute('value','0')
+                            slider.setAttribute('onchange','slidervalfunc()')
+                            slider.setAttribute('name','score_'+counted)
+                            thrdTd.setAttribute('class','text-center')
+                            thrdTd.appendChild(slider)
+                            frthTd.setAttribute('class','text-center')
+                            spanOnFourthTD.setAttribute('id','val_'+counted)
+                            var hiddenDivisionId = document.createElement('input')
+                            var hiddenUserId = document.createElement('input')
+                            hiddenDivisionId.setAttribute('name','division_id_'+counted)
+                            hiddenDivisionId.setAttribute('type','hidden')
+                            hiddenDivisionId.setAttribute('value',dataoutDivId)
+                        
+                            hiddenUserId.setAttribute('name','user_id_'+counted)
+                            hiddenUserId.setAttribute('type','hidden')
+                            hiddenUserId.setAttribute('value',dataOutId)
+                            frthTd.appendChild(spanOnFourthTD)
+                            tr.appendChild(firstTd)
+                            tr.appendChild(scTd)
+                            tr.appendChild(thrdTd)
+                            tr.appendChild(frthTd)
+                            tr.appendChild(hiddenDivisionId)
+                            tr.appendChild(hiddenUserId)
+                            document.getElementById('performance_body_table').appendChild(counterData)
+                            document.getElementById('performance_body_table').appendChild(tr)
+                        }
+                    },
+                    error : function (jXHR, textStatus, errorThrown) {
+                        console.log(jXHR, textStatus, errorThrown)
+                    }
+                });      
+            });
+            
+
+
+
             $('#button-submit').on('click', function (event) {
                 event.preventDefault();
                 var check_year = document.getElementById('query').value;

@@ -98,7 +98,7 @@ class StaffAuthDashboardController extends Controller
             ->orderByDesc('year')
             ->orderByDesc('month')
             ->first();
-            
+            // dd($latestPeriodPerformances);
             $monthDecidePerformance = null;
             if($latestPeriodPerformances){
                 $monthDecidePerformance = DB::table('master_performances')
@@ -120,14 +120,15 @@ class StaffAuthDashboardController extends Controller
                 ->orderBy('performance_score','desc')
                 ->get();
                 
-                $latestPeriodAchievement = DB::table('master_achievements')
-                ->select('month','year')
-                ->orderByDesc('year')
-                ->orderByDesc('month')
-                ->first();
-
+                
             }
-
+            
+            $latestPeriodAchievement = DB::table('master_achievements')
+            ->select('month','year')
+            ->orderByDesc('year')
+            ->orderByDesc('month')
+            ->first();
+            // dd($latestPe);
             $monthDecideAchievement = null;
 
             if($latestPeriodAchievement){
@@ -256,7 +257,7 @@ class StaffAuthDashboardController extends Controller
             ->where('master_users.division_id', $user->division_id)
             ->select('work_from_homes.id')
             ->get();
-
+                // dd($monthDecidePerformance);
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
                 'name'=>$user->name,

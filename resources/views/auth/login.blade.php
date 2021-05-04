@@ -3,13 +3,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HRIS</title>
+    <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
     <link href="{{ asset('css/fonts.css')}}" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/nifty.min.css" rel="stylesheet">
-    <link href="css/login/main.tambah.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/nifty.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/login/main.tambah.css')}}" rel="stylesheet">
     <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="plugins/pace/pace.min.css" rel="stylesheet">
-    <script src="plugins/pace/pace.min.js"></script>
+    <link href="{{ asset('plugins/pace/pace.min.css')}}" rel="stylesheet">
+    <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     <style>
         input::-ms-reveal,
         input::-ms-clear {

@@ -911,7 +911,7 @@ class MasterJobScheduleController extends Controller
         // dd();
         
         
-        return view('masterData.schedule.Chiefcopy',[
+        return view('staff.schedule.Chiefcopy',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -976,7 +976,6 @@ class MasterJobScheduleController extends Controller
             ]);
         }
         return redirect('/staff/schedule/division');
-        // dd($arrayData);
     }
     
 }

@@ -134,35 +134,35 @@
                                     <td class="text-center">
                                         <select class="selectpicker {{'sub-master_'.$i}}" data-style="btn-success" style="width: 100%;" name="{{'shift_'.$i.'_'.$loop->iteration}}" form="form-bulan-tahun">
                                             @foreach ($data_shift as $shift)
-                                            <option value="{{$shift->id}}"
-                                                class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
-                                                style="{{
-                                                    (
-                                                        $loop->iteration == 2 ? ($check_paid_leave == false ? "display: none" : "") :
-                                                        ($loop->iteration == 3 ? "display: none" : 
-                                                        ($loop->iteration == 4 ? ($check_wfh == false ? "display: none" : "") : ""))
-                                                    )
-                                                }}"
-                                                {{($item_user->division_id == 5 ? 
-                                                    ($check_paid_leave == true ? 
-                                                        ($loop->iteration == 2 ? 'selected' : '')
-                                                        :
-                                                        ($check_wfh == true ? ($loop->iteration == 4 ? 'selected' : '') : 
-                                                        ($loop->iteration == 5 ? 'selected' : ''))
-                                                    )
-                                                    :
-                                                    ($check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false ?
+                                                <option value="{{$shift->id}}"
+                                                    class="options-select {{'select-master_'.$i.'_'.$loop->iteration}} {{'option_'.$loop->iteration}}"
+                                                    style="{{
+                                                        (
+                                                            $loop->iteration == 2 ? ($check_paid_leave == false ? "display: none" : "") :
+                                                            ($loop->iteration == 3 ? "display: none" : 
+                                                            ($loop->iteration == 4 ? ($check_wfh == false ? "display: none" : "") : ""))
+                                                        )
+                                                    }}"
+                                                    {{($item_user->division_id == 5 ? 
                                                         ($check_paid_leave == true ? 
-                                                        ($loop->iteration == 2 ? 'selected' : '') : ($check_wfh == true ? 
-                                                        ($loop->iteration == 4 ? 'selected' : '') : ($loop->iteration == 5 ? 'selected' : ''))
+                                                            ($loop->iteration == 2 ? 'selected' : '')
+                                                            :
+                                                            ($check_wfh == true ? ($loop->iteration == 4 ? 'selected' : '') : 
+                                                            ($loop->iteration == 5 ? 'selected' : ''))
                                                         )
                                                         :
-                                                        ($loop->iteration == 1 ? 'selected' : '')
-                                                    )
-                                                )}}
-                                                >
-                                                {{$shift->name}}
-                                            </option>
+                                                        ($check_name_days != "Saturday" && $check_name_days != "Sunday" && $check_holiday == false ?
+                                                            ($check_paid_leave == true ? 
+                                                            ($loop->iteration == 2 ? 'selected' : '') : ($check_wfh == true ? 
+                                                            ($loop->iteration == 4 ? 'selected' : '') : ($loop->iteration == 5 ? 'selected' : ''))
+                                                            )
+                                                            :
+                                                            ($loop->iteration == 1 ? 'selected' : '')
+                                                        )
+                                                    )}}
+                                                    >
+                                                    {{$shift->name}}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -191,8 +191,6 @@
                     $(".sub-master_" + index).selectpicker('refresh');   
                 });
             }
-
-            
         });
     </script>
 @endsection

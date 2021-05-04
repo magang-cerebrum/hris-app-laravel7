@@ -11,27 +11,27 @@
                 <thead>
                     <tr role="row">
                         @if ($data->isEmpty())
-                        <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data presensi ditemukan!</th>
+                            <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data presensi ditemukan!</th>
                         @else
-                        <th class="sorting_asc text-center" tabindex="0">No</th>
-                        <th class="sorting_asc text-center">Tanggal</th>
-                        <th class="sorting text-center">Waktu Masuk</th>
-                        <th class="sorting text-center">Waktu Keluar</th>
-                        <th class="sorting text-center">Waktu Sehari</th>
-                        <th class="sorting text-center">Waktu Telat</th>
+                            <th class="sorting_asc text-center" tabindex="0">No</th>
+                            <th class="sorting_asc text-center">Tanggal</th>
+                            <th class="sorting text-center">Waktu Masuk</th>
+                            <th class="sorting text-center">Waktu Keluar</th>
+                            <th class="sorting text-center">Waktu Sehari</th>
+                            <th class="sorting text-center">Waktu Telat</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $row)
-                    <tr>
-                        <td tabindex="0" class="sorting_1 text-center">{{(($data->currentPage() * 5) - 5) + $loop->iteration}}</td>
-                        <td class="text-center">{{indonesian_date($row->presence_date)}}</td>
-                        <td class="text-center">{{$row->in_time}}</td>
-                        <td class="text-center">{{$row->out_time}}</td>
-                        <td class="text-center">{{$row->inaday_time}}</td>
-                        <td class="text-center">{{$row->late_time}}</td>
-                    </tr>
+                        <tr>
+                            <td tabindex="0" class="sorting_1 text-center">{{(($data->currentPage() * 5) - 5) + $loop->iteration}}</td>
+                            <td class="text-center">{{indonesian_date($row->presence_date)}}</td>
+                            <td class="text-center">{{$row->in_time}}</td>
+                            <td class="text-center">{{$row->out_time}}</td>
+                            <td class="text-center">{{$row->inaday_time}}</td>
+                            <td class="text-center">{{$row->late_time}}</td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

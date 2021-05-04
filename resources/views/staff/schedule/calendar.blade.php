@@ -16,7 +16,6 @@
 @endsection
 
 @section('content')
-    
     <div class="panel panel-bordered panel-primary">
         <div class="panel-heading">
             @foreach ($data_this_month as $item)
@@ -39,7 +38,7 @@
         @if (!$data_next_month->isEmpty()) 
             <div class="panel-heading">
                 @foreach ($data_next_month as $item)
-                <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$item->month.' - '.$item->year}}</h3>
+                    <h3 class="panel-title">{{'Jadwal Kerja Bulan '.$item->month.' - '.$item->year}}</h3>
                 @endforeach
             </div>
             <div class="panel-body">
@@ -55,48 +54,47 @@
 @endsection
 
 @section('script')
+    <script src="{{asset("plugins/fullcalendar/lib/moment.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
 
-<script src="{{asset("plugins/fullcalendar/lib/moment.min.js")}}"></script>
-<script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
-<script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
-<script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#calendar-this-month').fullCalendar({
-            contentHeight:500,
-            fixedWeekCount: false,
-            header:{
-                left: 'prev,next',
-                center: 'title',
-                right: 'month,basicWeek'
-            },
-            <?php foreach ($data_this_month as $item){ ?>
-                    defaultDate: '<?= $item->year ?>-<?= switch_month($item->month,false) ?>-01',
-                <?php } ?>
-            eventLimit: true,
-            events: [
-                <?php foreach ($data_this_month as $item) { 
-                    for ($i=1; $i <= $day; $i++) { ?>
-                        <?php 
-                            $shift = 'shift_'.$i;
-                            foreach($data_shift as $shifts){
-                                if($item->$shift == $shifts->name) {
-                                    $color = $shifts->calendar_color;
-                                    break;
-                                }
-                            }
-                        ?>
-                        {
-                            title: '<?= $item->$shift ?>',
-                            start: "<?= $data_this_month[0]->year ?>-<?= switch_month($data_this_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
-                            color: '<?= $color ?>'
-                        },
+    <script>
+        $(document).ready(function () {
+            $('#calendar-this-month').fullCalendar({
+                contentHeight:500,
+                fixedWeekCount: false,
+                header:{
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'month,basicWeek'
+                },
+                <?php foreach ($data_this_month as $item){ ?>
+                        defaultDate: '<?= $item->year ?>-<?= switch_month($item->month,false) ?>-01',
                     <?php } ?>
-                <?php } ?>
-            ]
-        });
-        $('#calendar-next-month').fullCalendar({
+                eventLimit: true,
+                events: [
+                    <?php foreach ($data_this_month as $item) { 
+                        for ($i=1; $i <= $day; $i++) { ?>
+                            <?php 
+                                $shift = 'shift_'.$i;
+                                foreach($data_shift as $shifts){
+                                    if($item->$shift == $shifts->name) {
+                                        $color = $shifts->calendar_color;
+                                        break;
+                                    }
+                                }
+                            ?>
+                            {
+                                title: '<?= $item->$shift ?>',
+                                start: "<?= $data_this_month[0]->year ?>-<?= switch_month($data_this_month[0]->month,false) ?>-<?= $i / 10 < 1 ? '0'. $i : $i ?>",
+                                color: '<?= $color ?>'
+                            },
+                        <?php } ?>
+                    <?php } ?>
+                ]
+            });
+            $('#calendar-next-month').fullCalendar({
                 defaultView:'basicWeek',
                 contentHeight: 103,
                 <?php foreach ($data_next_month as $item){ ?>
@@ -124,6 +122,6 @@
                     <?php } ?>
                 ]
             });
-    })
-</script>
+        })
+    </script>
 @endsection

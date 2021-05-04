@@ -2,6 +2,7 @@
 @section('title', 'Presensi')
 @section('content-title', 'Daftar Presensi Divisi')
 @section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
+
 @section('head')
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <style>
@@ -15,6 +16,7 @@
         }
     </style>
 @endsection
+
 @section('content')
     <div class="panel panel-bordered panel-primary">
         <div class="panel-heading">
@@ -61,6 +63,7 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
     <script>

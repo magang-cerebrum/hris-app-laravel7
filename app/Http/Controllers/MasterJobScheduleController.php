@@ -180,6 +180,7 @@ class MasterJobScheduleController extends Controller
         //     return back();
         // }
         $user = Auth::user();
+        $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
 
         $current_month = date('m');
         $current_year = date('Y');
@@ -239,6 +240,7 @@ class MasterJobScheduleController extends Controller
             ->get();
             return view('masterData.schedule.editCreate', [
                 'data'=>$data,
+                'data_division'=>$data_division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -908,8 +910,6 @@ class MasterJobScheduleController extends Controller
             'master_users.role_id as role_id'
         )
         ->get();
-        // dd();
-        
         
         return view('staff.schedule.Chiefcopy',[
             'name'=>$user->name,

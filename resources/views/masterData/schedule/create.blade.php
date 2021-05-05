@@ -36,7 +36,7 @@
                         <select class="selectpicker" data-style="btn-info" id="filter" onchange="filter_division()" form="form-check-user-month">
                             <option value=" "></option>
                             @foreach ($data_division as $division)
-                            <option value="{{$division->name}}">{{$division->name}}</option>
+                                <option value="{{$division->name}}">{{$division->name}}</option>
                             @endforeach
                         </select>
                     </div>

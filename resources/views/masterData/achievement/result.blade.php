@@ -1,7 +1,7 @@
 
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
-        <h3 class="panel-title">{{'Leaderboard Achievement Bulan '.$data[0]->month.' - '.$data[0]->year}}</h3>
+        <h3 class="panel-title">{{'Leaderboard Achievement Bulan '.switch_month($data[0]->month).' - '.$data[0]->year}}</h3>
     </div>
     <div class="panel-body" style="padding-top: 20px">
         <table id="presensi-result"
@@ -30,7 +30,7 @@
                             <td class="text-center">{{$data[$i]->name}}</td>
                         @endif
                         <td class="text-center">{{$data[$i]->score}}</td>
-                        <td class="text-center">{{$data[$i]->month}}</td>
+                        <td class="text-center">{{switch_month($data[0]->month)}}</td>
                         <td class="text-center">{{$data[$i]->year}}</td>
                     </tr>    
                 @endfor

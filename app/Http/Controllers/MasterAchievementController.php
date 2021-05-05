@@ -43,14 +43,13 @@ class MasterAchievementController extends Controller
         }
         elseif(Gate::allows('is_admin')){
             $splitter = explode('/',$request->get('query'));
-            $data = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+            $data = MasterAchievement::where(['month'=>$splitter[0],
         'year'=>$splitter[1]])
         ->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
         ->orderBy('score','desc')
         ->get();
-        $is_champ = MasterAchievement::where(['month'=>switch_month($splitter[0]),
+        $is_champ = MasterAchievement::where(['month'=>$splitter[0],
         'year'=>$splitter[1]])->max('score');
-        // dd(count($is_champ));
         $count = count($data);
         return view('masterData.achievement.result',['data'=>$data,
         'count'=>$count,
@@ -87,12 +86,14 @@ class MasterAchievementController extends Controller
     }
     }
     public function scored (Request $request){
+        // dd($request);
         if(Gate::denies('is_admin')){
             return abort(403,'Access Denied, Only Admin Can Access');
         }
         elseif(Gate::allows('is_admin')){
             global $datas;
             $datas=$request;
+            // dd($datas);
             for($i = 1; $i <=$request->count; $i++){
                 global $datas;
                 $user_id = 'user_id_'.$i;
@@ -100,7 +101,7 @@ class MasterAchievementController extends Controller
                 $score = 'score_'.$i;
                 $data = $datas->$score;
                 $split = explode('/',$datas->get('query'));
-
+                // dd($split);
                 $check = DB::table('master_achievements')
                 ->where('year','=',$split[1])
                 ->where('month','=',$split[0])
@@ -110,11 +111,11 @@ class MasterAchievementController extends Controller
                 if ($data == 0) {continue;}
                 if(count($check) > 0){
                     foreach($check as $items){
-                    MasterAchievement::where('id','=',$items->id)->update([
-                        'score' => $data
-                    ]); }
-                }
-                else {MasterAchievement::create([
+                        MasterAchievement::where('id','=',$items->id)->update([
+                            'score' => $data
+                        ]);
+                    }
+                } else {MasterAchievement::create([
                     'score' => $data,
                     'month'  =>$split[0],
                     'year' =>$split[1] ,
@@ -149,7 +150,7 @@ class MasterAchievementController extends Controller
             $max_month = 0;
             $min_month = 100;
             $data_month = MasterAchievement::
-            where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
+            where('month','=', $i / 10 < 1 ? '0'. $i : $i)
             ->where('year','=',date('Y'))
             ->get();
             if (count($data_month) == 0) {
@@ -181,7 +182,7 @@ class MasterAchievementController extends Controller
                 for ($j=0; $j < count($data_month); $j++) {                    
                     $usernya = $data_month[$j]->achievement_user_id;
                     $data_user = MasterAchievement::
-                    where('month','=',switch_month($i / 10 < 1 ? '0'. $i : $i))
+                    where('month','=',$i / 10 < 1 ? '0'. $i : $i)
                     ->where('year','=',date('Y'))
                     ->where('achievement_user_id','=',$usernya)
                     ->get();
@@ -238,7 +239,7 @@ class MasterAchievementController extends Controller
             $max_month = 0;
             $min_month = 100;
             $data_month = MasterAchievement::
-            where('month','=', switch_month($i / 10 < 1 ? '0'. $i : $i))
+            where('month','=', $i / 10 < 1 ? '0'. $i : $i)
             ->where('year','=',date('Y'))
             ->get();
             if (count($data_month) == 0) {
@@ -270,7 +271,7 @@ class MasterAchievementController extends Controller
                 for ($j=0; $j < count($data_month); $j++) {
                     for ($k=0; $k < count($ids); $k++) { 
                         $data_user = MasterAchievement::
-                        where('month','=',switch_month($i / 10 < 1 ? '0'. $i : $i))
+                        where('month','=',$i / 10 < 1 ? '0'. $i : $i)
                         ->where('year','=',date('Y'))
                         ->where('achievement_user_id','=',$ids[$k])
                         ->get();
@@ -360,38 +361,36 @@ class MasterAchievementController extends Controller
 
 
     public function pickDateResult(Request $request){
-        $user = Auth::user();
+        // $user = Auth::user();
         $userAvailable = array();
         $data = DB::table('master_users')
             ->where('status','=','Aktif')
-            ->where('division_id',$user->division_id)
-            ->where('position_id','=',11)
+            ->where('division_id','!=',7)
+            ->where('position_id','!=',[3])
             ->select('id')
             ->get();
 
         $month = $request->periode;
         $explodeMonth = explode('/',$month);
-        // dd($month);
-        $dataPerfMonth = MasterAchievement::where('month',$explodeMonth[0])
+        $dataAchMonth = MasterAchievement::where('month',$explodeMonth[0])
         ->where('year',$explodeMonth[1])
         ->select('achievement_user_id')
         ->get();
 
-        foreach($dataPerfMonth as $items){
+        foreach($dataAchMonth as $items){
             foreach($data as $datausers){
-                if($items->user_id == $datausers->id){
-                    $userAvailable[]=$items->user_id;
+                if($items->achievement_user_id == $datausers->id){
+                    $userAvailable[]=$items->achievement_user_id;
                 }
             }
         }
             $datas = MasterUser::whereNotIn('id',$userAvailable)
             ->where('status','=','Aktif')
-                ->where('division_id',$user->division_id)
-                ->where('position_id','=',11)
+            ->where('division_id','!=',7)
+            ->where('position_id','!=',[3])
             ->select([
                 'name','id','division_id'
             ])->get();
-            dd($datas,count($datas));
             return response()->json([
                 'data'=>$datas,
                 'countData'=>count($datas)

@@ -137,10 +137,13 @@
                 $(".defaulted").addClass("hidden");
                 $(".yearly").removeClass("hidden");
                 $("#paid-leave-left").val(remaining);
+                $('#paid_leave_date_start_defaulted').val('');
             } else {
                 $(".defaulted").removeClass("hidden");
                 $(".yearly").addClass("hidden");
                 $("#paid-leave-left").val("-");
+                $('#paid_leave_date_start').val('');
+                $('#paid_leave_date_end').val('');
             }
         }
 

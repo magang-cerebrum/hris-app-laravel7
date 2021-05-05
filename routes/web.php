@@ -225,8 +225,8 @@ Route::prefix('/admin/schedule')->middleware('auth')->group(function() {
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
-    Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
-    Route::post('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
+    Route::get('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
+    Route::get('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::get('/copyschedule',[MasterJobScheduleController::class,'CopySchedule']);
     Route::POST('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
@@ -239,8 +239,8 @@ Route::prefix('/staff/schedule')->middleware('auth')->group(function() {
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
-    Route::post('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
-    Route::post('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
+    Route::get('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
+    Route::get('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);

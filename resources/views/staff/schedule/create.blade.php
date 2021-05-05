@@ -22,9 +22,7 @@
             <h3 class="panel-title">Pilih Staff untuk Jadwal Kerja</h3>
         </div>
         
-        <form action="{{ url('/staff/schedule/add-schedule')}}" method="POST" id="form-chek-user-month" class="form-horizontal">
-            @csrf
-        </form>
+        <form action="{{ url('/staff/schedule/add-schedule')}}" method="GET" id="form-chek-user-month" class="form-horizontal"></form>
 
         <div class="panel-body" style="padding-top: 20px">
             <div class="row" style="margin-bottom: 10px">

@@ -257,7 +257,7 @@ class StaffAuthDashboardController extends Controller
             ->where('master_users.division_id', $user->division_id)
             ->select('work_from_homes.id')
             ->get();
-                // dd($monthDecidePerformance);
+                // dd($monthDecideAchievement);
             return view('dashboard.staff',[
                 'data_poster'=>$data_poster,
                 'name'=>$user->name,

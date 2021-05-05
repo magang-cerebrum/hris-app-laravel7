@@ -58,6 +58,7 @@ Route::put('/admin/password/saved',[UserController::class,'update'])->middleware
 
 //route landing dashboard, ganti password & profil ==ADMIN==
 Route::prefix('/admin')->middleware('auth')->group(function () {
+    Route::get('/', function () {return redirect('/admin/dashboard');});
     Route::get('/dashboard', [AdminAuthDashboardController::class,'index']);
     Route::get('/password/{user}',[UserController::class,'edit']);
     Route::put('/password/{user}/saved',[UserController::class,'update']);
@@ -69,6 +70,7 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
 
 //route landing dashboard, ganti password & profil ==STAFF==
 Route::prefix('/staff')->middleware('auth')->group(function(){
+    Route::get('/', function () {return redirect('/staff/dashboard');});
     Route::get('/dashboard', [StaffAuthDashboardController::class,'index']);
     Route::get('/password/{user}',[UserController::class,'edit']);
     Route::put('/password/{user}/saved',[UserController::class,'update']);

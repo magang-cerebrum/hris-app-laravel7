@@ -224,6 +224,7 @@ Route::prefix('/admin/schedule')->middleware('auth')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'index_month']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
+    Route::get('/add/ajax',[MasterJobScheduleController::class, 'ajax']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::get('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::get('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
@@ -238,13 +239,13 @@ Route::prefix('/staff/schedule')->middleware('auth')->group(function() {
     Route::get('/',[MasterJobScheduleController::class, 'staff_calendar']);
     Route::post('/search',[MasterJobScheduleController::class, 'result_calendar']);
     Route::get('/add',[MasterJobScheduleController::class, 'filter']);
+    Route::get('/add/ajax',[MasterJobScheduleController::class, 'ajax']);
     Route::get('/edit',[MasterJobScheduleController::class, 'filter_edit']);
     Route::get('/add-schedule',[MasterJobScheduleController::class, 'schedule_add']);
     Route::get('/edit-schedule',[MasterJobScheduleController::class, 'schedule_edit']);
     Route::post('/post',[MasterJobScheduleController::class, 'schedule_post']);
     Route::post('/edit-post',[MasterJobScheduleController::class, 'edit_post']);
     Route::get('/division',[MasterJobScheduleController::class, 'index_month']);
-    //copy jadwal
     Route::get('/copyschedule',[MasterJobScheduleController::class,'ChiefCopySchedule']);
     Route::post('/copyschedule/calculate',[MasterJobScheduleController::class,'ajaxCal']);
     Route::get('/copyschedule/calculates',[MasterJobScheduleController::class,'ajaxCheckBox']);

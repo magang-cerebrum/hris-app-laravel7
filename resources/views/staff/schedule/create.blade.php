@@ -60,7 +60,7 @@
                 <table id="staff-filter-schedule"
                 class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed"
                 role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%"
-                cellspacing="0">
+                cellspacing="0" hidden>
                     <thead>
                         <tr>
                             <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
@@ -71,18 +71,7 @@
                             <th class="sorting text-center" tabindex="0">Jabatan</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($data as $item)
-                            <tr class="sorting text-center" tabindex="0">
-                                <td class="sorting text-center" tabindex="0">{{$loop->iteration}}</td>
-                                <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]" value="{{$item->user_id}}" form="form-chek-user-month"></td>
-                                <td class="text-center">{{$item->user_nip}}</td>
-                                <td class="text-center">{{$item->user_name}}</td>
-                                <td class="text-center">{{$item->division_name}}</td>
-                                <td class="text-center">{{$item->position_name}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                    <tbody id="body_table"></tbody>
                 </table>
             </div>
         </div>
@@ -114,6 +103,74 @@
             });
             $('#filter').selectpicker({
                 dropupAuto: false
+            });
+
+            var url = '/staff/schedule/add/ajax'
+
+            $('#periode').on('change',function(){
+                var periode = document.getElementById('periode').value;
+                $.ajax({
+                    url: url,
+                    type : 'GET',
+                    data : {
+                        periode :periode
+                    },
+                    dataType:'json', 
+                    success:function(response){
+                        $('#staff-filter-schedule').show();
+                        var iteration = 1;
+                        var data_table = response.data;
+                        data_table.map( item => {
+                            var tbody = document.getElementById('body_table');
+                            var tr = document.createElement('tr');
+                            tr.setAttribute('class', 'sorting text-center');
+                            tr.setAttribute('tabindex', '0');
+
+                            var td_1 = document.createElement('td');
+                            td_1.setAttribute('class', 'text-center');
+                            var td_2 = document.createElement('td');
+                            td_2.setAttribute('class', 'text-center');
+                            var td_3 = document.createElement('td');
+                            td_3.setAttribute('class', 'text-center');
+                            var td_3 = document.createElement('td');
+                            td_3.setAttribute('class', 'text-center');
+                            var td_4 = document.createElement('td');
+                            td_4.setAttribute('class', 'text-center');
+                            var td_5 = document.createElement('td');
+                            td_5.setAttribute('class', 'text-center');
+                            var td_6 = document.createElement('td');
+                            td_6.setAttribute('class', 'text-center');
+
+                            var input = document.createElement('input');
+                            input.setAttribute('type', 'checkbox');
+                            input.setAttribute('class', 'sub_chk');
+                            input.setAttribute('name', 'check[]');
+                            input.setAttribute('value', item.user_id);
+                            input.setAttribute('form', 'form-chek-user-month');
+
+                            td_1.appendChild(document.createTextNode(iteration));
+                            td_2.appendChild(input);
+                            td_3.appendChild(document.createTextNode(item.user_nip));
+                            td_4.appendChild(document.createTextNode(item.name));
+                            td_5.appendChild(document.createTextNode(item.division_name));
+                            td_6.appendChild(document.createTextNode(item.position_name));
+
+                            tr.appendChild(td_1);
+                            tr.appendChild(td_2);
+                            tr.appendChild(td_3);
+                            tr.appendChild(td_4);
+                            tr.appendChild(td_5);
+                            tr.appendChild(td_6);
+
+                            tbody.appendChild(tr);
+
+                            iteration++;
+                        })
+                    },
+                    error : function (jXHR, textStatus, errorThrown) {
+                        console.log(jXHR, textStatus, errorThrown)
+                    }
+                });
             });
         });
 

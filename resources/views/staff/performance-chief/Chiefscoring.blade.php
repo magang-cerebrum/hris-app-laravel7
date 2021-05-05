@@ -138,6 +138,7 @@
                 orientation: 'bottom',
                 forceParse: false,
             });
+            
             var url = '/staff/performance/ajx/pickdate'
     
             $('#pickadate').on('change',function(){

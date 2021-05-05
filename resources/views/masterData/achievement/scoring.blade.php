@@ -136,15 +136,13 @@
                             aria-label="Position: activate to sort column ascending">Value </th>
                     </tr>
                 </thead>
-                <tbody  id="achievements_body_table">
-                   
-                </tbody>
+                <tbody  id="achievements_body_table"></tbody>
             </table>
         </div>
         <div class="panel-footer text-right">
             <button class="btn btn-mint" type="submit" id="button-submit" form="submit-achievement">Tambah</button>
         </div>
-        </form>
+        {{-- </form> --}}
     </div>
 @endsection
 
@@ -197,6 +195,7 @@
                     },
                     dataType:'json', 
                     success:function(response){
+                        console.log(response)
                         $('#headerTable').show()
                         let count = 0
                         
@@ -218,6 +217,7 @@
                             counterData.setAttribute('type','hidden')
                             counterData.setAttribute('name','count')
                             counterData.setAttribute('value',response.countData)
+                            counterData.setAttribute('form','submit-achievement')
                             var slider = document.createElement('input')
                             frthTd = document.createElement("td")
                             var spanOnFourthTD = document.createElement("span")
@@ -231,6 +231,7 @@
                             slider.setAttribute('min','0')
                             slider.setAttribute('max','100')
                             slider.setAttribute('step','5')
+                            slider.setAttribute('form','submit-achievement')
                             slider.setAttribute('id','customRange_'+counted)
                             slider.setAttribute('value','0')
                             slider.setAttribute('onchange','slidervalfunc()')
@@ -239,24 +240,25 @@
                             thrdTd.appendChild(slider)
                             frthTd.setAttribute('class','text-center')
                             spanOnFourthTD.setAttribute('id','val_'+counted)
-                            var hiddenDivisionId = document.createElement('input')
+                            // var hiddenDivisionId = document.createElement('input')
                             var hiddenUserId = document.createElement('input')
-                            hiddenDivisionId.setAttribute('name','division_id_'+counted)
-                            hiddenDivisionId.setAttribute('type','hidden')
-                            hiddenDivisionId.setAttribute('value',dataoutDivId)
-                        
+                            // hiddenDivisionId.setAttribute('name','division_id_'+counted)
+                            // hiddenDivisionId.setAttribute('type','hidden')
+                            // hiddenDivisionId.setAttribute('value',dataoutDivId)
+                            // hiddenDivisionId.setAttribute('')
                             hiddenUserId.setAttribute('name','user_id_'+counted)
                             hiddenUserId.setAttribute('type','hidden')
                             hiddenUserId.setAttribute('value',dataOutId)
+                            hiddenUserId.setAttribute('form','submit-achievement')
                             frthTd.appendChild(spanOnFourthTD)
                             tr.appendChild(firstTd)
                             tr.appendChild(scTd)
                             tr.appendChild(thrdTd)
                             tr.appendChild(frthTd)
-                            tr.appendChild(hiddenDivisionId)
+                            // tr.appendChild(hiddenDivisionId)
                             tr.appendChild(hiddenUserId)
-                            document.getElementById('performance_body_table').appendChild(counterData)
-                            document.getElementById('performance_body_table').appendChild(tr)
+                            document.getElementById('achievements_body_table').appendChild(counterData)
+                            document.getElementById('achievements_body_table').appendChild(tr)
                         }
                     },
                     error : function (jXHR, textStatus, errorThrown) {

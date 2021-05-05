@@ -130,35 +130,32 @@ public function chiefScored(Request $request){
                 
             
         }
-        $average = MasterPerformance::where('division_id',Auth::user()->division_id)
+        $average = MasterPerformance::leftJoin('master_users','master_performances.user_id','=','master_users.id')
+        ->where('division_id',Auth::user()->division_id)
         ->where('month',$split[0])
         ->where('year',$split[1])
+        ->where('position_id',11)
         ->avg('performance_score');
-        $chief_user_id = MasterUser::where('division_id',Auth::user()->division_id)
-        ->where('position_id','!=',11)
-        ->select('id')->get();
-        // dd($chief_user_id);
-        if(count($chief_user_id)>1){
-            foreach($chief_user_id as $chief_id){
-                MasterPerformance::create([
-                    'performance_score'=>round($average,1),
-                    'month'  =>$split[0],
-                    'year' =>$split[1],
-                    'division_id'=>Auth::user()->division_id,
-                    'user_id'=>$chief_id->id
-                ]);
-            }
-            
-        }
-        else{
+        
+        $checkChief = MasterPerformance::where('month',$split[0])
+        ->where('year',$split[1])
+        ->where('user_id',Auth::user()->id)
+        ->first();
+        
+        if($checkChief){
+            MasterPerformance::where('id',$checkChief->id)->update([
+                'performance_score'=>round($average,1),
+            ]);
+        }else{   
             MasterPerformance::create([
                 'performance_score'=>round($average,1),
                 'month'  =>$split[0],
                 'year' =>$split[1],
                 'division_id'=>Auth::user()->division_id,
-                'user_id'=>$chief_user_id[0]->id
+                'user_id'=>Auth::user()->id
             ]);
         }
+        
         // dd($average);
         Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
         return redirect('/staff/performance/scoring');

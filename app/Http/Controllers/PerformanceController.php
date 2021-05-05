@@ -64,6 +64,7 @@ class PerformanceController extends Controller
         $explodeMonth = explode('/',$month);
         $dataPerfMonth = MasterPerformance::where('month',$explodeMonth[0])
         ->where('year',$explodeMonth[1])
+        ->where('division_id',$user->division_id)
         ->select('user_id')
         ->get();
 

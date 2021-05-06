@@ -12,7 +12,7 @@
 @section('content')
     <div class="panel panel-bordered panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">LeaderBoard Achievement</h3>
+            <h3 class="panel-title">LeaderBoard Performa</h3>
         </div>
         <div class="panel-body">
             <div class="row mar-btm" >
@@ -82,20 +82,10 @@
                         // console.log(jXHR)
                         Swal.fire({
                             title: errorThrown,
-                            text: "Form belum diisi dengan benar / Tidak ada data achievement untuk bulan atau tahun terpilih",
+                            text: "Tidak ada data performa untuk bulan atau tahun terpilih",
                             icon: 'error',
                             width: 600
                         });
-                    },
-                    statusCode:{
-                        500:function(){
-                            Swal.fire({
-                            title: 'Error 500',
-                            text: "Data Tidak Tersedia",
-                            icon: 'error',
-                            width: 600
-                        });
-                        }
                     }
                 });
             });

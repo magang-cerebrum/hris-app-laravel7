@@ -137,7 +137,7 @@
 
             $("#anon").click(function () {
                 if ($(this).is(":checked"))
-                    $("#information").text('Mengirim tiket secara anonim tidak akan tersimpan di history pengajuan ticket!');
+                    $("#information").text('Anda akan mengirim tiket secara anonim');
                 else
                     $("#information").text("");
             });

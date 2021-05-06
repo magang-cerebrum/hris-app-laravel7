@@ -28,7 +28,7 @@
             <div id="btn_paid_leave">
                 <button class="btn btn-success btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="slip"
-                    data-original-title="Cetak Slip Gaji Data Terpilih" type="submit">
+                    data-original-title="Cetak Slip Gaji Data Terpilih" type="submit" onclick="submit_add()">
                     <i class="btn-label fa fa-check"></i>
                     Cetak Slip Gaji Data Terpilih
                 </button>

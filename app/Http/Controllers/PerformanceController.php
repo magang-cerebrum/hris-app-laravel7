@@ -132,7 +132,7 @@ public function chiefScored(Request $request){
             
         }
         $average = MasterPerformance::leftJoin('master_users','master_performances.user_id','=','master_users.id')
-        ->where('division_id',Auth::user()->division_id)
+        ->where('master_performances.division_id',Auth::user()->division_id)
         ->where('month',$split[0])
         ->where('year',$split[1])
         ->where('position_id',11)
@@ -159,7 +159,7 @@ public function chiefScored(Request $request){
         
         // dd($average);
         Alert::success('Berhasil!', 'Nilai untuk penghargaan periode bulan ' . switch_month($split[0]) . ' tahun ' . $split[1] . ' berhasil ditambahkan!');
-        return redirect('/staff/performance/scoring');
+        return redirect('/staff/performance');
 }
 
 public function chief_chart_index(){

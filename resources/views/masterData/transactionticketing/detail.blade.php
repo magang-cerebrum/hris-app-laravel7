@@ -88,6 +88,9 @@
                 forceParse: false,
                 endDate: '0',
             });
+            $('#input_search').on('click',function () {
+                $('.datepicker').hide();
+            });
             $('#btn-search').on('click',function () {
                 $('.datepicker').hide();
             });

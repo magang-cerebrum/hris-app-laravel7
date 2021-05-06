@@ -68,7 +68,7 @@
                 <div class="form-group">
                     <div class="row">
                         <label class="col-sm-2 control-label">Warna Kalendar:</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-10">
                             <div class="radio">
                                 <input id="color_radio-1" class="magic-radio" type="radio" name="calendar_color"
                                     value="#1C3550" checked form="form_create">

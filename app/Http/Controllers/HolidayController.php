@@ -134,7 +134,7 @@ class HolidayController extends Controller
                         $shift_hour = $total_hour - check_hour_shift($shift);
                         DB::table('master_job_schedules')
                         ->where('id', '=', $item->id)
-                        ->update(['shift_'.$check_day => 'Cuti', 'total_hour' => $shift_hour]);
+                        ->update(['shift_'.$check_day => 'Off', 'total_hour' => $shift_hour]);
                     }
                 }
             }

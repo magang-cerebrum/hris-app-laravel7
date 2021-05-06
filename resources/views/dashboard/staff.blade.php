@@ -357,7 +357,7 @@
                                 @endif
                             </div>
                             <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.$eom->month.' - '.$eom->year : '')}}</h3>
+                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.switch_month($eom->month).' - '.$eom->year : '')}}</h3>
                                 @if ($eom)
                                     <span class="text-lg text-semibold">{{$eom->name}}</span>
                                     <p>Division : {{$eom->division}}</p>

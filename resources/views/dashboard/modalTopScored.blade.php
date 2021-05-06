@@ -18,24 +18,17 @@
                         <tbody id="table-performance">
                             @if ($monthDecidePerformance)
                                 @for ($i = 0; $i < count($monthDecidePerformance); $i++)
-                                <tr
-                                    @if($i == 0)
-                                        class="text-bold"
-                                        style="color: #FFD700;
-                                    @elseif($i == 1)
-                                        class="text-bold"
-                                        style="color: #C0C0C0;
-                                    @elseif($i == 2)
-                                        class="text-bold"
-                                        style="color: #CD7F32;
-                                    @endif
-
+                                <tr style="
                                     @if($monthDecidePerformance[$i]->name == Auth::user()->name)
                                         background-color: rgba(139, 195, 74, 0.4); 
-                                        font-size: 16px;"
-                                    @else
-                                        "
+                                        font-size: 16px;
                                     @endif
+                                
+                                    @if($i == 0) color: #FFD700; font-weight: bold;
+                                    @elseif($i == 1) color: #C0C0C0; font-weight: bold;
+                                    @elseif($i == 2)  color: #CD7F32; font-weight: bold;
+                                    @endif
+                                    "
                                 >
                                     <td class="text-center"><span id="{{'p_rank_' . $i}}"></span></td>
                                     <td class="text-center"><span id="{{'p_name_' . $i}}"></td>
@@ -47,24 +40,18 @@
                         <tbody id="table-achievement">
                             @if ($monthDecideAchievement)
                                 @for ($i = 0; $i < count($monthDecideAchievement); $i++)
-                                <tr
-                                    @if($i == 0)
-                                        class="text-bold"
-                                        style="color: #FFD700;
-                                    @elseif($i == 1)
-                                        class="text-bold"
-                                        style="color: #C0C0C0;
-                                    @elseif($i == 2)
-                                        class="text-bold"
-                                        style="color: #CD7F32;
-                                    @endif
-
+                                <tr style="
                                     @if($monthDecideAchievement[$i]->name == Auth::user()->name)
                                         background-color: rgba(139, 195, 74, 0.4); 
-                                        font-size: 16px;"
-                                    @else
-                                        "
+                                        font-size: 16px;
                                     @endif
+
+                                    @if($i == 0) color: #FFD700; font-weight: bold;
+                                    @elseif($i == 1) color: #C0C0C0; font-weight: bold;
+                                    @elseif($i == 2) color: #CD7F32; font-weight: bold;
+                                    @endif
+                                    "
+                                    
                                 >
                                     <td class="text-center"><span id="{{'a_rank_' . $i}}"></span></td>
                                     <td class="text-center"><span id="{{'a_name_' . $i}}"></td>

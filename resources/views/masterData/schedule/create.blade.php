@@ -97,6 +97,7 @@
             $('#filter').selectpicker({
                 dropupAuto: false
             });
+
             $('.sub_chk').on('click', function(){
                 var currentRows = $(this).closest("tr");
                 var valueRowsName = currentRows.find("td:eq(2)").text();
@@ -112,6 +113,7 @@
             var url = '/admin/schedule/add/ajax'
 
             $('#periode').on('change',function(){
+                $('.tr_data').remove();
                 var periode = document.getElementById('periode').value;
                 $.ajax({
                     url: url,
@@ -127,7 +129,7 @@
                         data_table.map( item => {
                             var tbody = document.getElementById('body_table');
                             var tr = document.createElement('tr');
-                            tr.setAttribute('class', 'sorting text-center');
+                            tr.setAttribute('class', 'sorting text-center tr_data');
                             tr.setAttribute('tabindex', '0');
 
                             var td_1 = document.createElement('td');
@@ -152,7 +154,7 @@
 
                             td_1.appendChild(input);
                             td_2.appendChild(document.createTextNode(item.user_nip));
-                            td_3.appendChild(document.createTextNode(item.name));
+                            td_3.appendChild(document.createTextNode(item.user_name));
                             td_4.appendChild(document.createTextNode(item.division_name));
                             td_5.appendChild(document.createTextNode(item.position_name));
 

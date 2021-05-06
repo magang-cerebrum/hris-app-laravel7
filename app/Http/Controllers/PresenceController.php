@@ -32,8 +32,10 @@ class PresenceController extends Controller
         ->where('year', date('Y'))
         ->where('user_id', $user->id)->first();
 
-        $bool_schedule = $bool_schedule->$shift;
-
+        if($bool_schedule) {
+            $bool_schedule = $bool_schedule->$shift;
+        }
+        
         return view('staff.presence.history',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

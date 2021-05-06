@@ -26,22 +26,10 @@
         </div>
         
         <form action="{{url('/admin/ticketing/search')}}" method="get" id="form_search"></form>
-        <form action="/admin/ticketing/on-progress" method="POST" id="form-mul-onprog">
-            @csrf
-            @method('put')
-        </form>
 
         <div class="panel-body" style="padding-top: 20px">
             <div class="row mar-btm">
-                <div class="col-sm-2">
-                    <button id="btn-onprog" class="btn btn-primary  btn-labeled add-tooltip"
-                        data-toggle="tooltip" data-container="body" data-placement="top"
-                        data-original-title="Jadikan On Progress" onclick="submit_on_progress()" form="form-mul-onprog">
-                        <i class="btn-label fa fa-spinner"></i>
-                        Jadikan On Progress
-                    </button>
-                </div>
-                <div class="col-sm-6" id="option_tabel">
+                <div class="col-sm-8" id="option_tabel">
                     <div class="radio mar-hor">
                         <div class="col-sm-3">
                             <label for="" id="option_label">Tabel Ticketing: </label>
@@ -66,7 +54,7 @@
                             </span>
                             <input type="text" name="query" form="form_search"
                                 placeholder="Cari Ticket (Tanggal / Kategori / Status / Nama Pengirim)"
-                                class="form-control" autocomplete="off">
+                                class="form-control" autocomplete="off" id="input_search">
                             <span class="input-group-btn">
                                 <button class="btn btn-mint" type="submit" id="btn-search" form="form_search"><i class="fa fa-search"></i></button>
                             </span>
@@ -85,9 +73,6 @@
                                     colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
                                     style="width: 5%">No
                                 </th>
-                                <th class="text-center" style="width: 6%">
-                                    All <input type="checkbox" id="check-all-full">
-                                </th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
                                     colspan="1" aria-label="Position: activate to sort column ascending" style="width: 5%">
                                     Aksi</th>
@@ -105,15 +90,12 @@
                             @foreach ($done as $row)
                                 <tr>
                                     <td tabindex="0" class="sorting_1 text-center">
-                                        {{($done->currentPage() * 10) - 10 + $loop->iteration}}</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" class="check-item-full" name="selectid_full[]"
-                                            value="{{$row->id}}" form="form-mul-onprog">
+                                        {{($done->currentPage() * 10) - 10 + $loop->iteration}}
                                     </td>
                                     <td class="text-center">
                                         <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
                                             style="display: inline; margin: auto 5px" data-id="{{$row->id}}" 
-                                            @if ($row->name == null)
+                                            @if ($row->is_anonim == true)
                                                 data-name="Anonim"
                                             @else
                                                 data-name="{{$row->name}}"
@@ -136,7 +118,7 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        @if ($row->name == null)
+                                        @if ($row->is_anonim == true)
                                             Anonim
                                         @else
                                             {{$row->name}}
@@ -177,9 +159,6 @@
                                     colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
                                     style="width: 5%">No
                                 </th>
-                                <th class="text-center" style="width: 6%">
-                                    All <input type="checkbox" id="check-all">
-                                </th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="dt-basic" rowspan="1"
                                     colspan="1" aria-label="Position: activate to sort column ascending" style="width: 5%">
                                     Aksi</th>
@@ -197,14 +176,12 @@
                             @foreach ($ticketing as $row)
                                 <tr>
                                     <td tabindex="0" class="sorting_1 text-center">
-                                        {{($ticketing->currentPage() * 10) - 10 + $loop->iteration}}</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}">
+                                        {{($ticketing->currentPage() * 10) - 10 + $loop->iteration}}
                                     </td>
                                     <td class="text-center">
                                         <span id="detail_ticket" data-toggle="modal" data-target="#modal-detail-ticket"
                                             style="display: inline; margin: auto 5px" data-id="{{$row->id}}" 
-                                            @if ($row->name == null)
+                                            @if ($row->is_anonim == true)
                                                 data-name="Anonim"
                                             @else
                                                 data-name="{{$row->name}}"
@@ -225,7 +202,7 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        @if ($row->name == null)
+                                        @if ($row->is_anonim == true)
                                             Anonim
                                         @else
                                             {{$row->name}}

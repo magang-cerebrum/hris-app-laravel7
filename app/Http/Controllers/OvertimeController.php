@@ -32,7 +32,7 @@ class OvertimeController extends Controller
     public function ajaxList(Request $request)
     {
         $data = MasterOvertime::leftJoin('master_users','master_overtimes.user_id','=','master_users.id')
-        ->where('month',switch_month(explode('-',$request->periode)[1]))
+        ->where('month',explode('-',$request->periode)[1])
         ->where('year',explode('-',$request->periode)[0])
         ->select([
             'master_overtimes.*',
@@ -114,8 +114,8 @@ class OvertimeController extends Controller
     public function store(Request $request)
     {
         MasterOvertime::create([
-            'month' => switch_month(explode('/',$request->periode)[0]),
-            'year' => explode('/',$request->periode)[1],
+            'month' => switch_month(explode('-',$request->periode)[0],false),
+            'year' => explode('-',$request->periode)[1],
             'user_id' => $request->user_id,
             'hour' => $request->hour,
             'payment' => $request->payment,

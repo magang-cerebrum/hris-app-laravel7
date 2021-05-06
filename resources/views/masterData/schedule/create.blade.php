@@ -84,6 +84,7 @@
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
     <script type="text/javascript">
         var queue = new Array();
+        var checked = new Array();
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({
                 format: 'mm/yyyy',
@@ -96,18 +97,6 @@
             });
             $('#filter').selectpicker({
                 dropupAuto: false
-            });
-
-            $('.sub_chk').on('click', function(){
-                var currentRows = $(this).closest("tr");
-                var valueRowsName = currentRows.find("td:eq(2)").text();
-                if($(this).is(':checked',true)) {
-                    queue.push(valueRowsName+', ');
-                } else {
-                    queue.splice(queue.indexOf(valueRowsName+', '), 1);
-                }
-                $('#info').html(queue);
-                console.log(queue);
             });
 
             var url = '/admin/schedule/add/ajax'
@@ -126,7 +115,8 @@
                         $('#masterdata-filter-schedule').show();
                         $('#label_filter').show();
                         var data_table = response.data;
-                        data_table.map( item => {
+                        data_table.map( (item, i)  => {
+                            checked.push(false);
                             var tbody = document.getElementById('body_table');
                             var tr = document.createElement('tr');
                             tr.setAttribute('class', 'sorting text-center tr_data');
@@ -147,9 +137,10 @@
 
                             var input = document.createElement('input');
                             input.setAttribute('type', 'checkbox');
-                            input.setAttribute('class', 'sub_chk');
+                            input.setAttribute('class', 'sub_chk_');
                             input.setAttribute('name', 'check[]');
                             input.setAttribute('value', item.user_id);
+                            input.setAttribute('onClick', 'sub_check("'+item.user_name+'", '+ i +')');
                             input.setAttribute('form', 'form-check-user-month');
 
                             td_1.appendChild(input);
@@ -173,6 +164,17 @@
                 });
             });
         });
+        
+        function sub_check(name, i) {
+            checked[i] = !checked[i]
+            if(checked[i]) {
+                queue.push(name+', ');
+            } else {
+                queue.splice(queue.indexOf(name+', '), 1);
+            }
+            $('#info').html(queue);
+            
+        }
 
         // Sweetalert 2
         function submit_add(){

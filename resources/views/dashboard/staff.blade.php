@@ -125,10 +125,8 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}"
-
                     @if ($monthDecidePerformance)
-
-                    <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
+                        <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
             </div>
@@ -137,10 +135,11 @@
                     <select name="select" id="year-finder-performance" class="selectpicker" data-style="btn-primary"
                         onchange="showChangePerformanceYear()">
                         @foreach ($year_list_performance as $item)
-                        @if ($item->year == $current_year)
-                        <option value="{{$item->year}}" selected>{{$item->year}}</option>
-                        @else <option value="{{$item->year}}">{{$item->year}}</option>
-                        @endif
+                            @if ($item->year == $current_year)
+                                <option value="{{$item->year}}" selected>{{$item->year}}</option>
+                            @else 
+                                <option value="{{$item->year}}">{{$item->year}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -194,12 +193,13 @@
                 <h3 class="panel-title">
                     Top Scored Performance 
                     @if ($monthDecidePerformance)
-                    <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                        <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                        <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
+                        data-performance="{{$monthDecidePerformance}}" id="modal-performance">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored"></i>
+                        </span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
-                    <span data-toggle="modal" data-target="#modal-detail-top-scored-performance">
-                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored"></i>
-                    </span>
                 </h3>
             </div>
             <div class="panel-body" style="min-height: 383px; padding-top: 20px; padding-bottom: 20px">
@@ -270,11 +270,12 @@
                     Top Scored Achievement
                     @if ($monthDecideAchievement)
                         <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
+                        <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
+                            data-achievement="{{$monthDecideAchievement}}" id="modal-achievement">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
+                        </span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
-                    <span data-toggle="modal" data-target="#modal-detail-top-scored-achievement">
-                        <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
-                </span>
                 </h3>
             </div>
             <div class="panel-body" style=" padding-top: 20px; padding-bottom: 20px">
@@ -356,7 +357,7 @@
                                 @endif
                             </div>
                             <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.$eom->month.' - '.$eom->year : '')}}</h3>
+                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.switch_month($eom->month).' - '.$eom->year : '')}}</h3>
                                 @if ($eom)
                                     <span class="text-lg text-semibold">{{$eom->name}}</span>
                                     <p>Division : {{$eom->division}}</p>
@@ -445,10 +446,6 @@
             
     });
 
-    $(".flash-mess").fadeTo(2000, 500).slideUp(500, function () {
-        $(".flash-mess").slideUp(500);
-    });
-
     function showChangePerformanceYear() {
         $('#year-finder-performance').on('change', function (e) {
             var optionSelected = $("option:selected", this);
@@ -467,7 +464,6 @@
 
     var dataPerformance = {!!json_encode($scorePerformance)!!}
         
-    // console.log(dataPerformance)
     var pageviewsPerformance = [
         [1, dataPerformance[0] ? dataPerformance[0] : 0],
         [2, dataPerformance[1] ? dataPerformance[1] : 0],
@@ -482,7 +478,6 @@
         [11, dataPerformance[10] ? dataPerformance[10] : 0],
         [12, dataPerformance[11] ? dataPerformance[11] : 0]
     ];
-
 
     var dataAchievement = {!!json_encode($scoreAchievement)!!}
         
@@ -576,7 +571,6 @@
             }
         });
 
-
         $.plot('#staff-charts-achievement', [{
                 data: pageviewsAchievement,
                 lines: {
@@ -651,10 +645,48 @@
             }
         });
 
+        $('#modal-performance').on('click', function () {
+            var performance = $(this).data('performance')
+            for (let i = 0; i < performance.length; i++) {
+                var p_rank = {};
+                var p_name = {};
+                var p_score = {};
+
+                p_rank['p_rank_' + i] = i + 1;
+                p_name['p_name_' + i] = performance[i].name;
+                p_score['p_score_' + i] = performance[i].performance_score;
+
+                $('#p_rank_' + i).text(p_rank['p_rank_' + i]);
+                $('#p_name_' + i).text(p_name['p_name_' + i]);
+                $('#p_score_' + i).text(p_score['p_score_' + i]);
+                $('#type-modal').text('Performance');
+                $('#table-performance').removeClass('hidden')
+                $('#table-achievement').addClass('hidden')
+            }
+        });
+
+        $('#modal-achievement').on('click', function () {
+            var achievement = $(this).data('achievement')
+            for (let i = 0; i < achievement.length; i++) {
+                var a_rank = {};
+                var a_name = {};
+                var a_score = {};
+
+                a_rank['a_rank_' + i] = i + 1;
+                a_name['a_name_' + i] = achievement[i].name;
+                a_score['a_score_' + i] = achievement[i].score;
+
+                $('#a_rank_' + i).text(a_rank['a_rank_' + i]);
+                $('#a_name_' + i).text(a_name['a_name_' + i]);
+                $('#a_score_' + i).text(a_score['a_score_' + i]);
+                $('#type-modal').text('Achievement');
+                $('#table-performance').addClass('hidden')
+                $('#table-achievement').removeClass('hidden')
+                
+            }
+        });
+
     });
-
-
-
 
     $.ajaxSetup({
         headers: {
@@ -897,6 +929,5 @@
 </script>
 @endsection
 
-@include('staff/performance-chief/DetailedTopScoredPerformanceModal')
-@include('masterData/achievement/DetailedTopScoredAchievementModal')
+@include('dashboard/modalTopScored')
 @endsection

@@ -212,7 +212,6 @@ class DataStaffController extends Controller
                 'end_work_date' => $end_work_date,
                 'yearly_leave_remaining' => $request->yearly_leave_remaining,
                 'salary' => $salary,
-                'credit_card_bank' => $request->credit_card_bank,
                 'credit_card_number' => $request->credit_card_number,
                 'division_id' => $request->division_id,
                 'position_id' => $request->position_id,

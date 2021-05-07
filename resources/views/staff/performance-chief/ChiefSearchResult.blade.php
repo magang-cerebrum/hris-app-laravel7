@@ -1,7 +1,7 @@
 
 <div class="panel panel-bordered panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">{{'Leaderboard Achievement Bulan '.$data[0]->month.' - '.$data[0]->year}}</h3>
+        <h3 class="panel-title">{{'Leaderboard Performa Bulan '.$data[0]->month.' - '.$data[0]->year}}</h3>
     </div>
     <div class="panel-body">
         <table id="presensi-result"
@@ -10,7 +10,7 @@
             <thead>
                 <tr role="row">
                     @if ($data[0] == null)
-                        <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data achievement ditemukan!</th>
+                        <th class="text-center" tabindex="0" colspan="6">Ma'af, tidak ada data performa ditemukan!</th>
                     @else
                         <th class="sorting_asc text-center" tabindex="0">No</th>
                         <th class="sorting_asc text-center">Nama</th>

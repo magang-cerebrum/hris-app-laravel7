@@ -47,7 +47,7 @@ class TransactionTicketingController extends Controller
         $namanya = TransactionTicketing::leftJoin('master_users','master_users.id','=','user_id')
             ->where('master_users.id','=',$ticket->user_id)
             ->select('master_users.name')
-            ->get();
+            ->first();
         $status = ['Dikirimkan','On Progress','Selesai'];
         return view('masterdata.transactionticketing.edit',[
             'ticketing' => $ticket,
@@ -72,33 +72,8 @@ class TransactionTicketingController extends Controller
                 'response' => $request->response,
             ]);
             Alert::success('Berhasil!', 'Respon untuk ticket dengan ID '. $ticket->id . ' berhasil dikirim!');
-        return redirect('/admin/ticketing');
-            }
-    }
-    public function make_on_progress(Request $request){
-        if(Gate::denies('is_admin')){
-            return abort(403,'Access Denied, Only Admin Can Access');
-        }
-        elseif(Gate::allows('is_admin')) {
-            if ($request->selectid[0] != '') {
-                foreach ($request->selectid as $item) {
-                    TransactionTicketing::where('id', $item)->update([
-                        'status' => 'On Progress',
-                        'response' => 'Ticket sedang dalam tahap pengerjaan, mohon ditunggu ya kak :)'
-                    ]);
-                }
-            } else {
-                foreach ($request->selectid_full as $item) {
-                    TransactionTicketing::where('id', $item)->update([
-                        'status' => 'On Progress',
-                        'response' => 'Ticket sedang dalam tahap pengerjaan, mohon ditunggu ya kak :)'
-                    ]);
-                }
-            }
-        
-            Alert::success('Berhasil!', 'Ticket dengan ID terpilih sekarang berstatus On Progress');
             return redirect('/admin/ticketing');
-        }
+            }
     }
 
     public function admin_search(Request $request){
@@ -190,9 +165,15 @@ class TransactionTicketingController extends Controller
             $request->validate([
                 'message' => 'required'
             ]);
-            $id = ($request->anon == 'on' ? null : $id = $request->user_id);
+            if($request->anon) {
+                $anonim = true;
+            }
+            else {
+                $anonim = false;
+            }
             TransactionTicketing::create([
-                'user_id' => $id,
+                'is_anonim' => $anonim,
+                'user_id' => $request->user_id,
                 'message' => $request->message,
                 'category' => $request->category,
             ]);

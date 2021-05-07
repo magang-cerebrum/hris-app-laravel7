@@ -72,6 +72,7 @@
     </div>
 </div>
 
+<script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(document).on('click', '#detail_salary_staff', function () {
@@ -111,4 +112,20 @@
             $('#total_salary').text(total_salary);
         });
     });
+
+    function submit_add(){
+        event.preventDefault();
+        var check_user = document.querySelector('.sub_chk:checked');
+        if (check_user != null){
+                $('#slip').submit();
+        }
+        else {
+            Swal.fire({
+                    title: 'Sepertinya ada kesalahan...',
+                    text: "Mohon pilih data gaji terlebih dahulu...",
+                    icon: 'error',
+            });
+            return false;
+        }
+    }
 </script>

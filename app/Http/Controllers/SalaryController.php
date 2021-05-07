@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use PDF;
-use Asset\img;
-use Asset\file_slip;
 
 class SalaryController extends Controller
 {
@@ -257,7 +255,7 @@ class SalaryController extends Controller
     
                 $data_presences = DB::table('master_presences')->where('presence_date', 'LIKE', $year.'-'.$month.'%')->where('status', 0)->get();
             }
-    
+            Alert::success('Berhasil!','Data gaji periode '. switch_month($month) . ' - ' . $year . ' berhasil di ambil!')->width(600);
             return redirect('/admin/salary');
         }
     }
@@ -317,7 +315,7 @@ class SalaryController extends Controller
                 else {
                     $get_data_cut = DB::table('master_salary_cuts')
                     ->where('information', $cut_type->name)
-                    ->where('user_id', $user_id)
+                    ->where('user_id', $data->user_id)
                     ->where('month', switch_month($month))->where('year', $year)
                     ->first();
                     if($get_data_cut) {
@@ -334,7 +332,7 @@ class SalaryController extends Controller
                 if($cut_type->type == 'Semua') {
                     $get_data_allowance = DB::table('master_salary_allowances')->where('information', $allowance_type->name)->first();
                     if($get_data_allowance) {
-                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_allowance->nominal);
                     }
                     else {
                         $value_data = object_array_salary($allowance_type->name);
@@ -343,11 +341,11 @@ class SalaryController extends Controller
                 else {
                     $get_data_allowance = DB::table('master_salary_allowances')
                     ->where('information', $allowance_type->name)
-                    ->where('user_id', $user_id)
+                    ->where('user_id', $data->user_id)
                     ->where('month', switch_month($month))->where('year', $year)
                     ->first();
                     if($get_data_allowance) {
-                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_allowance->nominal);
                     }
                     else {
                         $value_data = object_array_salary($allowance_type->name);
@@ -388,6 +386,7 @@ class SalaryController extends Controller
             file_put_contents($file_patch, $file_output);
             DB::table('master_salaries')->where('id',$id)->update(['status'=>'Accepted', 'file_salary'=>$file_name]);
         }
+        Alert::success('Berhasil!','Slip gaji staff terpilih berhasil di cetak!');
         return redirect('/admin/salary');
     }
 

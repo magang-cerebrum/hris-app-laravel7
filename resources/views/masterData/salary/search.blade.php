@@ -81,24 +81,24 @@
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }});
+                    }
+                });
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
                     data: {periode: periode},
                     success: function (data) {
-                        $("#panel-output").html(data);
+                        $("#panel-output").html(data)
                     },
                     error: function (jXHR, textStatus, errorThrown) {
                         Swal.fire({
                             title: 'Error!',
                             text: "Isi form terlebih dahulu!",
-                            icon: 'error',
-                            width: 600
+                            icon: 'error'
                         });
-                    }
-                });
-            });
-        });
+                    }   
+                })
+            })
+        })
     </script>
 @endsection

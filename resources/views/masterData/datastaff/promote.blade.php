@@ -85,7 +85,7 @@
                     <label class="col-sm-2 control-label">Gaji Pokok:</label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="Gaji Pokok saat ini" id="salary_before" name="salary_before" form="form-promotion"
-                            class="form-control" value="{{$staff->salary}}" onload="format_rp(salary_before)" readonly>
+                            class="form-control" value="{{rupiah($staff->salary)}}" readonly>
                     </div>
                 </div>
             </div>
@@ -195,7 +195,7 @@
         </div>
         <div class="panel-footer text-right">
             <a class="btn btn-dark" type="button" href="{{url('/admin/data-staff')}}" id="btn-back">Kembali ke menu Data Staff</a>
-            <button class="btn btn-mint" type="submit" onclick="submit_promote()" form="form-promotion" id="btn-submit">Promosikan</button>
+            <button class="btn btn-mint" type="submit" onclick="submit_promote()" form="form-promotion" id="btn-submit" disabled>Promosikan</button>
         </div>
     </div>
 @endsection
@@ -203,30 +203,20 @@
 @section('script')
     <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('js/helpers.js')}}"></script>
     <script>
+        setTimeout(calculate,1500)
 
-        setTimeout(function() {
-            var angka = document.getElementById('salary_before').value;
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            document.getElementById('salary_before').value = 'Rp. ' + rupiah;
+        $(document).ready(function () {
+            $('#user_performance_score tr > td:contains(Tidak ada penilaian)').addClass("text-danger text-bold not-scored");
 
             if (document.querySelector('.not-scored')){
                 document.getElementById('score-information').className = 'text-danger text-bold text-center'
                 document.getElementById('score-information').innerHTML = 'Kenaikan gaji tidak dapat dilakukan karena masih terdapat nilai performa yang kosong!'
                 $('#btn-back').show();
-                $('#btn-submit').hide();
+                $('#btn-submit').remove();
             } else {
+                document.getElementById('btn-submit').disabled = false;
                 if (document.getElementById('status_before').value == 'Tetap'){
                     var ratarata = (document.getElementById('average_score').innerText / 10 ).toFixed(2);
                     document.getElementById('score-information').className = 'text-success text-center'
@@ -236,12 +226,6 @@
                     document.getElementById('percentage').value = '';
                 }
             }
-        },1500);
-
-        setTimeout(calculate,1500)
-
-        $(document).ready(function () {
-            $('#user_performance_score tr > td:contains(Tidak ada penilaian)').addClass("text-danger text-bold not-scored");
         });
 
         function format_rp(idnya) {

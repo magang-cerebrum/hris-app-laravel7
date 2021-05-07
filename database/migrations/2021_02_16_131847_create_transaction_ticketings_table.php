@@ -15,6 +15,7 @@ class CreateTransactionTicketingsTable extends Migration
     {
         Schema::create('transaction_ticketings', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_anonim')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->text('message');
             $table->enum('category',['Keluhan','Masukan','Bug Aplikasi','Kesalahan Informasi']);

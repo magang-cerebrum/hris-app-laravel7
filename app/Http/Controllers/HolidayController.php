@@ -180,7 +180,40 @@ class HolidayController extends Controller
             'information' => 'required',
             'date' => 'required|unique:master_holidays,date',
         ]);
+        $holiday_data = DB::table('master_holidays')->where('id', $holiday->id)->select(['date'])->first();
+        if(date('Y-m-d') < $holiday_data->date) {
+            $data_schedule = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->where('month', switch_month(explode('-', $holiday_data->date)[1]))
+            ->where('year', explode('-', $holiday_data->date)[0])
+            ->whereNotIn('division_id', [5])
+            ->select(['master_job_schedules.*'])->get();
 
+            if($data_schedule) {
+                $hour = DB::table('master_shifts')->where('name','Pagi')->select(['total_hour'])->first();
+                $temp = 'shift_'.explode('-', $holiday_data->date)[2];
+                foreach($data_schedule as $update) {
+                    $total_hour = $update->total_hour + $hour->total_hour;
+                    DB::table('master_job_schedules')->where('id', $update->id)->update([$temp=>'Pagi', 'total_hour'=>$total_hour]);
+                }
+            }
+        }
+        if(date('Y-m-d') < $request->date) {
+            $data_schedule = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->where('month', switch_month(explode('/', $request->date)[1]))
+            ->where('year', explode('/', $request->date)[0])
+            ->whereNotIn('division_id', [5])
+            ->select(['master_job_schedules.*'])->get();
+
+            if($data_schedule) {
+                $temp = 'shift_'.explode('/', $request->date)[2];
+                foreach($data_schedule as $update) {
+                    $total_hour = $update->total_hour - check_hour_shift($update->$temp);
+                    DB::table('master_job_schedules')->where('id', $update->id)->update([$temp=>'Off', 'total_hour'=>$total_hour]);
+                }
+            }
+        }
         MasterHoliday::where('id', $holiday->id)
             ->update([
                 'information' => $request->information,
@@ -197,6 +230,24 @@ class HolidayController extends Controller
         }
         elseif(Gate::allows('is_admin')) {
         foreach ($request->selectid as $item) {
+            $holiday = DB::table('master_holidays')->where('id', $item)->select(['date'])->first();
+            if(date('Y-m-d') < $holiday->date) {
+                $data_schedule = DB::table('master_job_schedules')
+                ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+                ->where('month', switch_month(explode('-', $holiday->date)[1]))
+                ->where('year', explode('-', $holiday->date)[0])
+                ->whereNotIn('division_id', [5])
+                ->select(['master_job_schedules.*'])->get();
+
+                if($data_schedule) {
+                    $hour = DB::table('master_shifts')->where('name','Pagi')->select(['total_hour'])->first();
+                    $temp = 'shift_'.explode('-', $holiday->date)[2];
+                    foreach($data_schedule as $update) {
+                        $total_hour = $update->total_hour + $hour->total_hour;
+                        DB::table('master_job_schedules')->where('id', $update->id)->update([$temp=>'Pagi', 'total_hour'=>$total_hour]);
+                    }
+                }
+            }
             MasterHoliday::where('id','=',$item)->delete();
         }
         Alert::success('Berhasil!', 'Hari libur yang dipilih berhasil dihapus!');

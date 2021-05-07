@@ -33,7 +33,6 @@
                                     <tbody>
                                         @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
                                         <tr>
-                                            {{-- {{dd($dataItem)}} --}}
                                             <td class="text-center" id="staff_name">{{$dataItem->staff_name}}</td>
                                             <td class="text-center">{{$dataItem->achievement_score}}</td>
                                             <td class="text-center">{{$dataItem->performance_score}}</td>

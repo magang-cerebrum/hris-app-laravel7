@@ -758,12 +758,17 @@ class MasterJobScheduleController extends Controller
         ->where('year', '=',date('Y'))
         ->whereNotIn('division_id',[7])
         ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
         ->select(
             'master_job_schedules.*',
             'master_users.nip as user_nip',
-            'master_users.name as user_name'
-        )->get();
-        
+            'master_users.name as user_name',
+            'master_users.division_id as division_id',
+            'master_divisions.name as division_name'
+        )->orderBy('division_name','asc')
+        ->get();
+        $division = DB::table('master_divisions')->get();
+        // dd($data);
         $user = Auth::user();
         return view('masterData.schedule.copy',[
             'name'=>$user->name,
@@ -771,6 +776,7 @@ class MasterJobScheduleController extends Controller
             'email'=>$user->email,
             'id'=>$user->id,
             'data'=>$data,
+            'divisions'=>$division
         ]);
     }
 

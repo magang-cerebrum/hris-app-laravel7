@@ -137,7 +137,7 @@
 
                             var input = document.createElement('input');
                             input.setAttribute('type', 'checkbox');
-                            input.setAttribute('class', 'sub_chk_');
+                            input.setAttribute('class', 'sub_chk');
                             input.setAttribute('name', 'check[]');
                             input.setAttribute('value', item.user_id);
                             input.setAttribute('onClick', 'sub_check("'+item.user_name+'", '+ i +')');

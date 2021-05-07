@@ -60,7 +60,7 @@
             </div>
             <div class="table-responsive">
                 <table id="masterdata-shift"
-                    class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid"
+                    class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
                     aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
                     <thead>
                         <tr role="row">
@@ -86,7 +86,10 @@
                             <tr>
                                 <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td>
                                     <td class="text-center">
-                                        <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
+                                        @if(in_array($loop->iteration,range(1,4)))
+                                        @else
+                                            <input type="checkbox" class="check-item" name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
+                                        @endif
                                     </td>
                                     <td class="text-center">
                                         <a href="/admin/shift/{{$row->id}}/edit"

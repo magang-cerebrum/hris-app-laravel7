@@ -233,7 +233,7 @@
                             class="form-control @error('credit_card_number') is-invalid @enderror"
                             value="{{$staff->credit_card_number}}">
                             @error('credit_card_number') <div class="text-danger invalid-feedback mt-3">
-                                Mohon isi sisa cuti hanya dengan angka.
+                                Mohon isi nomor rekening hanya dengan angka.
                             </div> @enderror
                         </div>
                         <label class="col-sm-2 control-label" for="salary">Gaji Pokok:</label>
@@ -250,6 +250,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/data-staff')}}" class="btn btn-dark">Kembali ke Informasi Staff</a>
             <button class="btn btn-mint" type="submit" form="edit">Simpan</button>
         </div>
     </div>

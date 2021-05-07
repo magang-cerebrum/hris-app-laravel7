@@ -18,7 +18,7 @@
     <div class="panel-body" style="padding-top: 20px">
         <div class="row mar-btm" id="row_btn">
             <div id="btn_paid_leave">
-                <button href="{{url('/admin/overtime/add')}}" class="btn btn-primary btn-labeled add-tooltip"
+                <button class="btn btn-primary btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="get_salary"
                     data-original-title="Ambil Data Gaji Baru" type="submit" {{$bool_check_day == false ? 'disabled' : ''}}>
                     <i class="btn-label fa fa-plus"></i>

@@ -745,7 +745,7 @@ class MasterJobScheduleController extends Controller
     }
 
 
-    public function CopySchedule(Request $request){
+    public function CopySchedule(){
         if(Gate::denies('is_admin')){
             Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
             return back();
@@ -917,12 +917,12 @@ class MasterJobScheduleController extends Controller
                 'total_hour'=>$totalHour
             ]);
         }
-        Alert::info('Silahkan lakukan cek jadwal!');
+        Alert::success('Salin Jadwal Berhasil!','Silahkan lakukan pengecekan jadwal!');
         return redirect('/admin/schedule');
     }
 
 
-    public function ChiefCopySchedule(Request $request){
+    public function ChiefCopySchedule(){
         $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
         $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
         $user = Auth::user();
@@ -1006,6 +1006,7 @@ class MasterJobScheduleController extends Controller
                 'total_hour'=>$totalHour
             ]);
         }
+        Alert::success('Salin Jadwal Berhasil!','Silahkan lakukan pengecekan jadwal!');
         return redirect('/staff/schedule/division');
     }
     

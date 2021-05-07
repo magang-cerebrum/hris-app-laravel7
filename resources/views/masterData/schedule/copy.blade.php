@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <div class="panel">
+    <div class="panel" style="border: #CE0404 1px solid">
         <div id="bv-wz">
             <div class="wz-heading pad-top">
                 <ul class="row wz-step wz-icon-bw wz-nav-off mar-top">
@@ -157,7 +157,7 @@
                     <div class="panel-footer text-right">
                         <div class="box-inline">
                             <button type="button" class="next btn btn-primary" form="bv-wz-form">Next</button>
-                            <button type="submit" class="finish btn btn-warning" form="bv-wz-form" disabled>Finish</button>
+                            <button type="submit" class="finish btn btn-warning" form="bv-wz-form">Finish</button>
                         </div>
                     </div>
                 </form>
@@ -335,13 +335,13 @@
                         setTimeout(function () {
                             $('.load6').addClass('hidden');
                             $('#information').removeClass('hidden');
+                            $('#bv-wz').find('.finish').show();
+                            $('#bv-wz').find('.finish').prop('disabled', false);
                         },3000);
                     }
                 // If it's the last tab then hide the last button and show the finish instead
                     if($current >= $total) {
                         $('#bv-wz').find('.next').hide();
-                        $('#bv-wz').find('.finish').show();
-                        $('#bv-wz').find('.finish').prop('disabled', false);
                     } else {
                         $('#bv-wz').find('.next').show();
                         $('#bv-wz').find('.finish').hide().prop('disabled', true);

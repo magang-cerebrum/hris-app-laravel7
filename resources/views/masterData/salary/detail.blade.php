@@ -72,6 +72,7 @@
     </div>
 </div>
 
+<script src="{{ asset('js/helpers.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(document).on('click', '#detail_salary_staff', function () {

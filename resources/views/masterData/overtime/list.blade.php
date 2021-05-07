@@ -40,7 +40,7 @@
                             <tr>
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td class="text-center">{{$item->user_name}}</td>
-                                <td class="text-center">{{$item->month . ' - ' . $item->year}}</td>
+                                <td class="text-center">{{switch_month($item->month) . ' - ' . $item->year}}</td>
                                 <td class="text-center">{{$item->hour . ' jam'}}</td>
                                 <td class="text-center">{{rupiah($item->payment)}}</td>
                             </tr>

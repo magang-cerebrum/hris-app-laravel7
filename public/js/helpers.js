@@ -60,19 +60,19 @@ function periodic(time) {
 
 function switch_month(month){
     switch(month){
-        case '01': bulan = 'Januari'; break;
-        case '02': bulan = 'Februari'; break;
-        case '03': bulan = 'Maret'; break;
-        case '04': bulan = 'April'; break;
-        case '05': bulan = 'Mei'; break;
-        case '06': bulan = 'Juni'; break;
-        case '07': bulan = 'Juli'; break;
-        case '08': bulan = 'Agustus'; break;
-        case '09': bulan = 'September'; break;
-        case '10': bulan = 'Oktober'; break;
-        case '11': bulan = 'November'; break;
-        case '12': bulan = 'Desember'; break;
+        case '01': month = 'Januari'; break;
+        case '02': month = 'Februari'; break;
+        case '03': month = 'Maret'; break;
+        case '04': month = 'April'; break;
+        case '05': month = 'Mei'; break;
+        case '06': month = 'Juni'; break;
+        case '07': month = 'Juli'; break;
+        case '08': month = 'Agustus'; break;
+        case '09': month = 'September'; break;
+        case '10': month = 'Oktober'; break;
+        case '11': month = 'November'; break;
+        case '12': month = 'Desember'; break;
     }
     
-    return bulan;
+    return month;
 }

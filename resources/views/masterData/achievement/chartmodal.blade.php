@@ -211,7 +211,7 @@
                     },
                     tooltip: {
                         show: true,
-                        content: 'Bulan: %x, Score: %y',
+                        content: 'Bulan: %x, Score: %y.1',
                     }
                 });
             },200);

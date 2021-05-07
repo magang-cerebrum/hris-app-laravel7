@@ -714,7 +714,7 @@ class MasterJobScheduleController extends Controller
     }
 
 
-    public function CopySchedule(Request $request){
+    public function CopySchedule(){
         if(Gate::denies('is_admin')){
             Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
             return back();

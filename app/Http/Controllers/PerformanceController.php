@@ -68,16 +68,12 @@ class PerformanceController extends Controller
         ->get();
 
         foreach($dataPerfMonth as $items){
-            foreach($data as $datausers){
-                if($items->user_id == $datausers->id){
-                    $userAvailable[]=$items->user_id;
-                }
-            }
+            $userAvailable[]=$items->user_id;
         }
             $datas = MasterUser::whereNotIn('id',$userAvailable)
             ->where('status','=','Aktif')
-                ->where('division_id',$user->division_id)
-                ->where('position_id','=',11)
+            ->where('division_id',$user->division_id)
+            ->where('position_id','=',11)
             ->select([
                 'name','id','division_id'
             ])->get();

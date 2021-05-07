@@ -307,7 +307,7 @@ class MasterAchievementController extends Controller
     if(Gate::denies('is_admin')){
         return abort(403,'Access Denied, Only Admin Can Access');
     }
-        $dataDate = date('m/Y');
+        // $dataDate = date('m/Y');
         $user = Auth::user();
         $divisions = DB::table('master_divisions')
         ->whereNotIn('id',[7])
@@ -323,8 +323,6 @@ class MasterAchievementController extends Controller
         // ->where('master_users.division_id','master_divisions.id')
         ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
        ->get();
-    //    dd($data);
-        // dd($data->where('division_name','=','Operation'));
         return view('masterData.achievement.eom',[
         'name'=>$user->name,
         'profile_photo'=>$user->profile_photo,
@@ -332,15 +330,43 @@ class MasterAchievementController extends Controller
         'id'=>$user->id,
         'data'=>$data,
         'divisions'=>$divisions
-        // 'allData'=>$arrayDataDivision
     ]);
 
 }
+
+    public function eom_search(Request $request){
+        $periodeRequest = explode('/',$request->periode) ;
+        $divisions = DB::table('master_divisions')
+        ->whereNotIn('id',[7])
+        ->get();
+        $data = DB::table('master_users')
+        ->whereNotIn('master_users.division_id',[7])
+        ->leftjoin('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
+        ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+        ->leftJoin('master_performances','master_users.id','=','master_performances.user_id')
+        ->where('master_users.status','Aktif')
+        ->where('master_divisions.status','Aktif')
+        ->where('position_id','!=',[3])
+        // ->where('master_users.division_id','master_divisions.id')
+        ->where('master_performances.month',$periodeRequest[0])
+        ->where('master_achievements.month',$periodeRequest[0])
+        ->where('master_performances.year',$periodeRequest[1])
+        ->where('master_achievements.year',$periodeRequest[1])
+        ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
+       ->get();
+
+       return view('masterData.achievement.listedeom',[
+        'data'=>$data,
+        'divisions'=>$divisions,
+        'month'=>$periodeRequest[0],
+        'year'=>$periodeRequest[1]
+    ]);
+
+    }
     public function chosedEom(Request $request){
         $user_id = $request->radio_input_eom;
-        $explodedDate = explode('/',$request->date);
-        $month = $explodedDate[0];
-        $year = $explodedDate[1];
+        $month = $request->month;
+        $year = $request->year;
         $check = DB::table('master_eoms')
         ->where('user_id',$user_id)
         ->where('month',$month)
@@ -361,15 +387,14 @@ class MasterAchievementController extends Controller
 
 
     public function pickDateResult(Request $request){
-        // $user = Auth::user();
         $userAvailable = array();
         $data = DB::table('master_users')
-            ->where('status','=','Aktif')
+            ->where('master_users.status','=','Aktif')
             ->where('division_id','!=',7)
             ->where('position_id','!=',[3])
-            ->select('id')
+            ->select('master_users.id')
             ->get();
-
+        // dd($data);
         $month = $request->periode;
         $explodeMonth = explode('/',$month);
         $dataAchMonth = MasterAchievement::where('month',$explodeMonth[0])
@@ -384,13 +409,17 @@ class MasterAchievementController extends Controller
                 }
             }
         }
-            $datas = MasterUser::whereNotIn('id',$userAvailable)
-            ->where('status','=','Aktif')
+            $datas = MasterUser::whereNotIn('master_users.id',$userAvailable)
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->where('master_users.status','=','Aktif')
             ->where('division_id','!=',7)
             ->where('position_id','!=',[3])
             ->select([
-                'name','id','division_id'
-            ])->get();
+                'master_users.name as staff_name','master_users.id','division_id','master_divisions.name as division_name'
+            ])
+            ->orderBy('division_name','asc')
+            ->get();
+            // dd($datas);
             return response()->json([
                 'data'=>$datas,
                 'countData'=>count($datas)

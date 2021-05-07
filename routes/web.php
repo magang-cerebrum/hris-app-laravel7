@@ -341,6 +341,7 @@ Route::prefix('/admin/achievement')->middleware('auth')->group(function () {
     Route::post('/search',[MasterAchievementController::class,'search']);
     Route::get('/charts', [MasterAchievementController::class,'admin_chart_index']);
     Route::get('/eom',[MasterAchievementController::class,'eom']);
+    Route::POST('/eom',[MasterAchievementController::class,'eom_search']);
     Route::post('/eom/chosed',[MasterAchievementController::class,'chosedEom']);
     Route::get('/ajx/pickdate',[MasterAchievementController::class,'pickDateResult']);
 

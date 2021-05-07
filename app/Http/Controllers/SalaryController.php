@@ -334,7 +334,7 @@ class SalaryController extends Controller
                 if($cut_type->type == 'Semua') {
                     $get_data_allowance = DB::table('master_salary_allowances')->where('information', $allowance_type->name)->first();
                     if($get_data_allowance) {
-                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_allowance->nominal);
                     }
                     else {
                         $value_data = object_array_salary($allowance_type->name);
@@ -347,7 +347,7 @@ class SalaryController extends Controller
                     ->where('month', switch_month($month))->where('year', $year)
                     ->first();
                     if($get_data_allowance) {
-                        $value_data = object_array_salary($get_data_allowance->information, $get_data_cut->nominal);
+                        $value_data = object_array_salary($get_data_allowance->information, $get_data_allowance->nominal);
                     }
                     else {
                         $value_data = object_array_salary($allowance_type->name);

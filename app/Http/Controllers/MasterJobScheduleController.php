@@ -113,6 +113,71 @@ class MasterJobScheduleController extends Controller
         ]);
     }
 
+    public function ajax(Request $request) {
+        $user = Auth::user();
+        $periode = explode('/',$request->periode);
+
+        if ($user->role_id == 1) {
+            $data_available = DB::table('master_job_schedules')
+            ->where('month', switch_month($periode[0]))->where('year', $periode[1])->select(['user_id'])->get();
+
+            $send_staff = array();
+            foreach ($data_available as $id_staff){
+                array_push($send_staff, $id_staff->user_id);
+            }
+
+            $data = DB::table('master_users')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->where('master_users.status','=','Aktif')
+            ->whereNotIn('master_users.division_id',[7])
+            ->whereNotIn('master_users.id',$send_staff)
+            ->select(
+                'master_users.id as user_id',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name',
+                'master_users.division_id',
+                'master_users.position_id',
+                'master_divisions.name as division_name',
+                'master_positions.name as position_name'
+                )
+            ->get();
+        }
+        else {
+            $data_available = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->where('month', switch_month($periode[0]))->where('year', $periode[1])->where('division_id', $user->division_id)->select(['user_id'])->get();
+
+            $send_staff = array();
+            foreach ($data_available as $id_staff){
+                array_push($send_staff, $id_staff->user_id);
+            }
+
+            $data = DB::table('master_users')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
+            ->where('master_users.status','=','Aktif')
+            ->where('master_users.division_id',$user->division_id)
+            ->whereNotIn('master_users.division_id',[7])
+            ->whereNotIn('master_users.id',$send_staff)
+            ->select(
+                'master_users.id as user_id',
+                'master_users.nip as user_nip',
+                'master_users.name as user_name',
+                'master_users.division_id',
+                'master_users.position_id',
+                'master_divisions.name as division_name',
+                'master_positions.name as position_name'
+                )
+            ->get();
+        }
+
+        return response()->json([
+            'data'=>$data,
+            'countData'=>count($data)
+        ]);
+    }
+
     public function filter()
     {
         // if(Gate::denies('is_admin')){
@@ -120,25 +185,9 @@ class MasterJobScheduleController extends Controller
         //     return back();
         // }
         $user = Auth::user();
-        $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
         if ($user->role_id == 1) {
-            $data = DB::table('master_users')
-            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-            ->where('master_users.status','=','Aktif')
-            ->whereNotIn('master_users.division_id',[7])
-            ->select(
-                'master_users.id as user_id',
-                'master_users.nip as user_nip',
-                'master_users.name as user_name',
-                'master_users.division_id',
-                'master_users.position_id',
-                'master_divisions.name as division_name',
-                'master_positions.name as position_name'
-                )
-            ->get();
+            $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
             return view('masterData.schedule.create', [
-                'data'=>$data,
                 'data_division'=>$data_division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -146,25 +195,7 @@ class MasterJobScheduleController extends Controller
                 'id'=>$user->id
             ]);
         } else {
-            $data = DB::table('master_users')
-            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-            ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
-            ->where('master_users.status','=','Aktif')
-            ->where('master_users.division_id',$user->division_id)
-            ->whereNotIn('master_users.division_id',[7])
-            ->select(
-                'master_users.id as user_id',
-                'master_users.nip as user_nip',
-                'master_users.name as user_name',
-                'master_users.division_id',
-                'master_users.position_id',
-                'master_divisions.name as division_name',
-                'master_positions.name as position_name'
-                )
-            ->get();
             return view('staff.schedule.create', [
-                'data'=>$data,
-                'data_division'=>$data_division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

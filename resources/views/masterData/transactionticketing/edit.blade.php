@@ -24,14 +24,14 @@
                     <div class="row">
                         <label class="col-sm-1 control-label">ID Ticket:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Nama Shift" name="name" form="form_edit"
+                            <input type="text" placeholder="ID Ticket" name="name" form="form_edit"
                             class="form-control" value="{{$ticketing->id}}" disabled>
                         </div>
                         <div class="col-sm-1"></div>
                         <label class="col-sm-1 control-label">Nama Pengirim:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Nama Shift" name="name" form="form_edit"
-                            class="form-control" value="{{$sender[0]->name == null ? 'Anonim' : $sender[0]->name}}" disabled>
+                            <input type="text" placeholder="Nama Staff" name="name" form="form_edit"
+                            class="form-control" value="{{$ticketing->is_anonim == true ? 'Anonim' : $sender->name}}" disabled>
                         </div>
                         <div class="col-sm-1"></div>
                     </div>

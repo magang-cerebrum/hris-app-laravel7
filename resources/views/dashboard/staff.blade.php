@@ -125,10 +125,8 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}"
-
                     @if ($monthDecidePerformance)
-
-                    <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
+                        <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
             </div>
@@ -137,10 +135,11 @@
                     <select name="select" id="year-finder-performance" class="selectpicker" data-style="btn-primary"
                         onchange="showChangePerformanceYear()">
                         @foreach ($year_list_performance as $item)
-                        @if ($item->year == $current_year)
-                        <option value="{{$item->year}}" selected>{{$item->year}}</option>
-                        @else <option value="{{$item->year}}">{{$item->year}}</option>
-                        @endif
+                            @if ($item->year == $current_year)
+                                <option value="{{$item->year}}" selected>{{$item->year}}</option>
+                            @else 
+                                <option value="{{$item->year}}">{{$item->year}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -194,13 +193,13 @@
                 <h3 class="panel-title">
                     Top Scored Performance 
                     @if ($monthDecidePerformance)
-                    <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                        <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
+                        <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
+                        data-performance="{{$monthDecidePerformance}}" id="modal-performance">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored"></i>
+                        </span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Performa Adalah Score Yang Diberikan Langsung Oleh Chief Divisi"></i></sup>
-                    <span data-toggle="modal" data-target="#modal-detail-top-scored"
-                        data-performance="{{$monthDecidePerformance}}" id="modal-performance">
-                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Performance"></i>
-                    </span>
                 </h3>
             </div>
             <div class="panel-body" style="min-height: 383px; padding-top: 20px; padding-bottom: 20px">
@@ -271,12 +270,12 @@
                     Top Scored Achievement
                     @if ($monthDecideAchievement)
                         <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
+                        <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
+                            data-achievement="{{$monthDecideAchievement}}" id="modal-achievement">
+                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
+                        </span>
                     @endif
                     <sup><i class="fa fa-info" title="Score Achievement Adalah Score Yang Diberikan Langsung Oleh HRD"></i></sup>
-                    <span data-toggle="modal" data-target="#modal-detail-top-scored"
-                        data-achievement="{{$monthDecideAchievement}}" id="modal-achievement">
-                            <i class="ti-cup add-tooltip" data-original-title="Detailed Top Scored Achievement"></i>
-                    </span>
                 </h3>
             </div>
             <div class="panel-body" style=" padding-top: 20px; padding-bottom: 20px">
@@ -358,7 +357,7 @@
                                 @endif
                             </div>
                             <div class="media-body" style="padding-top: 7px">
-                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.$eom->month.' - '.$eom->year : '')}}</h3>
+                                <h3 class="h5" style="color: #fff">{{'Staff Of The Month'.($eom ? ' Periode '.switch_month($eom->month).' - '.$eom->year : '')}}</h3>
                                 @if ($eom)
                                     <span class="text-lg text-semibold">{{$eom->name}}</span>
                                     <p>Division : {{$eom->division}}</p>

@@ -67,11 +67,11 @@
                             <div class="input-group input-daterange">
                                 <input type="text" class="form-control @error('start_date') is-invalid @enderror"
                                     placeholder="Tanggal Mulai" name="start_date" id="start_date"
-                                    value="{{old('start_date')}}" autocomplete="off" form="create_agenda" onchange="calculate()">
+                                    value="{{old('start_date')}}" autocomplete="off" form="create_agenda">
                                 <span class="input-group-addon">sampai</span>
                                 <input type="text" class="form-control @error('end_date') is-invalid @enderror"
                                     placeholder="Tanggal Berakhir" name="end_date" id="end_date"
-                                    value="{{old('end_date')}}" autocomplete="off" form="create_agenda" onchange="calculate()">
+                                    value="{{old('end_date')}}" autocomplete="off" form="create_agenda">
                             </div>
                             @error('start_date') <div class="text-danger invalid-feedback mt-3">
                                 Tanggal mulai kegiatan tidak boleh kosong.
@@ -89,7 +89,7 @@
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input id="timepicker-input-start" type="text"
-                                class="form-control @error('start_time') is-invalid @enderror" name="start_time" form="create_agenda" onchange="calculate()">
+                                class="form-control @error('start_time') is-invalid @enderror" name="start_time" form="create_agenda">
                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                         </div>
                         @error('start_time') <div class="text-danger invalid-feedback mt-3">
@@ -100,7 +100,7 @@
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input id="timepicker-input-end" type="text"
-                                class="form-control @error('start_time') is-invalid @enderror" name="end_time" form="create_agenda" onchange="calculate()">
+                                class="form-control @error('start_time') is-invalid @enderror" name="end_time" form="create_agenda">
                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                         </div>
                         @error('end_time') <div class="text-danger invalid-feedback mt-3">
@@ -171,7 +171,7 @@
             <div id="information" class="text-center text-info"></div>
         </div>
         <div class="panel-footer text-right">
-            <button class="btn btn-mint" type="submit" form="create_agenda">Tambah</button>
+            <button class="btn btn-mint" type="button" form="create_agenda" id="btn-submit">Tambah</button>
         </div>
     </div>
 @endsection
@@ -183,7 +183,7 @@
     <script>
         $(document).ready(function () {
             $('#datepicker-input-agenda .input-daterange').datepicker({
-                format: 'yyyy/mm/dd',
+                format: 'yyyy-mm-dd',
                 orientation: 'top',
                 autoclose: true,
                 todayHighlight: true,
@@ -203,37 +203,29 @@
                 var get = document.getElementById('timepicker-input-end').value;
                 document.getElementById('timepicker-input-end').value = get + ':00';
             });
+            $('#btn-submit').on('click', function () {
+                var start_time = $('#timepicker-input-start').val();
+                var end_time = $('#timepicker-input-end').val();
+                var start_date = $('#start_date').val()
+                var end_date = $('#end_date').val()
+                Swal.fire({
+                    width:600,
+                    title: 'Konfirmasi Pembuatan Agenda',
+                    text: 'Anda yakin ingin membuat agenda dari tanggal "'+ indonesian_date(start_date) + '" hingga tanggal "' + indonesian_date(end_date) + '" pukul "' + start_time + '" hingga pukul "' + end_time + '" untuk setiap harinya?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.value == true) {
+                        $('#create_agenda').submit()
+                    } else {
+                        return false;
+                    }} 
+                );
+            });
         });
-
-        function calculate(){
-            var title = $('#title').val();
-            var info = 'Agenda <strong>"' + title + '"</strong> akan dimasukan pada tanggal : <br>';
-            var get_start_time = $('#timepicker-input-start').val();
-            var get_end_time = $('#timepicker-input-end').val();
-
-            var start_date = new Date($('#start_date').val())
-            var end_date = new Date($('#end_date').val())
-            var days = new Date(end_date - start_date).getUTCDate()
-
-            for (var i = 1; i <= days; i++) {
-                var month_add = 1;
-                var count_days_in_month = function(m,y) {
-                    return new Date(y, m, 0).getDate();
-                };
-
-                var days_in_month = count_days_in_month(start_date.getUTCMonth() + 1,start_date.getUTCFullYear())
-                var day = (start_date.getUTCDate() + i)
-                if(day > days_in_month) {
-                    month_add++;
-                    day -= days_in_month;
-                }
-                var month = ('0' + (start_date.getUTCMonth() + month_add)).slice(-2)
-
-                var temp = '<strong>"' + day + ' ' + switch_month(month) + ' ' + start_date.getUTCFullYear() + '"</strong> - Pukul <strong>"' + get_start_time + ' sampai ' + get_end_time + '</strong>"<br>'
-                info = info + temp;
-            }
-
-            document.getElementById('information').innerHTML = info
-        }
     </script>
 @endsection

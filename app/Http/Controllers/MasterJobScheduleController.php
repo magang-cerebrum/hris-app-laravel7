@@ -782,8 +782,9 @@ class MasterJobScheduleController extends Controller
 
     public function ajaxCal(Request $request){
         if(Route::current()->uri == "admin/schedule/copyschedule/calculate"){
-            $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
-            $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+            // $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+            // $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+            $chosenUsers = $request->chosen;
             $firstPeriode = $request->first_periode;
             $splitFirstPeriode = explode('/',$firstPeriode);
             $dataScheduleFirstPeriode = DB::table('master_job_schedules')
@@ -797,21 +798,44 @@ class MasterJobScheduleController extends Controller
                     'master_users.nip as user_nip',
                     'master_users.name as user_name'
                 )->get();
+
                 $id = array();
+                
                 foreach($dataScheduleFirstPeriode as $periodeItems){
                     array_push($id,$periodeItems->user_id);
                 }
+
             $dataUser = DB::table('master_users')
             ->whereNotIn('id',$id)
             ->where('master_users.status','Aktif')
             ->whereNotIn('division_id',[7])
-            ->select('name','id')->get();
+            ->orderBy('division_id','desc')
+            ->select('name','id')
+            ->get();
+
+            $minorScheduleCheck = array();
             
+            $checkSchedule = MasterJobSchedule::where('user_id',$chosenUsers)
+            ->where('month','=',switch_month($splitFirstPeriode[0]))
+            ->where('year', '=',$splitFirstPeriode[1])
+            ->first();
+            for($i= 1;$i<=31;$i++){
+                $temp = 'shift_'.$i;
+                if($checkSchedule->$temp == "Cuti" ||$checkSchedule->$temp == "WFH" ||$checkSchedule->$temp == "Sakit"){
+                    array_push($minorScheduleCheck,checkSchedule($i,$checkSchedule->$temp));
+                }
+            }
+            $dataShift = DB::table('master_shifts')->whereNotIn('name',['WFH','Cuti','Sakit'])->get();
             
         return response()->json([
             'dataUser'=>$dataUser,
+            'dataMinor'=>$minorScheduleCheck,
+            'dataShift'=>$dataShift,
+            'countDataMinor'=>count($minorScheduleCheck)
         ]);
+
         }
+
         elseif(Route::current()->uri == "staff/schedule/copyschedule/calculate"){
             $user = Auth::user();
             $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
@@ -851,6 +875,8 @@ class MasterJobScheduleController extends Controller
         
     }
     public function ajaxCheckBox(Request $request){
+        // dd($request);
+        $day = $request->date;
         $check = $request->checkBox_val;
         $chosens = $request->chosen;
         $chosenUser = DB::table('master_users')
@@ -864,11 +890,14 @@ class MasterJobScheduleController extends Controller
        return response()->json([
         'names'=>$nameofUser,
         'chosenUser'=>$chosenUser,
-        'check'=>$chosenUser
+        'valMinor'=>$request->selectorMinor,
+        'dayofChangeShifts'=>$day,
+        // "ngeCheck"=>$check
        ]);
     }
 
     public function copied(Request $request){
+        // dd($request);
         $date = explode('/',$request->first);
         $chosenCopy = $request->chosen;
         $chosenTargetToCopy = $request->chosen_checkbox;
@@ -883,6 +912,9 @@ class MasterJobScheduleController extends Controller
             $tempName = 'shift_'.$i;
             array_push($arrayData,$dataScheduleCopy->$tempName);
         }
+
+        // foreach()
+
         $totalHour = $dataScheduleCopy->total_hour;
         foreach($chosenTargetToCopy as $itemTargetCopy){
             MasterJobSchedule::create([

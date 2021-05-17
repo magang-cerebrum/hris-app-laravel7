@@ -178,3 +178,10 @@ function pushData($shifts,$user_id,$user_name){
     }
     return $data;
 }
+
+function checkSchedule($day,$shift){
+    $data = new stdClass();
+    $data->day=$day;
+    $data->shift=$shift;
+    return $data;
+}

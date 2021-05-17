@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{asset("plugins/bootstrap-validator/bootstrapValidator.min.css")}}">
     <link rel="stylesheet" href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}">
     <link rel="stylesheet" href="{{asset("plugins/css-loaders/css/css-loaders.css")}}">
+    <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+
     <link rel="stylesheet" href="{{asset("plugins/themify-icons/themify-icons.css")}}">
     <meta name="csrf-token" content="{{csrf_token()}}">
 @endsection
@@ -43,16 +45,17 @@
                     </li>
                 </ul>
             </div>
-
+            
             <!--Progress bar-->
             <div class="progress progress-xs">
                 <div class="progress-bar progress-bar-primary"></div>
             </div>
-
+            
             <!--Form-->
             <div class="form-group">
                 <form id="bv-wz-form" class="form-horizontal" method="POST" action="{{url('/admin/schedule/copied')}}" >
-                @csrf
+                    @csrf
+                </form>
                     <div class="panel-body">
                         <div class="tab-content">
                             <!--First tab-->
@@ -96,7 +99,10 @@
 
                             <!--Second tab-->
                             <div id="bv-tab2" class="tab-pane fade">
-                                <div class="panel-body">
+                                <div class="panel-body" >
+                                    <input type="hidden" name="dateOfMinorCount" id="hiddenCountMinor" >
+                                    <div id="selectminor">
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-striped">
                                             <thead>
@@ -160,7 +166,6 @@
                             <button type="submit" class="finish btn btn-warning" form="bv-wz-form" disabled>Finish</button>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
         <!--===================================================-->
@@ -173,9 +178,11 @@
     <script src="{{asset("plugins/bootstrap-validator/bootstrapValidator.min.js")}}"></script>
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{asset("js/helpers.js")}}"></script>
+    <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 
     <script>
         $(document).ready(function(){
+            $('.selectpicker').selectpicker();
             $('#pickadate .input-group.date').datepicker({
                 format: 'mm/yyyy',
                 autoclose: true,
@@ -256,9 +263,14 @@
                                 type : 'POST',
                                 data : {
                                     first_periode : first_periode,
+                                    chosen:chosen
+                                    
                                 },
                                 dataType:'json',
                                 success : function(response){
+                                    $('.next').attr('id','ajax2')
+                                    
+                                    $('#hiddenCountMinor').val(response.countDataMinor)
                                     for(datas in response.dataUser){
                                         completedName = response.dataUser[datas].name
                                         completedId = response.dataUser[datas].id
@@ -279,6 +291,38 @@
                                         document.getElementById('tbodyCheckbox').appendChild(tr) 
                                         queue.splice(0,queue.length);
                                     }
+                                    var i = 1
+                                    var valminor =[];
+                                    for(dataMin in response.dataMinor){
+                                    var select = document.createElement('select')
+                                        select.setAttribute('class','selectpicker valminor-select')
+                                        select.setAttribute('data-style','btn btn-warning')
+                                        select.setAttribute('name',`dataMinor[]`)
+                                        select.setAttribute('form','bv-wz-form')
+                                        select.setAttribute('style','display:inline-block !important')
+
+                                        
+
+                                    var dateOfMinor = document.createElement('input')
+                                        dateOfMinor.setAttribute('name','date'+i++)
+                                        dateOfMinor.setAttribute('type','hidden')
+                                        dateOfMinor.setAttribute('value', response.dataMinor[dataMin].day)
+                                        // console.log(response.dataMinor[dataMin].day)
+                                        dateOfMinor.setAttribute('form','bv-wz-form')
+                                        dateOfMinor.setAttribute('class','date-minor')
+                                        var scheduleMinor = document.createTextNode(response.dataMinor[dataMin].shift)
+                                        for(dataShift in response.dataShift){
+                                            var shift = response.dataShift[dataShift].name
+                                            var opt = document.createElement('option')
+                                            opt.setAttribute('value',shift)
+                                            opt.appendChild(document.createTextNode(shift))
+                                            opt.text = shift
+                                            select.appendChild(opt)
+                                        }
+                                        // opt.setAttribute('')
+                                        document.getElementById('selectminor').appendChild(select)
+                                        document.getElementById('selectminor').appendChild(dateOfMinor)
+                                    }
                         
                                     $('.chosen-checkbox').on('click',function(){
                                         var valueRowsName = $(this).val();
@@ -288,9 +332,15 @@
                                             queue.splice(queue.indexOf(valueRowsName), 1);
                                         }
                                     });
-
+                                    var dateMinor = []
                                     var urls = '/admin/schedule/copyschedule/calculates'
-                                    $('#ajax').on('click',function(e){
+                                    $('#ajax2').on('click',function(e){
+                                        $('.valminor-select').each(function(){
+                                            valminor.push($(this).val());
+                                        });
+                                        $('.date-minor').each(function(){
+                                            dateMinor.push($(this).val())
+                                        });
                                         var secondsum
                                         var checkboxdata
                                         var datascheckbox
@@ -299,10 +349,14 @@
                                             type : 'GET',
                                             data : {
                                                 chosen : chosen,
-                                                checkBox_val : queue
+                                                checkBox_val : queue,
+                                                selectorMinor : valminor,
+                                                date:dateMinor
+
                                             },
                                             dataType:'json',
                                             success : function(response){
+                                                console.log(response)
                                                 for(datascheckbox in response.names){
                                                     checkboxdata = response.names[datascheckbox].name
                                                     var checkboxTextnodes = document.createTextNode(checkboxdata + ", ")

@@ -776,7 +776,36 @@ class MasterJobScheduleController extends Controller
             'email'=>$user->email,
             'id'=>$user->id,
             'data'=>$data,
-            'divisions'=>$division
+            // 'divisions'=>$division
+        ]);
+    }
+
+    public function ChiefCopySchedule(){
+        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
+        $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
+        $user = Auth::user();
+        $datas = DB::table('master_job_schedules')
+        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+        ->where('master_users.division_id',$user->division_id)
+        ->whereNotIn('master_users.division_id',[7])
+        ->where('month', '=', switch_month(date('m')))
+        ->orWhere('month','=',$acm)
+        ->where('year', '=',date('Y'))
+        ->select(
+            'master_job_schedules.*',
+            'master_users.nip as user_nip',
+            'master_users.name as user_name',
+            'master_users.division_id as division_id',
+            'master_users.role_id as role_id'
+        )
+        ->get();
+        
+        return view('staff.schedule.Chiefcopy',[
+            'name'=>$user->name,
+            'profile_photo'=>$user->profile_photo,
+            'email'=>$user->email,
+            'id'=>$user->id,
+            'data'=>$datas,
         ]);
     }
 
@@ -838,10 +867,9 @@ class MasterJobScheduleController extends Controller
 
         elseif(Route::current()->uri == "staff/schedule/copyschedule/calculate"){
             $user = Auth::user();
-            $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
-            $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
             $firstPeriode = $request->first_periode;
             $splitFirstPeriode = explode('/',$firstPeriode);
+            $chosenUsers = $request->chosen;
             $dataScheduleFirstPeriode = DB::table('master_job_schedules')
             ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
                 ->where('month','=',switch_month($splitFirstPeriode[0]))
@@ -866,10 +894,27 @@ class MasterJobScheduleController extends Controller
             // ->select('name','id')
             ->get();
 
+            $minorScheduleCheck = array();
+            
+            $checkSchedule = MasterJobSchedule::where('user_id',$chosenUsers)
+            ->where('month','=',switch_month($splitFirstPeriode[0]))
+            ->where('year', '=',$splitFirstPeriode[1])
+            ->first();
+            for($i= 1;$i<=31;$i++){
+                $temp = 'shift_'.$i;
+                if($checkSchedule->$temp == "Cuti" ||$checkSchedule->$temp == "WFH" ||$checkSchedule->$temp == "Sakit"){
+                    array_push($minorScheduleCheck,checkSchedule($i,$checkSchedule->$temp));
+                }
+            }
+            $dataShift = DB::table('master_shifts')->whereNotIn('name',['WFH','Cuti','Sakit'])->get();
+            
+
             return response()->json([
-                // 'uri'=>"Route::current()->uri",
+                'check'=>$chosenUsers,
                 'dataUser'=>$dataUser,
-                
+                'dataMinor'=>$minorScheduleCheck,
+                'dataShift'=>$dataShift,
+                'countDataMinor'=>count($minorScheduleCheck)
             ]); 
         }
         
@@ -912,10 +957,14 @@ class MasterJobScheduleController extends Controller
             $tempName = 'shift_'.$i;
             array_push($arrayData,$dataScheduleCopy->$tempName);
         }
-
-        // foreach()
-
         $totalHour = $dataScheduleCopy->total_hour;
+        for($index=0; $index < $request->dateOfMinorCount; $index++){
+                $temp = $request->date[$index];
+                $totalHour = $totalHour - check_hour_shift($arrayData[$temp-1]) + check_hour_shift($request->dataMinor[$index]);
+                 $arrayData[$temp-1] = $request->dataMinor[$index]; 
+        }
+        
+
         foreach($chosenTargetToCopy as $itemTargetCopy){
             MasterJobSchedule::create([
                 'month'=>switch_month($date[0]),
@@ -960,34 +1009,7 @@ class MasterJobScheduleController extends Controller
     }
 
 
-    public function ChiefCopySchedule(){
-        $carbon = Carbon::now('UTC'); // current datetime in UTC is 8:54 AM October 31, 2016
-        $acm = switch_month( $carbon->addMonthsNoOverflow(1)->format('m'));
-        $user = Auth::user();
-        $data = DB::table('master_job_schedules')
-        ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-        ->where('master_users.division_id',$user->division_id)
-        ->whereNotIn('master_users.division_id',[7])
-        ->where('month', '=', switch_month(date('m')))
-        ->orWhere('month','=',$acm)
-        ->where('year', '=',date('Y'))
-        ->select(
-            'master_job_schedules.*',
-            'master_users.nip as user_nip',
-            'master_users.name as user_name',
-            'master_users.division_id as division_id',
-            'master_users.role_id as role_id'
-        )
-        ->get();
-        
-        return view('staff.schedule.Chiefcopy',[
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id,
-            'data'=>$data,
-        ]);
-    }
+    
 
     public function Chiefcopied(Request $request){
         $date = explode('/',$request->first);
@@ -1005,6 +1027,12 @@ class MasterJobScheduleController extends Controller
             array_push($arrayData,$dataScheduleCopy->$tempName);
         }
         $totalHour = $dataScheduleCopy->total_hour;
+        for($index=0; $index < $request->dateOfMinorCount; $index++){
+                $temp = $request->date[$index];
+                $totalHour = $totalHour - check_hour_shift($arrayData[$temp-1]) + check_hour_shift($request->dataMinor[$index]);
+                 $arrayData[$temp-1] = $request->dataMinor[$index]; 
+        }
+        
         foreach($chosenTargetToCopy as $itemTargetCopy){
             MasterJobSchedule::create([
                 'month'=>switch_month($date[0]),

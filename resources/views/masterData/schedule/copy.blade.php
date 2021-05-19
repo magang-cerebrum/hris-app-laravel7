@@ -55,7 +55,7 @@
             <div class="form-group">
                 <form id="bv-wz-form" class="form-horizontal" method="POST" action="{{url('/admin/schedule/copied')}}" >
                     @csrf
-                </form>
+                
                     <div class="panel-body">
                         <div class="tab-content">
                             <!--First tab-->
@@ -166,6 +166,7 @@
                             <button type="submit" class="finish btn btn-warning" form="bv-wz-form" disabled>Finish</button>
                         </div>
                     </div>
+                </form>
             </div>
         </div>
         <!--===================================================-->
@@ -293,18 +294,19 @@
                                     }
                                     var i = 1
                                     var valminor =[];
+                                    // console.log(response.dataMinor)
                                     for(dataMin in response.dataMinor){
                                     var select = document.createElement('select')
                                         select.setAttribute('class','selectpicker valminor-select')
                                         select.setAttribute('data-style','btn btn-warning')
-                                        select.setAttribute('name',`dataMinor[]`)
+                                        select.setAttribute('name','dataMinor[]')
                                         select.setAttribute('form','bv-wz-form')
                                         select.setAttribute('style','display:inline-block !important')
 
                                         
 
                                     var dateOfMinor = document.createElement('input')
-                                        dateOfMinor.setAttribute('name','date'+i++)
+                                        dateOfMinor.setAttribute('name','date[]')
                                         dateOfMinor.setAttribute('type','hidden')
                                         dateOfMinor.setAttribute('value', response.dataMinor[dataMin].day)
                                         // console.log(response.dataMinor[dataMin].day)
@@ -389,13 +391,13 @@
                         setTimeout(function () {
                             $('.load6').addClass('hidden');
                             $('#information').removeClass('hidden');
+                            $('#bv-wz').find('.finish').show();
+                            $('#bv-wz').find('.finish').prop('disabled', false);
                         },3000);
                     }
                 // If it's the last tab then hide the last button and show the finish instead
-                    if($current >= $total) {
+                if($current >= $total) {
                         $('#bv-wz').find('.next').hide();
-                        $('#bv-wz').find('.finish').show();
-                        $('#bv-wz').find('.finish').prop('disabled', false);
                     } else {
                         $('#bv-wz').find('.next').show();
                         $('#bv-wz').find('.finish').hide().prop('disabled', true);

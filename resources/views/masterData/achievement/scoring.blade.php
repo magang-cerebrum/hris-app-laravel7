@@ -131,6 +131,8 @@
                         <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
                             aria-label="Position: activate to sort column ascending">Nama Karyawan</th>
                         <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending">Divisi Karyawan</th>
+                        <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
                             aria-label="Position: activate to sort column ascending">Penilaian Karyawan </th>
                         <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
                             aria-label="Position: activate to sort column ascending">Value </th>
@@ -186,6 +188,7 @@
                 var scTd
                 var thrdTd
                 var frthTd
+                var fifthTd
                 var counterData
                 $.ajax({
                     url: url,
@@ -202,17 +205,19 @@
                         for(data in response.data){
                             var counted =count+=1
                             var iteration = document.createTextNode(counted)
-                            dataOutName = response.data[data].name
+                            dataOutName = response.data[data].staff_name
                             var nodeDataOutName = document.createTextNode(dataOutName)
                             dataOutId = response.data[data].id
                             var nodeDataOutId = document.createTextNode(dataOutId)
                             dataoutDivId = response.data[data].division_id
                             var nodeDataOutDivId = document.createTextNode(dataOutId)
+                            var nodeDataOutDivName = document.createTextNode(response.data[data].division_name)
                             tr = document.createElement("tr")
                             tr.setAttribute('class','scorethis')
                             firstTd = document.createElement("td")
                             scTd = document.createElement("td")
                             thrdTd = document.createElement("td")
+                            fifthTd = document.createElement("td")
                             counterData=document.createElement('input')
                             counterData.setAttribute('type','hidden')
                             counterData.setAttribute('name','count')
@@ -226,6 +231,7 @@
                             firstTd.appendChild(iteration)
                             scTd.setAttribute('class','text-center')
                             scTd.appendChild(nodeDataOutName)
+                            fifthTd.appendChild(nodeDataOutDivName)
                             slider.setAttribute('type','range')
                             slider.setAttribute('class','form-range')
                             slider.setAttribute('min','0')
@@ -240,12 +246,7 @@
                             thrdTd.appendChild(slider)
                             frthTd.setAttribute('class','text-center')
                             spanOnFourthTD.setAttribute('id','val_'+counted)
-                            // var hiddenDivisionId = document.createElement('input')
                             var hiddenUserId = document.createElement('input')
-                            // hiddenDivisionId.setAttribute('name','division_id_'+counted)
-                            // hiddenDivisionId.setAttribute('type','hidden')
-                            // hiddenDivisionId.setAttribute('value',dataoutDivId)
-                            // hiddenDivisionId.setAttribute('')
                             hiddenUserId.setAttribute('name','user_id_'+counted)
                             hiddenUserId.setAttribute('type','hidden')
                             hiddenUserId.setAttribute('value',dataOutId)
@@ -253,9 +254,9 @@
                             frthTd.appendChild(spanOnFourthTD)
                             tr.appendChild(firstTd)
                             tr.appendChild(scTd)
+                            tr.appendChild(fifthTd)
                             tr.appendChild(thrdTd)
                             tr.appendChild(frthTd)
-                            // tr.appendChild(hiddenDivisionId)
                             tr.appendChild(hiddenUserId)
                             document.getElementById('achievements_body_table').appendChild(counterData)
                             document.getElementById('achievements_body_table').appendChild(tr)

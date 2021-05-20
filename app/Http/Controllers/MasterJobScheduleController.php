@@ -961,55 +961,81 @@ class MasterJobScheduleController extends Controller
         for($index=0; $index < $request->dateOfMinorCount; $index++){
                 $temp = $request->date[$index];
                 $totalHour = $totalHour - check_hour_shift($arrayData[$temp-1]) + check_hour_shift($request->dataMinor[$index]);
-                 $arrayData[$temp-1] = $request->dataMinor[$index]; 
+                $arrayData[$temp-1] = $request->dataMinor[$index]; 
         }
         
 
         foreach($chosenTargetToCopy as $itemTargetCopy){
+            $temp = array();
+            foreach ($arrayData as $defaultData) {
+                array_push($temp, $defaultData);
+            }
+            array_push($temp,$totalHour);
+            $accepted_paid_leave = DB::table('accepted_paid_leaves')
+            ->where('user_id',$itemTargetCopy)
+            ->where('date','LIKE', $date[1] . '-' . $date[0] . '%')
+            ->get();
+            $accepted_wfh = DB::table('accepted_work_from_homes')
+            ->where('user_id',$itemTargetCopy)
+            ->where('date','LIKE', $date[1] . '-' . $date[0] . '%')
+            ->get();
+
+            if ($accepted_paid_leave) {
+                foreach($accepted_paid_leave as $item_accepted_paid_leave){
+                    $day_paid_leave = date('j',strtotime($item_accepted_paid_leave->date));
+                    $temp[31] = $temp[31] - check_hour_shift($temp[$day_paid_leave-1]) + check_hour_shift('Cuti');
+                    $temp[$day_paid_leave-1] = 'Cuti';
+                }
+            }
+
+            if ($accepted_wfh) {
+                foreach($accepted_wfh as $item_accepted_wfh){
+                    $day_wfh = date('j',strtotime($item_accepted_wfh->date));
+                    $temp[31] = $temp[31] - check_hour_shift($temp[$day_wfh-1]) + check_hour_shift('WFH');
+                    $temp[$day_wfh-1] = 'WFH';
+                }
+            }
             MasterJobSchedule::create([
                 'month'=>switch_month($date[0]),
                 'year'=>$date[1],
                 'user_id'=>$itemTargetCopy,
-                'shift_1'=>$arrayData[0],
-                'shift_2'=>$arrayData[1],
-                'shift_3'=>$arrayData[2],
-                'shift_4'=>$arrayData[3],
-                'shift_5'=>$arrayData[4],
-                'shift_6'=>$arrayData[5],
-                'shift_7'=>$arrayData[6],
-                'shift_8'=>$arrayData[7],
-                'shift_9'=>$arrayData[8],
-                'shift_10'=>$arrayData[9],
-                'shift_11'=>$arrayData[10],
-                'shift_12'=>$arrayData[11],
-                'shift_13'=>$arrayData[12],
-                'shift_14'=>$arrayData[13],
-                'shift_15'=>$arrayData[14],
-                'shift_16'=>$arrayData[15],
-                'shift_17'=>$arrayData[16],
-                'shift_18'=>$arrayData[17],
-                'shift_19'=>$arrayData[18],
-                'shift_20'=>$arrayData[19],
-                'shift_21'=>$arrayData[20],
-                'shift_22'=>$arrayData[21],
-                'shift_23'=>$arrayData[22],
-                'shift_24'=>$arrayData[23],
-                'shift_25'=>$arrayData[24],
-                'shift_26'=>$arrayData[25],
-                'shift_27'=>$arrayData[26],
-                'shift_28'=>$arrayData[27],
-                'shift_29'=>$arrayData[28],
-                'shift_30'=>$arrayData[29],
-                'shift_31'=>$arrayData[30],
-                'total_hour'=>$totalHour
+                'shift_1'=>$temp[0],
+                'shift_2'=>$temp[1],
+                'shift_3'=>$temp[2],
+                'shift_4'=>$temp[3],
+                'shift_5'=>$temp[4],
+                'shift_6'=>$temp[5],
+                'shift_7'=>$temp[6],
+                'shift_8'=>$temp[7],
+                'shift_9'=>$temp[8],
+                'shift_10'=>$temp[9],
+                'shift_11'=>$temp[10],
+                'shift_12'=>$temp[11],
+                'shift_13'=>$temp[12],
+                'shift_14'=>$temp[13],
+                'shift_15'=>$temp[14],
+                'shift_16'=>$temp[15],
+                'shift_17'=>$temp[16],
+                'shift_18'=>$temp[17],
+                'shift_19'=>$temp[18],
+                'shift_20'=>$temp[19],
+                'shift_21'=>$temp[20],
+                'shift_22'=>$temp[21],
+                'shift_23'=>$temp[22],
+                'shift_24'=>$temp[23],
+                'shift_25'=>$temp[24],
+                'shift_26'=>$temp[25],
+                'shift_27'=>$temp[26],
+                'shift_28'=>$temp[27],
+                'shift_29'=>$temp[28],
+                'shift_30'=>$temp[29],
+                'shift_31'=>$temp[30],
+                'total_hour'=>$temp[31]
             ]);
         }
         Alert::success('Salin Jadwal Berhasil!','Silahkan lakukan pengecekan jadwal!');
         return redirect('/admin/schedule');
     }
-
-
-    
 
     public function Chiefcopied(Request $request){
         $date = explode('/',$request->first);
@@ -1030,46 +1056,75 @@ class MasterJobScheduleController extends Controller
         for($index=0; $index < $request->dateOfMinorCount; $index++){
                 $temp = $request->date[$index];
                 $totalHour = $totalHour - check_hour_shift($arrayData[$temp-1]) + check_hour_shift($request->dataMinor[$index]);
-                 $arrayData[$temp-1] = $request->dataMinor[$index]; 
+                $arrayData[$temp-1] = $request->dataMinor[$index]; 
         }
         
         foreach($chosenTargetToCopy as $itemTargetCopy){
+            $temp = array();
+            foreach ($arrayData as $defaultData) {
+                array_push($temp, $defaultData);
+            }
+            array_push($temp,$totalHour);
+            $accepted_paid_leave = DB::table('accepted_paid_leaves')
+            ->where('user_id',$itemTargetCopy)
+            ->where('date','LIKE', $date[1] . '-' . $date[0] . '%')
+            ->get();
+            $accepted_wfh = DB::table('accepted_work_from_homes')
+            ->where('user_id',$itemTargetCopy)
+            ->where('date','LIKE', $date[1] . '-' . $date[0] . '%')
+            ->get();
+
+            if ($accepted_paid_leave) {
+                foreach($accepted_paid_leave as $item_accepted_paid_leave){
+                    $day_paid_leave = date('j',strtotime($item_accepted_paid_leave->date));
+                    $temp[31] = $temp[31] - check_hour_shift($temp[$day_paid_leave-1]) + check_hour_shift('Cuti');
+                    $temp[$day_paid_leave-1] = 'Cuti';
+                }
+            }
+
+            if ($accepted_wfh) {
+                foreach($accepted_wfh as $item_accepted_wfh){
+                    $day_wfh = date('j',strtotime($item_accepted_wfh->date));
+                    $temp[31] = $temp[31] - check_hour_shift($temp[$day_wfh-1]) + check_hour_shift('WFH');
+                    $temp[$day_wfh-1] = 'WFH';
+                }
+            }
             MasterJobSchedule::create([
                 'month'=>switch_month($date[0]),
                 'year'=>$date[1],
                 'user_id'=>$itemTargetCopy,
-                'shift_1'=>$arrayData[0],
-                'shift_2'=>$arrayData[1],
-                'shift_3'=>$arrayData[2],
-                'shift_4'=>$arrayData[3],
-                'shift_5'=>$arrayData[4],
-                'shift_6'=>$arrayData[5],
-                'shift_7'=>$arrayData[6],
-                'shift_8'=>$arrayData[7],
-                'shift_9'=>$arrayData[8],
-                'shift_10'=>$arrayData[9],
-                'shift_11'=>$arrayData[10],
-                'shift_12'=>$arrayData[11],
-                'shift_13'=>$arrayData[12],
-                'shift_14'=>$arrayData[13],
-                'shift_15'=>$arrayData[14],
-                'shift_16'=>$arrayData[15],
-                'shift_17'=>$arrayData[16],
-                'shift_18'=>$arrayData[17],
-                'shift_19'=>$arrayData[18],
-                'shift_20'=>$arrayData[19],
-                'shift_21'=>$arrayData[20],
-                'shift_22'=>$arrayData[21],
-                'shift_23'=>$arrayData[22],
-                'shift_24'=>$arrayData[23],
-                'shift_25'=>$arrayData[24],
-                'shift_26'=>$arrayData[25],
-                'shift_27'=>$arrayData[26],
-                'shift_28'=>$arrayData[27],
-                'shift_29'=>$arrayData[28],
-                'shift_30'=>$arrayData[29],
-                'shift_31'=>$arrayData[30],
-                'total_hour'=>$totalHour
+                'shift_1'=>$temp[0],
+                'shift_2'=>$temp[1],
+                'shift_3'=>$temp[2],
+                'shift_4'=>$temp[3],
+                'shift_5'=>$temp[4],
+                'shift_6'=>$temp[5],
+                'shift_7'=>$temp[6],
+                'shift_8'=>$temp[7],
+                'shift_9'=>$temp[8],
+                'shift_10'=>$temp[9],
+                'shift_11'=>$temp[10],
+                'shift_12'=>$temp[11],
+                'shift_13'=>$temp[12],
+                'shift_14'=>$temp[13],
+                'shift_15'=>$temp[14],
+                'shift_16'=>$temp[15],
+                'shift_17'=>$temp[16],
+                'shift_18'=>$temp[17],
+                'shift_19'=>$temp[18],
+                'shift_20'=>$temp[19],
+                'shift_21'=>$temp[20],
+                'shift_22'=>$temp[21],
+                'shift_23'=>$temp[22],
+                'shift_24'=>$temp[23],
+                'shift_25'=>$temp[24],
+                'shift_26'=>$temp[25],
+                'shift_27'=>$temp[26],
+                'shift_28'=>$temp[27],
+                'shift_29'=>$temp[28],
+                'shift_30'=>$temp[29],
+                'shift_31'=>$temp[30],
+                'total_hour'=>$temp[31]
             ]);
         }
         Alert::success('Salin Jadwal Berhasil!','Silahkan lakukan pengecekan jadwal!');

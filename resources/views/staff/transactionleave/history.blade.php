@@ -50,7 +50,7 @@
                                     <td class="text-center">{{$item->informations}}</td>
                                     <td class="text-center">{{$item->status}}</td>
                                     <td class="text-center">
-                                        @if ($item->status == 'Diterima' || $item->status == 'Cancel')
+                                        @if ($item->status == 'Diterima' || $item->status == 'Ditolak' || $item->status == 'Ditolak-Chief' || $item->status == 'Cancel')
                                             <button class="btn btn-sm btn-icon btn-circle" type="submit" disabled>
                                                 <i class="fa fa-times"></i>
                                             </button>

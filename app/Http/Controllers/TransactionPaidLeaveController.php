@@ -339,6 +339,7 @@ class TransactionPaidLeaveController extends Controller
     }
     
     public function reject(TransactionPaidLeave $reject, Request $request){
+        // dd($request,$reject);
         $request->validate(['informations' => 'required']);
         TransactionPaidLeave::where('id', $reject->id)
             ->update(['informations' => $request->informations,'status' => 'Ditolak']);

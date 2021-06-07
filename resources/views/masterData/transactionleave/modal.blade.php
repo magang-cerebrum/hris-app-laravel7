@@ -48,7 +48,7 @@
                             <label class="col-sm-2 control-label" for="textarea-informations-message">Alasan Penolakan:</label>
                             <div class="col-sm-10">
                                 <textarea id="textarea-informations-message" rows="2" class="form-control"
-                                    placeholder="Masukan keterangan penolakan disini" name="informations"></textarea>
+                                    placeholder="Masukan keterangan penolakan disini" name="informations" form="form-reject"></textarea>
                             </div>
                         </div>
                     </div>

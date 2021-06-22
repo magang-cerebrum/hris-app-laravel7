@@ -272,6 +272,6 @@
         </div>
     </div>
 
-    @include('masterdata/datastaff/detail')
+    @include('masterData/datastaff/detail')
 
 @endsection

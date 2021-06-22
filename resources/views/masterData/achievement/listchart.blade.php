@@ -74,5 +74,5 @@
             <div class="text-center">{{ $staff->links() }}</div>
         </div>
     </div>
-    @include('masterdata/achievement/chartmodal')
+    @include('masterData/achievement/chartmodal')
 @endsection

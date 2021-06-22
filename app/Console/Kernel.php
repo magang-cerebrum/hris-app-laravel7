@@ -32,8 +32,8 @@ class Kernel extends ConsoleKernel
         //     DB::table('activity_log')->where('created_at','>',Carbon::now()->subDays(1))->delete();
         // })->dailyAt('17:19');
         // $schedule->command('activitylog:clean')->dailyAt('11:30');
-        $schedule->command('presence:check')->everyMinute();
-        $schedule->command('logs:delete')->everyMinute();
+        $schedule->command('presence:check')->twiceDaily(8, 13);
+        $schedule->command('logs:delete')->monthly();
     }
 
     /**

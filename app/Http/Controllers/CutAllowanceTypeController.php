@@ -18,7 +18,7 @@ class CutAllowanceTypeController extends Controller
         }
         $user = Auth::user();
         $cutallowancetype = MasterCutAllowanceType::paginate(10);
-        return view('masterdata.cutallowancetype.list',[
+        return view('masterData.cutallowancetype.list',[
             'cutallowancetype' => $cutallowancetype,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -33,7 +33,7 @@ class CutAllowanceTypeController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.cutallowancetype.create',[
+        return view('masterData.cutallowancetype.create',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -59,7 +59,7 @@ class CutAllowanceTypeController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.cutallowancetype.edit',[
+        return view('masterData.cutallowancetype.edit',[
             'cutallowancetype' => $type,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -106,7 +106,7 @@ class CutAllowanceTypeController extends Controller
         })
         ->paginate(10);
         
-        return view('masterdata.cutallowancetype.result',[
+        return view('masterData.cutallowancetype.result',[
             'cutallowancetype' => $result,
             'search' => $request->get('query'),
             'name'=>$user->name,

@@ -89,7 +89,7 @@ class MasterJobController extends Controller
         ->orWhereRaw("descript LIKE '%" . $request->get('query') . "%'")
         ->orWhereRaw("required LIKE '%" . $request->get('query') . "%'")
         ->paginate(5);
-        return view('masterdata.job.result',[
+        return view('masterData.job.result',[
             'dataJob' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

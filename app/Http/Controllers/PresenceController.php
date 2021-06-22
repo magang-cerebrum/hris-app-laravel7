@@ -288,7 +288,7 @@ class PresenceController extends Controller
             }
             array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
         }
-        return view('masterdata.presence.list',[
+        return view('masterData.presence.list',[
             'data'=>$data,
             'day'=>$days_in_month,
             'month'=>date('m'),

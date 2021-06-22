@@ -58,7 +58,7 @@ class SalaryController extends Controller
 
         $bool_check_day = $next_day <= date('Y-m-d');
 
-        return view('masterdata.salary.list', [
+        return view('masterData.salary.list', [
             'data' => $data,
             'month' => $month,
             'year' => $year,
@@ -448,7 +448,7 @@ class SalaryController extends Controller
             'master_positions.name as position'
         ])->first();
 
-        return view('masterdata.salary.edit',[
+        return view('masterData.salary.edit',[
             'data'=>$data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

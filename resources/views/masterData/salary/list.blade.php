@@ -145,4 +145,4 @@
         @endif
     </div>
 </div>
-@include('masterdata/salary/detail')
+@include('masterData/salary/detail')

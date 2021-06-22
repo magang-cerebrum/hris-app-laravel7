@@ -240,5 +240,5 @@
             </div>
         </div>
     </div>
-    @include('masterdata/transactionticketing/detail')
+    @include('masterData/transactionticketing/detail')
 @endsection

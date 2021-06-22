@@ -87,5 +87,5 @@
             @endif
         </div>
     </div>
-    @include('masterdata/overtime/modalCreate')
+    @include('masterData/overtime/modalCreate')
 @endsection

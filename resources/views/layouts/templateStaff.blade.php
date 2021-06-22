@@ -49,7 +49,7 @@
                 <!--================================-->
                 <div class="navbar-header">
                     <a href="{{ url('staff/dashboard')}}" class="navbar-brand">
-                        <img src="{{ asset('img/logo-cerebrum.png')}}" alt="Cerebrum Logo" class="brand-icon">
+                        <img src="{{ asset('img/logo-cerebrum.PNG')}}" alt="Cerebrum Logo" class="brand-icon">
                         <div class="brand-title">
                             <span class="brand-text">PT. Cerebrum Edukanesia</span>
                         </div>

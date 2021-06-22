@@ -19,7 +19,7 @@ class MasterLeaveTypeController extends Controller
             $user = Auth::user();
             $leavetype = MasterLeaveType::paginate(5);
 
-            return view('masterdata.leavetype.list',['leavetype'=>$leavetype,
+            return view('masterData.leavetype.list',['leavetype'=>$leavetype,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -36,7 +36,7 @@ class MasterLeaveTypeController extends Controller
             return back();
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
-            return view('masterdata.leavetype.create',[
+            return view('masterData.leavetype.create',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -65,7 +65,7 @@ class MasterLeaveTypeController extends Controller
             return back();
         }elseif(Gate::allows('is_admin')){
             $user = Auth::user();
-            return view('masterdata.leavetype.edit',['cuti' => $leavetype,
+            return view('masterData.leavetype.edit',['cuti' => $leavetype,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

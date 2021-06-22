@@ -161,7 +161,7 @@ class HolidayController extends Controller
         }
         elseif(Gate::allows('is_admin')) {
         $user = Auth::user();
-        return view('masterdata.holiday.edit',[
+        return view('masterData.holiday.edit',[
             'holiday' => $holiday,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

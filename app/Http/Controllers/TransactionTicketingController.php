@@ -27,7 +27,7 @@ class TransactionTicketingController extends Controller
         ->where('transaction_ticketings.status','=','Selesai')
         ->orderByDesc('created_at')
         ->paginate(10);
-        return view('masterdata.transactionticketing.list',[
+        return view('masterData.transactionticketing.list',[
             'ticketing' => $ticketing,
             'done' => $ticketing_done,
             'name'=>$user->name,
@@ -49,7 +49,7 @@ class TransactionTicketingController extends Controller
             ->select('master_users.name')
             ->first();
         $status = ['Dikirimkan','On Progress','Selesai'];
-        return view('masterdata.transactionticketing.edit',[
+        return view('masterData.transactionticketing.edit',[
             'ticketing' => $ticket,
             'sender' => $namanya,
             'status' => $status,

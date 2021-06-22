@@ -44,7 +44,7 @@ class DataStaffController extends Controller
         ->paginate(10);
         $count_aktif = MasterUser::where('status','=','Aktif')->count();
         $count_naktif = MasterUser::where('status','=','Non-Aktif')->count();
-        return view('masterdata.datastaff.list',[
+        return view('masterData.datastaff.list',[
             'aktif' => $aktif,
             'naktif' => $naktif,
             'count_aktif' => $count_aktif,
@@ -67,7 +67,7 @@ class DataStaffController extends Controller
         $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->where('status','Aktif')->get();
         $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
 
-        return view('masterdata.datastaff.create',[
+        return view('masterData.datastaff.create',[
             'divisions'=>$divisions,
             'positions'=>$positions,
             'roles'=>$roles,
@@ -151,7 +151,7 @@ class DataStaffController extends Controller
         $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->where('status','Aktif')->get();
         $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
         
-        return view('masterdata.datastaff.edit',[
+        return view('masterData.datastaff.edit',[
             'staff' => $staff,
             'divisions'=>$divisions,
             'positions'=>$positions,
@@ -279,7 +279,7 @@ class DataStaffController extends Controller
                 ->orWhereRaw("master_divisions.name LIKE '%" . $request->get('query') . "%'");
         })
         ->paginate(10);
-        return view('masterdata.datastaff.result',[
+        return view('masterData.datastaff.result',[
             'aktif' => $aktif,
             'naktif' => $naktif,
             'search' => $request->get('query'),
@@ -346,7 +346,7 @@ class DataStaffController extends Controller
             $total_score = null;
             $average_score = null;
         }
-        return view('masterdata.datastaff.promote',[
+        return view('masterData.datastaff.promote',[
             'staff' => $staff,
             'periode' => $periode,
             'performance' => $data_performance,

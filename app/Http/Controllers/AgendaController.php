@@ -20,7 +20,7 @@ class AgendaController extends Controller
         }
         $user = Auth::user();
         $agenda = MasterAgenda::paginate(10);
-        return view('masterdata.agenda.list',[
+        return view('masterData.agenda.list',[
             'agenda'=>$agenda,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -36,7 +36,7 @@ class AgendaController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.agenda.create',[
+        return view('masterData.agenda.create',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -73,7 +73,7 @@ class AgendaController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.agenda.edit',[
+        return view('masterData.agenda.edit',[
             'agenda' => $agenda,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -127,7 +127,7 @@ class AgendaController extends Controller
                 ->orWhereRaw("end_event LIKE '" . $request->get('query') . "%'");
         })
         ->paginate(10);
-        return view('masterdata.agenda.result',[
+        return view('masterData.agenda.result',[
             'agenda' => $result,
             'search' => $request->get('query'),
             'name'=>$user->name,
@@ -144,7 +144,7 @@ class AgendaController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.agenda.searchCalendar',[
+        return view('masterData.agenda.searchCalendar',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,

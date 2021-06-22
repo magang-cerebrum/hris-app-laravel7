@@ -26,7 +26,7 @@ class SalaryAllowanceController extends Controller
             'master_salary_allowances.*'
         ])
         ->paginate(10);
-        return view('masterdata.salaryallowance.list',[
+        return view('masterData.salaryallowance.list',[
             'salaryallowance' => $salaryallowance,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -44,7 +44,7 @@ class SalaryAllowanceController extends Controller
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
         $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->where('status','Aktif')->get();
-        return view('masterdata.salaryallowance.create', [
+        return view('masterData.salaryallowance.create', [
             'data_type'=>$data_type,
             'staff'=>$staff,
             'name'=>$user->name,
@@ -103,7 +103,7 @@ class SalaryAllowanceController extends Controller
         $user = Auth::user();
         $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
         $data_type = DB::table('master_cut_allowance_types')->where('category','Tunjangan')->where('status','Aktif')->get();
-        return view('masterdata.salaryallowance.edit',[
+        return view('masterData.salaryallowance.edit',[
             'data_type'=>$data_type,
             'allowance' => $allowance,
             'staff' => $staff,

@@ -198,7 +198,7 @@ class MasterAchievementController extends Controller
         $staff = DB::table('master_users')->where('status','Aktif')
         ->whereNotIn('position_id',[1,2,3])
         ->select(['id','name'])->paginate(10);
-        return view('masterdata.achievement.listchart',[
+        return view('masterData.achievement.listchart',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -290,7 +290,7 @@ class MasterAchievementController extends Controller
         ->whereIn('id',$ids)
         ->whereNotIn('position_id',[1,2,3])
         ->select(['id','name'])->paginate(10);
-        return view('masterdata.achievement.resultlist',[
+        return view('masterData.achievement.resultlist',[
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,

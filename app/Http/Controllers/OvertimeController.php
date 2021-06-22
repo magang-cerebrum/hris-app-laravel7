@@ -20,7 +20,7 @@ class OvertimeController extends Controller
         }
         $user = Auth::user();
         $overtime = MasterOvertime::paginate(10);
-        return view('masterdata.overtime.searchOvertime', [
+        return view('masterData.overtime.searchOvertime', [
             'overtime' => $overtime,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -39,7 +39,7 @@ class OvertimeController extends Controller
             'master_users.name as user_name'
         ])
         ->get();
-        return view('masterdata.overtime.list', [
+        return view('masterData.overtime.list', [
             'data' => $data,
             'month' => explode('-',$request->periode)[1],
             'year' => explode('-',$request->periode)[0]
@@ -99,7 +99,7 @@ class OvertimeController extends Controller
             'master_divisions.name as division_name'
         ])
         ->get();
-        return view('masterdata.overtime.create', [
+        return view('masterData.overtime.create', [
             'data' => $data,
             'data_division' => $data_division,
             'month' => $request->month,

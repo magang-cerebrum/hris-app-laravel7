@@ -17,7 +17,7 @@ class DivisionController extends Controller
         }
         $user = Auth::user();
         $division = MasterDivision::get();
-        return view('masterdata.division.list',[
+        return view('masterData.division.list',[
             'division' => $division,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
@@ -33,7 +33,7 @@ class DivisionController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.division.create', [
+        return view('masterData.division.create', [
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,
             'email'=>$user->email,
@@ -58,7 +58,7 @@ class DivisionController extends Controller
             return back();
         }
         $user = Auth::user();
-        return view('masterdata.division.edit',[
+        return view('masterData.division.edit',[
             'division' => $division,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

@@ -114,7 +114,7 @@ class MasterRecruitmentController extends Controller
         ->orWhereRaw("position LIKE '%" . $request->get('query') . "%'")
         ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
         ->paginate(10);
-        return view('masterdata.recruitment.resultRecruitment',[
+        return view('masterData.recruitment.resultRecruitment',[
             'data' => $data,
             'name'=>$user->name,
             'profile_photo'=>$user->profile_photo,

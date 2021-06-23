@@ -153,7 +153,6 @@ class AgendaController extends Controller
     }
 
     public function calendar(Request $request){
-        $user = Auth::user();
         $data = MasterAgenda::where(function ($query) use ($request){
             $query->whereRaw("start_event LIKE '" . $request->periode . "%'")
                 ->orWhereRaw("end_event LIKE '" . $request->periode . "%'");
@@ -165,10 +164,6 @@ class AgendaController extends Controller
             'month'=>explode("-", $request->periode)[1],
             'year'=>explode("-", $request->periode)[0],
             'data' => $data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
         ]);
     }
 

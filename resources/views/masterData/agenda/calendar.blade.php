@@ -13,17 +13,12 @@
     }
 
 </style>
-<div class="panel panel-bordered panel-danger">
+<div class="panel panel-bordered panel-danger" id="panel-calendar">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Agenda Kerja Bulan '.switch_month(explode("-", $periode)[1]).' - '.explode("-", $periode)[0]}} </h3>
     </div>
     <div class="panel-body" style="padding-top: 20px">
         <div id='calendar'></div><br>
-        @if ($data->isEmpty())
-        <div class="text-center">
-            <a href="{{url('/admin/agenda/add')}}" class="btn btn-warning">Klik disini untuk menambahkan agenda kerja!</a>
-        </div>
-        @endif
     </div>
 </div>
 
@@ -33,6 +28,33 @@
 <script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
 <script>
     $(document).ready(function () {
+        let data_agenda =  {!!json_encode($data) !!}
+        if (data_agenda.length == 0) {
+            $('#panel-calendar').remove();
+            Swal.fire({
+                title: 'Error!',
+                text: "Tidak ada data agenda untuk bulan dan tahun terpilih",
+                icon: 'error',
+                width: 600
+            }).then(() => {
+                Swal.fire({
+                    width: 600,
+                    title: 'Apakah anda ingin menambahkan agenda?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.value == true) {
+                        window.location.href = "/admin/agenda/add";
+                    } else {
+                        return false;
+                    }} 
+                );
+            });
+        }
         $('#calendar').fullCalendar({
             height: 575,
             fixedWeekCount: false,

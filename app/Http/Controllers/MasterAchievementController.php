@@ -43,18 +43,17 @@ class MasterAchievementController extends Controller
         }
         elseif(Gate::allows('is_admin')){
             $splitter = explode('/',$request->get('query'));
-            $data = MasterAchievement::where(['month'=>$splitter[0],
-        'year'=>$splitter[1]])
-        ->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
-        ->orderBy('score','desc')
-        ->get();
-        $is_champ = MasterAchievement::where(['month'=>$splitter[0],
-        'year'=>$splitter[1]])->max('score');
-        $count = count($data);
-        return view('masterData.achievement.result',['data'=>$data,
-        'count'=>$count,
-        'employee_of_the_month' =>$is_champ
-        ]);
+            $data = MasterAchievement::where(['month'=>$splitter[0], 'year'=>$splitter[1]])
+            ->leftjoin('master_users','master_achievements.achievement_user_id','=','master_users.id')
+            ->orderBy('score','desc')
+            ->get();
+            $is_champ = MasterAchievement::where(['month'=>$splitter[0], 'year'=>$splitter[1]])
+            ->max('score');
+            $count = count($data);
+            return view('masterData.achievement.result',['data'=>$data,
+                'count'=>$count,
+                'employee_of_the_month' =>$is_champ
+            ]);
         }
         
     }

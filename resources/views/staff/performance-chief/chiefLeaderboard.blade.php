@@ -1,6 +1,6 @@
 @extends('layouts/templateStaff')
-@section('title','Pencapaian')
-@section('content-title','Pencapaian / Leaderboard')
+@section('title','Performa Divisi')
+@section('content-title','Performa Divisi / Leaderboard')
 @section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
 
 @section('head')
@@ -18,7 +18,7 @@
             <div class="row mar-btm" >
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <form action="{{url('/staff/performance/search')}}" method="POST" id="cari-achievement">
+                    <form action="{{url('/staff/performance/search')}}" method="POST" id="cari-performa">
                         @csrf
                         <div id="pickadate">
                             <div class="input-group date">
@@ -26,7 +26,7 @@
                                     <button class="btn btn-primary" type="button" style="z-index: 2"><i
                                             class="fa fa-calendar"></i></button>
                                 </span>
-                                <input type="text" name="query" placeholder="Cari Leaderboard"
+                                <input type="text" name="query" placeholder="Cari Leaderboard" id="query"
                                     class="form-control" autocomplete="off" readonly>
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" id="btn-search" type="submit"><i class="fa fa-search"></i></button>
@@ -63,7 +63,17 @@
             $('#btn-search').on('click',function () {
                 $('.datepicker').hide();
             });
-            $('#cari-achievement').on('submit', function (event) {
+            $('#cari-performa').on('submit', function (event) {
+                if ($('#query').val() == '') {
+                    console.log($('#query').val())
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Mohon pilih periode terlebih dahulu!",
+                        icon: 'error',
+                        width: 600
+                    });
+                    return false;
+                }
                 event.preventDefault();
                 $.ajaxSetup({
                     headers: {
@@ -73,18 +83,33 @@
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
-                    // data: {  _token : <?php Session::token() ?>},
                     data: $(this).serialize(),
                     success: function (data) {
                         $("#panel-output").html(data);
                     },
                     error: function (jXHR, textStatus, errorThrown) {
-                        // console.log(jXHR)
                         Swal.fire({
                             title: errorThrown,
-                            text: "Tidak ada data performa untuk bulan atau tahun terpilih",
+                            text: "Tidak ada data performa untuk bulan dan tahun terpilih",
                             icon: 'error',
                             width: 600
+                        }).then(() => {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Apakah anda ingin menambahkan nilai performa divisi?',
+                                icon: 'info',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ya',
+                                cancelButtonText: 'Tidak'
+                            }).then((result) => {
+                                if (result.value == true) {
+                                    window.location.href = "/staff/performance/scoring";
+                                } else {
+                                    return false;
+                                }} 
+                            );
                         });
                     }
                 });

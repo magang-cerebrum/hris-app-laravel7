@@ -88,7 +88,10 @@ class AuthController extends Controller
 
         }
         public function logout() {
-            $stats = Auth::User()->role_id;
+            if (empty(Auth::user()->role_id)) {
+                return redirect('/login');
+            }
+            $stats = Auth::user()->role_id;
             $user = Auth::user()->name;
             if($stats==1){
                 activity()->log($user.' Telah Logout (Admin)');

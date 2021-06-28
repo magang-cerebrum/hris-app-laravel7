@@ -24,7 +24,15 @@
         </div>
         <div class="panel-body" style="padding-top: 20px">
             @if ($data_this_month->isEmpty())
-                <div class="text-center text-bold text-danger">Anda belum memiliki jadwal! Segera hubungi Chief untuk mendapatkan jadwal kerja!</div>
+                <div class="text-center">
+                    <div class="text-bold text-danger mar-btm">Anda belum memiliki jadwal!
+                        @if (Auth::user()->position_id != 11)
+                            </div>
+                            <a href="{{ url('staff/schedule/add')}}" class="btn btn-info">Klik disini untuk menambahkan jadwal!</a>
+                        @else
+                            Segera hubungi Chief untuk mendapatkan jadwal kerja!</div>
+                        @endif
+                </div>
             @else
             <div id='calendar-this-month'></div><br>
             <table><tr>

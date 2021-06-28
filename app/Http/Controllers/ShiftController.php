@@ -12,117 +12,159 @@ class ShiftController extends Controller
 {
     public function index()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            $shift = MasterShift::get();
+            return view('masterData.shift.list',[
+                'shift' => $shift,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        $user = Auth::user();
-        $shift = MasterShift::get();
-        return view('masterData.shift.list',[
-            'shift' => $shift,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function create()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            return view('masterData.shift.create', [
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        $user = Auth::user();
-        return view('masterData.shift.create', [
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function store(Request $request)
     {   
-        $user = Auth::user()->name;
-        $request->validate([
-            'name' => 'required',
-            'start_working_time' => 'required',
-            'end_working_time' => 'required',
-            'calendar_color' => 'required'
-        ]);
-
-        $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
-        $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
-        
-        MasterShift::create([
-            'name' => $request->name,
-            'start_working_time' => $request->start_working_time,
-            'end_working_time' => $request->end_working_time,
-            'calendar_color' => $request->calendar_color,
-            'total_hour' => $interval
-        ]);
-
-        activity()->log('Data ' .$request->name.' baru telah ditambahkan oleh '.$user);
-        Alert::success('Berhasil!', 'Shift baru telah ditambahkan!');
-        return redirect('/admin/shift');
-    }
-
-    public function edit(MasterShift $shift)
-    {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
-        }
-        $user = Auth::user();
-        return view('masterData.shift.edit',[
-            'shift' => $shift,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
-    }
-
-    public function update(Request $request, MasterShift $shift)
-    {
-        $user = Auth::user()->name;
-        $past = MasterShift::where('id',$shift->id)->get();
-        $request->validate([
-            'name' => 'required',
-            'start_working_time' => 'required',
-            'end_working_time' => 'required',
-            'calendar_color' => 'required'
-        ]);
-
-        $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
-        $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
-        
-        MasterShift::where('id', $shift->id)
-            ->update([
+        if(Auth::check()){
+            $user = Auth::user()->name;
+            $request->validate([
+                'name' => 'required',
+                'start_working_time' => 'required',
+                'end_working_time' => 'required',
+                'calendar_color' => 'required'
+            ]);
+    
+            $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
+            $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
+            
+            MasterShift::create([
                 'name' => $request->name,
                 'start_working_time' => $request->start_working_time,
                 'end_working_time' => $request->end_working_time,
                 'calendar_color' => $request->calendar_color,
                 'total_hour' => $interval
             ]);
-        activity()->log($user.' telah memperbarui  ' .$past[0]->name .' ('.$past[0]->start_working_time.'-'.$past[0]->end_working_time.') '.' menjadi '.$request->name .' ('.$request->start_working_time.'-'.$request->end_working_time.') ' );    
-        Alert::success('Berhasil!', 'Shift '. $shift->name . ' telah diperbaharui!');
-        return redirect('/admin/shift');
+    
+            activity()->log('Data ' .$request->name.' baru telah ditambahkan oleh '.$user);
+            Alert::success('Berhasil!', 'Shift baru telah ditambahkan!');
+            return redirect('/admin/shift');
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
+    }
+
+    public function edit(MasterShift $shift)
+    {
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            return view('masterData.shift.edit',[
+                'shift' => $shift,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
+    }
+
+    public function update(Request $request, MasterShift $shift)
+    {
+        if(Auth::check()){
+            $user = Auth::user()->name;
+            $past = MasterShift::where('id',$shift->id)->get();
+            $request->validate([
+                'name' => 'required',
+                'start_working_time' => 'required',
+                'end_working_time' => 'required',
+                'calendar_color' => 'required'
+            ]);
+    
+            $jumlah_jam = date_diff(date_create($request->start_working_time), date_create($request->end_working_time));
+            $interval = $jumlah_jam->format('%h') + ($jumlah_jam->format('%i') / 60);
+            
+            MasterShift::where('id', $shift->id)
+                ->update([
+                    'name' => $request->name,
+                    'start_working_time' => $request->start_working_time,
+                    'end_working_time' => $request->end_working_time,
+                    'calendar_color' => $request->calendar_color,
+                    'total_hour' => $interval
+                ]);
+            activity()->log($user.' telah memperbarui  ' .$past[0]->name .' ('.$past[0]->start_working_time.'-'.$past[0]->end_working_time.') '.' menjadi '.$request->name .' ('.$request->start_working_time.'-'.$request->end_working_time.') ' );    
+            Alert::success('Berhasil!', 'Shift '. $shift->name . ' telah diperbaharui!');
+            return redirect('/admin/shift');
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function destroySelected(Request $request){
-        foreach ($request->selectid as $item) {
-            MasterShift::where('id','=',$item)->delete();
+        if(Auth::check()){
+            foreach ($request->selectid as $item) {
+                MasterShift::where('id','=',$item)->delete();
+            }
+            Alert::success('Berhasil!', 'Shift yang dipilih berhasil dihapus!');
+            return redirect('/admin/shift');
         }
-        Alert::success('Berhasil!', 'Shift yang dipilih berhasil dihapus!');
-        return redirect('/admin/shift');
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function toogle_status(Request $request){
-        if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
-        else {$change = 'Aktif';}
-        MasterShift::where('id', $request->id)->update(['status' => $change]);
-        return response()->json(['name'=> $request->name, 'status' => $change]);
+        if(Auth::check()){
+            if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+            else {$change = 'Aktif';}
+            MasterShift::where('id', $request->id)->update(['status' => $change]);
+            return response()->json(['name'=> $request->name, 'status' => $change]);
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 }

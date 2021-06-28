@@ -14,105 +14,141 @@ class SliderController extends Controller
 {
     public function index()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            $data = DB::table('sliders')->get();
+            return view('poster.list',[
+                'data'=>$data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        $user = Auth::user();
-        $data = DB::table('sliders')->get();
-        return view('poster.list',[
-            'data'=>$data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function create()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            return view('poster.add',[
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        $user = Auth::user();
-        return view('poster.add',[
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required|string',
-            'file'=>'file|required'
-        ]);
-
-        $poster = $request->file('file');
-        $poster_name = "poster_" . $request->name . "." . $poster->getClientOriginalExtension();
-        $tujuan_upload = 'img/poster';
-        $poster->move($tujuan_upload, $poster_name);
-
-        DB::table('sliders')
-        ->insert(
-            [
-                'name'=>$request->name,
-                'file'=>$poster_name
-            ]
-        );
-
-        Alert::success('Berhasil!', 'Poster baru telah ditambahkan!');
-        return redirect('/admin/poster');
+        if(Auth::check()){
+            $request->validate([
+                'name'=>'required|string',
+                'file'=>'file|required'
+            ]);
+    
+            $poster = $request->file('file');
+            $poster_name = "poster_" . $request->name . "." . $poster->getClientOriginalExtension();
+            $tujuan_upload = 'img/poster';
+            $poster->move($tujuan_upload, $poster_name);
+    
+            DB::table('sliders')
+            ->insert(
+                [
+                    'name'=>$request->name,
+                    'file'=>$poster_name
+                ]
+            );
+    
+            Alert::success('Berhasil!', 'Poster baru telah ditambahkan!');
+            return redirect('/admin/poster');
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function destroySelected(Request $request){
-        foreach ($request->selectid as $item) {
-            slider::where('id','=',$item)->delete();
+        if(Auth::check()){
+            foreach ($request->selectid as $item) {
+                slider::where('id','=',$item)->delete();
+            }
+            Alert::success('Berhasil!', 'Poster yang dipilih berhasil dihapus!');
+            return redirect('/admin/poster');
         }
-        Alert::success('Berhasil!', 'Poster yang dipilih berhasil dihapus!');
-        return redirect('/admin/poster');
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function edit(slider $poster)
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            return view('poster.edit',[
+                'poster' => $poster,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        $user = Auth::user();
-        return view('poster.edit',[
-            'poster' => $poster,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function update(Request $request, slider $poster)
     {
-        $request->validate([
-            'name'=>'required|string',
-            'file'=>'file|required'
-        ]);
-
-        $past = slider::where('id',$poster->id)->get();
-        
-        $path_poster = 'img/poster/'.$past[0]->file;
-        $file_path_poster = public_path($path_poster);
-        unlink($file_path_poster);
-
-        $poster = $request->file('file');
-        $poster_name = "poster_" . $request->name . "." . $poster->getClientOriginalExtension();
-        $tujuan_upload = 'img/poster';
-        $poster->move($tujuan_upload, $poster_name);
-
-        DB::table('sliders')->where('id',$past[0]->id)->update(['file'=>$poster_name]);
-
-        Alert::success('Berhasil!', 'Poster '. $past[0]->name . ' telah diganti !');
-        return redirect('/admin/poster');
+        if(Auth::check()){
+            $request->validate([
+                'name'=>'required|string',
+                'file'=>'file|required'
+            ]);
+    
+            $past = slider::where('id',$poster->id)->get();
+            
+            $path_poster = 'img/poster/'.$past[0]->file;
+            $file_path_poster = public_path($path_poster);
+            unlink($file_path_poster);
+    
+            $poster = $request->file('file');
+            $poster_name = "poster_" . $request->name . "." . $poster->getClientOriginalExtension();
+            $tujuan_upload = 'img/poster';
+            $poster->move($tujuan_upload, $poster_name);
+    
+            DB::table('sliders')->where('id',$past[0]->id)->update(['file'=>$poster_name]);
+    
+            Alert::success('Berhasil!', 'Poster '. $past[0]->name . ' telah diganti !');
+            return redirect('/admin/poster');
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 }

@@ -12,58 +12,75 @@ class LogController extends Controller
 {    
     public function index()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+    
+            $log = DB::table('activity_log')->orderByDesc('created_at')->paginate(10);
+            $user = Auth::user();
+            return view('system.logs.list',[
+                'data'=>$log,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-
-        $log = DB::table('activity_log')->orderByDesc('created_at')->paginate(10);
-        $user = Auth::user();
-        return view('system.logs.list',[
-            'data'=>$log,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
 
     public function destroyselected(Request $request)
     {
-        foreach ($request->selectid as $item) {
-            DB::table('activity_log')->where('id','=',$item)->delete();
+        if(Auth::check()){
+            foreach ($request->selectid as $item) {
+                DB::table('activity_log')->where('id','=',$item)->delete();
+            }
+            Alert::success('Berhasil!', 'Log yang dipilih berhasil dihapus!');
+            return redirect('/admin/log');
         }
-        Alert::success('Berhasil!', 'Log yang dipilih berhasil dihapus!');
-        return redirect('/admin/log');
-
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
     }
     
     public function search(Request $request){
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            if ($request->get('query') == null) {return redirect('/admin/log');}
+            if (strpos($request->get('query'),'/')) {
+                $split = explode('/',$request->get('query'));
+                $data = DB::table('activity_log')
+                ->whereRaw("created_at LIKE '".$split[1]."-".$split[0]."%'")
+                ->orderByDesc('created_at')
+                ->paginate(10);
+            } else {
+                $data = DB::table('activity_log')
+                ->whereRaw("description LIKE '%" . $request->get('query') . "%'")
+                ->orderByDesc('created_at')
+                ->paginate(10);
+            }
+            $user =  Auth::user();
+    
+            return view('system.logs.result', [
+                'data' => $data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->idate
+            ]);
         }
-        if ($request->get('query') == null) {return redirect('/admin/log');}
-        if (strpos($request->get('query'),'/')) {
-            $split = explode('/',$request->get('query'));
-            $data = DB::table('activity_log')
-            ->whereRaw("created_at LIKE '".$split[1]."-".$split[0]."%'")
-            ->orderByDesc('created_at')
-            ->paginate(10);
-        } else {
-            $data = DB::table('activity_log')
-            ->whereRaw("description LIKE '%" . $request->get('query') . "%'")
-            ->orderByDesc('created_at')
-            ->paginate(10);
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
         }
-        $user =  Auth::user();
-
-        return view('system.logs.result', [
-            'data' => $data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->idate
-        ]);
     }
 }

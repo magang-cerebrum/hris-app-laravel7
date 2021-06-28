@@ -39,6 +39,7 @@ class TransactionTicketingController extends Controller
             }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -67,6 +68,7 @@ class TransactionTicketingController extends Controller
             }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -87,6 +89,7 @@ class TransactionTicketingController extends Controller
                 }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -147,6 +150,7 @@ class TransactionTicketingController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -172,6 +176,7 @@ class TransactionTicketingController extends Controller
             ]);}
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -184,6 +189,7 @@ class TransactionTicketingController extends Controller
             return view('staff.transactionticketing.createticket',['id'=>$user->id]);}
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -213,6 +219,7 @@ class TransactionTicketingController extends Controller
             }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

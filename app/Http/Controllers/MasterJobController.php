@@ -35,6 +35,7 @@ class MasterJobController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -55,6 +56,7 @@ class MasterJobController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -75,6 +77,7 @@ class MasterJobController extends Controller
             return redirect('/admin/job');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -94,6 +97,7 @@ class MasterJobController extends Controller
             return redirect('/admin/job');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -119,6 +123,7 @@ class MasterJobController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

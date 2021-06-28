@@ -57,6 +57,7 @@ class DataStaffController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -84,6 +85,7 @@ class DataStaffController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -151,6 +153,7 @@ class DataStaffController extends Controller
             return redirect('/admin/data-staff');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -179,6 +182,7 @@ class DataStaffController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -242,6 +246,7 @@ class DataStaffController extends Controller
             return redirect('/admin/data-staff');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -261,6 +266,7 @@ class DataStaffController extends Controller
             return redirect('/admin/data-staff');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -271,6 +277,7 @@ class DataStaffController extends Controller
             return response()->json(['name'=> $request->name]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -326,6 +333,7 @@ class DataStaffController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -338,6 +346,7 @@ class DataStaffController extends Controller
             return response()->json(['name'=> $request->name, 'status' => $change]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -404,6 +413,7 @@ class DataStaffController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -426,6 +436,7 @@ class DataStaffController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -461,6 +472,7 @@ class DataStaffController extends Controller
             return redirect('/admin/data-staff');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

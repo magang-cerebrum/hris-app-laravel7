@@ -30,6 +30,7 @@ class SliderController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -50,6 +51,7 @@ class SliderController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -79,6 +81,7 @@ class SliderController extends Controller
             return redirect('/admin/poster');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -92,6 +95,7 @@ class SliderController extends Controller
             return redirect('/admin/poster');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -113,6 +117,7 @@ class SliderController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -142,6 +147,7 @@ class SliderController extends Controller
             return redirect('/admin/poster');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

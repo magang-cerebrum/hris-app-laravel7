@@ -33,6 +33,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -73,6 +74,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -104,6 +106,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -276,6 +279,7 @@ class SalaryController extends Controller
             }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -411,6 +415,7 @@ class SalaryController extends Controller
             return redirect('/admin/salary');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -422,6 +427,7 @@ class SalaryController extends Controller
             return redirect('/admin/salary');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -450,13 +456,14 @@ class SalaryController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
 
     public function update(Request $request, $id)
     {
-        if(Auth:check()){
+        if(Auth::check()){
             DB::table('master_salaries')->where('id', $id)->update([
                 'total_fine'=>$request->total_fine,
                 'total_salary'=>$request->total_salary
@@ -465,6 +472,7 @@ class SalaryController extends Controller
             return redirect('/admin/salary');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

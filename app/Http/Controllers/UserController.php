@@ -37,6 +37,7 @@ class UserController extends Controller
             }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -66,6 +67,7 @@ class UserController extends Controller
             else return redirect('/staff/dashboard');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -89,6 +91,7 @@ class UserController extends Controller
             Alert::success('Berhasil!','Foto Profil berhasil diperbaharui!');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -137,6 +140,7 @@ class UserController extends Controller
             dd($data_max_performance,$data_max_achievement);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

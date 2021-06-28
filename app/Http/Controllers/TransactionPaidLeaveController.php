@@ -45,6 +45,7 @@ class TransactionPaidLeaveController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -79,6 +80,7 @@ class TransactionPaidLeaveController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -98,6 +100,7 @@ class TransactionPaidLeaveController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -184,6 +187,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/staff/paid-leave/history');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -213,6 +217,7 @@ class TransactionPaidLeaveController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -314,6 +319,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/admin/paid-leave');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -328,6 +334,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/admin/paid-leave');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -343,6 +350,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/admin/paid-leave');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -353,6 +361,7 @@ class TransactionPaidLeaveController extends Controller
             return response()->json(['name' => $request->name]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -384,6 +393,7 @@ class TransactionPaidLeaveController extends Controller
             }
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -402,6 +412,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/admin/paid-leave');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -431,6 +442,7 @@ class TransactionPaidLeaveController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -459,6 +471,7 @@ class TransactionPaidLeaveController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -473,6 +486,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/staff/paid-leave/division');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -487,6 +501,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/staff/paid-leave/division');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -505,6 +520,7 @@ class TransactionPaidLeaveController extends Controller
             return redirect('/staff/paid-leave/division');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

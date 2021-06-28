@@ -182,6 +182,7 @@ class AdminAuthDashboardController extends Controller
             }
         }
         else{
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -208,6 +209,7 @@ class AdminAuthDashboardController extends Controller
             ]);
         }
         else{
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -234,6 +236,7 @@ class AdminAuthDashboardController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -287,6 +290,7 @@ class AdminAuthDashboardController extends Controller
             return redirect('/admin/profile');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

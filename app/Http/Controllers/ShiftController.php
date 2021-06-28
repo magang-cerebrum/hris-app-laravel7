@@ -28,6 +28,7 @@ class ShiftController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -48,6 +49,7 @@ class ShiftController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -79,6 +81,7 @@ class ShiftController extends Controller
             return redirect('/admin/shift');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -100,6 +103,7 @@ class ShiftController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -132,6 +136,7 @@ class ShiftController extends Controller
             return redirect('/admin/shift');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -145,6 +150,7 @@ class ShiftController extends Controller
             return redirect('/admin/shift');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -157,6 +163,7 @@ class ShiftController extends Controller
             return response()->json(['name'=> $request->name, 'status' => $change]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

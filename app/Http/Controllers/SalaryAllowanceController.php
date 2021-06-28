@@ -36,6 +36,7 @@ class SalaryAllowanceController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -60,6 +61,7 @@ class SalaryAllowanceController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -105,6 +107,7 @@ class SalaryAllowanceController extends Controller
             return redirect('/admin/salary-allowance');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -130,6 +133,7 @@ class SalaryAllowanceController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -165,6 +169,7 @@ class SalaryAllowanceController extends Controller
             return redirect('/admin/salary-allowance');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -179,6 +184,7 @@ class SalaryAllowanceController extends Controller
             return redirect('/admin/salary-allowance');
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -238,6 +244,7 @@ class SalaryAllowanceController extends Controller
             ]);
         }
         else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
             return redirect('/login');
         }
     }

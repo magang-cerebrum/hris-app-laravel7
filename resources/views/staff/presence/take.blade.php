@@ -45,9 +45,15 @@
             #Cam {
                 background:rgb(255,255,155);
             }
+            #my_camera {
+                margin: auto;
+            }
             @media screen and (max-width: 600px) {
                 .panel-body {
                     padding: 15px 0 25px;
+                }
+                #Cam {
+                    width: 90%;
                 }
             }
         </style>
@@ -107,7 +113,7 @@
         }
         function ShowCam(){
             Webcam.set({
-                width: 320,
+                width: 263,
                 height: 240,
                 image_format: 'jpeg',
                 jpeg_quality: 100

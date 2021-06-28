@@ -12,19 +12,24 @@ class MasterRecruitmentController extends Controller
 {
     public function index()
     {
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            $data = MasterRecruitment::paginate(10);
+            return view('masterData.recruitment.listRecruitment', [
+                'data' => $data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        $user = Auth::user();
-        $data = MasterRecruitment::paginate(10);
-        return view('masterData.recruitment.listRecruitment', [
-            'data' => $data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            return redirect('/login');
+        }
     }
 
     public function create()
@@ -85,41 +90,51 @@ class MasterRecruitmentController extends Controller
 
     public function destroySelected(Request $request)
     {
-        $ids = $request->input('check');
+        if(Auth::check()){
+            $ids = $request->input('check');
         
-        foreach($ids as $deletes) {
-            $data= MasterRecruitment::where("id",$deletes)->first();
-
-            $path_cv = 'upload_recruitment/cv_upload/'.$data->file_cv;
-            $file_path_cv = public_path($path_cv);
-            unlink($file_path_cv);
-
-            $path_porto = 'upload_recruitment/portofolio_upload/'.$data->file_portofolio;
-            $file_path_porto = public_path($path_porto);
-            unlink($file_path_porto);
-
-            $data->delete();
+            foreach($ids as $deletes) {
+                $data= MasterRecruitment::where("id",$deletes)->first();
+    
+                $path_cv = 'upload_recruitment/cv_upload/'.$data->file_cv;
+                $file_path_cv = public_path($path_cv);
+                unlink($file_path_cv);
+    
+                $path_porto = 'upload_recruitment/portofolio_upload/'.$data->file_portofolio;
+                $file_path_porto = public_path($path_porto);
+                unlink($file_path_porto);
+    
+                $data->delete();
+            }
+            Alert::success('Berhasil!', 'Data pelamar terpilih berhasil dihapus!');
+            return redirect('/admin/recruitment');
         }
-        Alert::success('Berhasil!', 'Data pelamar terpilih berhasil dihapus!');
-        return redirect('/admin/recruitment');
+        else {
+            return redirect('/login');
+        }
     }
     public function search(Request $request){
-        if(Gate::denies('is_admin')){
-            Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
-            return back();
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            if ($request->get('query') == null) {return redirect('/admin/recruitment');}
+            $user = Auth::user();
+            $data = MasterRecruitment::whereRaw("name LIKE '%" . $request->get('query') . "%'")
+            ->orWhereRaw("position LIKE '%" . $request->get('query') . "%'")
+            ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
+            ->paginate(10);
+            return view('masterData.recruitment.resultRecruitment',[
+                'data' => $data,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
         }
-        if ($request->get('query') == null) {return redirect('/admin/recruitment');}
-        $user = Auth::user();
-        $data = MasterRecruitment::whereRaw("name LIKE '%" . $request->get('query') . "%'")
-        ->orWhereRaw("position LIKE '%" . $request->get('query') . "%'")
-        ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
-        ->paginate(10);
-        return view('masterData.recruitment.resultRecruitment',[
-            'data' => $data,
-            'name'=>$user->name,
-            'profile_photo'=>$user->profile_photo,
-            'email'=>$user->email,
-            'id'=>$user->id
-        ]);
+        else {
+            return redirect('/login');
+        }
     }
 }

@@ -270,67 +270,8 @@ class PresenceController extends Controller
                 return back();
             }
             $user = Auth::user();
-            $cal = CAL_GREGORIAN;
-            $days_in_month = cal_days_in_month($cal, date('m'), date('Y'));
-            $data = array();
-            $data_schedule = DB::table('master_job_schedules')
-            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
-            ->where('master_users.status','Aktif')
-            ->select([
-                'master_job_schedules.*',
-                'master_users.name as user_name'
-            ])
-            ->get();
-            foreach ($data_schedule as $user_schedule) {
-                $shifts = array();
-                for ($i=1; $i <= $days_in_month; $i++) { 
-                    $temp = 'shift_' . $i;
-                    $getShift = $user_schedule->$temp;
-                    if ($getShift != 'Off' && $getShift != 'Cuti' && $getShift != 'Sakit') {                    
-                        $data_presence = DB::table('master_presences')
-                        ->where('presence_date',date('Y') . '-' . date('m') . '-' . ($i / 10 < 1 ? '0'. $i : $i))
-                        ->where('user_id',$user_schedule->user_id)
-                        ->first();
-                        if ($data_presence == null) {
-                            $getShift = 'Kosong';
-                        } else {
-                            if ($data_presence->in_time != null) {
-                                if ($data_presence->out_time != '00:00:00') {
-                                    $getShift = 'Absen Masuk';
-                                } elseif ($data_presence->out_time == '00:00:00') {
-                                    $getShift = 'Kosong';
-                                    goto insertImmediately;
-                                }
-                            } 
-                            if ($data_presence->late_time == '00:00:00'){
-                                $getShift = 'Hadir';
-                            } elseif ($data_presence->late_time == null) {
-                                $getShiftTime = DB::table('master_shifts')
-                                ->where('name',$data_presence->shift_name)
-                                ->select('start_working_time')
-                                ->first();
-                                $isLateIn = (date_create($data_presence->in_time) > date_create($getShiftTime->start_working_time) ? true : false);
-                                if ($isLateIn) {
-                                    $getShift = 'Telat Masuk';
-                                } else {
-                                    $getShift = 'Absen Masuk';
-                                }
-                            } else{
-                                $getShift = 'Telat';
-                            }
-                        }
-                    }
-                    insertImmediately:
-                    array_push($shifts,$getShift);
-                }
-                array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
-            }
             $data_divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
             return view('masterData.presence.list',[
-                'data'=>$data,
-                'day'=>$days_in_month,
-                'month'=>date('m'),
-                'year'=>date('Y'),
                 'divisions'=> $data_divisions,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -352,15 +293,22 @@ class PresenceController extends Controller
             }
             $cal = CAL_GREGORIAN;
             $days_in_month = cal_days_in_month($cal, explode('-',$request->periode)[1], explode('-',$request->periode)[0]);
+            $division = ($request->division != 'all' ? true : false);
             $data = array();
             $data_schedule = DB::table('master_job_schedules')
             ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
             ->where('master_users.status','Aktif')
+            ->where('master_job_schedules.month',switch_month(explode('-',$request->periode)[1]))
+            ->where('master_job_schedules.year',explode('-',$request->periode)[0])
             ->select([
                 'master_job_schedules.*',
                 'master_users.name as user_name'
             ])
-            ->get();
+            ->when($division, function ($query) use ($request){
+                return $query->where('master_users.division_id',$request->division);
+            },function ($query){
+                return $query;
+            })->get();
             foreach ($data_schedule as $user_schedule) {
                 $shifts = array();
                 for ($i=1; $i <= $days_in_month; $i++) { 
@@ -405,8 +353,8 @@ class PresenceController extends Controller
                 }
                 array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
             }
-
-            return response()->json([
+            
+            return view('masterData.presence.calendar', [
                 'data'=>$data,
                 'day'=>$days_in_month,
                 'month'=>explode('-',$request->periode)[1],

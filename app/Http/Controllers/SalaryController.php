@@ -33,7 +33,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -74,7 +74,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -106,7 +106,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -279,7 +279,7 @@ class SalaryController extends Controller
             }
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -415,7 +415,7 @@ class SalaryController extends Controller
             return redirect('/admin/salary');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -427,7 +427,7 @@ class SalaryController extends Controller
             return redirect('/admin/salary');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -456,7 +456,7 @@ class SalaryController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -472,7 +472,7 @@ class SalaryController extends Controller
             return redirect('/admin/salary');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }

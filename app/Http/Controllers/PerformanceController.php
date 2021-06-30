@@ -23,7 +23,7 @@ class PerformanceController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -47,7 +47,7 @@ class PerformanceController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
      }
@@ -87,7 +87,7 @@ class PerformanceController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
      }
@@ -111,7 +111,7 @@ class PerformanceController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }        
     }
@@ -169,7 +169,7 @@ class PerformanceController extends Controller
             return redirect('/staff/performance');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -260,7 +260,7 @@ class PerformanceController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -353,7 +353,7 @@ class PerformanceController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }

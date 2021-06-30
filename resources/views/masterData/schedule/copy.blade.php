@@ -12,6 +12,33 @@
 
     <link rel="stylesheet" href="{{asset("plugins/themify-icons/themify-icons.css")}}">
     <meta name="csrf-token" content="{{csrf_token()}}">
+
+    <style>
+        .panel-body {
+            padding: 15px 20px 25px !important;
+        }
+        .table-responsive {
+            margin-top: 15px;
+        }
+        .control-label {
+            width: 80px;
+        }
+        .date-minor {
+            width: 30px;
+        }
+        .shift-minor {
+            width: 50px;
+        }
+        .valminor-select {
+            width: 30px;
+        }
+        .row-selectminor {
+            margin-bottom: 5px;
+        }
+        .bootstrap-select>.dropdown-toggle {
+            width: 40% !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -101,8 +128,7 @@
                             <div id="bv-tab2" class="tab-pane fade">
                                 <div class="panel-body" >
                                     <input type="hidden" name="dateOfMinorCount" id="hiddenCountMinor" >
-                                    <div id="selectminor">
-                                    </div>
+                                    <div id="selectminor"></div>
                                     <div class="table-responsive">
                                         <table class="table table-striped">
                                             <thead>
@@ -183,7 +209,6 @@
 
     <script>
         $(document).ready(function(){
-            $('.selectpicker').selectpicker();
             $('#pickadate .input-group.date').datepicker({
                 format: 'mm/yyyy',
                 autoclose: true,
@@ -299,36 +324,31 @@
                                     }
                                     var i = 1
                                     var valminor =[];
-                                    // console.log(response.dataMinor)
                                     for(dataMin in response.dataMinor){
-                                    var select = document.createElement('select')
-                                        select.setAttribute('class','selectpicker valminor-select')
-                                        select.setAttribute('data-style','btn btn-warning')
-                                        select.setAttribute('name','dataMinor[]')
-                                        select.setAttribute('form','bv-wz-form')
-                                        select.setAttribute('style','display:inline-block !important')
-
+                                        var selectminor = document.getElementById('selectminor')
                                         
+                                        var row_selectminor = document.createElement('div')
+                                        row_selectminor.setAttribute('class','row row-selectminor');
 
-                                    var dateOfMinor = document.createElement('input')
-                                        dateOfMinor.setAttribute('name','date[]')
-                                        dateOfMinor.setAttribute('type','hidden')
-                                        dateOfMinor.setAttribute('value', response.dataMinor[dataMin].day)
-                                        // console.log(response.dataMinor[dataMin].day)
-                                        dateOfMinor.setAttribute('form','bv-wz-form')
-                                        dateOfMinor.setAttribute('class','date-minor')
-                                        var scheduleMinor = document.createTextNode(response.dataMinor[dataMin].shift)
+                                        row_selectminor.innerHTML = '<label class="control-label">Tanggal: </label> <input class="date-minor" value="'+ response.dataMinor[dataMin].day +'" name="date[]" form="bv-wz-form" readonly> <label class="control-label"> Shif Awal: </label> <input class="shift-minor" value="'+ response.dataMinor[dataMin].shift +'" readonly> <label class="control-label"> Shif Baru: </label> '
+
+                                        var select_selectminor = document.createElement('select')
+                                        select_selectminor.setAttribute('class','selectpicker valminor-select')
+                                        select_selectminor.setAttribute('data-style','btn btn-warning')
+                                        select_selectminor.setAttribute('name','dataMinor[]')
+                                        select_selectminor.setAttribute('form','bv-wz-form')
+
                                         for(dataShift in response.dataShift){
-                                            var shift = response.dataShift[dataShift].name
-                                            var opt = document.createElement('option')
-                                            opt.setAttribute('value',shift)
-                                            opt.appendChild(document.createTextNode(shift))
-                                            opt.text = shift
-                                            select.appendChild(opt)
+                                            var opt_selectminor = document.createElement('option')
+                                            opt_selectminor.setAttribute('value', response.dataShift[dataShift].name)
+                                            opt_selectminor.innerText = response.dataShift[dataShift].name
+                                            select_selectminor.appendChild(opt_selectminor)
                                         }
-                                        // opt.setAttribute('')
-                                        document.getElementById('selectminor').appendChild(select)
-                                        document.getElementById('selectminor').appendChild(dateOfMinor)
+
+                                        row_selectminor.appendChild(select_selectminor);
+                                        selectminor.appendChild(row_selectminor)
+                                        
+                                        $('.selectpicker').selectpicker();
                                     }
                         
                                     $('.chosen-checkbox').on('click',function(){

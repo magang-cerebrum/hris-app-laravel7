@@ -28,7 +28,7 @@ class MasterRecruitmentController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -111,7 +111,7 @@ class MasterRecruitmentController extends Controller
             return redirect('/admin/recruitment');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -136,7 +136,7 @@ class MasterRecruitmentController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }

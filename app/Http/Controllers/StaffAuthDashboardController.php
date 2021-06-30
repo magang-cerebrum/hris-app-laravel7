@@ -289,7 +289,7 @@ class StaffAuthDashboardController extends Controller
             }
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }    
     }
@@ -352,7 +352,7 @@ class StaffAuthDashboardController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }    
     }
@@ -416,7 +416,7 @@ class StaffAuthDashboardController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -444,7 +444,7 @@ class StaffAuthDashboardController extends Controller
                 ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -472,7 +472,7 @@ class StaffAuthDashboardController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -502,7 +502,7 @@ class StaffAuthDashboardController extends Controller
             return redirect('/staff/profile');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }

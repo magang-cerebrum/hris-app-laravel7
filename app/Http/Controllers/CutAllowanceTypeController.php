@@ -28,7 +28,7 @@ class CutAllowanceTypeController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -48,7 +48,7 @@ class CutAllowanceTypeController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -65,7 +65,7 @@ class CutAllowanceTypeController extends Controller
             return redirect('/admin/cuts-allowances');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -87,7 +87,7 @@ class CutAllowanceTypeController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -109,7 +109,7 @@ class CutAllowanceTypeController extends Controller
             return redirect('/admin/cuts-allowances');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -123,7 +123,7 @@ class CutAllowanceTypeController extends Controller
             return redirect('/admin/cuts-allowances');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -153,7 +153,7 @@ class CutAllowanceTypeController extends Controller
             ]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -166,7 +166,7 @@ class CutAllowanceTypeController extends Controller
             return response()->json(['name'=> $request->name, 'status' => $change, 'category' => $request->category]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }

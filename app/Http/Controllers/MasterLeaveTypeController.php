@@ -29,7 +29,7 @@ class MasterLeaveTypeController extends Controller
             }
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -51,7 +51,7 @@ class MasterLeaveTypeController extends Controller
             }
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -70,7 +70,7 @@ class MasterLeaveTypeController extends Controller
             return redirect('/admin/paid-leave-type');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -92,7 +92,7 @@ class MasterLeaveTypeController extends Controller
             }
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -115,7 +115,7 @@ class MasterLeaveTypeController extends Controller
             return redirect('admin/paid-leave-type');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -129,7 +129,7 @@ class MasterLeaveTypeController extends Controller
             return redirect('/admin/paid-leave-type');
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }
@@ -142,7 +142,7 @@ class MasterLeaveTypeController extends Controller
             return response()->json(['name'=> $request->name, 'status' => $change]);
         }
         else {
-            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
             return redirect('/login');
         }
     }

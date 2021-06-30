@@ -64,6 +64,7 @@
     </div>
 </body>
 
+    @include('sweetalert::alert')
 <script>
     function mousedownPass(obj) {
         var obj = document.getElementById('pass-form');

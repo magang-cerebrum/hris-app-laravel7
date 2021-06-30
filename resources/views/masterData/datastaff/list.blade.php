@@ -7,6 +7,11 @@
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        .icon-dropdown{
+            margin-right: 4px;
+            text-align: center;
+            width: 18px !important;
+        }
         .table > tbody > tr > td,
         .table > tbody > tr > th, 
         .table > tfoot > tr > td, 
@@ -109,57 +114,55 @@
                                         name="selectid_active[]" value="{{$row->id}}" form="form-mul-delete">
                                 </td>
                                 <td class="text-center">
-                                    <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
-                                        style="display: inline;" data-nip="{{$row->nip}}"
-                                        data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-address="{{$row->address}}"
-                                        data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
-                                        data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
-                                        data-employee_status="{{$row->employee_status}}"
-                                        data-employee_type="{{$row->employee_type}}" data-status="{{$row->status}}"
-                                        data-contract_duration="{{$row->contract_duration}}"
-                                        data-start_work_date="{{$row->start_work_date}}"
-                                        data-end_work_date="{{$row->end_work_date}}"
-                                        data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
-                                        data-division_name="{{$row->division_name}}"
-                                        data-position_name="{{$row->position_name}}"
-                                        data-role_name="{{$row->role_name}}"
-                                        data-cc_number="{{$row->credit_card_number}}"
-                                        data-salary="{{$row->salary}}">
-                                        <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Detail Staff"
-                                            type="button">
-                                            <i class="fa fa-info"></i>
-                                        </a>
-                                    </span>
-                                    <a href="/admin/data-staff/{{$row->id}}/edit"
-                                        class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Edit Staff"
-                                        type="button">
-                                        <i class="fa fa-pencil-square"></i>
-                                    </a>
-                                    <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Nonaktifkan Staff"
-                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
-                                        <i class="pli-close"></i>
-                                    </button>
-                                    @if ($row->employee_status == 'Tetap')
-                                        <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Naikan Gaji Staff"
-                                            type="button" onclick="salary_increase({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
-                                            <i class="pli-money-2"></i>
-                                        </button>
-                                    @else
-                                        <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Promosikan Staff"
-                                            type="button" onclick="promote({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')">
-                                            <i class="psi-arrow-up-2"></i>
-                                        </button>
-                                    @endif
-                                    <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Reset Password Staff"
-                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="display: inline;">
-                                        <i class="fa fa-unlock-alt"></i>
-                                    </button>
+                                    <div class="btn-group">
+                                        <div class="dropdown">
+                                            <button class="btn btn-dark btn-active-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                                Aksi <i class="dropdown-caret"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff" style="cursor: pointer"
+                                                        data-nip="{{$row->nip}}" data-name="{{$row->name}}"
+                                                        data-dob="{{$row->dob}}" data-address="{{$row->address}}"
+                                                        data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
+                                                        data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
+                                                        data-employee_status="{{$row->employee_status}}"
+                                                        data-employee_type="{{$row->employee_type}}" data-status="{{$row->status}}"
+                                                        data-contract_duration="{{$row->contract_duration}}"
+                                                        data-start_work_date="{{$row->start_work_date}}"
+                                                        data-end_work_date="{{$row->end_work_date}}"
+                                                        data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
+                                                        data-division_name="{{$row->division_name}}"
+                                                        data-position_name="{{$row->position_name}}"
+                                                        data-role_name="{{$row->role_name}}"
+                                                        data-cc_number="{{$row->credit_card_number}}"
+                                                        data-salary="{{$row->salary}}">
+                                                        <i class="fa fa-info icon-dropdown"></i> Detail Staff
+                                                    </a>
+                                                </li>
+                                                <li><a href="/admin/data-staff/{{$row->id}}/edit" style="cursor: pointer"> 
+                                                    <i class="fa fa-pencil-square icon-dropdown"></i> Edit Staff 
+                                                </a></li>
+                                                <li><a onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')" style="cursor: pointer">
+                                                    <i class="pli-close icon-dropdown"></i> Nonaktifkan Staff
+                                                </a></li>
+                                                <li><a onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="cursor: pointer">
+                                                    <i class="fa fa-unlock-alt icon-dropdown"></i> Reset Password Staff
+                                                </a></li>
+                                                <li>
+                                                    @if ($row->employee_status == 'Tetap')
+                                                        <a onclick="salary_increase({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')" style="cursor: pointer">
+                                                            <i class="pli-money-2 icon-dropdown"></i> Naikan Gaji Staff
+                                                        </a>
+                                                    @else
+                                                        <a onclick="promote({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')" style="cursor: pointer">
+                                                            <i class="psi-arrow-up-2 icon-dropdown"></i> Promosikan Staff
+                                                        </a>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="text-center">{{$row->nip}}</td>
                                 <td class="text-center">{{$row->name}}</td>
@@ -198,57 +201,55 @@
                                         name="selectid[]" value="{{$row->id}}" form="form-mul-delete">
                                 </td>
                                 <td class="text-center">
-                                    <span id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
-                                        style="display: inline;" data-nip="{{$row->nip}}"
-                                        data-name="{{$row->name}}" data-dob="{{$row->dob}}" data-address="{{$row->address}}"
-                                        data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
-                                        data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
-                                        data-employee_status="{{$row->employee_status}}"
-                                        data-employee_type="{{$row->employee_type}}" data-status="{{$row->status}}"
-                                        data-contract_duration="{{$row->contract_duration}}"
-                                        data-start_work_date="{{$row->start_work_date}}"
-                                        data-end_work_date="{{$row->end_work_date}}"
-                                        data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
-                                        data-division_name="{{$row->division_name}}"
-                                        data-position_name="{{$row->position_name}}"
-                                        data-role_name="{{$row->role_name}}"
-                                        data-cc_number="{{$row->credit_card_number}}"
-                                        data-salary="{{$row->salary}}">
-                                        <a class="btn btn-info btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Detail Staff"
-                                            type="button">
-                                            <i class="fa fa-info"></i>
-                                        </a>
-                                    </span>
-                                    <a href="/admin/data-staff/{{$row->id}}/edit"
-                                        class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Edit Staff"
-                                        type="button">
-                                        <i class="fa fa-pencil-square"></i>
-                                    </a>
-                                    <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Aktifkan Staff"
-                                        type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
-                                        <i class="pli-yes"></i>
-                                    </button>
-                                    @if ($row->employee_status == 'Tetap')
-                                        <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Naikan Gaji Staff"
-                                            type="button" disabled>
-                                            <i class="pli-money-2"></i>
-                                        </button>
-                                    @else
-                                        <button class="btn btn-dark btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                            data-container="body" data-placement="top" data-original-title="Promosikan Staff"
-                                            type="button" disabled>
-                                            <i class="psi-arrow-up-2"></i>
-                                        </button>
-                                    @endif
-                                    <button class="btn btn-purple btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                        data-container="body" data-placement="top" data-original-title="Reset Password Staff"
-                                        type="button" onclick="reset_pass({{$row->id}},'{{$row->name}}')">
-                                        <i class="fa fa-unlock-alt"></i>
-                                    </button>
+                                    <div class="btn-group">
+                                        <div class="dropdown">
+                                            <button class="btn btn-dark btn-active-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                                Aksi <i class="dropdown-caret"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff" style="cursor: pointer"
+                                                        data-nip="{{$row->nip}}" data-name="{{$row->name}}"
+                                                        data-dob="{{$row->dob}}" data-address="{{$row->address}}"
+                                                        data-phone_number="{{$row->phone_number}}" data-gender="{{$row->gender}}"
+                                                        data-email="{{$row->email}}" data-profile_photo="{{$row->profile_photo}}"
+                                                        data-employee_status="{{$row->employee_status}}"
+                                                        data-employee_type="{{$row->employee_type}}" data-status="{{$row->status}}"
+                                                        data-contract_duration="{{$row->contract_duration}}"
+                                                        data-start_work_date="{{$row->start_work_date}}"
+                                                        data-end_work_date="{{$row->end_work_date}}"
+                                                        data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
+                                                        data-division_name="{{$row->division_name}}"
+                                                        data-position_name="{{$row->position_name}}"
+                                                        data-role_name="{{$row->role_name}}"
+                                                        data-cc_number="{{$row->credit_card_number}}"
+                                                        data-salary="{{$row->salary}}">
+                                                        <i class="fa fa-info icon-dropdown"></i> Detail Staff
+                                                    </a>
+                                                </li>
+                                                <li><a href="/admin/data-staff/{{$row->id}}/edit" style="cursor: pointer"> 
+                                                    <i class="fa fa-pencil-square icon-dropdown"></i> Edit Staff 
+                                                </a></li>
+                                                <li><a onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')" style="cursor: pointer">
+                                                    <i class="pli-yes icon-dropdown"></i> Aktifkan Staff
+                                                </a></li>
+                                                <li><a onclick="reset_pass({{$row->id}},'{{$row->name}}')" style="cursor: pointer">
+                                                    <i class="fa fa-unlock-alt icon-dropdown"></i> Reset Password Staff
+                                                </a></li>
+                                                <li>
+                                                    @if ($row->employee_status == 'Tetap')
+                                                        <a onclick="salary_increase({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')" style="cursor: pointer">
+                                                            <i class="pli-money-2 icon-dropdown"></i> Naikan Gaji Staff
+                                                        </a>
+                                                    @else
+                                                        <a onclick="promote({{$row->id}},'{{$row->name}}','{{$row->employee_status}}')" style="cursor: pointer">
+                                                            <i class="psi-arrow-up-2 icon-dropdown"></i> Promosikan Staff
+                                                        </a>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="text-center">{{$row->nip}}</td>
                                 <td class="text-center">{{$row->name}}

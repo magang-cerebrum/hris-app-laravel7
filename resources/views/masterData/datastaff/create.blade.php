@@ -34,7 +34,7 @@
                     <div class="row">
                         <label class="col-sm-2 control-label">NIP:</label>
                         <div class="col-sm-4">
-                            <input type="number" placeholder="NIP" name="nip" form="form_create"
+                            <input type="number" placeholder="NIP" name="nip" form="form_create" autocomplete="off"
                                 class="form-control @error('nip') is-invalid @enderror" value="{{old('nip')}}">
                             @error('nip') <div class="text-danger invalid-feedback mt-3">
                                 Mohon isi NIP.
@@ -42,7 +42,7 @@
                         </div>
                         <label class="col-sm-2 control-label">Nama Staff:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Nama Lengkap" name="name" form="form_create"
+                            <input type="text" placeholder="Nama Lengkap" name="name" form="form_create" autocomplete="off"
                                 class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}">
                             @error('name') <div class="text-danger invalid-feedback mt-3">
                                 Mohon isi nama lengkap.
@@ -56,7 +56,7 @@
                         <div id="datepicker-input-dob">
                             <div class="col-sm-4">
                                 <div class="input-group date">
-                                    <input type="text" class="form-control @error('dob') is-invalid @enderror"
+                                    <input type="text" class="form-control @error('dob') is-invalid @enderror" autocomplete="off"
                                         placeholder="Tanggal Lahir" name="dob" value="{{old('dob')}}" form="form_create">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -94,7 +94,7 @@
                         <label class="col-sm-2 control-label">No Handphone:</label>
                         <div class="col-sm-4">
                             <input type="number" placeholder="Nomor Handphone" name="phone_number" form="form_create"
-                                class="form-control @error('phone_number') is-invalid @enderror"
+                                class="form-control @error('phone_number') is-invalid @enderror" autocomplete="off"
                                 value="{{old('phone_number')}}">
                             @error('phone_number') <div class="text-danger invalid-feedback mt-3">
                                 {{$message}}
@@ -102,7 +102,7 @@
                         </div>
                         <label class="col-sm-2 control-label">Email:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Alamat Email" name="email" form="form_create"
+                            <input type="text" placeholder="Alamat Email" name="email" form="form_create" autocomplete="off"
                                 class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}">
                             @error('email') <div class="text-danger invalid-feedback mt-3">
                                 {{$message}}
@@ -110,12 +110,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- password & photo profile--}}
-                <input type="hidden" name="password" class="form-control invisible" form="form_create"
-                    value="<?=password_hash("cerebrum",PASSWORD_DEFAULT)?>">
-                <input type="hidden" name="photo_profile" class="form-control invisible" form="form_create"
-                    value="defaultL.jpg">
-                {{-- ================== --}}
                 <div class="form-group">
                     <div class="row">
                         <label class="col-sm-2 control-label">Status Karyawan:</label>
@@ -137,7 +131,7 @@
                         <span id="input-contract_duration">
                             <label class="col-sm-2 control-label">Durasi Kontrak:</label>
                             <div class="col-sm-4">
-                                <input type="number" placeholder="Lama kontrak dalam satuan bulan"
+                                <input type="number" placeholder="Lama kontrak dalam satuan bulan" autocomplete="off"
                                     name="contract_duration" id="contract_duration" form="form_create"
                                     class="form-control @error('contract_duration') is-invalid @enderror" readonly>
                                 @error('contract_duration') <div class="text-danger invalid-feedback mt-3">
@@ -213,7 +207,7 @@
                         <label class="col-sm-2 control-label">Sisa Cuti Tahunan:</label>
                         <div class="col-sm-4">
                             <input type="number" placeholder="Sisa cuti diisi hanya dengan jumlah hari"
-                                name="yearly_leave_remaining" form="form_create"
+                                name="yearly_leave_remaining" form="form_create" autocomplete="off"
                                 class="form-control @error('yearly_leave_remaining') is-invalid @enderror"
                                 value="{{old('yearly_leave_remaining')}}">
                             @error('yearly_leave_remaining') <div class="text-danger invalid-feedback mt-3">
@@ -227,7 +221,7 @@
                         <label class="col-sm-2 control-label" for="credit_card_number">No. Rekening:</label>
                         <div class="col-sm-4">
                             <input type="number" placeholder="Nomor Rekening tanpa Kode Bank"
-                            name="credit_card_number" form="form_create"
+                            name="credit_card_number" form="form_create" autocomplete="off"
                             class="form-control @error('credit_card_number') is-invalid @enderror"
                             value="{{old('credit_card_number')}}">
                             @error('credit_card_number') <div class="text-danger invalid-feedback mt-3">
@@ -237,7 +231,7 @@
                         <label class="col-sm-2 control-label" for="salary">Gaji Pokok:</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Gaji Pokok" name="salary" id="salary" form="form_create"
-                                class="form-control @error('salary') is-invalid @enderror"
+                                class="form-control @error('salary') is-invalid @enderror" autocomplete="off"
                                 value="{{old('salary')}}" onkeyup="format_rp()">
                             @error('salary') <div class="text-danger invalid-feedback mt-3">
                                 Mohon isi gaji pokok.

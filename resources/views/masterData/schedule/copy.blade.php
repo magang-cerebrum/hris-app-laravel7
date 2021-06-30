@@ -96,7 +96,7 @@
                                                 </button>
                                             </span>
                                             <input type="text" name="first" id="first_periode"  placeholder="Pilih Tanggal" 
-                                                class="form-control" autocomplete="off" readonly form="bv-wz-form">
+                                                class="form-control" autocomplete="off" readonly form="bv-wz-form" >
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -188,7 +188,7 @@
                     <!--Footer button-->
                     <div class="panel-footer text-right">
                         <div class="box-inline">
-                            <button type="button" class="next btn btn-primary" form="bv-wz-form">Next</button>
+                            <button type="button" class="next btn btn-primary" form="bv-wz-form" disabled>Next</button>
                             <button type="submit" class="finish btn btn-warning" form="bv-wz-form" disabled>Finish</button>
                         </div>
                     </div>
@@ -266,6 +266,8 @@
                             $('#table-data tr').not('.'+switched_month).hide()
                             $('#theader').show()
                             
+
+                            
                         });
                         $('.chosen-radio').on('change', function(){
                             for(chosen_inputs of chosen_input){
@@ -273,7 +275,9 @@
                                     chosen = chosen_inputs.value
                                     break;
                                 }
+                                
                             };
+                            $('#bv-wz').find('.next').prop('disabled', false);
                         })
                     
                         var url = '/admin/schedule/copyschedule/calculate'
@@ -294,6 +298,7 @@
                                 },
                                 dataType:'json',
                                 success : function(response){
+                                    $('#bv-wz').find('.next').prop('disabled', true);
                                     $('.next').attr('id','ajax2')
                                     
                                     $('#hiddenCountMinor').val(response.countDataMinor)
@@ -353,6 +358,7 @@
                                         } else {
                                             queue.splice(queue.indexOf(valueRowsName), 1);
                                         }
+                                        $('#bv-wz').find('.next').prop('disabled', false);
                                     });
                                     var dateMinor = []
                                     var urls = '/admin/schedule/copyschedule/calculates'
@@ -360,6 +366,7 @@
                                         $('.valminor-select').each(function(){
                                             valminor.push($(this).val());
                                         });
+                                        // console.log(valminor)
                                         $('.date-minor').each(function(){
                                             dateMinor.push($(this).val())
                                         });
@@ -391,6 +398,7 @@
                                                     document.getElementById('firstSum').appendChild(nodesradio)   
                                                     document.getElementById('periode').appendChild(periodeNoding)
                                                 }
+                                                $('#bv-wz').find('.next').prop('disabled', false);
                                             },
                                             error : function (jXHR, textStatus, errorThrown) {
                                                 console.log(jXHR, textStatus, errorThrown)

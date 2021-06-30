@@ -98,18 +98,21 @@
                                             type="button">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        @if ($row->status == 'Aktif')
-                                            <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                                data-container="body" data-placement="top" data-original-title="Nonaktifkan Shift"
-                                                type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
-                                                <i class="pli-close"></i>
-                                            </button>
+                                        @if(in_array($loop->iteration,range(1,4)))
                                         @else
-                                            <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
-                                                data-container="body" data-placement="top" data-original-title="Aktifkan Shift"
-                                                type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
-                                                <i class="pli-yes"></i>
-                                            </button>
+                                            @if ($row->status == 'Aktif')
+                                                <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                                    data-container="body" data-placement="top" data-original-title="Nonaktifkan Shift"
+                                                    type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
+                                                    <i class="pli-close"></i>
+                                                </button>
+                                            @else
+                                                <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                                    data-container="body" data-placement="top" data-original-title="Aktifkan Shift"
+                                                    type="button" onclick="toogle_status({{$row->id}},'{{$row->name}}','{{$row->status}}')">
+                                                    <i class="pli-yes"></i>
+                                                </button>
+                                            @endif
                                         @endif
                                     </td>
                                 <td class="text-center">{{$row->name}} 

@@ -325,15 +325,92 @@ class PresenceController extends Controller
                 }
                 array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
             }
+            $data_divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
             return view('masterData.presence.list',[
                 'data'=>$data,
                 'day'=>$days_in_month,
                 'month'=>date('m'),
                 'year'=>date('Y'),
+                'divisions'=> $data_divisions,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
                 'id'=>$user->id
+            ]);
+        }
+        else {
+            Alert::info('Sesi berakhir!'.'Silahkan login kembali!');
+            return redirect('/login');
+        }
+    }
+
+    public function filterPresence(Request $request){
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $cal = CAL_GREGORIAN;
+            $days_in_month = cal_days_in_month($cal, explode('-',$request->periode)[1], explode('-',$request->periode)[0]);
+            $data = array();
+            $data_schedule = DB::table('master_job_schedules')
+            ->leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
+            ->where('master_users.status','Aktif')
+            ->select([
+                'master_job_schedules.*',
+                'master_users.name as user_name'
+            ])
+            ->get();
+            foreach ($data_schedule as $user_schedule) {
+                $shifts = array();
+                for ($i=1; $i <= $days_in_month; $i++) { 
+                    $temp = 'shift_' . $i;
+                    $getShift = $user_schedule->$temp;
+                    if ($getShift != 'Off' && $getShift != 'Cuti' && $getShift != 'Sakit') {                    
+                        $data_presence = DB::table('master_presences')
+                        ->where('presence_date', explode('-',$request->periode)[0] . '-' . explode('-',$request->periode)[1] . '-' . ($i / 10 < 1 ? '0'. $i : $i))
+                        ->where('user_id',$user_schedule->user_id)
+                        ->first();
+                        if ($data_presence == null) {
+                            $getShift = 'Kosong';
+                        } else {
+                            if ($data_presence->in_time != null) {
+                                if ($data_presence->out_time != '00:00:00') {
+                                    $getShift = 'Absen Masuk';
+                                } elseif ($data_presence->out_time == '00:00:00') {
+                                    $getShift = 'Kosong';
+                                    goto insertImmediately;
+                                }
+                            } 
+                            if ($data_presence->late_time == '00:00:00'){
+                                $getShift = 'Hadir';
+                            } elseif ($data_presence->late_time == null) {
+                                $getShiftTime = DB::table('master_shifts')
+                                ->where('name',$data_presence->shift_name)
+                                ->select('start_working_time')
+                                ->first();
+                                $isLateIn = (date_create($data_presence->in_time) > date_create($getShiftTime->start_working_time) ? true : false);
+                                if ($isLateIn) {
+                                    $getShift = 'Telat Masuk';
+                                } else {
+                                    $getShift = 'Absen Masuk';
+                                }
+                            } else{
+                                $getShift = 'Telat';
+                            }
+                        }
+                    }
+                    insertImmediately:
+                    array_push($shifts,$getShift);
+                }
+                array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
+            }
+
+            return response()->json([
+                'data'=>$data,
+                'day'=>$days_in_month,
+                'month'=>explode('-',$request->periode)[1],
+                'year'=>explode('-',$request->periode)[0]
             ]);
         }
         else {

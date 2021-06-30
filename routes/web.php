@@ -420,6 +420,7 @@ Route::prefix('/admin/recruitment')->middleware('auth')->group(function () {
 
 Route::prefix('/admin/presence')->middleware('auth')->group(function () {
     Route::get('/', [PresenceController::class,'getProcessedPresenceView']);
+    Route::post('/filter', [PresenceController::class,'filterPresence']);
     Route::post('/processed', [PresenceController::class,'viewProcessedPresence']);
     Route::post('/reset', [PresenceController::class,'resetStats']);
 });

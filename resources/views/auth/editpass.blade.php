@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-        
+    @include('sweetalert::alert')
     <div id="bg-overlay1" class="bg-img"></div>
     <div class="cls-content">
         <div class="cls-content-sm panel">

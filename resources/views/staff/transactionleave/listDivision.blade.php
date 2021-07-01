@@ -134,5 +134,5 @@
             </div>
         </div>
     </div>
-    @include('staff/transactionleave/modaldivision')
+    @include('staff/transactionleave/modalDivision')
 @endsection

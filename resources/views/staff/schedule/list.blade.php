@@ -5,9 +5,13 @@
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
-    <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+    <link href="{{asset("plugins/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet">
+    <link href="{{asset("plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css")}}" rel="stylesheet">
+    <link href="{{asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        .fc-time, .fc-left{display : none;}
+        td.break{width: 10px; height: 10px;}
         tbody {
             color: black;
         }
@@ -53,9 +57,40 @@
 
 
 @section('script')
+    <script src="{{asset("plugins/fullcalendar/lib/moment.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('js/helpers.js')}}"></script>
     <script>
+        setTimeout(function () {
+            let division = {!! json_encode($division) !!}
+            var periode = current_period();
+            document.getElementById('query').value = periode;
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }});
+            $.ajax({
+                url: '/staff/schedule/search',
+                type: 'POST',
+                data: {periode: periode, division: division},
+                success: function (data) {
+                    $("#panel-output").html(data);
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Mohon isi dulu form!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+            });
+        },500);
+
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({
                 format: 'mm/yyyy',

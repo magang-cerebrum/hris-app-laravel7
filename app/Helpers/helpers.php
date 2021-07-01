@@ -185,3 +185,11 @@ function checkSchedule($day,$shift){
     $data->shift=$shift;
     return $data;
 }
+
+function current_period($switch_month = 'data'){
+    if ($switch_month == 'data') {
+        return date('Y') . '-' . date('m') . '-';
+    } elseif ($switch_month == 'view'){
+        return switch_month(date('m'))  . '-' . date('Y');
+    }
+}

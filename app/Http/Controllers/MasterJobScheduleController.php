@@ -36,6 +36,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.list', [
+                    'division' => $user->division_id,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
                     'email'=>$user->email,
@@ -747,7 +748,7 @@ class MasterJobScheduleController extends Controller
         if(Auth::check()){
             $user = Auth::user();
             $split = explode('/', $request->periode);
-            $division = ($request->division != 'Semua Divisi' ? true : false);
+            $filter_division = ($request->division != 'Semua Divisi' ? true : false);
             $data = MasterJobSchedule::leftJoin('master_users','master_job_schedules.user_id','=','master_users.id')
             ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->where('month', switch_month($split[0]))
@@ -756,8 +757,8 @@ class MasterJobScheduleController extends Controller
                 'master_job_schedules.*',
                 'master_users.name as user_name'
             )
-            ->when($division,function ($query) use ($request){
-                return $query->where('master_divisions.name',$request->division);
+            ->when($filter_division,function ($query) use ($request){
+                return $query->where('master_divisions.id',$request->division);
             },function ($query){
                 return $query;
             })->get();
@@ -772,8 +773,7 @@ class MasterJobScheduleController extends Controller
             )->get();
             
             $cal = CAL_GREGORIAN;
-            $month = switch_month($split[0]);
-            $days_in_month = cal_days_in_month($cal, $split[0] , date('Y'));
+            $days_in_month = cal_days_in_month($cal, $split[0] , $split[1]);
             $data_shift = DB::table('master_shifts')->get();
             if ($user->role_id == 1) {
                 return view('masterData.schedule.calendar', [

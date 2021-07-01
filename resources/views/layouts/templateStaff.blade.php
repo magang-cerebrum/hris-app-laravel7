@@ -286,6 +286,13 @@
                                         <li class="list-header">Division</li>
 
                                         <li>
+                                            <a href="{{ url('staff/data-staff')}}">
+                                                <i class="fa fa-users"></i>
+                                                <span class="menu-title">Data Staff Divisi</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
                                             <a href="{{ url('#')}}">
                                                 <i class="fa fa-calendar-o"></i>
                                                 <span class="menu-title">Jadwal Kerja Divisi</span>
@@ -303,14 +310,14 @@
 
                                         <li>
                                             <a href="{{ url('staff/presence/division')}}">
-                                                <i class="fa fa-users"></i>
+                                                <i class="fa fa-clock-o"></i>
                                                 <span class="menu-title">Presensi Divisi</span>
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ url('staff/paid-leave/division')}}">
-                                                <i class="fa fa-users"></i>
+                                                <i class="fa fa-user-md"></i>
                                                 <span class="menu-title">Cuti Anggota Divisi</span>
                                             </a>
                                         </li>

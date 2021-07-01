@@ -143,7 +143,13 @@ class PresenceController extends Controller
         if(Auth::check()){
             $date = date('Y-m-d');
             $time = date('H:i:s');
-            
+
+            $image = $request->image;
+            $image_array_1 = explode(";", $image);
+            $image_array_2 = explode(",", $image_array_1[1]);
+            $data = base64_decode($image_array_2[1]);
+            $image_name = $date.'_'. Auth::user()->name . '.jpeg';
+        
             $master_shift = DB::table('master_shifts')->get();
     
             if ($request->bool_presence == 0) {
@@ -167,52 +173,20 @@ class PresenceController extends Controller
                 ->where('month', switch_month(date('m', strtotime($date))))
                 ->where('year', date('Y', strtotime($date)))
                 ->where('user_id',$request->user_id)->first();
-                
-                $image = $request->image;
-                $image_array_1 = explode(";", $image);
-                $image_array_2 = explode(",", $image_array_1[1]);
-                $data = base64_decode($image_array_2[1]);
-                $image_name = $date.'_'. Auth::user()->name . '.jpeg';
     
                 $temp_name = 'shift_'.date('j', strtotime($date));
                 $shift = $data_shift->$temp_name;
     
                 $hour_shift = 0;
+                $normaly_in_time = 0;
                 foreach($master_shift as $item_shift) {
                     if ($item_shift->name == $shift) {
                         $hour_shift = $item_shift->total_hour;
-                    }
-                }
-    
-                $image_path = 'img-presensi/masuk/' . $image_name;
-                file_put_contents($image_path, $data);
-    
-                DB::table('master_presences')->insert([
-                    'user_id' => $request->user_id,
-                    'presence_date' => $date,
-                    'in_time' => $time,
-                    'shift_name' => $shift,
-                    'shift_default_hour' => $hour_shift,
-                    'file_in' => $image_name
-                ]);
-    
-                DB::table('master_check_presences')->where('user_id',$request->user_id)->delete();
-            }
-            else if ($request->bool_presence == 1) {
-                $data_presence = DB::table('master_presences')
-                ->where('user_id', $request->user_id)
-                ->where('presence_date', $date)->first();
-    
-                $normaly_in_time = 0;
-                foreach($master_shift as $item_shift) {
-                    if ($item_shift->name == $data_presence->shift_name) {
                         $normaly_in_time = $item_shift->start_working_time;
                     }
                 }
-    
-                $interval = date_diff(date_create($data_presence->in_time),date_create($time));
-                $inadayTime = $interval->format('%h:%i:%s');
-                $intervalLate = date_diff(date_create($normaly_in_time),date_create($data_presence->in_time));
+
+                $intervalLate = date_diff(date_create($normaly_in_time),date_create($time));
                 $late = $intervalLate->format('%h:%i:%s');
                 $inTimeLateHour = $intervalLate->format('%h');
                 $inTimeLateMinute = $intervalLate->format('%i');
@@ -224,13 +198,39 @@ class PresenceController extends Controller
                 }
                 $fine = (intval($lateInMinute/5))*20000;
     
+                $image_path = 'img-presensi/masuk/' . $image_name;
+                file_put_contents($image_path, $data);
+    
+                DB::table('master_presences')->insert([
+                    'user_id' => $request->user_id,
+                    'presence_date' => $date,
+                    'in_time' => $time,
+                    'shift_name' => $shift,
+                    'shift_default_hour' => $hour_shift,
+                    'file_in' => $image_name,
+                    'late_time'=> $late,
+                    'fine'=> $fine
+                ]);
+    
+                DB::table('master_check_presences')->where('user_id',$request->user_id)->delete();
+            }
+            else if ($request->bool_presence == 1) {
+                $data_presence = DB::table('master_presences')
+                ->where('user_id', $request->user_id)
+                ->where('presence_date', $date)->first();
+    
+                $interval = date_diff(date_create($data_presence->in_time),date_create($time));
+                $inadayTime = $interval->format('%h:%i:%s');
+
+                $image_path = 'img-presensi/pulang/' . $image_name;
+                file_put_contents($image_path, $data);
+                
                 DB::table('master_presences')
                 ->where('id', $data_presence->id)
                 ->update([
                     'out_time'=>$time,
                     'inaday_time'=> $inadayTime,
-                    'late_time'=> $late,
-                    'fine'=> $fine
+                    'file_out' => $image_name,
                 ]);
             }
             return redirect('/staff/presence');

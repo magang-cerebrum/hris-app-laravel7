@@ -125,7 +125,7 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}"
-                    @if ($monthDecidePerformance)
+                    @if (count($monthDecidePerformance)!=0)
                         <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
@@ -158,7 +158,7 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Achievement "{{$name}}"
-                    @if ($monthDecideAchievement)
+                    @if (count($monthDecideAchievement)!=0)
                         <span id="textvalperf">Tahun {{$monthDecideAchievement[0]->year}}</span> 
                     @endif
                 </h3>
@@ -192,7 +192,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Performance 
-                    @if ($monthDecidePerformance)
+                    @if (count($monthDecidePerformance)!=0)
                         <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
                         <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
                         data-performance="{{$monthDecidePerformance}}" id="modal-performance">
@@ -268,7 +268,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Achievement
-                    @if ($monthDecideAchievement)
+                    @if (count($monthDecideAchievement)!=0)
                         <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
                         <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
                             data-achievement="{{$monthDecideAchievement}}" id="modal-achievement">

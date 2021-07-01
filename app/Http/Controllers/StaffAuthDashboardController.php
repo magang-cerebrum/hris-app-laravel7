@@ -119,8 +119,6 @@ class StaffAuthDashboardController extends Controller
                     ->where('master_divisions.id',Auth::user()->division_id)
                     ->orderBy('performance_score','desc')
                     ->get();
-                    
-                    
                 }
                 
                 $latestPeriodAchievement = DB::table('master_achievements')
@@ -148,6 +146,7 @@ class StaffAuthDashboardController extends Controller
                     ])
                     ->where('month',$latestPeriodAchievement->month)
                     ->where('year',$latestPeriodAchievement->year)
+                    ->where('master_divisions.id',Auth::user()->division_id)
                     ->orderBy('score','desc')
                     ->get();
                 }

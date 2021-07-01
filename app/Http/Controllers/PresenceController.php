@@ -43,7 +43,7 @@ class PresenceController extends Controller
                 'email'=>$user->email,
                 'id'=>$user->id,
                 'bool_presence'=>$bool_presence,
-                'bool_schedule' => $bool_schedule
+                'bool_schedule' => $bool_schedule,
             ]);
         }
         else {

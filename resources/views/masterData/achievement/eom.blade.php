@@ -43,6 +43,57 @@
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script src="{{asset("js/helpers.js")}}"></script>
 <script>
+ setTimeout(function(){
+            
+            var date = new Date()
+            var month =  ("0" + (date.getMonth() + 1)).slice(-2)
+            var year = date.getFullYear()
+            periode = month + '/' +year
+            document.getElementById('periode').value = periode
+            console.log(periode)
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                    });
+            $.ajax({
+                    url: '/admin/achievement/eom',
+                    type: "POST",
+                    data: {periode:periode},
+                    success: function (data) {
+                        // console.log(data)
+                        $("#panel-output").html(data);
+                    },
+                    // error: function (jXHR, textStatus, errorThrown) {
+                    //     Swal.fire({
+                    //         title: 'Error!',
+                    //         text: "Tidak ada data achievement untuk bulan dan tahun terpilih",
+                    //         icon: 'error',
+                    //         width: 600
+                    //     }).then(() => {
+                    //         Swal.fire({
+                    //             width: 600,
+                    //             title: 'Apakah anda ingin menambahkan nilai achievement?',
+                    //             icon: 'info',
+                    //             showCancelButton: true,
+                    //             confirmButtonColor: '#3085d6',
+                    //             cancelButtonColor: '#d33',
+                    //             confirmButtonText: 'Ya',
+                    //             cancelButtonText: 'Tidak'
+                    //         }).then((result) => {
+                    //             if (result.value == true) {
+                    //                 window.location.href = "/admin/achievement/scoring";
+                    //             } else {
+                    //                 return false;
+                    //             }} 
+                    //         );
+                    //     });
+                    // }
+                });
+        },1000)   
+
+
+    
     $('#pickadate .input-group.date').datepicker({
         format: 'mm/yyyy',
         autoclose: true,

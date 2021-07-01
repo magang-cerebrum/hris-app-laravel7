@@ -24,12 +24,14 @@ class MasterAchievementController extends Controller
             elseif(Gate::allows('is_admin')){
             
             $user = Auth::user();
-           
+            $dataCurrent_Month = DB::table('master_achievements')->where('month',date('m'))->where('month',date('m'))->get();
+            
             return view('masterData.achievement.leaderboard',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
                 'id'=>$user->id,
+                'dataCM'=>$dataCurrent_Month,
                 ]);
             }
         }
@@ -55,7 +57,8 @@ class MasterAchievementController extends Controller
                 $is_champ = MasterAchievement::where(['month'=>$splitter[0], 'year'=>$splitter[1]])
                 ->max('score');
                 $count = count($data);
-                return view('masterData.achievement.result',['data'=>$data,
+                return view('masterData.achievement.result',[
+                    'data'=>$data,
                     'count'=>$count,
                     'employee_of_the_month' =>$is_champ
                 ]);
@@ -80,13 +83,15 @@ class MasterAchievementController extends Controller
                 ->where('division_id','!=',7)
                 ->where('position_id','!=',[3])
                 ->get();
-                
+                $dataCurrent_Month = DB::table('master_achievements')->where('month',date('m'))->where('month',date('m'))->get();
                 return view('masterData.achievement.scoring',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
                 'id'=>$user->id,
-                'data'=>$data
+                'data'=>$data,
+                'dataCM'=>$dataCurrent_Month,
+                // 'countDataCM'=>count($dataCurrent_Month)
                 ]);
             }
         }
@@ -344,9 +349,9 @@ class MasterAchievementController extends Controller
                 ->where('master_users.status','Aktif')
                 ->where('master_divisions.status','Aktif')
                 ->where('position_id','!=',[3])
-                // ->where('master_users.division_id','master_divisions.id')
                 ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
-            ->get();
+                ->get();
+
                 return view('masterData.achievement.eom',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -383,6 +388,7 @@ class MasterAchievementController extends Controller
             ->where('master_achievements.year',$periodeRequest[1])
             ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
            ->get();
+        //    dd($data);
     
             return view('masterData.achievement.listedeom',[
                 'data'=>$data,

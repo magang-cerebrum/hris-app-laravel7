@@ -133,7 +133,7 @@
                 $('#take_presence').submit();
             }
             else {
-                if (jarak <= 100000 ) {
+                if (jarak <= 10 ) {
                     take_snapshot()
                     $('#take_presence').submit();
                 }

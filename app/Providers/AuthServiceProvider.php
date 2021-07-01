@@ -38,7 +38,12 @@ class AuthServiceProvider extends ServiceProvider
                 return $staff;  
             }
         });
-
+        Gate::define('is_chief', function(MasterUser $user){
+            $chief = Auth::User()->position_id;
+            if($chief != 11 && $chief != 1 && $chief != 2){
+                return $chief;
+            }
+        });
         //
     }
 }

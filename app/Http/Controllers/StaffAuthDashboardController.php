@@ -99,7 +99,7 @@ class StaffAuthDashboardController extends Controller
                 ->orderByDesc('month')
                 ->first();
                 // dd($latestPeriodPerformances);
-                $monthDecidePerformance = null;
+                $monthDecidePerformance = array();
                 if($latestPeriodPerformances){
                     $monthDecidePerformance = DB::table('master_performances')
                     ->leftjoin('master_users',
@@ -127,7 +127,7 @@ class StaffAuthDashboardController extends Controller
                 ->orderByDesc('month')
                 ->first();
                 // dd($latestPe);
-                $monthDecideAchievement = null;
+                $monthDecideAchievement = array();
     
                 if($latestPeriodAchievement){
                     $monthDecideAchievement = DB::table('master_achievements')

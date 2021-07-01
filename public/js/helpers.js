@@ -76,3 +76,18 @@ function switch_month(month){
     
     return month;
 }
+
+function current_period($with_day = false){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    if($with_day){
+        today = dd + '/' + mm + '/' + yyyy;
+    } else {
+        today = mm + '/' + yyyy;
+    }
+    
+    return today;
+}

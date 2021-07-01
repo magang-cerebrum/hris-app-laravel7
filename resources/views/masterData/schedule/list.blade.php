@@ -6,9 +6,13 @@
 @section('head')
     <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
     <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
+    <link href="{{asset("plugins/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet">
+    <link href="{{asset("plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css")}}" rel="stylesheet">
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        .fc-time, .fc-left{display : none;}
+        td.break{width: 10px; height: 10px;}
         tbody {
             color: black;
         }
@@ -43,7 +47,7 @@
                         <select class="selectpicker" data-style="btn-info" id="filter">
                             <option value="Semua Divisi">Semua Divisi</option>
                             @foreach ($data_division as $division)
-                                <option value="{{$division->name}}">{{$division->name}}</option>
+                                <option value="{{$division->id}}">{{$division->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -58,10 +62,41 @@
 @endsection
 
 @section('script')
+    <script src="{{asset("plugins/fullcalendar/lib/moment.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
+    <script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>    
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('js/helpers.js')}}"></script>
     <script>
+        setTimeout(function () {
+            var periode = current_period();
+            document.getElementById('query').value = periode;
+            var division = 'Semua Divisi';
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }});
+            $.ajax({
+                url: '/admin/schedule/search',
+                type: 'POST',
+                data: {periode: periode,division: division},
+                success: function (data) {
+                    $("#panel-output").html(data);
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Mohon isi dulu form!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+            });
+        },1000);
+
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({
                 format: 'mm/yyyy',
@@ -92,7 +127,7 @@
                     },
                     error: function (jXHR, textStatus, errorThrown) {
                         Swal.fire({
-                            title: errorThrown,
+                            title: 'Error!',
                             text: "Mohon isi dulu form!",
                             icon: 'error',
                             width: 600

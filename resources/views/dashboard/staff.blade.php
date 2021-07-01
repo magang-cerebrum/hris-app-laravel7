@@ -75,6 +75,43 @@
     </div>
 @endif
 
+<div class="row mh-byrow">
+    <div class="col-md-6">
+        <div class="panel panel-warning panel-colorful media middle pad-all">
+            <div class="media-left">
+                <div class="pad-hor">
+                    <i class="pli-fingerprint icon-3x"></i>
+                </div>
+            </div>
+            <div class="media-body">
+                <p class="text-2x mar-no text-semibold">
+                    @if ($bool_presence == 0)
+                        Belum Absen Masuk
+                    @elseif ($bool_presence == 1)
+                        Belum Absen Pulang
+                    @else
+                        Sudah Absen
+                    @endif
+                </p>
+                <p class="mar-no">{{$schedule ? 'Shift anda hari ini '.$schedule : 'Anda Belum Mempunyai Jadwal'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-purple panel-colorful media middle pad-all">
+            <div class="media-left">
+                <div class="pad-hor">
+                    <i class="pli-fingerprint icon-3x"></i>
+                </div>
+            </div>
+            <div class="media-body">
+                <p class="text-2x mar-no text-semibold">{{$paid_leave_user}}</p>
+                <p class="mar-no">Sisa Cuti Tahunan Anda</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (Auth::user()->position_id != 11)
     <div class="row mh-byrow">
         <div class="col-md-4">

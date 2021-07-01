@@ -99,7 +99,7 @@ class StaffAuthDashboardController extends Controller
                 ->orderByDesc('month')
                 ->first();
                 // dd($latestPeriodPerformances);
-                $monthDecidePerformance = null;
+                $monthDecidePerformance = array();
                 if($latestPeriodPerformances){
                     $monthDecidePerformance = DB::table('master_performances')
                     ->leftjoin('master_users',
@@ -119,8 +119,6 @@ class StaffAuthDashboardController extends Controller
                     ->where('master_divisions.id',Auth::user()->division_id)
                     ->orderBy('performance_score','desc')
                     ->get();
-                    
-                    
                 }
                 
                 $latestPeriodAchievement = DB::table('master_achievements')
@@ -128,8 +126,7 @@ class StaffAuthDashboardController extends Controller
                 ->orderByDesc('year')
                 ->orderByDesc('month')
                 ->first();
-                // dd($latestPe);
-                $monthDecideAchievement = null;
+                $monthDecideAchievement = array();
     
                 if($latestPeriodAchievement){
                     $monthDecideAchievement = DB::table('master_achievements')
@@ -148,11 +145,10 @@ class StaffAuthDashboardController extends Controller
                     ])
                     ->where('month',$latestPeriodAchievement->month)
                     ->where('year',$latestPeriodAchievement->year)
+                    ->where('master_divisions.id',Auth::user()->division_id)
                     ->orderBy('score','desc')
                     ->get();
                 }
-    
-                // dd($monthDecideAchievement->take(3));
                 
                 for ($k = 1 ; $k<=12;$k++){
                     $max_score_performance=0;
@@ -257,7 +253,35 @@ class StaffAuthDashboardController extends Controller
                 ->where('master_users.division_id', $user->division_id)
                 ->select('work_from_homes.id')
                 ->get();
-                    // dd($monthDecideAchievement);
+
+                $date = date('Y-m-d');
+                $count_presence_in_day = DB::table('master_presences')
+                ->where('user_id', $user->id)
+                ->where('presence_date', $date)->get();
+                if (count($count_presence_in_day) == 0) {
+                    $bool_presence = 0;
+                }
+                else {
+                    if ($count_presence_in_day[0]->out_time == null) {
+                        $bool_presence = 1;
+                    }
+                    else {
+                        $bool_presence = 2;
+                    }
+                }
+
+                $temp_schedule = false;
+                $temp_day = 'shift_'.date('j', strtotime($date));
+                $temp_month = switch_month(date('m', strtotime($date)));
+                $temp_year = date('Y', strtotime($date));
+                $schedule = DB::table('master_job_schedules')
+                ->where('user_id', $user->id)
+                ->where('month', $temp_month)
+                ->where('year', $temp_year)->first();
+                if($schedule) {
+                    $temp_schedule = $schedule->$temp_day;
+                }
+
                 return view('dashboard.staff',[
                     'data_poster'=>$data_poster,
                     'name'=>$user->name,
@@ -285,6 +309,9 @@ class StaffAuthDashboardController extends Controller
                     'data_presence'=>$data_presence,
                     'data_paid_leave'=>$data_paid,
                     'data_wfh'=>$data_wfh,
+                    'bool_presence'=>$bool_presence,
+                    'schedule'=>$temp_schedule,
+                    'paid_leave_user'=>$user->yearly_leave_remaining,
                 ]);
             }
         }

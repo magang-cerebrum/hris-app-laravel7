@@ -6,6 +6,11 @@
 @section('head')
     <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+    <style>
+        #btn-search {
+            margin-top: 10px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -31,10 +36,10 @@
                         </div>
                     </div>
                 </div>
+                <button type="submit" class="btn btn-pink float-right" form="cari-presensi" id="btn-search">Cari Presensi</button>
         </div>
         <div class="panel-footer text-right">
-            <button type="button" class="btn btn-warning float-right" id="input-presence" onClick="presensi()">Absensi</button>
-            <button type="submit" class="btn btn-pink float-right" form="cari-presensi">Cari Presensi</button>
+            <button type="button" class="btn btn-warning float-right" id="input-presence" onClick="presensi()">Absensi {{$bool_presence == 0 ? 'Masuk' : ($bool_presence == 1 ? 'Pulang' : '')}}</button>
         </div>
     </div>
 

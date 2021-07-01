@@ -75,6 +75,43 @@
     </div>
 @endif
 
+<div class="row mh-byrow">
+    <div class="col-md-6">
+        <div class="panel panel-warning panel-colorful media middle pad-all">
+            <div class="media-left">
+                <div class="pad-hor">
+                    <i class="pli-fingerprint icon-3x"></i>
+                </div>
+            </div>
+            <div class="media-body">
+                <p class="text-2x mar-no text-semibold">
+                    @if ($bool_presence == 0)
+                        Belum Absen Masuk
+                    @elseif ($bool_presence == 1)
+                        Belum Absen Pulang
+                    @else
+                        Sudah Absen
+                    @endif
+                </p>
+                <p class="mar-no">{{$schedule ? 'Shift anda hari ini '.$schedule : 'Anda Belum Mempunyai Jadwal'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-purple panel-colorful media middle pad-all">
+            <div class="media-left">
+                <div class="pad-hor">
+                    <i class="pli-fingerprint icon-3x"></i>
+                </div>
+            </div>
+            <div class="media-body">
+                <p class="text-2x mar-no text-semibold">{{$paid_leave_user}}</p>
+                <p class="mar-no">Sisa Cuti Tahunan Anda</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (Auth::user()->position_id != 11)
     <div class="row mh-byrow">
         <div class="col-md-4">
@@ -125,7 +162,7 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Performa "{{$name}}"
-                    @if ($monthDecidePerformance)
+                    @if (count($monthDecidePerformance)!=0)
                         <span id="textvalperf">Tahun {{$monthDecidePerformance[0]->year}}</span> 
                     @endif
                 </h3>
@@ -158,7 +195,7 @@
         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Grafik Achievement "{{$name}}"
-                    @if ($monthDecideAchievement)
+                    @if (count($monthDecideAchievement)!=0)
                         <span id="textvalperf">Tahun {{$monthDecideAchievement[0]->year}}</span> 
                     @endif
                 </h3>
@@ -192,7 +229,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Performance 
-                    @if ($monthDecidePerformance)
+                    @if (count($monthDecidePerformance)!=0)
                         <span>({{switch_month($monthDecidePerformance[0]->month) . ' - ' .$monthDecidePerformance[0]->year}})</span>
                         <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
                         data-performance="{{$monthDecidePerformance}}" id="modal-performance">
@@ -268,7 +305,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Top Scored Achievement
-                    @if ($monthDecideAchievement)
+                    @if (count($monthDecideAchievement)!=0)
                         <span>({{switch_month($monthDecideAchievement[0]->month) . ' - ' .$monthDecideAchievement[0]->year}})</span>
                         <span data-toggle="modal" data-target="#modal-detail-top-scored" style="cursor: pointer"
                             data-achievement="{{$monthDecideAchievement}}" id="modal-achievement">

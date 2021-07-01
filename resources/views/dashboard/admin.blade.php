@@ -53,7 +53,7 @@
                     <!-- deklarasi carousel -->
                     <div class="carousel-inner" role="listbox">
                             @foreach ($data_poster as $item_poster)
-                            <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">d
+                            <div class="item {{$loop->iteration  == 1 ? "active" : ""}}">
                                 <img src="{{ asset('img/poster/'.$item_poster->file)}}" alt="{{$item_poster->name}}">
                             </div>
                             @endforeach

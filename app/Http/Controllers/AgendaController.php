@@ -187,7 +187,12 @@ class AgendaController extends Controller
                 return back();
             }
             $user = Auth::user();
+            $data_calendar_cm = MasterAgenda::where(function ($query) {
+                $query->whereRaw("start_event LIKE '" . current_period() . "%'")
+                    ->orWhereRaw("end_event LIKE '" . current_period() . "%'");
+            })->get();
             return view('masterData.agenda.searchCalendar',[
+                'data_calendar' => $data_calendar_cm,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -207,7 +212,6 @@ class AgendaController extends Controller
                     ->orWhereRaw("end_event LIKE '" . $request->periode . "%'");
             })
             ->get();
-            
             return view('masterData.agenda.calendar',[
                 'periode'=>$request->periode,
                 'month'=>explode("-", $request->periode)[1],

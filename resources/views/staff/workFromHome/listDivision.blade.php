@@ -132,5 +132,5 @@
             </div>
         </div>
     </div>
-    @include('staff/workFromHome/modaldivision')
+    @include('staff/workFromHome/modalDivision')
 @endsection

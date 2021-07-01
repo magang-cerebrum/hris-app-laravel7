@@ -15,6 +15,8 @@
     <script src="{{ asset('plugins/pace/pace.min.js')}}"></script>
     {{-- Sweetalert 2 --}}
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
+
+    <script type="text/javascript" src="{{asset('plugins/webcam/webcam.js')}}"></script>
     <style>
         #bg-overlay1 {
             background-image: url('../../img/background/bg-img.jpg');
@@ -32,32 +34,24 @@
             padding-bottom: 15px;
             margin-bottom: 20px;
         }
+        #Cam {
+            background:rgb(255,255,155);
+        }
+        #my_camera {
+            margin: auto;
+        }
         @media screen and (max-width: 600px) {
             .cls-content .cls-content-lg {
                 width: 98%;
             }
+            .panel-body {
+                padding: 15px 0 25px;
+            }
+            #Cam {
+                width: 90%;
+            }
         }
     </style>
-
-    @if ($bool_presence == 0)
-        <script type="text/javascript" src="{{asset('plugins/webcam/webcam.js')}}"></script>
-        <style type="text/css">
-            #Cam {
-                background:rgb(255,255,155);
-            }
-            #my_camera {
-                margin: auto;
-            }
-            @media screen and (max-width: 600px) {
-                .panel-body {
-                    padding: 15px 0 25px;
-                }
-                #Cam {
-                    width: 90%;
-                }
-            }
-        </style>
-    @endif
 </head>
 <body>
     <div id="container" class="cls-container">
@@ -72,9 +66,7 @@
                 <div class="panel-body">
                     <input type="hidden" name="user_id" value="{{$id}}" form="take_presence">
                     <input type="hidden" name="bool_presence" value="{{$bool_presence}}" form="take_presence">
-                    @if ($bool_presence == 0)
-                        <input type="hidden" name="image" id="image_presence" form="take_presence">
-                    @endif
+                    <input type="hidden" name="image" id="image_presence" form="take_presence">
                     <div class="mar-ver pad-btm">
                         <img src="{{ asset('img/profile-photos/'.$profile_photo)}}" class="img-circle img-lg">
                         <h1 class="h3">{{$name}}</h1>
@@ -82,11 +74,9 @@
                         <h2 class="h3">
                             {{$bool_presence == 0 ? 'Silahkan mengambil absensi masuk kerja' : 'Silahkan mengambil absensi pulang kerja'}}
                         </h2>
-                        @if ($bool_presence == 0)
-                            <div class="container" id="Cam"><b>Webcam Preview...</b>
-                                <div id="my_camera"></div>
-                            </div>
-                        @endif
+                        <div class="container" id="Cam"><b>Webcam Preview...</b>
+                            <div id="my_camera"></div>
+                        </div>
                         <div>
                             <button class="btn btn-success add-tooltip" type="button" onClick="getLocation()" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Ambil Absensi" form="take_presence">Absensi</button>
                             <a href="{{url ('/staff/presence')}}">
@@ -139,16 +129,12 @@
             var shift = {!!json_encode($shift) !!};
             var check_presen = {!!json_encode($bool_presence) !!};
             if (shift == 'WFH') {
-                if (check_presen == 0){
-                    take_snapshot()
-                }
+                take_snapshot()
                 $('#take_presence').submit();
             }
             else {
                 if (jarak <= 10 ) {
-                    if (check_presen == 0){
-                        take_snapshot()
-                    }
+                    take_snapshot()
                     $('#take_presence').submit();
                 }
                 else {

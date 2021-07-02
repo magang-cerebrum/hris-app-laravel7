@@ -27,7 +27,7 @@
 @section('content')
     <div class="panel panel-primary panel-bordered">
         <div class="panel-heading">
-            <h3 class="panel-title">Riwayat Pengajuan WFH Divisi</h3>
+            <h3 class="panel-title">Daftar Pengajuan WFH Divisi</h3>
         </div>
 
         <form action="" method="POST" id="form-approve-pending">

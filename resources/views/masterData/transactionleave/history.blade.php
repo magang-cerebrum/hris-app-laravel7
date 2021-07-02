@@ -15,18 +15,29 @@
         </form>
 
         <div class="panel-body" style="padding-top: 20px">
+            <div class="row mar-btm">
+                <div id="btn_paid_leave" style="display: inline">
+                    <a href="{{url('/admin/paid-leave/')}}" class="btn btn-dark btn-labeled add-tooltip"
+                        data-toggle="tooltip" data-container="body" data-placement="top"
+                        data-original-title="Kembali ke Daftar Pengajuan Cuti">
+                        <i class="fa fa-arrow-left"></i>
+                        Kembali
+                    </a>
+                </div>
             @if (count($data) == 0)
+            </div>
                 <div class="text-center">
                     <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
                     <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
                 </div>
             @else
-                <button id="btn-delete" class="btn btn-danger add-tooltip" style="margin-bottom: 10px" type="submit"
+                <button id="btn-delete" class="btn btn-danger add-tooltip" type="submit"
                     data-toggle="tooltip" data-container="body" data-placement="top"
                     data-original-title="Hapus Riwayat Pengajuan Cuti" form="form_history">
                     <i class="btn-label fa fa-trash"></i>
                     Hapus Data Terpilih
                 </button>
+            </div>
                 <div class="table-responsive">
                     <table id="masterdata-history-cuti"
                         class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"

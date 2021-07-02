@@ -158,7 +158,8 @@
                     <!--Footer button-->
                     <div class="panel-footer text-right">
                         <div class="box-inline">
-                            <button type="button" class="next btn btn-primary" form="bv-wz-form">Next</button>
+                            <a href="{{ url()->previous() }}" class="btn btn-dark">Cancel</a>
+                            <button type="button" class="next btn btn-primary" form="bv-wz-form" disabled>Next</button>
                             <button type="submit" class="finish btn btn-warning" form="bv-wz-form">Finish</button>
                         </div>
                     </div>
@@ -175,6 +176,7 @@
     <script src="{{asset("plugins/bootstrap-validator/bootstrapValidator.min.js")}}"></script>
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{asset("js/helpers.js")}}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 
     <script>
         $(document).ready(function(){
@@ -244,11 +246,11 @@
                                     break;
                                 }
                             };
+                            $('#bv-wz').find('.next').prop('disabled', false);
                         })
 
                         var url = '/staff/schedule/copyschedule/calculate'
                         $('#ajax').on('click',function(e){
-                            // var second_periode = document.getElementById('second_periode').value
                             $.ajaxSetup({
                                 headers: {
                                     'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
@@ -263,7 +265,9 @@
                                 },
                                 dataType:'json',
                                 success : function(response){
-                                    console.log(response)
+                                    
+                                    $('#bv-wz').find('.next').prop('disabled', true);
+
                                     for(datas in response.dataUser){
                                         completedName = response.dataUser[datas].name
                                         completedId = response.dataUser[datas].id
@@ -286,7 +290,6 @@
 
                                     var i = 1
                                     var valminor =[];
-                                    // console.log(response.dataMinor)
                                     for(dataMin in response.dataMinor){
                                     var select = document.createElement('select')
                                         select.setAttribute('class','selectpicker valminor-select')
@@ -301,7 +304,6 @@
                                         dateOfMinor.setAttribute('name','date[]')
                                         dateOfMinor.setAttribute('type','hidden')
                                         dateOfMinor.setAttribute('value', response.dataMinor[dataMin].day)
-                                        // console.log(response.dataMinor[dataMin].day)
                                         dateOfMinor.setAttribute('form','bv-wz-form')
                                         dateOfMinor.setAttribute('class','date-minor')
                                         var scheduleMinor = document.createTextNode(response.dataMinor[dataMin].shift)
@@ -324,9 +326,9 @@
                                             queue.push(valueRowsName);
                                         } else {
                                             queue.splice(queue.indexOf(valueRowsName), 1);
-                                        }    
+                                        };
+                                        $('#bv-wz').find('.next').prop('disabled', false);
                                     });   
-
                                     var urls = '/staff/schedule/copyschedule/calculates'
                                     $('#ajax').on('click',function(e){
                                         $('.valminor-select').each(function(){
@@ -335,6 +337,17 @@
                                         $('.date-minor').each(function(){
                                             dateMinor.push($(this).val())
                                         });
+                                        if(!queue.length>0){
+                                            Swal.fire({
+                                                    width:600,
+                                                    title: 'Error!',
+                                                    text: "Mohon Pilih Jadwal Karyawan yang akan di salin terlebih dahulu atau Mohon Pilih Target Copy Jadwal",
+                                                    icon: 'error',
+                                                    }).then(()=>{
+                                                            window.location.href = "";
+                                                    });
+
+                                        }
                                         var secondsum
                                         var checkboxdata
                                         var datascheckbox
@@ -361,16 +374,17 @@
                                                     document.getElementById('firstSum').appendChild(nodesradio)   
                                                     document.getElementById('periode').appendChild(periodeNoding)
                                                 }
+                                                $('#bv-wz').find('.next').prop('disabled', false);
                                             },
-                                            error : function (jXHR, textStatus, errorThrown) {
-                                                console.log(jXHR, textStatus, errorThrown)
-                                            }
+                                            error : function (jXHR, textStatus, errorThrown,XMLHttpRequest) {
+                                                
+                                             }
 
-                                        });
+                                         });
                                     });
                                 },
                                 error : function (jXHR, textStatus, errorThrown) {
-                                    console.log(jXHR, textStatus, errorThrown)
+                                
                                 }
                             });
                         })

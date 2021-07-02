@@ -137,7 +137,8 @@
                                                     <th style="width: 300px" >Pilih :</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tbodyCheckbox"></tbody>
+                                            <tbody id="tbodyCheckbox">
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -188,6 +189,7 @@
                     <!--Footer button-->
                     <div class="panel-footer text-right">
                         <div class="box-inline">
+                            <a href="" class="btn btn-dark">Restart</a>
                             <button type="button" class="next btn btn-primary" form="bv-wz-form" disabled>Next</button>
                             <button type="submit" class="finish btn btn-warning" form="bv-wz-form" disabled>Finish</button>
                         </div>
@@ -206,7 +208,7 @@
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{asset("js/helpers.js")}}"></script>
     <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
-
+    <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
     <script>
         $(document).ready(function(){
             $('#pickadate .input-group.date').datepicker({
@@ -307,6 +309,8 @@
                                         completedId = response.dataUser[datas].id
                                         tr = document.createElement("tr")
                                         td = document.createElement("td")
+                                        fieldset = document.createElement('fieldset')
+                                        fieldset.setAttribute('id','checkbox-fieldset')
                                         botTd = document.createElement('td')
                                         checkbox = document.createElement("input")
                                         checkbox.setAttribute('type','checkbox')
@@ -314,6 +318,8 @@
                                         checkbox.setAttribute('value',completedId)
                                         checkbox.setAttribute('class','chosen-checkbox')
                                         checkbox.setAttribute('name','chosen_checkbox[]')
+                                        checkbox.setAttribute('id',completedId)
+                                        fieldset.appendChild(checkbox)
                                         content = document.createTextNode(completedName)
                                         td.appendChild(content)
                                         botTd.appendChild(checkbox)
@@ -370,6 +376,18 @@
                                         $('.date-minor').each(function(){
                                             dateMinor.push($(this).val())
                                         });
+
+                                        if(!queue.length>0){
+                                            Swal.fire({
+                                                    width:600,
+                                                    title: 'Error!',
+                                                    text: "Mohon Pilih Jadwal Karyawan yang akan di salin terlebih dahulu atau Mohon Pilih Target Copy Jadwal",
+                                                    icon: 'error',
+                                                    }).then(()=>{
+                                                            window.location.href = "";
+                                                    });
+
+                                        }
                                         var secondsum
                                         var checkboxdata
                                         var datascheckbox
@@ -385,8 +403,8 @@
                                             },
                                             dataType:'json',
                                             success : function(response){
-                                                console.log(response)
                                                 for(datascheckbox in response.names){
+                                               
                                                     checkboxdata = response.names[datascheckbox].name
                                                     var checkboxTextnodes = document.createTextNode(checkboxdata + ", ")
                                                     document.getElementById('secondSum').appendChild(checkboxTextnodes)   
@@ -401,13 +419,13 @@
                                                 $('#bv-wz').find('.next').prop('disabled', false);
                                             },
                                             error : function (jXHR, textStatus, errorThrown) {
-                                                console.log(jXHR, textStatus, errorThrown)
+                                                
                                             }
                                         });
                                     });
                                 },
                                 error : function (jXHR, textStatus, errorThrown) {
-                                    console.log(jXHR, textStatus, errorThrown)
+
                                 }
                             });
                         })

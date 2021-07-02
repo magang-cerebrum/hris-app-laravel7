@@ -171,6 +171,7 @@
             <div id="information" class="text-center text-info"></div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/agenda')}}" class="btn btn-dark">Kembali ke Data Agenda</a>
             <button class="btn btn-mint" type="button" form="create_agenda" id="btn-submit">Tambah</button>
         </div>
     </div>

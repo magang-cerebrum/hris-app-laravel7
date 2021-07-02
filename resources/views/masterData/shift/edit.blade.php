@@ -128,6 +128,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/shift')}}" class="btn btn-dark">Kembali ke Data Shift</a>
             <button class="btn btn-mint" type="submit" form="form_edit">Simpan</button>
         </div>
     </div>

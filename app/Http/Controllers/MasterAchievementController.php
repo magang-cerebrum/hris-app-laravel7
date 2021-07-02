@@ -351,7 +351,6 @@ class MasterAchievementController extends Controller
                 ->where('position_id','!=',[3])
                 ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
                 ->get();
-
                 return view('masterData.achievement.eom',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -388,12 +387,23 @@ class MasterAchievementController extends Controller
             ->where('master_achievements.year',$periodeRequest[1])
             ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
            ->get();
-           
+    
+           $month =$periodeRequest[0];
+           $year = $periodeRequest[1];
+           $checkEOM = DB::table('master_eoms')
+           ->leftJoin('master_users','master_eoms.user_id','=','master_users.id')
+           ->where('month',$month)
+           ->where('year',$year)
+           ->select('name as eom_holder','month','year')
+           ->first();
+        //    dd($checkEOM);
             return view('masterData.achievement.listedeom',[
                 'data'=>$data,
                 'divisions'=>$divisions,
                 'month'=>$periodeRequest[0],
-                'year'=>$periodeRequest[1]
+                'year'=>$periodeRequest[1],
+                'countcheckEOM'=>($checkEOM ? true : false),
+                'checkEOM'=>$checkEOM
             ]);
         }
         else {
@@ -408,20 +418,22 @@ class MasterAchievementController extends Controller
             $month = $request->month;
             $year = $request->year;
             $check = DB::table('master_eoms')
-            ->where('user_id',$user_id)
             ->where('month',$month)
-            ->where('year',$year)->get();
-            if(count($check)>0){
-                foreach($check as $items){
-                    DB::table('master_eoms')->where('id',$items->id)->update(['user_id'=>$user_id]);
-                }
+            ->where('year',$year)->first();
+            if($check){
+                    DB::table('master_eoms')->where('id',$check->id)->update(['user_id'=>$user_id]);
+                    Alert::success('Berhasil','Employee of the month berhasil diupdate!');
+                
             }
-            DB::table('master_eoms')->insert([
-                'user_id'=>$user_id,
+            else{
+                DB::table('master_eoms')->insert([
+                    'user_id'=>$user_id,
                     'month'=>$month,
                     'year'=>$year
-            ]);
-            Alert::success('Berhasil','Employee of the month berhasil terpilih!');
+                ]);
+                
+                Alert::success('Berhasil','Employee of the month berhasil terpilih!');
+            }
             return redirect('/admin/achievement/eom');
         }
         else {

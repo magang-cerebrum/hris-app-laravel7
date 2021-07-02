@@ -831,8 +831,7 @@ class MasterJobScheduleController extends Controller
                 'master_divisions.name as division_name'
             )->orderBy('division_name','asc')
             ->get();
-            $division = DB::table('master_divisions')->get();
-            // dd($data);
+
             $user = Auth::user();
             return view('masterData.schedule.copy',[
                 'name'=>$user->name,

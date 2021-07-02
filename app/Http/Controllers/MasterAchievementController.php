@@ -250,7 +250,11 @@ class MasterAchievementController extends Controller
             ->whereNotIn('position_id',[1,2,3])
             ->get();
             foreach ($check_user as $item){$ids[] = $item->id;}
-    
+            if($check_user->isEmpty()){
+                Alert::error('Data grafik tidak ditemukan!', 'Mohon maaf, pencarian data grafik "' . $request->get('query') . '" tidak ditemukan!');
+                return redirect('admin/achievement/charts');
+            }
+            
             $score = array();
             $average = array();
             $max = array();

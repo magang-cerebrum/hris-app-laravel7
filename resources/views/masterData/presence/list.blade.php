@@ -22,12 +22,6 @@
             <h3 class="panel-title">Data Presensi Staff </h3>
         </div>
 
-        <form action="/admin/presence/processed" method="POST" id="process">
-            @csrf
-        </form>
-        <form action="/admin/presence/reset" method="POST" id="reset">
-            @csrf
-        </form>
         <form action="/admin/presence/filter" method="POST" id="filter">
             @csrf
         </form>
@@ -60,10 +54,6 @@
                 <div class="col-sm-1"><input type="submit" value="Lihat Presensi" class="btn btn-dark" id="btn-search" form="filter"></div>
             </div>
         </div>
-        <div class="panel-footer">
-            <button type="submit" class="btn btn-success" form="process">Get Processed Data</button>
-            <button type="submit" class="btn btn-dark" form="reset">Reset Log Presence</button>
-        </div>
     </div>
 
     <div id="panel-output"></div>
@@ -76,7 +66,37 @@
     <script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
     <script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
     <script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
+    <script src="{{asset("js/helpers.js")}}"></script>
     <script>
+        setTimeout(function () {
+            let division = 'all';
+            let periode = current_period('-',true);
+            $('#periode').val(periode);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }});
+            $.ajax({
+                url: '/admin/presence/filter',
+                type: 'POST',
+                data: {
+                    periode: periode,
+                    division: division
+                },
+                success: function (data) {
+                    $("#panel-output").html(data);
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Isi form terlebih dahulu!",
+                        icon: 'error',
+                        width: 600
+                    });
+                }
+            });
+        },1000);
+
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({
                 format: 'yyyy-mm',

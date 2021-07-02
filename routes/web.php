@@ -430,6 +430,8 @@ Route::prefix('/admin/presence')->middleware('auth')->group(function () {
     Route::post('/reset', [PresenceController::class,'resetStats']);
 });
 
+Route::get('/recruitment', [MasterRecruitmentController::class,'form']);
+
 //route testing
 Route::view('/test', 'kamera');
 Route::get('/test/hitung',[UserController::class,'test']);

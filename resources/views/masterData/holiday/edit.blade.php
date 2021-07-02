@@ -48,6 +48,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/holiday')}}" class="btn btn-dark">Kembali ke Data Hari Libur</a>
             <button class="btn btn-warning" type="submit" form="edit">Simpan</button>
         </div>
     </div>

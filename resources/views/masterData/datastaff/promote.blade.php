@@ -194,7 +194,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
-            <a class="btn btn-dark" type="button" href="{{url('/admin/data-staff')}}" id="btn-back">Kembali ke menu Data Staff</a>
+            <a class="btn btn-dark" type="button" href="{{url('/admin/data-staff')}}" id="btn-back">Kembali ke Informasi Staff</a>
             <button class="btn btn-mint" type="submit" onclick="submit_promote()" form="form-promotion" id="btn-submit" disabled>Promosikan</button>
         </div>
     </div>

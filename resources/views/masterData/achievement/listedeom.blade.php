@@ -31,16 +31,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{-- @dump($data->where('division_id','=',$divisionsItems->id)->count()) --}}
+                                        @if ($data->where('division_id','=',$divisionsItems->id)->count()==0)
+                                            <td colspan="4" class="text-uppercase text-bold text-center" id="data-exist">Nilai Achievement dan Nilai Performance pada periode ini belum ada</td>
+                                        @else
                                         @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
+                                       
                                         <tr>
+                                           
                                             <td class="text-center" id="staff_name">{{$dataItem->staff_name}}</td>
                                             <td class="text-center">{{$dataItem->achievement_score}}</td>
                                             <td class="text-center">{{$dataItem->performance_score}}</td>
                                             <td class="text-center"><input type="radio" name="radio_input_eom"
-                                                    id="radio-eom{{$loop->iteration}}" form="choose-eom" value="{{$dataItem->staff_id}}">
-                                            </td>
+                                                    id="radio-eom{{$loop->iteration}}" form="choose-eom" value="{{$dataItem->staff_id}}"></td>
+                                            
                                         </tr>
                                         @endforeach
+                                        @endif
+                                        
                                     </tbody>
                                 </table>
                             </div>

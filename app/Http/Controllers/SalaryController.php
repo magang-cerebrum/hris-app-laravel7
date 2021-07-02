@@ -26,6 +26,7 @@ class SalaryController extends Controller
             }
             $user = Auth::user();
             return view('masterData.salary.search',[
+                'menu'=>['m-data','s-data-gaji'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -66,6 +67,7 @@ class SalaryController extends Controller
             $bool_check_day = $next_day <= date('Y-m-d');
     
             return view('masterData.salary.list', [
+                'menu'=>['',''],
                 'data' => $data,
                 'month' => $month,
                 'year' => $year,
@@ -98,6 +100,7 @@ class SalaryController extends Controller
             ->get();
     
             return view('staff.salary.list', [
+                'menu'=>['m-gaji',''],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -448,6 +451,7 @@ class SalaryController extends Controller
             ])->first();
     
             return view('masterData.salary.edit',[
+                'menu'=>['m-data','s-data-gaji'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

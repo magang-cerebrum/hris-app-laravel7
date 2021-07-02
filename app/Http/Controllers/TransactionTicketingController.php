@@ -29,6 +29,7 @@ class TransactionTicketingController extends Controller
             ->orderByDesc('created_at')
             ->paginate(10);
             return view('masterData.transactionticketing.list',[
+                'menu'=>['m-sistem','s-sistem-tiketing'],
                 'ticketing' => $ticketing,
                 'done' => $ticketing_done,
                 'name'=>$user->name,
@@ -57,6 +58,7 @@ class TransactionTicketingController extends Controller
                 ->first();
             $status = ['Dikirimkan','On Progress','Selesai'];
             return view('masterData.transactionticketing.edit',[
+                'menu'=>['m-sistem','s-sistem-tiketing'],
                 'ticketing' => $ticket,
                 'sender' => $namanya,
                 'status' => $status,
@@ -141,6 +143,7 @@ class TransactionTicketingController extends Controller
             }
             $user =  Auth::user();
             return view('masterData.transactionticketing.result', [
+                'menu'=>['m-sistem','s-sistem-tiketing'],
                 'ticketing' => $ticketing,
                 'done' => $ticketing_done,
                 'name'=>$user->name,
@@ -168,6 +171,7 @@ class TransactionTicketingController extends Controller
                 ->orderByDesc('created_at')
                 ->paginate(10);
             return view('staff.transactionticketing.history',[
+                'menu'=>['m-tiketing',''],
                 'ticketing' => $ticketing,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -185,8 +189,12 @@ class TransactionTicketingController extends Controller
             if(Gate::denies('is_staff')){
                 return abort(403,'Access Denied, Only Staff Can Access');
             }elseif(Gate::allows('is_staff')){
-            $user = Auth::user();
-            return view('staff.transactionticketing.createticket',['id'=>$user->id]);}
+                $user = Auth::user();
+                return view('staff.transactionticketing.createticket',[
+                    'menu'=>['',''],
+                    'id'=>$user->id]
+                );
+            }
         }
         else {
             Alert::info('Sesi berakhir!','Silahkan login kembali!');

@@ -161,6 +161,7 @@ class AdminAuthDashboardController extends Controller
                 }
     
                 return view('dashboard.admin',[
+                    'menu'=>['m-dashboard',''],
                     'data_absensi'=>$data_absensi,
                     'data_poster'=>$data_poster,
                     'data_recruitment'=>$data_rect,
@@ -198,6 +199,7 @@ class AdminAuthDashboardController extends Controller
             $roles = DB::table('master_roles')->where('id', $data->role_id)->get();
             
             return view('dashboard.profile',[
+                'menu'=>['',''],
                 'name'=>$data->name,
                 'email'=>$data->email,
                 'id'=>$data->id,
@@ -225,6 +227,7 @@ class AdminAuthDashboardController extends Controller
             $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
             
             return view('dashboard.editprofile',[
+                'menu'=>['',''],
                 'name'=>$data->name,
                 'email'=>$data->email,
                 'id'=>$data->id,

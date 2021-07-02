@@ -38,6 +38,7 @@ class PresenceController extends Controller
             }
             
             return view('staff.presence.history',[
+                'menu'=>['m-presensi',''],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -66,6 +67,7 @@ class PresenceController extends Controller
             ->get();
     
             return view('staff.presence.division',[
+                'menu'=>['m-d-presensi',''],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -124,6 +126,7 @@ class PresenceController extends Controller
             ->where('user_id', $user->id)->first();
     
             return view('staff.presence.take',[
+                'menu'=>['',''],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -252,6 +255,7 @@ class PresenceController extends Controller
             $user=Auth::user();
             $data = MasterPresence::whereBetween('presence_date',[date($request->start),date($request->end)])->where('user_id','=',$user->id)->paginate(5);
             return view('staff.presence.result',[
+                'menu'=>['',''],
                 'data' => $data,
                 'start' => $start,
                 'end' => $end
@@ -272,6 +276,7 @@ class PresenceController extends Controller
             $user = Auth::user();
             $data_divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
             return view('masterData.presence.list',[
+                'menu'=>['m-data','s-data-presensi'],
                 'divisions'=> $data_divisions,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -356,6 +361,7 @@ class PresenceController extends Controller
             $division_name = DB::table('master_divisions')
             ->where('id',$request->division)->select('name')->first();
             return view('masterData.presence.calendar', [
+                'menu'=>['',''],
                 'data'=>$data,
                 'division'=>$division_name,
                 'day'=>$days_in_month,

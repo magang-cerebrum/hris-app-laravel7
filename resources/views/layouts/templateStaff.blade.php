@@ -204,7 +204,7 @@
                                         <li class="list-header">Navigation</li>
                             
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-dashboard' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/dashboard')}}">
                                                 <i class="psi-home"></i>
                                                 <span class="menu-title">Dashboard</span>
@@ -212,7 +212,7 @@
                                         </li>
                             
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-presensi' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/presence')}}">
                                                 <i class="psi-checked-user"></i>
                                                 <span class="menu-title">Presensi</span>
@@ -220,7 +220,7 @@
                                         </li>
 
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-agenda' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/agenda')}}">
                                                 <i class="fa fa-calendar"></i>
                                                 <span class="menu-title">Agenda Kerja</span>
@@ -228,7 +228,7 @@
                                         </li>
 
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-jadwal' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/schedule')}}">
                                                 <i class="fa fa-calendar-check-o"></i>
                                                 <span class="menu-title">Jadwal Kerja</span>
@@ -236,7 +236,7 @@
                                         </li>
                                        
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-cuti' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('#')}}">
                                                 <i class="fa fa-calendar-minus-o"></i>
                                                 <span class="menu-title">Cuti</span>
@@ -244,14 +244,18 @@
                                             </a>
 
                                             <!--Submenu-->
-                                            <ul class="collapse">
-                                                <li><a href="{{ url('staff/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Pengajuan Cuti</a></li>
-                                                <li><a href="{{ url('staff/paid-leave/history')}}"><i class="fa fa-history"></i>Riwayat Cuti</a></li>
+                                            <ul class="collapse {{$menu[0] == 'm-cuti' ? 'in' : ''}}">
+                                                <li {{$menu[1] == 's-cuti-pengajuan' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Pengajuan Cuti</a>
+                                                </li>
+                                                <li {{$menu[1] == 's-cuti-riwayat' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/paid-leave/history')}}"><i class="fa fa-history"></i>Riwayat Cuti</a>
+                                                </li>
                                             </ul>
                                         </li>
 
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-wfh' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('#')}}">
                                                 <i class="psi-monitor-laptop"></i>
                                                 <span class="menu-title">Work From Home</span>
@@ -259,14 +263,18 @@
                                             </a>
 
                                             <!--Submenu-->
-                                            <ul class="collapse">
-                                                <li><a href="{{ url('staff/wfh')}}"><i class="psi-monitor-laptop"></i>Pengajuan WFH</a></li>
-                                                <li><a href="{{ url('staff/wfh/history')}}"><i class="fa fa-history"></i>Riwayat WFH</a></li>
+                                            <ul class="collapse {{$menu[0] == 'm-wfh' ? 'in' : ''}}">
+                                                <li {{$menu[1] == 's-wfh-pengajuan' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/wfh')}}"><i class="psi-monitor-laptop"></i>Pengajuan WFH</a>
+                                                </li>
+                                                <li {{$menu[1] == 's-wfh-riwayat' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/wfh/history')}}"><i class="fa fa-history"></i>Riwayat WFH</a>
+                                                </li>
                                             </ul>
                                         </li>
                                         
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-gaji' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/salary')}}">
                                                 <i class="fa fa-money"></i>
                                                 <span class="menu-title">Gaji</span>
@@ -274,7 +282,7 @@
                                         </li>                                       
                                         
                                         <!--Menu list item-->
-                                        <li>
+                                        <li {{$menu[0] == 'm-tiketing' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/ticketing')}}">
                                                 <i class="psi-support"></i>
                                                 <span class="menu-title">Ticketing</span>
@@ -285,14 +293,14 @@
                                         <!--Category name-->
                                         <li class="list-header">Division</li>
 
-                                        <li>
+                                        <li {{$menu[0] == 'm-d-data' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/data-staff')}}">
                                                 <i class="fa fa-users"></i>
                                                 <span class="menu-title">Data Staff Divisi</span>
                                             </a>
                                         </li>
 
-                                        <li>
+                                        <li {{$menu[0] == 'm-d-jadwal' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('#')}}">
                                                 <i class="fa fa-calendar-o"></i>
                                                 <span class="menu-title">Jadwal Kerja Divisi</span>
@@ -300,36 +308,44 @@
                                             </a>
 
                                             <!--Submenu-->
-                                            <ul class="collapse">
-                                                <li><a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a></li>
-                                                <li><a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a></li>
-                                                <li><a href="{{ url('staff/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a></li>
-											    <li><a href="{{ url('staff/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a></li>
+                                            <ul class="collapse {{$menu[0] == 'm-d-jadwal' ? 'in' : ''}}">
+                                                <li {{$menu[1] == 's-d-jadwal-tambah' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/schedule/add')}}"><i class="fa fa-calendar-plus-o"></i>Tambah Jadwal</a>
+                                                </li>
+                                                <li {{$menu[1] == 's-d-jadwal-daftar' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/schedule/division')}}"><i class="psi-calendar-4"></i>Lihat Jadwal Divisi</a>
+                                                </li>
+                                                <li {{$menu[1] == 's-d-jadwal-edit' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a>
+                                                </li>
+											    <li {{$menu[1] == 's-d-jadwal-copy' ? 'class=active-link' : ''}}>
+                                                    <a href="{{ url('staff/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a>
+                                                </li>
                                             </ul>
                                         </li>
 
-                                        <li>
+                                        <li {{$menu[0] == 'm-d-presensi' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/presence/division')}}">
                                                 <i class="fa fa-clock-o"></i>
                                                 <span class="menu-title">Presensi Divisi</span>
                                             </a>
                                         </li>
 
-                                        <li>
+                                        <li {{$menu[0] == 'm-d-cuti' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/paid-leave/division')}}">
                                                 <i class="fa fa-user-md"></i>
                                                 <span class="menu-title">Cuti Anggota Divisi</span>
                                             </a>
                                         </li>
 
-                                        <li>
+                                        <li {{$menu[0] == 'm-d-wfh' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/wfh/division')}}">
                                                 <i class="psi-monitor-2"></i>
                                                 <span class="menu-title">WFH Anggota Divisi</span>
                                             </a>
                                         </li>
 
-                                        <li>
+                                        <li {{$menu[0] == 'm-d-performa' ? 'class=active-sub' : ''}}>
                                             <a href="#">
                                                 <i class="fa fa-trophy"></i>
                                                 <span class="menu-title">Performa Divisi</span>
@@ -337,10 +353,16 @@
                                             </a>
                                             
                                             <!--Submenu-->
-                                            <ul class="collapse">
-                                                <li><a href="/staff/performance"><i class="fa fa-cubes"></i>Leaderboard</a></li>
-                                                <li><a href="/staff/performance/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
-                                                <li><a href="/staff/performance/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>                                
+                                            <ul class="collapse {{$menu[0] == 'm-d-performa' ? 'in' : ''}}">
+                                                <li {{$menu[1] == 's-d-performa-leaderboard' ? 'class=active-link' : ''}}>
+                                                    <a href="/staff/performance"><i class="fa fa-cubes"></i>Leaderboard</a>
+                                                </li>
+                                                <li {{$menu[1] == 's-d-performa-penilaian' ? 'class=active-link' : ''}}>
+                                                    <a href="/staff/performance/scoring"><i class="fa fa-sliders"></i>Penilaian</a>
+                                                </li>
+                                                <li {{$menu[1] == 's-d-performa-grafik' ? 'class=active-link' : ''}}>
+                                                    <a href="/staff/performance/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a>
+                                                </li>                                
                                             </ul>
                     
                                         </li>

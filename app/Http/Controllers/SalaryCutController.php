@@ -28,6 +28,7 @@ class SalaryCutController extends Controller
             ])
             ->paginate(10);
             return view('masterData.salarycut.list',[
+                'menu'=>['m-data','s-data-potongan'],
                 'salarycut' => $salarycut,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -52,6 +53,7 @@ class SalaryCutController extends Controller
             $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
             $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
             return view('masterData.salarycut.create', [
+                'menu'=>['m-data','s-data-potongan'],
                 'data_type'=>$data_type,
                 'staff'=>$staff,
                 'name'=>$user->name,
@@ -123,6 +125,7 @@ class SalaryCutController extends Controller
             $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
             $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
             return view('masterData.salarycut.edit',[
+                'menu'=>['m-data','s-data-potongan'],
                 'data_type'=>$data_type,
                 'cut' => $cut,
                 'staff' => $staff,
@@ -235,6 +238,7 @@ class SalaryCutController extends Controller
             $user =  Auth::user();
     
             return view('masterData.salarycut.result', [
+                'menu'=>['m-data','s-data-potongan'],
                 'search' => $request->get('query'),
                 'salarycut' => $data,
                 'name'=>$user->name,

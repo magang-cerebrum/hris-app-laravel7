@@ -33,6 +33,7 @@ class WorkFromHomeController extends Controller
             $user = Auth::user();
             
             return view('masterData.workFromHome.list', [
+                'menu'=>['m-data','s-data-wfh'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -65,6 +66,7 @@ class WorkFromHomeController extends Controller
             $user = Auth::user();
     
             return view('masterData.workFromHome.history', [
+                'menu'=>['m-data','s-data-wfh'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -83,6 +85,7 @@ class WorkFromHomeController extends Controller
         if(Auth::check()){
             $user = Auth::user();
             return view('staff.workFromHome.create', [
+                'menu'=>['m-wfh','s-wfh-pengajuan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -211,6 +214,7 @@ class WorkFromHomeController extends Controller
             ->paginate(5);
             
             return view('staff.workFromHome.history',[
+                'menu'=>['m-wfh','s-wfh-riwayat'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -370,6 +374,7 @@ class WorkFromHomeController extends Controller
             )
             ->paginate(5);
             return view('staff.workFromHome.listDivision',[
+                'menu'=>['m-d-wfh',''],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -397,6 +402,7 @@ class WorkFromHomeController extends Controller
             ->paginate(5);
             
             return view('staff.workFromHome.historyDivision',[
+                'menu'=>['m-d-wfh',''],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

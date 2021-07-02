@@ -8,20 +8,28 @@
 
 <div class="panel panel-bordered panel-danger">
     <div class="panel-heading">
-        <h3 class="panel-title">{{'Data Presensi Bulan '.switch_month($month).' - '.$year}} </h3>
+        <h3 class="panel-title">{{'Data Presensi Bulan '.switch_month($month).' - '.$year . '| Divisi : ' . ($division === null ? 'Semua Divisi' : $division->name)}} </h3>
     </div>
     <div class="panel-body" style="padding-top: 20px">
-        <div id='calendar'></div><br>
-        <table><tr>
-            <td style="width: 15px;height: 15px;background-color:#2B323A"></td><td class="break"></td><td>: Tidak Hadir</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#79AF3A"></td><td class="break"></td><td>: Hadir</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#1F897F"></td><td class="break"></td><td>: Absen Masuk</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#FF8806"></td><td class="break"></td><td>: Terlambat</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#953CA4"></td><td class="break"></td><td>: Terlambat Masuk</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#F22314"></td><td class="break"></td><td>: Off</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#ED417B"></td><td class="break"></td><td>: Cuti</td><td class="break">
-            <td style="width: 15px;height: 15px;background-color:#290657"></td><td class="break"></td><td>: Sakit</td><td class="break">
-        <tr></table>
+        @if (empty($data))
+            <div class="text-center text-bold text-danger">
+                Tidak ada data presensi ditemukan untuk bulan ini. <br>
+                Hal ini terjadi karena belum ada jadwal yang dibuat untuk staff pada bulan ini. <br>
+                <a href="{{url('/admin/schedule/add')}}" class="btn btn-warning mar-top">Klik disini untuk menambahkan jadwal kerja!</a>
+            </div>
+        @else
+            <div id='calendar'></div><br>
+            <table><tr>
+                <td style="width: 15px;height: 15px;background-color:#2B323A"></td><td class="break"></td><td>: Tidak Hadir</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#79AF3A"></td><td class="break"></td><td>: Hadir</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#1F897F"></td><td class="break"></td><td>: Absen Masuk</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#FF8806"></td><td class="break"></td><td>: Terlambat</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#953CA4"></td><td class="break"></td><td>: Terlambat Masuk</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#F22314"></td><td class="break"></td><td>: Off</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#ED417B"></td><td class="break"></td><td>: Cuti</td><td class="break">
+                <td style="width: 15px;height: 15px;background-color:#290657"></td><td class="break"></td><td>: Sakit</td><td class="break">
+            <tr></table>
+        @endif
     </div>
 </div>
 

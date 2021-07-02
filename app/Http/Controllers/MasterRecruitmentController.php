@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MasterJobRecruitment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class MasterRecruitmentController extends Controller
             $user = Auth::user();
             $data = MasterRecruitment::paginate(10);
             return view('masterData.recruitment.listRecruitment', [
+                'menu'=>['m-rekruitasi','s-rekruitasi-daftar'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -33,9 +35,10 @@ class MasterRecruitmentController extends Controller
         }
     }
 
-    public function create()
-    {
-        return view('recruitment.recruitment');
+    public function form()
+    {  
+        $data = MasterJobRecruitment::get();
+        return view('recruitment.recruitment',['data' => $data]);
     }
 
     public function store(Request $request)
@@ -128,6 +131,7 @@ class MasterRecruitmentController extends Controller
             ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
             ->paginate(10);
             return view('masterData.recruitment.resultRecruitment',[
+                'menu'=>['m-rekruitasi','s-rekruitasi-daftar'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

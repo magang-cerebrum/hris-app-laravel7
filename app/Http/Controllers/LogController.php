@@ -21,6 +21,7 @@ class LogController extends Controller
             $log = DB::table('activity_log')->orderByDesc('created_at')->paginate(10);
             $user = Auth::user();
             return view('system.logs.list',[
+                'menu'=>['m-sistem','s-sistem-log'],
                 'data'=>$log,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -71,6 +72,7 @@ class LogController extends Controller
             $user =  Auth::user();
     
             return view('system.logs.result', [
+                'menu'=>['m-sistem','s-sistem-log'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

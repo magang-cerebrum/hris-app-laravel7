@@ -20,6 +20,7 @@ class PositionController extends Controller
             $user = Auth::user();
             $position = MasterPosition::get();
             return view('masterData.position.list',[
+                'menu'=>['m-master','s-master-jabatan'],
                 'position' => $position,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -42,6 +43,7 @@ class PositionController extends Controller
             }
             $user = Auth::user();
             return view('masterData.position.create', [
+                'menu'=>['m-master','s-master-jabatan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -79,6 +81,7 @@ class PositionController extends Controller
             }
             $user = Auth::user();
             return view('masterData.position.edit',[
+                'menu'=>['m-master','s-master-jabatan'],
                 'position' => $position,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

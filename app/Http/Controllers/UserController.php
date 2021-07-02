@@ -19,6 +19,7 @@ class UserController extends Controller
             $pass = Auth::user()->password;
             if(Route::current()->uri == "admin/password" && Gate::allows('is_admin')){
                 return view('auth.editpass',[
+                    'menu'=>['',''],
                     'pass' => $pass,
                     'id'=>$id,
                 ]);
@@ -28,6 +29,7 @@ class UserController extends Controller
             }
             elseif(Route::current()->uri == "staff/password" && Gate::allows('is_staff')){
                 return view('auth.editpass',[
+                    'menu'=>['',''],
                     'pass' => $pass,
                     'id'=>$id,
                 ]);

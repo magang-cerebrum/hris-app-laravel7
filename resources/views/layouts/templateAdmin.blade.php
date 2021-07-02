@@ -195,7 +195,7 @@
 						            <li class="list-header">Navigation</li>
 						
 						            <!--Menu list item-->
-						            <li>
+						            <li {{$menu[0] == 'm-dashboard' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('admin/dashboard')}}">
 						                    <i class="psi-home"></i>
 						                    <span class="menu-title">Dashboard</span>
@@ -203,7 +203,7 @@
 						            </li>
 
 						            <!--Menu list item-->
-						            <li>
+						            <li {{$menu[0] == 'm-agenda' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('admin/agenda/calendar')}}">
 						                    <i class="fa fa-calendar"></i>
 						                    <span class="menu-title">Agenda Kerja</span>
@@ -211,7 +211,7 @@
 						            </li>
 						
 						            <!--Menu list item-->
-						            <li>
+						            <li {{$menu[0] == 'm-data' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('#')}}">
 						                    <i class="fa fa-users"></i>
 						                    <span class="menu-title">Data Staff</span>
@@ -219,19 +219,35 @@
 						                </a>
 						
 						                <!--Submenu-->
-						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Informasi Staff</a></li>
-                                            <li><a href="{{ url('admin/presence')}}"><i class="psi-checked-user"></i>Presensi</a></li>
-											<li><a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a></li>
-                                            <li><a href="{{ url('admin/wfh')}}"><i class="psi-monitor-laptop"></i>Work From Home</a></li>
-											<li><a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a></li>
-                                            <li><a href="{{ url('admin/overtime')}}"><i class="psi-overtime"></i>Lembur</a></li>
-                                            <li><a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a></li>
-                                            <li><a href="{{ url('admin/salary-allowance')}}"><i class="psi-wallet-2"></i>Tunjangan Gaji</a></li>
+						                <ul class="collapse {{$menu[0] == 'm-data' ? 'in' : ''}}">
+                                            <li {{$menu[1] == 's-data-info' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/data-staff')}}"><i class="fa fa-users"></i>Informasi Staff</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-data-presensi' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/presence')}}"><i class="psi-checked-user"></i>Presensi</a>
+                                            </li>
+											<li {{$menu[1] == 's-data-cuti' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/paid-leave')}}"><i class="fa fa-calendar-minus-o"></i>Cuti</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-data-wfh' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/wfh')}}"><i class="psi-monitor-laptop"></i>Work From Home</a>
+                                            </li>
+											<li {{$menu[1] == 's-data-gaji' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/salary')}}"><i class="fa fa-money"></i>Gaji</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-data-lembur' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/overtime')}}"><i class="psi-overtime"></i>Lembur</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-data-potongan' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/salary-cut')}}"><i class="fa fa-scissors"></i>Potongan Gaji</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-data-tunjangan' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/salary-allowance')}}"><i class="psi-wallet-2"></i>Tunjangan Gaji</a>
+                                            </li>
 						                </ul>
 						            </li>
 
-                                    <li>
+                                    <li {{$menu[0] == 'm-jadwal' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('#')}}">
 						                    <i class="psi-checked-user"></i>
 						                    <span class="menu-title">Jadwal Kerja</span>
@@ -239,16 +255,24 @@
 						                </a>
 						
 						                <!--Submenu-->
-						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/schedule')}}"><i class="psi-calendar-4"></i>Daftar Jadwal</a></li>
-											<li><a href="{{ url('admin/schedule/add')}}"><i class="psi-checked-user"></i>Tambah Jadwal</a></li>
-                                            <li><a href="{{ url('admin/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a></li>
-											<li><a href="{{ url('admin/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a></li>
+						                <ul class="collapse {{$menu[0] == 'm-jadwal' ? 'in' : ''}}">
+                                            <li {{$menu[1] == 's-jadwal-daftar' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/schedule')}}"><i class="psi-calendar-4"></i>Daftar Jadwal</a>
+                                            </li>
+											<li {{$menu[1] == 's-jadwal-tambah' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/schedule/add')}}"><i class="psi-checked-user"></i>Tambah Jadwal</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-jadwal-edit' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/schedule/edit')}}"><i class="fa fa-pencil-square"></i>Edit Jadwal</a>
+                                            </li>
+											<li {{$menu[1] == 's-jadwal-copy' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/schedule/copyschedule')}}"><i class="fa fa-copy"></i>Copy Jadwal</a>
+                                            </li>
                                         </ul>
 						            </li>
                                     
 						            <!--Menu list item-->
-						            <li>
+						            <li {{$menu[0] == 'm-master' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('#')}}">
 						                    <i class="fa fa-archive"></i>
                                             <span class="menu-title">Master Data</span>
@@ -256,19 +280,33 @@
 						                </a>
 						
 						                <!--Submenu-->
-						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/agenda/')}}"><i class="psi-calendar-2"></i>Agenda Kerja</a></li>
-                                            <li><a href="{{ url('admin/paid-leave-type')}}"><i class="psi-calendar-4"></i>Tipe Cuti</a></li>
-                                            <li><a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a></li>
-											<li><a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a></li>
-											<li><a href="{{ url('admin/shift')}}"><i class="psi-clock"></i>Shift</a></li>
-                                            <li><a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a></li>
-                                            <li><a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe     Potongan dan Tunjangan Gaji</a></li>
+						                <ul class="collapse {{$menu[0] == 'm-master' ? 'in' : ''}}">
+                                            <li {{$menu[1] == 's-master-agenda' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/agenda/')}}"><i class="psi-calendar-2"></i>Agenda Kerja</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-master-cuti' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/paid-leave-type')}}"><i class="psi-calendar-4"></i>Tipe Cuti</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-master-divisi' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/division')}}"><i class="fa fa-id-card"></i>Divisi</a>
+                                            </li>
+											<li {{$menu[1] == 's-master-jabatan' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/position')}}"><i class="fa fa-black-tie"></i>Jabatan</a>
+                                            </li>
+											<li {{$menu[1] == 's-master-shift' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/shift')}}"><i class="psi-clock"></i>Shift</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-master-libur' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/holiday')}}"><i class="fa fa-calendar-plus-o"></i>Hari Libur</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-master-ptgaji' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/cuts-allowances')}}"><i class="fa fa-money"></i>Tipe     Potongan dan Tunjangan Gaji</a>
+                                            </li>
 						                </ul>
                                     </li>
 
                                     <!--Menu list item-->
-                                    <li>
+                                    <li {{$menu[0] == 'm-pencapaian' ? 'class=active-sub' : ''}}>
                                         <a href="#">
                                             <i class="fa fa-trophy"></i>
                                             <span class="menu-title">Pencapaian</span>
@@ -276,17 +314,25 @@
                                         </a>
                                         
                                         <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a></li>
-                                            <li><a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a></li>
-                                            <li><a href="/admin/achievement/eom"><i class="ti-crown" style="color: gold"></i>Karyawan Terbaik</a></li>
-                                            <li><a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a></li>
+                                        <ul class="collapse {{$menu[0] == 'm-pencapaian' ? 'in' : ''}}">
+                                            <li {{$menu[1] == 's-pencapaian-leaderboard' ? 'class=active-link' : ''}}>
+                                                <a href="/admin/achievement"><i class="fa fa-cubes"></i>Leaderboard</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-pencapaian-penilaian' ? 'class=active-link' : ''}}>
+                                                <a href="/admin/achievement/scoring"><i class="fa fa-sliders"></i>Penilaian</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-pencapaian-eom' ? 'class=active-link' : ''}}>
+                                                <a href="/admin/achievement/eom"><i class="ti-crown" style="color: gold"></i>Karyawan Terbaik</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-pencapaian-grafik' ? 'class=active-link' : ''}}>
+                                                <a href="/admin/achievement/charts"><i class="fa fa-bar-chart"></i>Grafik Nilai</a>
+                                            </li>
                                         </ul>
                 
                                     </li>
                                     
                                     <!--Menu list item-->
-						            <li>
+						            <li {{$menu[0] == 'm-rekruitasi' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('#')}}">
 						                    <i class="fa fa-handshake-o"></i>
                                             <span class="menu-title">Rekruitasi</span>
@@ -294,14 +340,18 @@
                                         </a>
 
                                         <!--Submenu-->
-						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/job')}}"><i class="psi-idea-2"></i>Lowongan Tersedia</a></li>
-                                            <li><a href="{{ url('admin/recruitment')}}"><i class="fa fa-handshake-o"></i>Daftar Rekruitasi</a></li>
+						                <ul class="collapse {{$menu[0] == 'm-rekruitasi' ? 'in' : ''}}">
+                                            <li {{$menu[1] == 's-rekruitasi-lowongan' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/job')}}"><i class="psi-idea-2"></i>Lowongan Tersedia</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-rekruitasi-daftar' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/recruitment')}}"><i class="fa fa-handshake-o"></i>Daftar Rekruitasi</a>
+                                            </li>
 						                </ul>
                                     </li>
                                     
                                     <!--Menu list item-->
-						            <li>
+						            <li {{$menu[0] == 'm-sistem' ? 'class=active-sub' : ''}}>
 						                <a href="{{ url('#')}}">
 						                    <i class="psi-gear"></i>
                                             <span class="menu-title">Sistem</span>
@@ -309,10 +359,16 @@
 						                </a>
 						
 						                <!--Submenu-->
-						                <ul class="collapse">
-                                            <li><a href="{{ url('admin/poster')}}"><i class="fa fa-university"></i>Poster</a></li>
-                                            <li><a href="{{ url('admin/ticketing')}}"><i class="psi-support"></i>Ticketing</a></li>
-											<li><a href="{{ url('admin/log')}}"><i class="psi-paperclip"></i>Log</a></li>
+						                <ul class="collapse {{$menu[0] == 'm-sistem' ? 'in' : ''}}">
+                                            <li {{$menu[1] == 's-sistem-poster' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/poster')}}"><i class="fa fa-university"></i>Poster</a>
+                                            </li>
+                                            <li {{$menu[1] == 's-sistem-tiketing' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/ticketing')}}"><i class="psi-support"></i>Ticketing</a>
+                                            </li>
+											<li {{$menu[1] == 's-sistem-log' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/log')}}"><i class="psi-paperclip"></i>Log</a>
+                                            </li>
 						                </ul>
                                     </li>
                                 </ul>

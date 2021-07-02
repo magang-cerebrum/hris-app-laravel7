@@ -37,6 +37,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/paid-leave-type')}}" class="btn btn-dark">Kembali ke Data Tipe Cuti</a>
             <button class="btn btn-mint" type="submit" form="create">Tambah</button>
         </div>
     </div>

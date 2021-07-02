@@ -89,39 +89,31 @@
                     <tr>
                         <td class="text-center">{{($aktif->currentPage() * 10) - 10 + $loop->iteration}}</td>
                         <td class="text-center">
-                            <div class="btn-group">
-                                <div class="dropdown">
-                                    <button class="btn btn-dark btn-active-primary dropdown-toggle"
-                                        data-toggle="dropdown" type="button">
-                                        Aksi <i class="dropdown-caret"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
-                                                style="cursor: pointer" data-nip="{{$row->nip}}"
-                                                data-name="{{$row->name}}" data-dob="{{$row->dob}}"
-                                                data-address="{{$row->address}}"
-                                                data-phone_number="{{$row->phone_number}}"
-                                                data-gender="{{$row->gender}}" data-email="{{$row->email}}"
-                                                data-profile_photo="{{$row->profile_photo}}"
-                                                data-employee_status="{{$row->employee_status}}"
-                                                data-employee_type="{{$row->employee_type}}"
-                                                data-status="{{$row->status}}"
-                                                data-contract_duration="{{$row->contract_duration}}"
-                                                data-start_work_date="{{$row->start_work_date}}"
-                                                data-end_work_date="{{$row->end_work_date}}"
-                                                data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
-                                                data-division_name="{{$row->division_name}}"
-                                                data-position_name="{{$row->position_name}}"
-                                                data-role_name="{{$row->role_name}}"
-                                                data-cc_number="{{$row->credit_card_number}}"
-                                                data-salary="{{$row->salary}}">
-                                                <i class="fa fa-info icon-dropdown"></i> Detail Staff
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <span class="add-tooltip" data-toggle="tooltip"
+                            data-container="body" data-placement="top" data-original-title="Detail Staff">
+                                <a class="btn btn-sm btn-info btn-icon btn-circle"
+                                    id="detail_staff" data-toggle="modal" data-target="#modal-detail-staff"
+                                    style="cursor: pointer" data-nip="{{$row->nip}}"
+                                    data-name="{{$row->name}}" data-dob="{{$row->dob}}"
+                                    data-address="{{$row->address}}"
+                                    data-phone_number="{{$row->phone_number}}"
+                                    data-gender="{{$row->gender}}" data-email="{{$row->email}}"
+                                    data-profile_photo="{{$row->profile_photo}}"
+                                    data-employee_status="{{$row->employee_status}}"
+                                    data-employee_type="{{$row->employee_type}}"
+                                    data-status="{{$row->status}}"
+                                    data-contract_duration="{{$row->contract_duration}}"
+                                    data-start_work_date="{{$row->start_work_date}}"
+                                    data-end_work_date="{{$row->end_work_date}}"
+                                    data-yearly_leave_remaining="{{$row->yearly_leave_remaining}}"
+                                    data-division_name="{{$row->division_name}}"
+                                    data-position_name="{{$row->position_name}}"
+                                    data-role_name="{{$row->role_name}}"
+                                    data-cc_number="{{$row->credit_card_number}}"
+                                    data-salary="{{$row->salary}}">
+                                    <i class="fa fa-info"></i>
+                                </a>
+                            </span>
                         </td>
                         <td class="text-center">{{$row->nip}}</td>
                         <td class="text-center">{{$row->name}}</td>

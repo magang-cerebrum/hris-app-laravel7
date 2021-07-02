@@ -22,6 +22,7 @@ class AgendaController extends Controller
             $user = Auth::user();
             $agenda = MasterAgenda::paginate(10);
             return view('masterData.agenda.list',[
+                'menu'=>['m-master','s-master-agenda'],
                 'agenda'=>$agenda,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -44,6 +45,7 @@ class AgendaController extends Controller
             }
             $user = Auth::user();
             return view('masterData.agenda.create',[
+                'menu'=>['m-master','s-master-agenda'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -93,6 +95,7 @@ class AgendaController extends Controller
             }
             $user = Auth::user();
             return view('masterData.agenda.edit',[
+                'menu'=>['m-master','s-master-agenda'],
                 'agenda' => $agenda,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -165,6 +168,7 @@ class AgendaController extends Controller
             })
             ->paginate(10);
             return view('masterData.agenda.result',[
+                'menu'=>['m-master','s-master-agenda'],
                 'agenda' => $result,
                 'search' => $request->get('query'),
                 'name'=>$user->name,
@@ -192,6 +196,7 @@ class AgendaController extends Controller
                     ->orWhereRaw("end_event LIKE '" . current_period() . "%'");
             })->get();
             return view('masterData.agenda.searchCalendar',[
+                'menu'=>['m-agenda',''],
                 'data_calendar' => $data_calendar_cm,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -213,6 +218,7 @@ class AgendaController extends Controller
             })
             ->get();
             return view('masterData.agenda.calendar',[
+                'menu'=>['',''],
                 'periode'=>$request->periode,
                 'month'=>explode("-", $request->periode)[1],
                 'year'=>explode("-", $request->periode)[0],
@@ -234,6 +240,7 @@ class AgendaController extends Controller
             })
             ->get();
             return view('staff.agenda.calendar',[
+                'menu'=>['m-agenda',''],
                 'month'=>date('m'),
                 'year'=>date('Y'),
                 'data' => $data,

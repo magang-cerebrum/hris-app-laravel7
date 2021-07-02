@@ -151,7 +151,7 @@
                             td_1.appendChild(document.createTextNode(iteration));
                             td_2.appendChild(input);
                             td_3.appendChild(document.createTextNode(item.user_nip));
-                            td_4.appendChild(document.createTextNode(item.name));
+                            td_4.appendChild(document.createTextNode(item.user_name));
                             td_5.appendChild(document.createTextNode(item.division_name));
                             td_6.appendChild(document.createTextNode(item.position_name));
 

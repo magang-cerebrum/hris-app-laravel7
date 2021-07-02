@@ -173,7 +173,8 @@
             </div>
         </div>
         <div class="panel-footer text-right">
-            <button class="btn btn-mint" type="submit" form="edit_agenda">Tambah</button>
+            <a href="{{url('/admin/agenda')}}" class="btn btn-dark">Kembali ke Data Agenda</a>
+            <button class="btn btn-mint" type="submit" form="edit_agenda">Simpan</button>
         </div>
     </div>
 @endsection

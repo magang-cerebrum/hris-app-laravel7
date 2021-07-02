@@ -27,6 +27,7 @@ class MasterAchievementController extends Controller
             $dataCurrent_Month = DB::table('master_achievements')->where('month',date('m'))->where('month',date('m'))->get();
             
             return view('masterData.achievement.leaderboard',[
+                'menu'=>['m-pencapaian','s-pencapaian-leaderboard'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -58,6 +59,7 @@ class MasterAchievementController extends Controller
                 ->max('score');
                 $count = count($data);
                 return view('masterData.achievement.result',[
+                    'menu'=>['',''],
                     'data'=>$data,
                     'count'=>$count,
                     'employee_of_the_month' =>$is_champ
@@ -85,13 +87,14 @@ class MasterAchievementController extends Controller
                 ->get();
                 $dataCurrent_Month = DB::table('master_achievements')->where('month',date('m'))->where('month',date('m'))->get();
                 return view('masterData.achievement.scoring',[
-                'name'=>$user->name,
-                'profile_photo'=>$user->profile_photo,
-                'email'=>$user->email,
-                'id'=>$user->id,
-                'data'=>$data,
-                'dataCM'=>$dataCurrent_Month,
-                // 'countDataCM'=>count($dataCurrent_Month)
+                    'menu'=>['m-pencapaian','s-pencapaian-penilaian'],
+                    'name'=>$user->name,
+                    'profile_photo'=>$user->profile_photo,
+                    'email'=>$user->email,
+                    'id'=>$user->id,
+                    'data'=>$data,
+                    'dataCM'=>$dataCurrent_Month,
+                    // 'countDataCM'=>count($dataCurrent_Month)
                 ]);
             }
         }
@@ -218,6 +221,7 @@ class MasterAchievementController extends Controller
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
             return view('masterData.achievement.listchart',[
+                'menu'=>['m-pencapaian','s-pencapaian-grafik'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -314,6 +318,7 @@ class MasterAchievementController extends Controller
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
             return view('masterData.achievement.resultlist',[
+                'menu'=>['m-pencapaian','s-pencapaian-grafik'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -352,6 +357,7 @@ class MasterAchievementController extends Controller
                 ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
                 ->get();
                 return view('masterData.achievement.eom',[
+                    'menu'=>['m-pencapaian','s-pencapaian-eom'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -398,6 +404,7 @@ class MasterAchievementController extends Controller
            ->first();
         //    dd($checkEOM);
             return view('masterData.achievement.listedeom',[
+                'menu'=>['',''],
                 'data'=>$data,
                 'divisions'=>$divisions,
                 'month'=>$periodeRequest[0],

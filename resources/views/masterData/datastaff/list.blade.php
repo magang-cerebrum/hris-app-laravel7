@@ -86,7 +86,7 @@
             <div class="table-responsive">
                 <table id="masterdata-staff-active"
                     class="table table-striped table-bordered no-footer dtr-inline collapsed" role="grid"
-                    aria-describedby="demo-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                    aria-describedby="demo-basic_info" style="" width="100%" cellspacing="0">
                     <thead>
                         <tr role="row">
                             <th class="sorting_asc text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1"

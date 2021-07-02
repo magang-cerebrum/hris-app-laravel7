@@ -243,6 +243,7 @@
         </div>
 
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/data-staff')}}" class="btn btn-dark">Kembali ke Informasi Staff</a>
             <button class="btn btn-mint" type="submit" form="form_create">Tambah</button>
         </div>
     </div>

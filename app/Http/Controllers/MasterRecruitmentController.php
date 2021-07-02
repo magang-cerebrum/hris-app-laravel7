@@ -20,6 +20,7 @@ class MasterRecruitmentController extends Controller
             $user = Auth::user();
             $data = MasterRecruitment::paginate(10);
             return view('masterData.recruitment.listRecruitment', [
+                'menu'=>['m-rekruitasi','s-rekruitasi-daftar'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -128,6 +129,7 @@ class MasterRecruitmentController extends Controller
             ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
             ->paginate(10);
             return view('masterData.recruitment.resultRecruitment',[
+                'menu'=>['m-rekruitasi','s-rekruitasi-daftar'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

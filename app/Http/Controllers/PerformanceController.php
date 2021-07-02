@@ -16,6 +16,7 @@ class PerformanceController extends Controller
         if(Auth::check()){
             $user = Auth::user();
             return view('staff.performance-chief.chiefLeaderboard',[
+                'menu'=>['m-d-performa','s-d-performa-leaderboard'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -41,7 +42,9 @@ class PerformanceController extends Controller
     
             $is_champ = MasterPerformance::where(['month'=>$splitter[0],'year'=>$splitter[1]])->max('performance_score');
             $count = count($data);;
-            return view('staff.performance-chief.ChiefSearchResult',['data'=>$data,
+            return view('staff.performance-chief.ChiefSearchResult',[
+                'menu'=>['',''],
+                'data'=>$data,
                 'count'=>$count,
                 'employee_of_the_month' =>$is_champ
             ]);
@@ -102,6 +105,7 @@ class PerformanceController extends Controller
             // ->select('id')
             ->get();
             return view('staff.performance-chief.Chiefscoring',[
+                'menu'=>['m-d-performa','s-d-performa-penilaian'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -248,6 +252,7 @@ class PerformanceController extends Controller
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
             return view('staff.performance-chief.Chieflistchart',[
+                'menu'=>['m-d-performa','s-d-performa-grafik'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -341,6 +346,7 @@ class PerformanceController extends Controller
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
             return view('staff.performance-chief.ChiefResultList',[
+                'menu'=>['m-d-performa','s-d-performa-grafik'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

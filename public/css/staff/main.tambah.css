@@ -126,3 +126,11 @@
 .pace .pace-progress, .nano>.nano-pane>.nano-slider {
     background-color: #070525;
 }
+
+#mainnav-menu ul .active-link a {
+    color: #bbff00;
+}
+#mainnav-menu ul .active-link:hover a {
+    color: #ffffff;
+    background-color: rgba(121, 14, 14, 0.671);
+}

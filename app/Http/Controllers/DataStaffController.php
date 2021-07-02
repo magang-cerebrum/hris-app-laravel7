@@ -74,6 +74,7 @@ class DataStaffController extends Controller
 
             if (!$role) {
                 return view('masterData.datastaff.list',[
+                    'menu'=>['m-data','s-data-info'],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'count_aktif' => $count_aktif,
@@ -85,6 +86,7 @@ class DataStaffController extends Controller
                 ]);
             } else {
                 return view('staff.datastaff.list',[
+                    'menu'=>['m-d-data',''],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'count_aktif' => $count_aktif,
@@ -116,6 +118,7 @@ class DataStaffController extends Controller
             $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
     
             return view('masterData.datastaff.create',[
+                'menu'=>['m-data','s-data-info'],
                 'divisions'=>$divisions,
                 'positions'=>$positions,
                 'roles'=>$roles,
@@ -212,6 +215,7 @@ class DataStaffController extends Controller
             $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
             
             return view('masterData.datastaff.edit',[
+                'menu'=>['m-data','s-data-info'],
                 'staff' => $staff,
                 'divisions'=>$divisions,
                 'positions'=>$positions,
@@ -376,6 +380,7 @@ class DataStaffController extends Controller
             })->paginate(10);
             if (!$role) {
                 return view('masterData.datastaff.result',[
+                    'menu'=>['m-data','s-data-info'],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'search' => $request->get('query'),
@@ -386,6 +391,7 @@ class DataStaffController extends Controller
                 ]);
             } else {
                 return view('staff.datastaff.result',[
+                    'menu'=>['m-d-data',''],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'search' => $request->get('query'),
@@ -465,6 +471,7 @@ class DataStaffController extends Controller
                 $average_score = null;
             }
             return view('masterData.datastaff.promote',[
+                'menu'=>['m-data','s-data-info'],
                 'staff' => $staff,
                 'periode' => $periode,
                 'performance' => $data_performance,

@@ -108,6 +108,9 @@
                     </thead>
                     <tbody id="performance_body_table"></tbody>
                 </table>
+                @if(!$dataCM->isEmpty())
+                    <p class="h4 text-uppercase text-bold text-center" id="data-exist" hidden>Data Pada Periode ini Sudah Diinput</p>
+                @endif
             </div>
             <div class="panel-footer text-right">
                 <button class="btn btn-mint" type="submit" id="button-submit" form="submit-achievement">Nilai</button>
@@ -128,6 +131,109 @@
                 output.innerHTML = slider.value + '/100'
             }
         }
+
+        setTimeout(function(){
+            // $('#data-exist').show()
+            var date = new Date()
+            var month =  ("0" + (date.getMonth() + 1)).slice(-2)
+            var year = date.getFullYear()
+            periode = month + '/' +year
+            document.getElementById('query').value = periode
+            console.log(periode)
+                var data
+                var dataOutName
+                var dataOutId
+                var dataoutDivId
+                var firstTd
+                var tr
+                var scTd
+                var thrdTd
+                var frthTd
+                var fifthTd
+                var counterData
+                var url = '/staff/performance/ajx/pickdate'
+
+                $.ajax({
+                    url: url,
+                    type : 'GET',
+                    data : {
+                        periode :periode
+                    },
+                    dataType:'json', 
+                    success:function(response){
+                        // console.log(response)
+                        if(response.countData>0){
+                            $('#data-exist').hide()
+                        }
+                        else{
+                            $('#data-exist').show()
+                        }
+                        $('#headerTable').show()
+                        let count = 0
+                        for(data in response.data){
+                            var counted =count+=1
+                            var iteration = document.createTextNode(counted)
+                            dataOutName = response.data[data].name
+                            var nodeDataOutName = document.createTextNode(dataOutName)
+                            dataOutId = response.data[data].id
+                            var nodeDataOutId = document.createTextNode(dataOutId)
+                            dataoutDivId = response.data[data].division_id
+                            var nodeDataOutDivId = document.createTextNode(dataOutId)
+                            tr = document.createElement("tr")
+                            tr.setAttribute('class','scorethis')
+                            firstTd = document.createElement("td")
+                            scTd = document.createElement("td")
+                            thrdTd = document.createElement("td")
+                            counterData=document.createElement('input')
+                            counterData.setAttribute('type','hidden')
+                            counterData.setAttribute('name','count')
+                            counterData.setAttribute('value',response.countData)
+                            var slider = document.createElement('input')
+                            frthTd = document.createElement("td")
+                            var spanOnFourthTD = document.createElement("span")
+                            firstTd.setAttribute('class','sorting_1 text-center')
+                            firstTd.setAttribute('tabindex','0')
+                            firstTd.appendChild(iteration)
+                            scTd.setAttribute('class','text-center')
+                            scTd.appendChild(nodeDataOutName)
+                            slider.setAttribute('type','range')
+                            slider.setAttribute('class','form-range')
+                            slider.setAttribute('min','0')
+                            slider.setAttribute('max','100')
+                            slider.setAttribute('step','5')
+                            slider.setAttribute('id','customRange_'+counted)
+                            slider.setAttribute('value','0')
+                            slider.setAttribute('onchange','slidervalfunc()')
+                            slider.setAttribute('name','score_'+counted)
+                            thrdTd.setAttribute('class','text-center')
+                            thrdTd.appendChild(slider)
+                            frthTd.setAttribute('class','text-center')
+                            spanOnFourthTD.setAttribute('id','val_'+counted)
+                            var hiddenDivisionId = document.createElement('input')
+                            var hiddenUserId = document.createElement('input')
+                            hiddenDivisionId.setAttribute('name','division_id_'+counted)
+                            hiddenDivisionId.setAttribute('type','hidden')
+                            hiddenDivisionId.setAttribute('value',dataoutDivId)
+                        
+                            hiddenUserId.setAttribute('name','user_id_'+counted)
+                            hiddenUserId.setAttribute('type','hidden')
+                            hiddenUserId.setAttribute('value',dataOutId)
+                            frthTd.appendChild(spanOnFourthTD)
+                            tr.appendChild(firstTd)
+                            tr.appendChild(scTd)
+                            tr.appendChild(thrdTd)
+                            tr.appendChild(frthTd)
+                            tr.appendChild(hiddenDivisionId)
+                            tr.appendChild(hiddenUserId)
+                            document.getElementById('performance_body_table').appendChild(counterData)
+                            document.getElementById('performance_body_table').appendChild(tr)
+                        }
+                    },
+                    error : function (jXHR, textStatus, errorThrown) {
+                        console.log(jXHR, textStatus, errorThrown)
+                    }
+                });
+        },1000)
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({
                 format: 'mm/yyyy',
@@ -154,6 +260,7 @@
                 var thrdTd
                 var frthTd
                 var counterData
+
                 $.ajax({
                     url: url,
                     type : 'GET',
@@ -162,7 +269,13 @@
                     },
                     dataType:'json', 
                     success:function(response){
-                        // console.log(response)
+                        console.log(response)
+                        if(response.countData>0){
+                            $('#data-exist').hide()
+                        }
+                        else{
+                            $('#data-exist').show()
+                        }
                         $('#headerTable').show()
                         let count = 0
                         

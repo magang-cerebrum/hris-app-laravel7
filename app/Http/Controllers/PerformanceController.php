@@ -15,11 +15,13 @@ class PerformanceController extends Controller
     public function indexChief(){
         if(Auth::check()){
             $user = Auth::user();
+            $dataCurrent_Month = DB::table('master_performances')->where('month',date('m'))->where('month',date('m'))->get();
             return view('staff.performance-chief.chiefLeaderboard',[
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
                 'id'=>$user->id,
+                'dataCM'=>$dataCurrent_Month,
             ]);
         }
         else {
@@ -94,6 +96,7 @@ class PerformanceController extends Controller
 
     public function chiefScoring(){
         if(Auth::check()){
+            $dataCurrent_Month = DB::table('master_performances')->where('month',date('m'))->where('month',date('m'))->get();
             $user = Auth::user();
             $datas = DB::table('master_users')
             ->where('status','=','Aktif')
@@ -107,6 +110,7 @@ class PerformanceController extends Controller
                 'email'=>$user->email,
                 'id'=>$user->id,
                 'data'=>$datas,
+                'dataCM'=>$dataCurrent_Month,
                 // 'countData'=>$countData
             ]);
         }

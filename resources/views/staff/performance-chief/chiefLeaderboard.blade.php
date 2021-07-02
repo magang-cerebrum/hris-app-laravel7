@@ -39,7 +39,9 @@
             </div>
         </div>
     </div>
-
+    @if($dataCM->isEmpty())
+    <p class="h4 text-uppercase text-bold text-center" id="data-exist" hidden >Data Pada Periode ini Sudah Diinput</p>
+    @endif
     <div id="panel-output"></div>
 @endsection
 
@@ -48,7 +50,54 @@
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
     <script>
-        
+          setTimeout(function(){
+            
+            var date = new Date()
+            var month =  ("0" + (date.getMonth() + 1)).slice(-2)
+            var year = date.getFullYear()
+            periode = month + '/' +year
+            document.getElementById('query').value = periode
+            console.log(periode)
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                    });
+            $.ajax({
+                    url: '/staff/performance/search',
+                    type: "POST",
+                    data: {query:periode},
+                    success: function (data) {
+                        // console.log(data)
+                        $("#panel-output").html(data);
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "Tidak ada data Performa untuk bulan dan tahun terpilih",
+                            icon: 'error',
+                            width: 600
+                        }).then(() => {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Apakah anda ingin menambahkan nilai Performa?',
+                                icon: 'info',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ya',
+                                cancelButtonText: 'Tidak'
+                            }).then((result) => {
+                                if (result.value == true) {
+                                    window.location.href = "/staff/achievement/scoring";
+                                } else {
+                                    return false;
+                                }} 
+                            );
+                        });
+                    }
+                });
+        },1000)   
             
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({

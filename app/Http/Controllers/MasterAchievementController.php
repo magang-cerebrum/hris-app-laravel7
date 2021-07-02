@@ -388,8 +388,7 @@ class MasterAchievementController extends Controller
             ->where('master_achievements.year',$periodeRequest[1])
             ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
            ->get();
-        //    dd($data);
-    
+           
             return view('masterData.achievement.listedeom',[
                 'data'=>$data,
                 'divisions'=>$divisions,

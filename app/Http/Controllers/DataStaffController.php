@@ -15,11 +15,13 @@ class DataStaffController extends Controller
     public function index()
     {
         if(Auth::check()){
-            if(Gate::denies('is_admin')){
-                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+            if(Gate::denies('is_admin') && Gate::denies('is_chief')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin dan Chief!')->width(600);
                 return back();
             }
             $user = Auth::user();
+            $role = ($user->role_id == 2 ? true : false);
+
             $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
             ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
@@ -30,6 +32,12 @@ class DataStaffController extends Controller
                 'master_roles.name as role_name'
             )
             ->where('master_users.status','=','Aktif')
+            ->when($role,function ($query) use ($user){
+                return $query->where('master_users.division_id', $user->division_id)
+                            ->whereNotIn('master_users.division_id', [7]);
+            },function ($query){
+                return $query;
+            })
             ->paginate(10);
             
             $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
@@ -42,19 +50,52 @@ class DataStaffController extends Controller
                 'master_roles.name as role_name'
             )
             ->where('master_users.status','=','Non-Aktif')
+            ->when($role,function ($query) use ($user){
+                return $query->where('master_users.division_id', $user->division_id)
+                ->whereNotIn('master_users.division_id', [7]);
+            },function ($query){
+                return $query;
+            })
             ->paginate(10);
-            $count_aktif = MasterUser::where('status','=','Aktif')->count();
-            $count_naktif = MasterUser::where('status','=','Non-Aktif')->count();
-            return view('masterData.datastaff.list',[
-                'aktif' => $aktif,
-                'naktif' => $naktif,
-                'count_aktif' => $count_aktif,
-                'count_naktif' => $count_naktif,
-                'name'=>$user->name,
-                'profile_photo'=>$user->profile_photo,
-                'email'=>$user->email,
-                'id'=>$user->id
-            ]);
+
+            $count_aktif = MasterUser::where('status','=','Aktif')
+            ->when($role,function ($query) use ($user){
+                return $query->where('master_users.division_id', $user->division_id);
+            },function ($query){
+                return $query;
+            })->count();
+
+            $count_naktif = MasterUser::where('status','=','Non-Aktif')
+            ->when($role,function ($query) use ($user){
+                return $query->where('master_users.division_id', $user->division_id);
+            },function ($query){
+                return $query;
+            })->count();
+
+            if (!$role) {
+                return view('masterData.datastaff.list',[
+                    'aktif' => $aktif,
+                    'naktif' => $naktif,
+                    'count_aktif' => $count_aktif,
+                    'count_naktif' => $count_naktif,
+                    'name'=>$user->name,
+                    'profile_photo'=>$user->profile_photo,
+                    'email'=>$user->email,
+                    'id'=>$user->id
+                ]);
+            } else {
+                return view('staff.datastaff.list',[
+                    'aktif' => $aktif,
+                    'naktif' => $naktif,
+                    'count_aktif' => $count_aktif,
+                    'count_naktif' => $count_naktif,
+                    'name'=>$user->name,
+                    'profile_photo'=>$user->profile_photo,
+                    'email'=>$user->email,
+                    'id'=>$user->id
+                ]);
+            }
+            
         }
         else {
             Alert::info('Sesi berakhir!','Silahkan login kembali!');
@@ -284,12 +325,15 @@ class DataStaffController extends Controller
 
     public function search(Request $request){
         if(Auth::check()){
-            if(Gate::denies('is_admin')){
+            if(Gate::denies('is_admin') && Gate::denies('is_chief')){
                 Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
                 return back();
             }
-            if ($request->get('query') == null) {return redirect('/admin/data-staff');}
             $user = Auth::user();
+            $role = ($user->role_id == 2 ? true : false);
+
+            if ($request->get('query') == null) {return redirect((!$role ? '/admin/data-staff' : '/staff/data-staff'));}
+            
             $aktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
             ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
@@ -302,10 +346,14 @@ class DataStaffController extends Controller
             ->where('master_users.status','=','Aktif')
             ->where(function ($query) use ($request){
                 $query->whereRaw("master_users.nip LIKE '%" . $request->get('query') . "%'")
-                    ->orWhereRaw("master_users.name LIKE '%" . $request->get('query') . "%'")
-                    ->orWhereRaw("master_divisions.name LIKE '%" . $request->get('query') . "%'");
-            })
-            ->paginate(10);
+                    ->orWhereRaw("master_users.name LIKE '%" . $request->get('query') . "%'");
+            })->when($role,function ($query) use ($user){
+                return $query->where('master_users.division_id', $user->division_id)
+                ->whereNotIn('master_users.division_id', [7]);
+            },function ($query){
+                return $query;
+            })->paginate(10);
+
             $naktif = MasterUser::leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
             ->leftJoin('master_positions','master_users.position_id','=','master_positions.id')
             ->leftJoin('master_roles','master_users.role_id','=','master_roles.id')
@@ -318,19 +366,35 @@ class DataStaffController extends Controller
             ->where('master_users.status','=','Non-Aktif')
             ->where(function ($query) use ($request){
                 $query->whereRaw("master_users.nip LIKE '%" . $request->get('query') . "%'")
-                    ->orWhereRaw("master_users.name LIKE '%" . $request->get('query') . "%'")
-                    ->orWhereRaw("master_divisions.name LIKE '%" . $request->get('query') . "%'");
+                    ->orWhereRaw("master_users.name LIKE '%" . $request->get('query') . "%'");
             })
-            ->paginate(10);
-            return view('masterData.datastaff.result',[
-                'aktif' => $aktif,
-                'naktif' => $naktif,
-                'search' => $request->get('query'),
-                'name'=>$user->name,
-                'profile_photo'=>$user->profile_photo,
-                'email'=>$user->email,
-                'id'=>$user->id
-            ]);
+            ->when($role,function ($query) use ($user){
+                return $query->where('master_users.division_id', $user->division_id)
+                ->whereNotIn('master_users.division_id', [7]);
+            },function ($query){
+                return $query;
+            })->paginate(10);
+            if (!$role) {
+                return view('masterData.datastaff.result',[
+                    'aktif' => $aktif,
+                    'naktif' => $naktif,
+                    'search' => $request->get('query'),
+                    'name'=>$user->name,
+                    'profile_photo'=>$user->profile_photo,
+                    'email'=>$user->email,
+                    'id'=>$user->id
+                ]);
+            } else {
+                return view('staff.datastaff.result',[
+                    'aktif' => $aktif,
+                    'naktif' => $naktif,
+                    'search' => $request->get('query'),
+                    'name'=>$user->name,
+                    'profile_photo'=>$user->profile_photo,
+                    'email'=>$user->email,
+                    'id'=>$user->id
+                ]);
+            }
         }
         else {
             Alert::info('Sesi berakhir!','Silahkan login kembali!');

@@ -80,7 +80,7 @@ Route::prefix('/staff')->middleware('auth')->group(function(){
     Route::post('/foto', [UserController::class,'change_photo_profile']);
 });
 
-//route masterdata staff
+//route masterdata datastaff ==ADMIN==
 Route::prefix('/admin/data-staff')->middleware('auth')->group(function(){
     Route::get('/',[DataStaffController::class,'index']);
     Route::get('/add',[DataStaffController::class,'create']);
@@ -90,6 +90,11 @@ Route::prefix('/admin/data-staff')->middleware('auth')->group(function(){
     Route::put('/{staff}/password', [DataStaffController::class, 'reset_pass']);
     Route::put('/{staff}/status', [DataStaffController::class, 'toogle_status']);
     Route::delete('/', [DataStaffController::class, 'destroySelected']);
+    Route::get('/search', [DataStaffController::class, 'search']);
+});
+//route masterdata datastaff ==CHIEF==
+Route::prefix('/staff/data-staff')->middleware('auth')->group(function(){
+    Route::get('/',[DataStaffController::class,'index']);
     Route::get('/search', [DataStaffController::class, 'search']);
 });
 //route agenda kerja ==ADMIN==

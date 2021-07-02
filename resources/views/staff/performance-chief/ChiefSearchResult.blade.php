@@ -25,7 +25,7 @@
                     <tr>
                         <td tabindex="0" class="sorting_1 text-center">{{$loop->iteration}}</td><td class="text-center">{{$dataItems->name}}</td>
                         <td class="text-center">{{$dataItems->performance_score}}</td>
-                        <td class="text-center">{{$dataItems->month}}</td>
+                        <td class="text-center">{{switch_month($dataItems->month)}}</td>
                         <td class="text-center">{{$dataItems->year}}</td>
                     </tr>
                 @endforeach

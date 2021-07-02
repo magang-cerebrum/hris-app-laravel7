@@ -28,6 +28,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/division')}}" class="btn btn-dark">Kembali ke Data Divisi</a>
             <button class="btn btn-mint" type="submit" form="edit">Simpan</button>
         </div>
     </div>

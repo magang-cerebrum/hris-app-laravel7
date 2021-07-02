@@ -9,6 +9,16 @@
             <h3 class="panel-title">Riwayat Pengajuan Cuti Staff</h3>
         </div>
         <div class="panel-body" style="padding-top: 20px">
+            <div class="row mar-btm" id="row_btn">
+                <div id="btn_paid_leave">
+                    <a href="{{url('/staff/paid-leave/division')}}" class="btn btn-dark btn-labeled add-tooltip"
+                        data-toggle="tooltip" data-container="body" data-placement="top"
+                        data-original-title="Kembali ke Daftar Pengajuan Cuti">
+                        <i class="fa fa-arrow-left"></i>
+                        Kembali
+                    </a>
+                </div>
+            </div>
             @if (count($data) == 0)
                 <div class="text-center">
                     <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>

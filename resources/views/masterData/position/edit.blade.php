@@ -30,6 +30,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/position')}}" class="btn btn-dark">Kembali ke Data Jabatan</a>
             <button class="btn btn-mint" type="submit" form="edit">Simpan</button>
         </div>
     </div>

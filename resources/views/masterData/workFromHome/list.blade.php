@@ -42,7 +42,7 @@
                         data-toggle="tooltip" data-container="body" data-placement="top"
                         data-original-title="Lihat Riwayat Pengajuan WFH">
                         <i class="fa fa-history"></i>
-                        Riwayat Pengajuan
+                        Riwayat Pengajuan WFH
                     </a>
                 </div>
                 @if (count($data) != 0)

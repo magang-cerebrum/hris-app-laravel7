@@ -29,7 +29,7 @@
             <div class="cls-content-sm panel">
                 <div class="panel-body">
                     <div class="mar-ver pad-btm">
-                        <h1 class="h3">Rekruitasi PT. Cerebrum Edukanesia</h1>
+                        <h1 class="h3">Rekruitasi PT. Cerebrum Edukanesia Nusantara</h1>
                     </div>
                     @if (count($data) == 0)
                         <div style="text-align: center">
@@ -159,7 +159,7 @@
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Input CV</label>
+                                <label class="col-md-3 control-label">File CV</label>
                                 <div class="col-md-9">
                                     <span class="pull-left btn btn-primary btn-file">
                                     Browse... <input type="file" name="file_cv">
@@ -168,7 +168,7 @@
                             </div>
     
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Input Portopolio</label>
+                                <label class="col-md-3 control-label">File Portofolio</label>
                                 <div class="col-md-9">
                                     <span class="pull-left btn btn-primary btn-file">
                                     Browse... <input type="file" name="file_portofolio">
@@ -180,7 +180,7 @@
                                 <div class="row">
                                     <div class="col-md-2"></div>
                                         <div class="col-md-8">
-                                            <input type="submit" class="btn btn-primary btn-lg btn-block">  
+                                            <input value="Kirim Lamaranfi" type="submit" class="btn btn-primary btn-lg btn-block" disabled>  
                                         </div>
                                     <div class="col-md-2"></div>
                                 </div>

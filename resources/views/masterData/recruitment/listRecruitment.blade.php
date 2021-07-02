@@ -15,6 +15,32 @@
 @endsection
 
 @section('content')
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="panel-control">
+                <button class="btn btn-default" data-panel="minmax"><i class="psi-chevron-up"></i></button>
+            </div>
+            <h3 class="panel-title">Panduan Penggunaan API Rekruitasi</h3>
+        </div>
+        <div class="collapse">
+            <div class="panel-body">
+                <ul>
+                    <li>
+                        <h5>API : /available-jobs | Method : GET</h5>
+                        <p>Untuk mengambil data posisi yang sedang dibuka, API ini nantinya menghasilkan respon ke <a class="text-bold" href="{{url('/recruitment')}}" target="_blank"> FORM REKRUITASI (/recruitment)</a> bagian memilih posisi posisi pekerjaan.</p>
+                        <p>Controller : MasterRecruitment | Method : form</p>
+                    </li>
+                    <li>
+                        <h5>API : /recruitment-add | Method : POST</h5>
+                        <p>Untuk mengrim data hasil form dari <a class="text-bold" href="{{url('/recruitment')}}" target="_blank"> FORM REKRUITASI (/recruitment)</a></p>
+                        <p>Semua field <span class="text-bold">WAJIB </span>diisi. Termasuk file <span class="text-bold"> CV dan Portofolio.</span></p>
+                        <p>Controller : MasterRecruitment | Method : store</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
     <div class="panel panel-danger panel-bordered">
         <div class="panel-heading">
             <h3 class="panel-title">Daftar Rekruitasi</h3>

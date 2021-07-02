@@ -59,6 +59,7 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <a href="{{url('/admin/cuts-allowances')}}" class="btn btn-dark">Kembali ke Tipe Potongan dan Tunjangan</a>
             <button class="btn btn-mint" type="submit" form="create_type">Tambah</button>
         </div>
     </div>

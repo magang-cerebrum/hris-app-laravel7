@@ -358,10 +358,12 @@ class PresenceController extends Controller
                 }
                 array_push($data,pushData($shifts,$user_schedule->user_id,$user_schedule->user_name));
             }
-            
+            $division_name = DB::table('master_divisions')
+            ->where('id',$request->division)->select('name')->first();
             return view('masterData.presence.calendar', [
                 'menu'=>['',''],
                 'data'=>$data,
+                'division'=>$division_name,
                 'day'=>$days_in_month,
                 'month'=>explode('-',$request->periode)[1],
                 'year'=>explode('-',$request->periode)[0]

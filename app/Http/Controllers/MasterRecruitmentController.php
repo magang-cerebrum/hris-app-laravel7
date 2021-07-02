@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MasterJobRecruitment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -34,9 +35,10 @@ class MasterRecruitmentController extends Controller
         }
     }
 
-    public function create()
-    {
-        return view('recruitment.recruitment');
+    public function form()
+    {  
+        $data = MasterJobRecruitment::get();
+        return view('recruitment.recruitment',['data' => $data]);
     }
 
     public function store(Request $request)

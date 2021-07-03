@@ -19,6 +19,7 @@ class DivisionController extends Controller
             $user = Auth::user();
             $division = MasterDivision::get();
             return view('masterData.division.list',[
+                'menu'=>['m-master','s-master-divisi'],
                 'division' => $division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -41,6 +42,7 @@ class DivisionController extends Controller
             }
             $user = Auth::user();
             return view('masterData.division.create', [
+                'menu'=>['m-master','s-master-divisi'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -78,6 +80,7 @@ class DivisionController extends Controller
             }
             $user = Auth::user();
             return view('masterData.division.edit',[
+                'menu'=>['m-master','s-master-divisi'],
                 'division' => $division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

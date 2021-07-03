@@ -1,4 +1,4 @@
-<div class="panel panel-bordered panel-danger">
+<div id="panels" class="panel panel-bordered panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title">Pemilihan Karyawan Terbaik</h3>
     </div>
@@ -13,6 +13,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- {{dd($checkEOM)}} --}}
                     @foreach ($divisions as $divisionsItems)
                     <tr>
                         <td><a href="#collapseRow{{$loop->iteration}}" data-toggle="collapse"
@@ -59,7 +60,25 @@
             </table>
             <input type="hidden" name="year" value="{{$year}}" form="choose-eom">
             <input type="hidden" name="month"value="{{$month}}" form="choose-eom">
-            <button type="submit" class="btn btn-danger" id="btn-submit" form="choose-eom">Pilih</button>
+            <button type="submit" class="submit btn btn-danger" id="btn-submit" form="choose-eom" disabled>Pilih</button>
         
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+       $("input[type='radio'][name='radio_input_eom']").click(function() {
+        $('#panels').find('.submit').prop('disabled', false);
+        });
+     });
+     var CheckEoMStatus = {!! json_encode($countcheckEOM) !!} 
+     var CheckEoM = {!! json_encode($checkEOM) !!} 
+    //  console.log(CheckEoM.eom_holder,CountCheckEoM)
+     if(CheckEoMStatus == true){
+        Swal.fire({
+        width:600,
+        title: 'EOM Periode '+CheckEoM.month+'/'+CheckEoM.year+' Sudah Terpilih ('+CheckEoM.eom_holder+')',
+        text: 'Apakah anda ingin Update EOM Periode ' +CheckEoM.month+'/'+CheckEoM.year+ ' ?',
+        icon: 'warning',
+       })
+     }
+</script>

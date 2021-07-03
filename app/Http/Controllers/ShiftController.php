@@ -20,6 +20,7 @@ class ShiftController extends Controller
             $user = Auth::user();
             $shift = MasterShift::get();
             return view('masterData.shift.list',[
+                'menu'=>['m-master','s-master-shift'],
                 'shift' => $shift,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -42,6 +43,7 @@ class ShiftController extends Controller
             }
             $user = Auth::user();
             return view('masterData.shift.create', [
+                'menu'=>['m-master','s-master-shift'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -95,6 +97,7 @@ class ShiftController extends Controller
             }
             $user = Auth::user();
             return view('masterData.shift.edit',[
+                'menu'=>['m-master','s-master-shift'],
                 'shift' => $shift,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

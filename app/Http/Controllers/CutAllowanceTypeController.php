@@ -20,6 +20,7 @@ class CutAllowanceTypeController extends Controller
             $user = Auth::user();
             $cutallowancetype = MasterCutAllowanceType::paginate(10);
             return view('masterData.cutallowancetype.list',[
+                'menu'=>['m-master','s-master-ptgaji'],
                 'cutallowancetype' => $cutallowancetype,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -41,6 +42,7 @@ class CutAllowanceTypeController extends Controller
             }
             $user = Auth::user();
             return view('masterData.cutallowancetype.create',[
+                'menu'=>['m-master','s-master-ptgaji'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -79,6 +81,7 @@ class CutAllowanceTypeController extends Controller
             }
             $user = Auth::user();
             return view('masterData.cutallowancetype.edit',[
+                'menu'=>['m-master','s-master-ptgaji'],
                 'cutallowancetype' => $type,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -144,6 +147,7 @@ class CutAllowanceTypeController extends Controller
             ->paginate(10);
             
             return view('masterData.cutallowancetype.result',[
+                'menu'=>['m-master','s-master-ptgaji'],
                 'cutallowancetype' => $result,
                 'search' => $request->get('query'),
                 'name'=>$user->name,

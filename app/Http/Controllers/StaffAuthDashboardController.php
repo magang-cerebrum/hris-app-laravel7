@@ -283,6 +283,7 @@ class StaffAuthDashboardController extends Controller
                 }
 
                 return view('dashboard.staff',[
+                    'menu'=>['m-dashboard',''],
                     'data_poster'=>$data_poster,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -460,6 +461,7 @@ class StaffAuthDashboardController extends Controller
             $roles = DB::table('master_roles')->where('id', '=', $data->role_id)->get();
     
             return view('dashboard.profile',[
+                'menu'=>['',''],
                 'id' =>$data->id,
                 'name'=> $data->name,
                 'email'=> $data->email,
@@ -488,6 +490,7 @@ class StaffAuthDashboardController extends Controller
             $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
     
             return view('dashboard.editprofile',[
+                'menu'=>['',''],
                 'id' =>$data->id,
                 'name'=> $data->name,
                 'email'=> $data->email,

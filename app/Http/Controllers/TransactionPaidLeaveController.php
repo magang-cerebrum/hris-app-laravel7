@@ -37,6 +37,7 @@ class TransactionPaidLeaveController extends Controller
             $user = Auth::user();
             
             return view('masterData.transactionleave.list', [
+                'menu'=>['m-data','s-data-cuti'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -72,6 +73,7 @@ class TransactionPaidLeaveController extends Controller
             $user = Auth::user();
     
             return view('masterData.transactionleave.history', [
+                'menu'=>['m-data','s-data-cuti'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -91,6 +93,7 @@ class TransactionPaidLeaveController extends Controller
             $data = MasterLeaveType::where('status','Aktif')->get();
             $user = Auth::user();
             return view('staff.transactionleave.create', [
+                'menu'=>['m-cuti','s-cuti-pengajuan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -209,6 +212,7 @@ class TransactionPaidLeaveController extends Controller
             ->paginate(5);
             
             return view('staff.transactionleave.history',[
+                'menu'=>['m-cuti','s-cuti-riwayat'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -434,6 +438,7 @@ class TransactionPaidLeaveController extends Controller
             )
             ->paginate(5);
             return view('staff.transactionleave.listDivision',[
+                'menu'=>['m-d-cuti',''],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -463,6 +468,7 @@ class TransactionPaidLeaveController extends Controller
             ->paginate(5);
             
             return view('staff.transactionleave.historyDivision',[
+                'menu'=>['m-d-cuti',''],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

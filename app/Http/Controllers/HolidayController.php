@@ -24,6 +24,7 @@ class HolidayController extends Controller
                 $user = Auth::user();
         
                 return view('masterData.holiday.list', [
+                    'menu'=>['m-master','s-master-libur'],
                     'data' => $data,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -49,6 +50,7 @@ class HolidayController extends Controller
             $user = Auth::user();
     
             return view('masterData.holiday.add', [
+                'menu'=>['m-master','s-master-libur'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -182,6 +184,7 @@ class HolidayController extends Controller
             elseif(Gate::allows('is_admin')) {
             $user = Auth::user();
             return view('masterData.holiday.edit',[
+                'menu'=>['m-master','s-master-libur'],
                 'holiday' => $holiday,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -309,6 +312,7 @@ class HolidayController extends Controller
             $user =  Auth::user();
     
             return view('masterData.holiday.result', [
+                'menu'=>['m-master','s-master-libur'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

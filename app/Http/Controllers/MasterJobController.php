@@ -27,6 +27,7 @@ class MasterJobController extends Controller
             $user = Auth::user();
     
             return view('masterData.job.list', [
+                'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
                 'dataJob' => $dataJob,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -49,6 +50,7 @@ class MasterJobController extends Controller
             }
             $user = Auth::user();
             return view('masterData.job.create', [
+                'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -172,6 +174,7 @@ class MasterJobController extends Controller
             ->paginate(5);
             return view('masterData.job.result',[
                 'searched' => $request->get('query'),
+                'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
                 'dataJob' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

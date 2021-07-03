@@ -22,6 +22,7 @@ class OvertimeController extends Controller
             $user = Auth::user();
             $overtime = MasterOvertime::paginate(10);
             return view('masterData.overtime.searchOvertime', [
+                'menu'=>['m-data','s-data-lembur'],
                 'overtime' => $overtime,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -47,6 +48,7 @@ class OvertimeController extends Controller
             ])
             ->get();
             return view('masterData.overtime.list', [
+                'menu'=>['',''],
                 'data' => $data,
                 'month' => explode('-',$request->periode)[1],
                 'year' => explode('-',$request->periode)[0]
@@ -113,6 +115,7 @@ class OvertimeController extends Controller
             ])
             ->get();
             return view('masterData.overtime.create', [
+                'menu'=>['m-data','s-data-lembur'],
                 'data' => $data,
                 'data_division' => $data_division,
                 'month' => $request->month,

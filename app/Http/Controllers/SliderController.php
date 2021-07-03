@@ -22,6 +22,7 @@ class SliderController extends Controller
             $user = Auth::user();
             $data = DB::table('sliders')->get();
             return view('poster.list',[
+                'menu'=>['m-sistem','s-sistem-poster'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -44,6 +45,7 @@ class SliderController extends Controller
             }
             $user = Auth::user();
             return view('poster.add',[
+                'menu'=>['m-sistem','s-sistem-poster'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -109,6 +111,7 @@ class SliderController extends Controller
             }
             $user = Auth::user();
             return view('poster.edit',[
+                'menu'=>['m-sistem','s-sistem-poster'],
                 'poster' => $poster,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

@@ -64,31 +64,6 @@
                         // console.log(data)
                         $("#panel-output").html(data);
                     },
-                    // error: function (jXHR, textStatus, errorThrown) {
-                    //     Swal.fire({
-                    //         title: 'Error!',
-                    //         text: "Tidak ada data achievement untuk bulan dan tahun terpilih",
-                    //         icon: 'error',
-                    //         width: 600
-                    //     }).then(() => {
-                    //         Swal.fire({
-                    //             width: 600,
-                    //             title: 'Apakah anda ingin menambahkan nilai achievement?',
-                    //             icon: 'info',
-                    //             showCancelButton: true,
-                    //             confirmButtonColor: '#3085d6',
-                    //             cancelButtonColor: '#d33',
-                    //             confirmButtonText: 'Ya',
-                    //             cancelButtonText: 'Tidak'
-                    //         }).then((result) => {
-                    //             if (result.value == true) {
-                    //                 window.location.href = "/admin/achievement/scoring";
-                    //             } else {
-                    //                 return false;
-                    //             }} 
-                    //         );
-                    //     });
-                    // }
                 });
         },1000)   
 

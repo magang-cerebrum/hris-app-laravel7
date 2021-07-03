@@ -28,6 +28,7 @@ class MasterJobScheduleController extends Controller
             if($user->role_id == 1){
                 $data_division = DB::table('master_divisions')->whereNotIn('id',[7])->get();
                 return view('masterData.schedule.list', [
+                    'menu'=>['m-jadwal','s-jadwal-daftar'],
                     'data_division' => $data_division,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -36,6 +37,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.list', [
+                    'menu'=>['m-d-jadwal','s-d-jadwal-daftar'],
                     'division' => $user->division_id,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -72,6 +74,7 @@ class MasterJobScheduleController extends Controller
             $days_in_month = cal_days_in_month($cal, $month, $request->year);
     
             return view('masterData.schedule.result', [
+                'menu'=>['',''],
                 'data'=>$data,
                 'count_day'=>$days_in_month
             ]);
@@ -114,6 +117,7 @@ class MasterJobScheduleController extends Controller
             ->get();
             $data_shift = DB::table('master_shifts')->get();
             return view('staff.schedule.calendar', [
+                'menu'=>['m-jadwal',''],
                 'data_this_month'=>$data_this_month,
                 'data_next_month'=>$data_next_month,
                 'data_shift'=>$data_shift,
@@ -212,6 +216,7 @@ class MasterJobScheduleController extends Controller
             if ($user->role_id == 1) {
                 $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
                 return view('masterData.schedule.create', [
+                    'menu'=>['m-jadwal','s-jadwal-tambah'],
                     'data_division'=>$data_division,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -220,6 +225,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.create', [
+                    'menu'=>['m-d-jadwal','s-d-jadwal-tambah'],
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
                     'email'=>$user->email,
@@ -300,6 +306,7 @@ class MasterJobScheduleController extends Controller
                     )
                 ->get();
                 return view('masterData.schedule.editCreate', [
+                    'menu'=>['m-jadwal','s-jadwal-edit'],
                     'data'=>$data,
                     'data_division'=>$data_division,
                     'name'=>$user->name,
@@ -331,6 +338,7 @@ class MasterJobScheduleController extends Controller
                     )
                 ->get();
                 return view('staff.schedule.editCreate', [
+                    'menu'=>['m-d-jadwal','s-d-jadwal-edit'],
                     'data'=>$data,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -377,6 +385,7 @@ class MasterJobScheduleController extends Controller
     
             if($user->role_id == 1){
                 return view('masterData.schedule.add', [
+                    'menu'=>['m-jadwal','s-jadwal-tambah'],
                     'data_user'=>$data_user,
                     'data_holiday'=>$data_holiday,
                     'data_paid_leave'=>$data_paid_leave,
@@ -393,6 +402,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.add', [
+                    'menu'=>['m-d-jadwal','s-d-jadwal-tambah'],
                     'data_user'=>$data_user,
                     'data_holiday'=>$data_holiday,
                     'data_paid_leave'=>$data_paid_leave,
@@ -435,6 +445,7 @@ class MasterJobScheduleController extends Controller
     
             if($user->role_id == 1){
                 return view('masterData.schedule.edit', [
+                    'menu'=>['m-jadwal','s-jadwal-edit'],
                     'data'=>$data,
                     'data_shift'=>$data_shift,
                     'name'=>$user->name,
@@ -444,6 +455,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.edit', [
+                    'menu'=>['m-d-jadwal','s-d-jadwal-edit'],
                     'data'=>$data,
                     'data_shift'=>$data_shift,
                     'name'=>$user->name,
@@ -777,6 +789,7 @@ class MasterJobScheduleController extends Controller
             $data_shift = DB::table('master_shifts')->get();
             if ($user->role_id == 1) {
                 return view('masterData.schedule.calendar', [
+                    'menu'=>['',''],
                     'data'=>$data,
                     'data_shift'=>$data_shift,
                     'day'=>$days_in_month,
@@ -789,6 +802,7 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.result', [
+                    'menu'=>['',''],
                     'data'=>$data_staff,
                     'data_shift'=>$data_shift,
                     'day'=>$days_in_month,
@@ -831,10 +845,10 @@ class MasterJobScheduleController extends Controller
                 'master_divisions.name as division_name'
             )->orderBy('division_name','asc')
             ->get();
-            $division = DB::table('master_divisions')->get();
-            // dd($data);
+
             $user = Auth::user();
             return view('masterData.schedule.copy',[
+                'menu'=>['m-jadwal','s-jadwal-copy'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -871,6 +885,7 @@ class MasterJobScheduleController extends Controller
             ->get();
             
             return view('staff.schedule.Chiefcopy',[
+                'menu'=>['m-d-jadwal','s-d-jadwal-copy'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

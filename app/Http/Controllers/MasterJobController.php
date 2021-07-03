@@ -82,7 +82,50 @@ class MasterJobController extends Controller
         }
     }
 
-    
+    public function edit(MasterJobRecruitment $job)
+    {
+        if(Auth::check()){
+            if(Gate::denies('is_admin')){
+                Alert::error('403 - Unauthorized', 'Halaman tersebut hanya bisa diakses oleh Admin!')->width(600);
+                return back();
+            }
+            $user = Auth::user();
+            return view('masterData.job.edit',[
+                'job' => $job,
+                'name'=>$user->name,
+                'profile_photo'=>$user->profile_photo,
+                'email'=>$user->email,
+                'id'=>$user->id
+            ]);
+        }
+        else {
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
+            return redirect('/login');
+        }
+    }
+
+    public function update(Request $request, MasterJobRecruitment $job)
+    {
+        if(Auth::check()){
+            $request->validate([
+                'name'=>'required',
+                'descript'=>'required',
+                'required'=>'required'
+            ]);
+            MasterJobRecruitment::where('id', $job->id)->update([
+                'name' => $request->name,
+                'descript' => $request->descript,
+                'required' => $request->required
+            ]);
+            Alert::success('Berhasil!', 'Lowongan Kerja '. $job->name . ' telah diupdate!');
+            return redirect('/admin/job');
+        }
+        else {
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
+            return redirect('/login');
+        }
+    }
+
     public function destroy(Request $request)
     {
         if(Auth::check()){
@@ -95,6 +138,19 @@ class MasterJobController extends Controller
             activity()->log('Admin ' .$user.' Telah menghapus Lowongan ' . $data->name  . " bagian " . $data->descript);
             Alert::success('Berhasil!', 'Lowongan yang dipilih berhasil dihapus!');
             return redirect('/admin/job');
+        }
+        else {
+            Alert::info('Sesi berakhir!','Silahkan login kembali!');
+            return redirect('/login');
+        }
+    }
+
+    public function toogle_status(Request $request){
+        if(Auth::check()){
+            if ($request->status == 'Aktif') {$change = 'Non-Aktif';}
+            else {$change = 'Aktif';}
+            MasterJobRecruitment::where('id', $request->id)->update(['status' => $change]);
+            return response()->json(['name'=> $request->name, 'status' => $change]);
         }
         else {
             Alert::info('Sesi berakhir!','Silahkan login kembali!');
@@ -115,6 +171,7 @@ class MasterJobController extends Controller
             ->orWhereRaw("required LIKE '%" . $request->get('query') . "%'")
             ->paginate(5);
             return view('masterData.job.result',[
+                'searched' => $request->get('query'),
                 'dataJob' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

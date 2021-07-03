@@ -410,8 +410,11 @@ Route::prefix('/admin/log')->middleware('auth')->group(function(){
 //route masterdata job
 Route::prefix('/admin/job')->middleware('auth')->group(function (){
     Route::get('/',[ MasterJobController::class,'indexJob']);
-    Route::post('/',[ MasterJobController::class,'store']);
     Route::get('/add',[ MasterJobController::class,'create']);
+    Route::post('/',[ MasterJobController::class,'store']);
+    Route::get('/{job}/edit',[ MasterJobController::class,'edit']);
+    Route::put('/{job}',[ MasterJobController::class,'update']);
+    Route::put('/{job}/status', [MasterJobController::class, 'toogle_status']);
     Route::get('/search',[ MasterJobController::class,'search']);
     Route::delete('/delete',[ MasterJobController::class,'destroy']);
 });

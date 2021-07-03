@@ -89,7 +89,7 @@
                                 cancelButtonText: 'Tidak'
                             }).then((result) => {
                                 if (result.value == true) {
-                                    window.location.href = "/staff/achievement/scoring";
+                                    window.location.href = "/staff/performance/scoring";
                                 } else {
                                     return false;
                                 }} 

@@ -50,7 +50,7 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-mint" type="button" style="z-index: 2"><i class="fa fa-calendar"></i></button>
                             </span>
-                            <input type="text" name="query" placeholder="Cari (nama/deskripsi/tanggal kegiatan)"
+                            <input type="text" name="query" placeholder="Cari (nama/deskripsi/tanggal kegiatan)" id="textnya"
                                 class="form-control" autocomplete="off" form="search_agenda">
                             <span class="input-group-btn">
                                 <button class="btn btn-mint" id="btn-search" type="submit" form="search_agenda"><i class="fa fa-search"></i></button>
@@ -129,6 +129,9 @@
                 forceParse: false,
             });
             $('#btn-search').on('click',function () {
+                $('.datepicker').hide();
+            });
+            $('#textnya').on('focus',function () {
                 $('.datepicker').hide();
             });
         });

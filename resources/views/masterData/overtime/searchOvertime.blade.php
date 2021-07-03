@@ -49,8 +49,25 @@
 @section('script')
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('js/helpers.js')}}"></script>
     <script>
-            
+        setTimeout(function () {
+            let periode = current_period('-', true);
+            document.getElementById('periode').value = periode;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }});
+            $.ajax({
+                url: '/admin/overtime',
+                type: 'POST',
+                data: {periode: periode},
+                success: function (data) {
+                    $("#panel-output").html(data);
+                }
+            });
+        },1000);
+
         $(document).ready(function () {
             $('#pickadate .input-group.date').datepicker({
                 format: 'yyyy-mm',

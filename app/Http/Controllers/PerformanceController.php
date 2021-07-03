@@ -286,7 +286,10 @@ class PerformanceController extends Controller
             foreach ($check_user as $item){
                 $ids[] = $item->id;
             }
-        
+            if($check_user->isEmpty()){
+                Alert::error('Data grafik tidak ditemukan!', 'Mohon maaf, pencarian data grafik "' . $request->get('query') . '" tidak ditemukan!');
+                return redirect('staff/performance/charts');
+            }
             $score = array();
             $average = array();
             $max = array();

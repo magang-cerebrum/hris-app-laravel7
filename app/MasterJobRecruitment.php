@@ -9,6 +9,7 @@ class MasterJobRecruitment extends Model
     protected $fillable=[
         'name',
         'descript',
-        'required'
+        'required',
+        'status'
     ];
 }

@@ -199,7 +199,6 @@ class AdminAuthDashboardController extends Controller
             $roles = DB::table('master_roles')->where('id', $data->role_id)->get();
             
             return view('dashboard.profile',[
-                'menu'=>['',''],
                 'name'=>$data->name,
                 'email'=>$data->email,
                 'id'=>$data->id,
@@ -227,7 +226,6 @@ class AdminAuthDashboardController extends Controller
             $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
             
             return view('dashboard.editprofile',[
-                'menu'=>['',''],
                 'name'=>$data->name,
                 'email'=>$data->email,
                 'id'=>$data->id,

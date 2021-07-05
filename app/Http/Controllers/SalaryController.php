@@ -67,7 +67,6 @@ class SalaryController extends Controller
             $bool_check_day = $next_day <= date('Y-m-d');
     
             return view('masterData.salary.list', [
-                'menu'=>['',''],
                 'data' => $data,
                 'month' => $month,
                 'year' => $year,

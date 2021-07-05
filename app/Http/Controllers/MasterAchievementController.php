@@ -59,7 +59,6 @@ class MasterAchievementController extends Controller
                 ->max('score');
                 $count = count($data);
                 return view('masterData.achievement.result',[
-                    'menu'=>['',''],
                     'data'=>$data,
                     'count'=>$count,
                     'employee_of_the_month' =>$is_champ
@@ -408,7 +407,6 @@ class MasterAchievementController extends Controller
            ->first();
         //    dd($checkEOM);
             return view('masterData.achievement.listedeom',[
-                'menu'=>['',''],
                 'data'=>$data,
                 'divisions'=>$divisions,
                 'month'=>$periodeRequest[0],

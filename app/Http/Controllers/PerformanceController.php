@@ -45,7 +45,6 @@ class PerformanceController extends Controller
             $is_champ = MasterPerformance::where(['month'=>$splitter[0],'year'=>$splitter[1]])->max('performance_score');
             $count = count($data);;
             return view('staff.performance-chief.ChiefSearchResult',[
-                'menu'=>['',''],
                 'data'=>$data,
                 'count'=>$count,
                 'employee_of_the_month' =>$is_champ

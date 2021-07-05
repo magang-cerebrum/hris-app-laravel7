@@ -218,7 +218,6 @@ class AgendaController extends Controller
             })
             ->get();
             return view('masterData.agenda.calendar',[
-                'menu'=>['',''],
                 'periode'=>$request->periode,
                 'month'=>explode("-", $request->periode)[1],
                 'year'=>explode("-", $request->periode)[0],

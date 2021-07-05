@@ -789,7 +789,6 @@ class MasterJobScheduleController extends Controller
             $data_shift = DB::table('master_shifts')->get();
             if ($user->role_id == 1) {
                 return view('masterData.schedule.calendar', [
-                    'menu'=>['',''],
                     'data'=>$data,
                     'data_shift'=>$data_shift,
                     'day'=>$days_in_month,
@@ -802,7 +801,6 @@ class MasterJobScheduleController extends Controller
                 ]);
             } else {
                 return view('staff.schedule.result', [
-                    'menu'=>['',''],
                     'data'=>$data_staff,
                     'data_shift'=>$data_shift,
                     'day'=>$days_in_month,

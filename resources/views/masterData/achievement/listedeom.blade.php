@@ -18,7 +18,7 @@
                     <tr>
                         <td><a href="#collapseRow{{$loop->iteration}}" data-toggle="collapse"
                                 data-id="" class="
-                                @if($divisionsItems->id == $checkEOM->division_id)
+                                @if($StatuscheckEOM && $divisionsItems->id == $checkEOM->division_id)
                                 bg-warning
                                 @else
 
@@ -40,12 +40,13 @@
                                     <tbody>
                                         @if ($data->where('division_id','=',$divisionsItems->id)->count()==0)
                                             <td colspan="4" class="text-uppercase text-bold text-center" id="data-exist">Nilai Achievement dan Nilai Performance pada periode ini belum ada</td>
-                                        @else
+                                       
+                                            @else
                                         @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
                                         <tr>
                                            {{-- {{$dataItemW}} --}}
                                             <td class="
-                                            @if($dataItem->staff_name==$checkEOM->eom_holder)
+                                            @if($StatuscheckEOM && $dataItem->staff_name==$checkEOM->eom_holder)
                                             text-center text-warning ti-crown
                                             @else
                                             text-center

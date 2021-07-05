@@ -37,7 +37,7 @@ class MasterRecruitmentController extends Controller
 
     public function form()
     {  
-        $data = MasterJobRecruitment::get();
+        $data = MasterJobRecruitment::where('status','Aktif')->get();
         return view('recruitment.recruitment',['data' => $data]);
     }
 

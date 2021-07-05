@@ -6,6 +6,14 @@
 @section('head')
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">
     <style>
+        .table > tbody > tr > td,
+        .table > tbody > tr > th, 
+        .table > tfoot > tr > td, 
+        .table > tfoot > tr > th, 
+        .table > thead > tr > td, 
+        .table > thead > tr > th{
+            vertical-align:middle;
+        }
         @media screen and (max-width: 600px){
             #btn-delete {
                 margin-bottom: 10px;
@@ -69,12 +77,12 @@
                         <thead>
                             <tr role="row">
                                 <th class="sorting text-center" tabindex="0" style="width: 5%">No</th>
-                                <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox"
-                                        id="master">
-                                </th>
+                                <th class="sorting text-center" tabindex="0" style="width: 6%">All <input type="checkbox" id="master"></th>
+                                <th class="sorting text-center" tabindex="0" style="width: 10%">Aksi</th>
                                 <th class="sorting text-center" tabindex="0">Nama Posisi</th>
                                 <th class="sorting text-center" tabindex="0">Deskripsi</th>
                                 <th class="sorting text-center" tabindex="0">Persyaratan</th>
+                                <th class="sorting text-center" tabindex="0">Status Lowongan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,9 +92,31 @@
                                     <td class="text-center"><input type="checkbox" class="sub_chk" name="check[]"
                                         value="{{$item->id}}" form="form-mul-delete">
                                     </td>
+                                    <td class="text-center">
+                                        <a href="/admin/job/{{$item->id}}/edit"
+                                            class="btn btn-success btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                            data-container="body" data-placement="top" data-original-title="Edit Lowongan"
+                                            type="button">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        @if ($item->status == 'Aktif')
+                                            <button class="btn btn-danger btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                                data-container="body" data-placement="top" data-original-title="Nonaktifkan Lowongan"
+                                                type="button" onclick="toogle_status({{$item->id}},'{{$item->name}}','{{$item->status}}')">
+                                                <i class="pli-close"></i>
+                                            </button>
+                                        @else
+                                            <button class="btn btn-primary btn-icon btn-circle add-tooltip" data-toggle="tooltip"
+                                                data-container="body" data-placement="top" data-original-title="Aktifkan Lowongan"
+                                                type="button" onclick="toogle_status({{$item->id}},'{{$item->name}}','{{$item->status}}')">
+                                                <i class="pli-yes"></i>
+                                            </button>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{$item->name}}</td>
                                     <td class="text-center">{{$item->descript}}</td>
                                     <td>{!!$item->required!!}</td>
+                                    <td class="text-center">{{$item->status}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -137,6 +167,58 @@
                     icon: 'error',
                 })
             }
+        }
+
+        function toogle_status(id,name,status){
+            var url = "/admin/job/:id/status".replace(':id', id);
+            if (status == 'Aktif') { var word = 'menonaktifkan'}
+            else { var word = 'mengaktifkan'}
+            Swal.fire({
+                width: 600,
+                title: 'Konfirmasi Perubahan Status ',
+                text: 'Anda yakin ingin ' + word + ' Lowongan "'+ name + '"?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value == true) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: url,
+                        type: 'PUT',
+                        data: {id : id, name: name, status:status},
+                        success: function(response) {
+                            Swal.fire({
+                                width: 600,
+                                title: 'Berhasil!',
+                                text: "Lowongan dengan nama " + response.name + " saat ini berstatus " + response.status,
+                                icon: 'success',
+                                timer: 2000
+                            });
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1500);
+                        },
+                        error: function (jXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: errorThrown,
+                            text: "Penggantian status gagal!",
+                            icon: 'error',
+                            width: 600
+                        });
+                    }
+                    });
+                } else {
+                    return false;
+                }} 
+            );
         }
     </script>
 @endsection

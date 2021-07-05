@@ -23,7 +23,7 @@
                     <div class="row mar-btm">
                         <div class="col-sm-8"></div>
                         <div class="col-sm-4">
-                            <form action="{{url('/staff/achievement/searchlist')}}" method="get">
+                            <form action="{{url('/staff/performance/searchlist')}}" method="get">
                                 <div class="input-group">
                                     <input type="text" name="query" placeholder="Cari Staff" class="form-control"
                                         autocomplete="off">

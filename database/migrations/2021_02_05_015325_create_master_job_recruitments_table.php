@@ -18,6 +18,7 @@ class CreateMasterJobRecruitmentsTable extends Migration
             $table->string('name', 50);
             $table->text('descript');
             $table->text('required');
+            $table->enum('status',['Aktif','Non-Aktif']);
             $table->timestamps();
         });
     }

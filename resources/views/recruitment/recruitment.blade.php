@@ -180,7 +180,7 @@
                                 <div class="row">
                                     <div class="col-md-2"></div>
                                         <div class="col-md-8">
-                                            <input value="Kirim Lamaranfi" type="submit" class="btn btn-primary btn-lg btn-block" disabled>  
+                                            <input value="Kirim Lamaran" type="submit" class="btn btn-primary btn-lg btn-block" disabled>  
                                         </div>
                                     <div class="col-md-2"></div>
                                 </div>

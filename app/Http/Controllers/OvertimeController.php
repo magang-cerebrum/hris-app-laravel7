@@ -48,7 +48,6 @@ class OvertimeController extends Controller
             ])
             ->get();
             return view('masterData.overtime.list', [
-                'menu'=>['',''],
                 'data' => $data,
                 'month' => explode('-',$request->periode)[1],
                 'year' => explode('-',$request->periode)[0]

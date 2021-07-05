@@ -294,7 +294,7 @@ class TransactionPaidLeaveController extends Controller
                         $temp = 'shift_'.$day;
                         $shift_day = $data_schedule[0]->$temp;
     
-                        if($shift_day != 'Cuti' || $shift_day != 'Off') {
+                        if($shift_day != 'Cuti' && $shift_day != 'Off') {
                             $total_hour = $data_schedule[0]->total_hour - check_hour_shift($shift_day);
                             DB::table('master_job_schedules')
                             ->where('id', '=', $data_schedule[0]->id)

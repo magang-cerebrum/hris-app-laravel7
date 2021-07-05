@@ -80,13 +80,14 @@
     });
 
     $(document).ready(function () {
-        // $('#periode').on('change', function () {
-        //     $('.datepicker').hide();
-        // });
-
         $('#periode').on('change', function () {
-                // event.preventDefault();
+            $('.datepicker').hide();
+        });
+
+        $('#periode').on('change', function (event) {
+                event.preventDefault();
                 var periode = document.getElementById('periode').value;
+                console.log(periode)
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

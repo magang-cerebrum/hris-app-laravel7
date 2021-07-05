@@ -191,7 +191,6 @@ class TransactionTicketingController extends Controller
             }elseif(Gate::allows('is_staff')){
                 $user = Auth::user();
                 return view('staff.transactionticketing.createticket',[
-                    'menu'=>['',''],
                     'id'=>$user->id]
                 );
             }

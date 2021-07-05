@@ -1,4 +1,4 @@
-<div id="panels" class="panel panel-bordered panel-danger">
+<div id="panels" class="panel panel-bordered panel-danger fade-in">
     <div class="panel-heading">
         <h3 class="panel-title">Pemilihan Karyawan Terbaik</h3>
     </div>

@@ -5,7 +5,7 @@
     td.break{width: 10px; height: 10px;}
 </style>
 
-<div class="panel panel-bordered panel-danger">
+<div class="panel panel-bordered panel-danger fade-in">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Jadwal Kerja Bulan '.switch_month($month).' - '.$year}} </h3>
     </div>
@@ -31,7 +31,7 @@
 <script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
 <script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
 <script>
-    $(document).ready(function () {
+    setTimeout(function () {
         $('#calendar').fullCalendar({
             fixedWeekCount: false,
             header:{
@@ -62,5 +62,5 @@
                 <?php } ?>
             ]
         });
-    })
+    },1500);
 </script>

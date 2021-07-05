@@ -58,7 +58,7 @@
     </div>
 
     <div id="current_month">
-        <div class="panel panel-bordered panel-danger">
+        <div class="panel panel-bordered panel-danger fade-in">
             <div class="panel-heading">
                 <h3 class="panel-title">Agenda Kerja Bulan Ini {{current_period('view')}}</h3>
             </div>
@@ -88,44 +88,7 @@
     <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
     <script>
-        $(document).ready(function () {
-            $('#pickadate .input-group.date').datepicker({
-                format: 'yyyy-mm',
-                autoclose: true,
-                minViewMode: 'months',
-                maxViewMode: 'years',
-                startView: 'months',
-                orientation: 'bottom',
-                forceParse: false,
-            });
-            $('#btn-search').on('click',function () {
-                $('.datepicker').hide();
-            });
-            $('#cari-agenda').on('submit', function (event) {
-                event.preventDefault();
-                var periode = document.getElementById('periode').value;
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }});
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: $(this).attr('method'),
-                    data: {periode: periode},
-                    success: function (data) {
-                        $("#current_month").remove();
-                        $("#panel-output").html(data);
-                    },
-                    error: function (jXHR, textStatus, errorThrown) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: "Isi form terlebih dahulu!",
-                            icon: 'error',
-                            width: 600
-                        });
-                    }
-                });
-            });
+        setTimeout(function () {
             $('#current_calendar').fullCalendar({
                 height: 575,
                 fixedWeekCount: false,
@@ -164,6 +127,46 @@
                         <?php } ?>
                     <?php } ?>
                 ]
+            });
+        },1500);
+
+        $(document).ready(function () {
+            $('#pickadate .input-group.date').datepicker({
+                format: 'yyyy-mm',
+                autoclose: true,
+                minViewMode: 'months',
+                maxViewMode: 'years',
+                startView: 'months',
+                orientation: 'bottom',
+                forceParse: false,
+            });
+            $('#btn-search').on('click',function () {
+                $('.datepicker').hide();
+            });
+            $('#cari-agenda').on('submit', function (event) {
+                event.preventDefault();
+                var periode = document.getElementById('periode').value;
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }});
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: {periode: periode},
+                    success: function (data) {
+                        $("#current_month").remove();
+                        $("#panel-output").html(data);
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "Isi form terlebih dahulu!",
+                            icon: 'error',
+                            width: 600
+                        });
+                    }
+                });
             });
         });
     </script>

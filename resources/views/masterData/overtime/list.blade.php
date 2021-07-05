@@ -1,4 +1,4 @@
-<div class="panel panel-bordered panel-danger">
+<div class="panel panel-bordered panel-danger fade-in">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Daftar Lembur "'.switch_month($month) . ' - ' . $year . '"'}}</h3>
     </div>

@@ -72,7 +72,7 @@
     <script src="{{ asset('js/helpers.js')}}"></script>
     <script>
         setTimeout(function () {
-            var periode = current_period();
+            var periode = current_period('/', false, false, true);
             document.getElementById('query').value = periode;
             var division = 'Semua Divisi';
             $.ajaxSetup({

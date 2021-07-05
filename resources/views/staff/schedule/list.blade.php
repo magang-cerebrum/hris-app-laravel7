@@ -67,7 +67,7 @@
     <script>
         setTimeout(function () {
             let division = {!! json_encode($division) !!}
-            var periode = current_period();
+            var periode = current_period('/', false, false, true);
             document.getElementById('query').value = periode;
             $.ajaxSetup({
             headers: {

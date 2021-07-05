@@ -1,7 +1,7 @@
 
-<div class="panel panel-bordered panel-primary">
+<div class="panel panel-bordered panel-primary fade-in">
     <div class="panel-heading">
-        <h3 class="panel-title">{{'Leaderboard Performa Bulan '.$data[0]->month.' - '.$data[0]->year}}</h3>
+        <h3 class="panel-title">{{'Leaderboard Performa Bulan '.switch_month($data[0]->month).' - '.$data[0]->year}}</h3>
     </div>
     <div class="panel-body">
         <table id="presensi-result"

@@ -77,7 +77,7 @@ function switch_month(month){
     return month;
 }
 
-function current_period(separator = '/', ymd = false, with_day = false){
+function current_period(separator = '/', ymd = false, with_day = false, month_first = false){
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -89,6 +89,8 @@ function current_period(separator = '/', ymd = false, with_day = false){
         today = dd + separator + mm + separator + yyyy;
     } else if(ymd){
         today = yyyy + separator + mm;
+    } else if(month_first){
+        today = mm + separator + yyyy;
     }
     
     return today;

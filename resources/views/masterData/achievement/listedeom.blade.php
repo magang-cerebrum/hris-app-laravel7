@@ -40,7 +40,8 @@
                                     <tbody>
                                         @if ($data->where('division_id','=',$divisionsItems->id)->count()==0)
                                             <td colspan="4" class="text-uppercase text-bold text-center" id="data-exist">Nilai Achievement dan Nilai Performance pada periode ini belum ada</td>
-                                        @else
+                                       
+                                            @else
                                         @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
                                         <tr>
                                            {{-- {{$dataItemW}} --}}

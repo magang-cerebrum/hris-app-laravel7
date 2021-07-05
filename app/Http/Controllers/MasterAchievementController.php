@@ -403,7 +403,7 @@ class MasterAchievementController extends Controller
            ->leftJoin('master_users','master_eoms.user_id','=','master_users.id')
            ->where('month',$month)
            ->where('year',$year)
-           ->select('name as eom_holder','month','year')
+           ->select('name as eom_holder','month','year','division_id')
            ->first();
         //    dd($checkEOM);
             return view('masterData.achievement.listedeom',[
@@ -411,7 +411,7 @@ class MasterAchievementController extends Controller
                 'divisions'=>$divisions,
                 'month'=>$periodeRequest[0],
                 'year'=>$periodeRequest[1],
-                'countcheckEOM'=>($checkEOM ? true : false),
+                'StatuscheckEOM'=>($checkEOM ? true : false),
                 'checkEOM'=>$checkEOM
             ]);
         }

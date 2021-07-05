@@ -407,6 +407,12 @@ Route::prefix('/admin/log')->middleware('auth')->group(function(){
     Route::delete('/',[LogController::class,'destroyselected']);
 });
 
+//route sistem log
+Route::prefix('/admin/setting')->middleware('auth')->group(function(){
+    Route::get('/',[LogController::class,'index']);
+    Route::post('/',[LogController::class,'save']);
+});
+
 //route masterdata job
 Route::prefix('/admin/job')->middleware('auth')->group(function (){
     Route::get('/',[ MasterJobController::class,'indexJob']);

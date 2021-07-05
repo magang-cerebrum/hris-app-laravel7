@@ -369,6 +369,9 @@
 											<li {{$menu[1] == 's-sistem-log' ? 'class=active-link' : ''}}>
                                                 <a href="{{ url('admin/log')}}"><i class="psi-paperclip"></i>Log</a>
                                             </li>
+											<li {{$menu[1] == 's-sistem-log' ? 'class=active-link' : ''}}>
+                                                <a href="{{ url('admin/setting')}}"><i class="fa fa-cog"></i>Pengaturan</a>
+                                            </li>
 						                </ul>
                                     </li>
                                 </ul>

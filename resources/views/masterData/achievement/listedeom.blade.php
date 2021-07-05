@@ -17,7 +17,13 @@
                     @foreach ($divisions as $divisionsItems)
                     <tr>
                         <td><a href="#collapseRow{{$loop->iteration}}" data-toggle="collapse"
-                                data-id="">{{$divisionsItems->name}}</a></td>
+                                data-id="" class="
+                                @if($divisionsItems->id == $checkEOM->division_id)
+                                bg-warning
+                                @else
+
+                                @endif
+                                ">{{$divisionsItems->name}}</a></td>
                     </tr>
                     <tr>
                         <td class="hiddenRow">
@@ -32,20 +38,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @dump($data->where('division_id','=',$divisionsItems->id)->count()) --}}
                                         @if ($data->where('division_id','=',$divisionsItems->id)->count()==0)
                                             <td colspan="4" class="text-uppercase text-bold text-center" id="data-exist">Nilai Achievement dan Nilai Performance pada periode ini belum ada</td>
                                         @else
                                         @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
-                                       
                                         <tr>
-                                           
-                                            <td class="text-center" id="staff_name">{{$dataItem->staff_name}}</td>
+                                           {{-- {{$dataItemW}} --}}
+                                            <td class="
+                                            @if($dataItem->staff_name==$checkEOM->eom_holder)
+                                            text-center text-warning ti-crown
+                                            @else
+                                            text-center
+                                            @endif
+                                            " id="staff_name">{{$dataItem->staff_name}}</td>
                                             <td class="text-center">{{$dataItem->achievement_score}}</td>
                                             <td class="text-center">{{$dataItem->performance_score}}</td>
                                             <td class="text-center"><input type="radio" name="radio_input_eom"
                                                     id="radio-eom{{$loop->iteration}}" form="choose-eom" value="{{$dataItem->staff_id}}"></td>
-                                            
                                         </tr>
                                         @endforeach
                                         @endif
@@ -70,7 +79,7 @@
         $('#panels').find('.submit').prop('disabled', false);
         });
      });
-     var CheckEoMStatus = {!! json_encode($countcheckEOM) !!} 
+     var CheckEoMStatus = {!! json_encode($StatuscheckEOM) !!} 
      var CheckEoM = {!! json_encode($checkEOM) !!} 
     //  console.log(CheckEoM.eom_holder,CountCheckEoM)
      if(CheckEoMStatus == true){

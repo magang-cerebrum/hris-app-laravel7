@@ -1,4 +1,4 @@
-<div class="panel panel-bordered panel-primary">
+<div class="panel panel-bordered panel-primary fade-in">
     <div class="panel-heading" id="panel_heading">
         <h3 class="panel-title">Hasil Pencarian Presensi <span id="panel_head_1">| {{indonesian_date($start)}} hingga {{indonesian_date($end)}}</span></h3>
         <h3 class="panel-title" id="panel_head_2">{{indonesian_date($start)}} hingga {{indonesian_date($end)}}</h3>

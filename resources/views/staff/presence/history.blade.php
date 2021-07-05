@@ -63,7 +63,7 @@
                 },
                 error: function (jXHR, textStatus, errorThrown) {
                     Swal.fire({
-                        title: errorThrown,
+                        title: 'Error!',
                         text: "Mohon isi dulu form dengan benar...",
                         icon: 'error',
                     });

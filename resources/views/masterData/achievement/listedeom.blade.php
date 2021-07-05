@@ -44,7 +44,6 @@
                                             @else
                                         @foreach ($data->where('division_id','=',$divisionsItems->id) as $dataItem)
                                         <tr>
-                                           {{-- {{$dataItemW}} --}}
                                             <td class="
                                             @if($StatuscheckEOM && $dataItem->staff_name==$checkEOM->eom_holder)
                                             text-center text-warning ti-crown

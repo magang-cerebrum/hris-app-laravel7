@@ -337,7 +337,7 @@
                                         $('.date-minor').each(function(){
                                             dateMinor.push($(this).val())
                                         });
-                                        if(!queue.length>0){
+                                        if(queue.length==0){
                                             Swal.fire({
                                                     width:600,
                                                     title: 'Error!',
@@ -362,8 +362,10 @@
                                             },
                                             dataType:'json',
                                             success : function(response){
+                                                
                                                 for(datascheckbox in response.names){
                                                     checkboxdata = response.names[datascheckbox].name
+                                                    queue =1
                                                     var checkboxTextnodes = document.createTextNode(checkboxdata + ", ")
                                                     document.getElementById('secondSum').appendChild(checkboxTextnodes)   
                                                 }

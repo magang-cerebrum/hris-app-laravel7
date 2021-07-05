@@ -29,9 +29,6 @@
                 </span>
                 <input type="text" name="periode" placeholder="Cari Data Pencapaian Karyawan" id="periode"
                     class="form-control" autocomplete="off" form="search-eom" readonly>
-                <span class="input-group-btn">
-                    <button class="btn btn-danger" id="btn-search" type="submit" form="search-eom"><i class="fa fa-search"></i></button>
-                </span>
             </div>
         </div>
     </div>
@@ -43,6 +40,7 @@
 <script src="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.js")}}"></script>
 <script src="{{asset("js/helpers.js")}}"></script>
 <script>
+    
  setTimeout(function(){
             
             var date = new Date()
@@ -82,20 +80,20 @@
     });
 
     $(document).ready(function () {
-        $('#btn-search').on('click', function () {
-            $('.datepicker').hide();
-        });
+        // $('#periode').on('change', function () {
+        //     $('.datepicker').hide();
+        // });
 
-        $('#search-eom').on('submit', function (event) {
-                event.preventDefault();
+        $('#periode').on('change', function () {
+                // event.preventDefault();
                 var periode = document.getElementById('periode').value;
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }});
                 $.ajax({
-                    url: $(this).attr('action'),
-                    type: $(this).attr('method'),
+                    url: '/admin/achievement/eom',
+                    type: "POST",
                     data: {periode: periode},
                     success: function (data) {
                         $("#panel-output").html(data);

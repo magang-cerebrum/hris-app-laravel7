@@ -134,3 +134,33 @@
     color: #ffffff;
     background-color: rgba(121, 14, 14, 0.671);
 }
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+        top: 50%;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        top: 50%;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+.fade-in {
+    position: relative !important;
+    -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
+    -webkit-animation-duration: 1.5s;
+            animation-duration: 1.5s;
+}

@@ -1,5 +1,5 @@
 
-<div class="panel panel-bordered panel-danger">
+<div class="panel panel-bordered panel-danger fade-in">
     <div class="panel-heading">
         <h3 class="panel-title">{{'Leaderboard Achievement Bulan '.switch_month($data[0]->month).' - '.$data[0]->year}}</h3>
     </div>

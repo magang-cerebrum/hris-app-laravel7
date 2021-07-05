@@ -313,7 +313,7 @@ class WorkFromHomeController extends Controller
                         $temp = 'shift_'.$day;
                         $shift_day = $data_schedule[0]->$temp;
     
-                        if($shift_day != 'Cuti' || $shift_day != 'Off') {
+                        if($shift_day != 'Cuti' && $shift_day != 'Off' && $shift_day != 'WFH') {
                             $total_hour = $data_schedule[0]->total_hour - check_hour_shift($shift_day) + check_hour_shift('WFH');
                             DB::table('master_job_schedules')
                             ->where('id', '=', $data_schedule[0]->id)

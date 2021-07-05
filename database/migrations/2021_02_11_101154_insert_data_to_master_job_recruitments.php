@@ -23,13 +23,13 @@ class InsertDataToMasterJobRecruitments extends Migration
                 'id' => 1,
                 'name' => 'IT',
                 'descript' => 'Berpengalaman di bidang Front-End dengan framework selama setahun atau lebih.',
-                'required' => 'Beragama Islam. Memiliki keinginan untuk belajar lebih. Menguasai framework VueJS akan lebih disenangi.'
+                'required' => '<p>Beragama Islam. Memiliki keinginan untuk belajar lebih. Menguasai framework VueJS akan lebih disenangi.</p>'
             ],
             [
                 'id' => 2,
                 'name' => 'Quality Control',
                 'descript' => 'Paham cara menilai pengembangan aplikasi.',
-                'required' => 'Beragama Islam. Memiliki keinginan untuk belajar lebih. Berpengalaman di bidang QC sebelumnya selama 2 tahun atau lebih akan lebih disenangi.'
+                'required' => '<p>Beragama Islam. Memiliki keinginan untuk belajar lebih. Berpengalaman di bidang QC sebelumnya selama 2 tahun atau lebih akan lebih disenangi.</p>'
             ]
             ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

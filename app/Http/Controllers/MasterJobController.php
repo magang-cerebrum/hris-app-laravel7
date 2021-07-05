@@ -93,6 +93,7 @@ class MasterJobController extends Controller
             }
             $user = Auth::user();
             return view('masterData.job.edit',[
+                'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
                 'job' => $job,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

@@ -27,6 +27,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\WorkFromHomeController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -409,8 +410,8 @@ Route::prefix('/admin/log')->middleware('auth')->group(function(){
 
 //route sistem log
 Route::prefix('/admin/setting')->middleware('auth')->group(function(){
-    Route::get('/',[LogController::class,'index']);
-    Route::post('/',[LogController::class,'save']);
+    Route::get('/',[SettingController::class,'index']);
+    Route::post('/',[SettingController::class,'save']);
 });
 
 //route masterdata job

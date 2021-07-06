@@ -179,7 +179,7 @@ class SalaryCutController extends Controller
 
     public function destroyAll(Request $request)
     {
-        if(Aurh::check()){
+        if(Auth::check()){
             foreach ($request->selectid as $item) {
                 MasterSalaryCut::where('id','=',$item)->delete();
             }

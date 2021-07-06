@@ -75,6 +75,7 @@ return array(
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\Setting' => $baseDir . '/app/Setting.php',
     'App\\TransactionPaidLeave' => $baseDir . '/app/TransactionPaidLeave.php',
     'App\\TransactionTicketing' => $baseDir . '/app/TransactionTicketing.php',
     'App\\User' => $baseDir . '/app/User.php',

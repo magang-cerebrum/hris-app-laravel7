@@ -29,7 +29,6 @@ class MasterJobScheduleController extends Controller
             foreach ($company as $item) {
                 $company_data[$item->name] = $item->value;
             }
-            
             if($user->role_id == 1){
                 $data_division = DB::table('master_divisions')->whereNotIn('id',[7])->get();
                 

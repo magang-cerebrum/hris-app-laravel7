@@ -28,7 +28,7 @@
             </div>
                 <div class="text-center">
                     <h1 class="h3">Data Kosong / Data Tidak Ditemukan</h1>
-                    <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 250px">
+                    <img src="{{ asset('img/'.$company_logo)}}" style="width: 250px">
                 </div>
             @else
                 <button id="btn-delete" class="btn btn-danger add-tooltip" type="submit"

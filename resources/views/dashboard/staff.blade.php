@@ -389,7 +389,7 @@
                                         alt="Profile Picture">
                                 @else
                                     <img class="img-lg img-circle img-responsive"
-                                        src="{{asset('img/title-cerebrum.png')}}"
+                                        src="{{asset('img/'.$company_logo)}}"
                                         alt="Profile Picture">
                                 @endif
                             </div>
@@ -417,7 +417,7 @@
                                     alt="Profile Picture">
                                 @else
                                     <img class="img-lg img-circle img-responsive"
-                                    src="{{asset('img/title-cerebrum.png')}}"
+                                    src="{{asset('img/'.$company_logo)}}"
                                     alt="Profile Picture">
                                 @endif
                             </div>
@@ -445,7 +445,7 @@
                                     alt="Profile Picture">
                                 @else
                                     <img class="img-lg img-circle img-responsive"
-                                    src="{{asset('img/title-cerebrum.png')}}"
+                                    src="{{asset('img/'.$company_logo)}}"
                                     alt="Profile Picture">
                                 @endif
                             </div>

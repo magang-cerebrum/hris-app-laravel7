@@ -33,7 +33,7 @@
             <h3 class="panel-title">Pengaturan Aplikasi</h3>
         </div>
 
-        <form class="form-horizontal" action="{{url('/admin/setting')}}" method="POST" id="setting">
+        <form class="form-horizontal" action="{{url('/admin/setting')}}" method="POST" id="setting" enctype="multipart/form-data">
             @csrf
             <div class="panel-body">
                 <div class="tab-base">

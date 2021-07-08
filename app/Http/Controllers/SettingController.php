@@ -55,13 +55,12 @@ class SettingController extends Controller
             if ($request->has('company_name')) {
                 Setting::where('name','Nama Perusahaan')->update(['value' => $request->company_name]);
             }
-            if ($request->has('company_logo')) {
-                if(!$request->company_logo == null) {
-                    $logo = $request->company_logo;
-                    $logo_name = "logo-cerebrum.PNG";
-                    $tujuan_upload = 'img/';
-                    $logo->move($tujuan_upload, $logo_name);
-                }
+
+            if ($request->file('company_logo') != null) {
+                $logo = $request->file('company_logo');
+                $logo_name = "logo-cerebrum." . $logo->getClientOriginalExtension();
+                $tujuan_upload = 'img/';
+                $logo->move($tujuan_upload, $logo_name);
             }
             
             if ($request->has('payroll_date')) {

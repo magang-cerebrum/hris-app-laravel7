@@ -58,7 +58,7 @@ class SettingController extends Controller
 
             if ($request->file('company_logo') != null) {
                 $logo = $request->file('company_logo');
-                $logo_name = "logo-cerebrum." . $logo->getClientOriginalExtension();
+                $logo_name = "logo-cerebrum.png";
                 $tujuan_upload = 'img/';
                 $logo->move($tujuan_upload, $logo_name);
             }

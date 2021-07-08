@@ -15,7 +15,7 @@
             <div class="text-center text-bold text-danger">
                 Tidak ada data presensi ditemukan untuk bulan ini. <br>
                 Hal ini terjadi karena belum ada jadwal yang dibuat untuk staff pada bulan ini. <br>
-                <a href="{{url('/admin/schedule/add')}}" class="btn btn-warning mar-top">Klik disini untuk menambahkan jadwal kerja!</a>
+                <a href="{{url('/admin/schedule/add')}}" class="btn btn-warning mar-top">Klik untuk menambahkan jadwal kerja!</a>
             </div>
         @else
             <div id='calendar'></div><br>

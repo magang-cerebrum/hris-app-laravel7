@@ -1,7 +1,7 @@
 @extends('layouts/templateStaff')
 @section('title','WFH')
 @section('content-title','Work From Home / Riwayat Pengajuan WFH')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('content')
     <div class="panel panel-primary panel-bordered">

@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Divisi')
 @section('title','Master Data')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">

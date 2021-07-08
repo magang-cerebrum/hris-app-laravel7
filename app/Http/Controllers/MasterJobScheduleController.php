@@ -27,8 +27,16 @@ class MasterJobScheduleController extends Controller
             $user = Auth::user();
             if($user->role_id == 1){
                 $data_division = DB::table('master_divisions')->whereNotIn('id',[7])->get();
+
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
+                
                 return view('masterData.schedule.list', [
                     'menu'=>['m-jadwal','s-jadwal-daftar'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_division' => $data_division,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -38,6 +46,8 @@ class MasterJobScheduleController extends Controller
             } else {
                 return view('staff.schedule.list', [
                     'menu'=>['m-d-jadwal','s-d-jadwal-daftar'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'division' => $user->division_id,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -74,7 +84,6 @@ class MasterJobScheduleController extends Controller
             $days_in_month = cal_days_in_month($cal, $month, $request->year);
     
             return view('masterData.schedule.result', [
-                'menu'=>['',''],
                 'data'=>$data,
                 'count_day'=>$days_in_month
             ]);
@@ -116,8 +125,16 @@ class MasterJobScheduleController extends Controller
             )
             ->get();
             $data_shift = DB::table('master_shifts')->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.schedule.calendar', [
                 'menu'=>['m-jadwal',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data_this_month'=>$data_this_month,
                 'data_next_month'=>$data_next_month,
                 'data_shift'=>$data_shift,
@@ -213,10 +230,18 @@ class MasterJobScheduleController extends Controller
             //     return back();
             // }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             if ($user->role_id == 1) {
                 $data_division = DB::table('master_divisions')->select('name')->where('status','Aktif')->get();
                 return view('masterData.schedule.create', [
                     'menu'=>['m-jadwal','s-jadwal-tambah'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_division'=>$data_division,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -226,6 +251,8 @@ class MasterJobScheduleController extends Controller
             } else {
                 return view('staff.schedule.create', [
                     'menu'=>['m-d-jadwal','s-d-jadwal-tambah'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
                     'email'=>$user->email,
@@ -282,6 +309,11 @@ class MasterJobScheduleController extends Controller
 
                 array_push($month, switch_month($temp_month));
             }
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             if ($user->role_id == 1) {
                 $data = DB::table('master_job_schedules')
@@ -304,10 +336,12 @@ class MasterJobScheduleController extends Controller
                     'master_divisions.name as division_name',
                     'master_positions.name as position_name'
                     )
-                ->get();
-                return view('masterData.schedule.editCreate', [
-                    'menu'=>['m-jadwal','s-jadwal-edit'],
-                    'data'=>$data,
+                    ->get();
+                    return view('masterData.schedule.editCreate', [
+                        'menu'=>['m-jadwal','s-jadwal-edit'],
+                        'company_name'=>$company_data['Nama Perusahaan'],
+                        'company_logo'=>$company_data['Logo Perusahaan'],
+                        'data'=>$data,
                     'data_division'=>$data_division,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -337,8 +371,11 @@ class MasterJobScheduleController extends Controller
                     'master_positions.name as position_name'
                     )
                 ->get();
+                
                 return view('staff.schedule.editCreate', [
                     'menu'=>['m-d-jadwal','s-d-jadwal-edit'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data'=>$data,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -382,10 +419,17 @@ class MasterJobScheduleController extends Controller
             ->where('date', 'LIKE', $split[1].'-'.$split[0].'%')
             ->whereIn('user_id',$data_id)
             ->get();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             if($user->role_id == 1){
                 return view('masterData.schedule.add', [
                     'menu'=>['m-jadwal','s-jadwal-tambah'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_user'=>$data_user,
                     'data_holiday'=>$data_holiday,
                     'data_paid_leave'=>$data_paid_leave,
@@ -403,6 +447,8 @@ class MasterJobScheduleController extends Controller
             } else {
                 return view('staff.schedule.add', [
                     'menu'=>['m-d-jadwal','s-d-jadwal-tambah'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_user'=>$data_user,
                     'data_holiday'=>$data_holiday,
                     'data_paid_leave'=>$data_paid_leave,
@@ -442,10 +488,17 @@ class MasterJobScheduleController extends Controller
             ->get();
     
             $data_shift = MasterShift::all();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             if($user->role_id == 1){
                 return view('masterData.schedule.edit', [
                     'menu'=>['m-jadwal','s-jadwal-edit'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data'=>$data,
                     'data_shift'=>$data_shift,
                     'name'=>$user->name,
@@ -456,6 +509,8 @@ class MasterJobScheduleController extends Controller
             } else {
                 return view('staff.schedule.edit', [
                     'menu'=>['m-d-jadwal','s-d-jadwal-edit'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data'=>$data,
                     'data_shift'=>$data_shift,
                     'name'=>$user->name,
@@ -787,6 +842,7 @@ class MasterJobScheduleController extends Controller
             $cal = CAL_GREGORIAN;
             $days_in_month = cal_days_in_month($cal, $split[0] , $split[1]);
             $data_shift = DB::table('master_shifts')->get();
+            
             if ($user->role_id == 1) {
                 return view('masterData.schedule.calendar', [
                     'data'=>$data,
@@ -845,8 +901,16 @@ class MasterJobScheduleController extends Controller
             ->get();
 
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.schedule.copy',[
                 'menu'=>['m-jadwal','s-jadwal-copy'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -881,9 +945,16 @@ class MasterJobScheduleController extends Controller
                 'master_users.role_id as role_id'
             )
             ->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('staff.schedule.Chiefcopy',[
                 'menu'=>['m-d-jadwal','s-d-jadwal-copy'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

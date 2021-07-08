@@ -49,9 +49,9 @@
                 <!--================================-->
                 <div class="navbar-header">
                     <a href="{{ url('staff/dashboard')}}" class="navbar-brand">
-                        <img src="{{ asset('img/logo-cerebrum.PNG')}}" alt="Cerebrum Logo" class="brand-icon">
+                        <img src="{{ asset('img/'.$company_logo)}}" alt="Cerebrum Logo" class="brand-icon">
                         <div class="brand-title">
-                            <span class="brand-text">PT. Cerebrum Edukanesia</span>
+                            <span class="brand-text">{{ $company_name}}</span>
                         </div>
                     </a>
                 </div>
@@ -386,7 +386,7 @@
         <!--===================================================-->
         <footer id="footer">
 
-            <p class="pad-lft">&#0169; 2021 PT. Cerebrum Edukanesia</p>
+            <p class="pad-lft">&#0169; 2021 {{ $company_name }}</p>
 
         </footer>
         <!--===================================================-->

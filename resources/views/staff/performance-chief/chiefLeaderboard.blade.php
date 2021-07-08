@@ -1,7 +1,7 @@
 @extends('layouts/templateStaff')
 @section('title','Performa Divisi')
 @section('content-title','Performa Divisi / Leaderboard')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">

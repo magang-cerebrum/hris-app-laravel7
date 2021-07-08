@@ -21,8 +21,16 @@ class SliderController extends Controller
             }
             $user = Auth::user();
             $data = DB::table('sliders')->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('poster.list',[
                 'menu'=>['m-sistem','s-sistem-poster'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -44,8 +52,16 @@ class SliderController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('poster.add',[
                 'menu'=>['m-sistem','s-sistem-poster'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -110,8 +126,16 @@ class SliderController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('poster.edit',[
                 'menu'=>['m-sistem','s-sistem-poster'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'poster' => $poster,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

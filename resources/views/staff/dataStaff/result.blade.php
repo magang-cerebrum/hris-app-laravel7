@@ -1,6 +1,6 @@
 @extends('layouts/templateStaff')
 @section('content-title','Data Staff Divisi')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Data Staff Divisi')
 
 @section('head')

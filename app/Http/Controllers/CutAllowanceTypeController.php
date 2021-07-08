@@ -19,8 +19,16 @@ class CutAllowanceTypeController extends Controller
             }
             $user = Auth::user();
             $cutallowancetype = MasterCutAllowanceType::paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.cutallowancetype.list',[
                 'menu'=>['m-master','s-master-ptgaji'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'cutallowancetype' => $cutallowancetype,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -41,8 +49,16 @@ class CutAllowanceTypeController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.cutallowancetype.create',[
                 'menu'=>['m-master','s-master-ptgaji'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -80,8 +96,16 @@ class CutAllowanceTypeController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.cutallowancetype.edit',[
                 'menu'=>['m-master','s-master-ptgaji'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'cutallowancetype' => $type,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -145,9 +169,16 @@ class CutAllowanceTypeController extends Controller
                     ->orWhereRaw("category LIKE '%" . $request->get('query') . "%'");
             })
             ->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('masterData.cutallowancetype.result',[
                 'menu'=>['m-master','s-master-ptgaji'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'cutallowancetype' => $result,
                 'search' => $request->get('query'),
                 'name'=>$user->name,

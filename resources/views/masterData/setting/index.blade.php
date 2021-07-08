@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Sistem / Pengaturan Aplikasi')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Pengaturan Aplikasi')
 
 @section('head')
@@ -55,13 +55,13 @@
                             <div class="form-group has-feedback">
                                 <label for="company_logo" class="col-sm-3 control-label">Logo Perusahaan : </label>
                                 <div class="col-sm-9">
-                                    <input type="file" class="form-control setting-form" id="Logo Perusahaan">
+                                    <input type="file" class="form-control setting-form" id="Logo Perusahaan" name="company_logo">
                                 </div>
                             </div>
                             @if (array_key_exists('Logo Perusahaan', $data))
                                 <div class="form-group">
                                     <label for="current_logo" class="col-sm-3 control-label">Logo Perusahaan saat ini : </label>
-                                    <img class="brand-icon" name='company_logo' id="current_logo" src="{{ asset('img/' . $data['Logo Perusahaan'])}}" alt="Logo Perusahaan">
+                                    <img class="brand-icon" id="current_logo" src="{{ asset('img/' . $data['Logo Perusahaan'])}}" alt="Logo Perusahaan">
                                 </div>
                             @endif
                         </div>
@@ -93,6 +93,14 @@
                                     <input type="text" class="form-control setting-form" name='office_longitude'
                                     id="Longitude Kantor" placeholder="Longitude Kantor" autocomplete="off"
                                     value="{{array_key_exists('Longitude Kantor', $data) ? $data['Longitude Kantor'] : ''}}">
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="office_distance" class="col-sm-3 control-label">Jarak Presensi : </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control setting-form" name='office_distance'
+                                    id="distance Kantor" placeholder="Jarak presensi" autocomplete="off"
+                                    value="{{array_key_exists('Latitude Kantor', $data) ? $data['Jarak Presensi'] : ''}}">
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 @extends($data->role_id == 1 ? 'layouts/templateAdmin' : 'layouts/templateStaff')
 @section('content-title','Profile User')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Profile')
 @section('content')
 <div class="panel panel-bordered {{$data->role_id == 1 ? 'panel-danger' : 'panel-primary'}}">

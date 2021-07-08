@@ -1,7 +1,7 @@
 @extends('layouts/templateStaff')
 @section('title','Cuti Anggota Divisi')
 @section('content-title','Cuti Anggota Divisi / Riwayat Pengajuan Cuti')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('content')
     <div class="panel panel-primary panel-bordered">

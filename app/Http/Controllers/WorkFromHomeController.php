@@ -31,9 +31,16 @@ class WorkFromHomeController extends Controller
                 )
             ->paginate(5);
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('masterData.workFromHome.list', [
                 'menu'=>['m-data','s-data-wfh'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -64,9 +71,16 @@ class WorkFromHomeController extends Controller
                 )
             ->paginate(5);
             $user = Auth::user();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.workFromHome.history', [
                 'menu'=>['m-data','s-data-wfh'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -84,8 +98,16 @@ class WorkFromHomeController extends Controller
     {
         if(Auth::check()){
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.workFromHome.create', [
                 'menu'=>['m-wfh','s-wfh-pengajuan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -212,9 +234,16 @@ class WorkFromHomeController extends Controller
             $data = DB::table('work_from_homes')
             ->where('user_id', '=', $user->id)
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('staff.workFromHome.history',[
                 'menu'=>['m-wfh','s-wfh-riwayat'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -373,8 +402,16 @@ class WorkFromHomeController extends Controller
                 'master_users.name as user_name'
             )
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.workFromHome.listDivision',[
                 'menu'=>['m-d-wfh',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -400,9 +437,16 @@ class WorkFromHomeController extends Controller
                 'master_users.name as user_name'
                 )
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('staff.workFromHome.historyDivision',[
                 'menu'=>['m-d-wfh',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

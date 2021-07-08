@@ -21,8 +21,16 @@ class OvertimeController extends Controller
             }
             $user = Auth::user();
             $overtime = MasterOvertime::paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.overtime.searchOvertime', [
                 'menu'=>['m-data','s-data-lembur'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'overtime' => $overtime,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -113,8 +121,16 @@ class OvertimeController extends Controller
                 'master_divisions.name as division_name'
             ])
             ->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.overtime.create', [
                 'menu'=>['m-data','s-data-lembur'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'data_division' => $data_division,
                 'month' => $request->month,

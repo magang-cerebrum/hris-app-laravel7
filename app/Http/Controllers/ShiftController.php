@@ -19,8 +19,16 @@ class ShiftController extends Controller
             }
             $user = Auth::user();
             $shift = MasterShift::get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.shift.list',[
                 'menu'=>['m-master','s-master-shift'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'shift' => $shift,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -42,8 +50,16 @@ class ShiftController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.shift.create', [
                 'menu'=>['m-master','s-master-shift'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -96,8 +112,16 @@ class ShiftController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.shift.edit',[
                 'menu'=>['m-master','s-master-shift'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'shift' => $shift,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

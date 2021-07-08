@@ -18,8 +18,16 @@ class DivisionController extends Controller
             }
             $user = Auth::user();
             $division = MasterDivision::get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.division.list',[
                 'menu'=>['m-master','s-master-divisi'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'division' => $division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -41,8 +49,16 @@ class DivisionController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.division.create', [
                 'menu'=>['m-master','s-master-divisi'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -79,8 +95,16 @@ class DivisionController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.division.edit',[
                 'menu'=>['m-master','s-master-divisi'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'division' => $division,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

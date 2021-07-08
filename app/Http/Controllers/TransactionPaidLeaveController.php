@@ -35,9 +35,16 @@ class TransactionPaidLeaveController extends Controller
                 )
             ->paginate(5);
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('masterData.transactionleave.list', [
                 'menu'=>['m-data','s-data-cuti'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -71,9 +78,16 @@ class TransactionPaidLeaveController extends Controller
                 )
             ->paginate(5);
             $user = Auth::user();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.transactionleave.history', [
                 'menu'=>['m-data','s-data-cuti'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -92,8 +106,16 @@ class TransactionPaidLeaveController extends Controller
         if(Auth::check()){
             $data = MasterLeaveType::where('status','Aktif')->get();
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.transactionleave.create', [
                 'menu'=>['m-cuti','s-cuti-pengajuan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -210,9 +232,16 @@ class TransactionPaidLeaveController extends Controller
                 'master_leave_types.name as type_name'
                 )
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('staff.transactionleave.history',[
                 'menu'=>['m-cuti','s-cuti-riwayat'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -437,8 +466,16 @@ class TransactionPaidLeaveController extends Controller
                 'master_leave_types.name as type_name'
             )
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.transactionleave.listDivision',[
                 'menu'=>['m-d-cuti',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -466,9 +503,16 @@ class TransactionPaidLeaveController extends Controller
                 'master_leave_types.name as type_name'
                 )
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('staff.transactionleave.historyDivision',[
                 'menu'=>['m-d-cuti',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

@@ -20,8 +20,16 @@ class MasterRecruitmentController extends Controller
             }
             $user = Auth::user();
             $data = MasterRecruitment::paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.recruitment.listRecruitment', [
                 'menu'=>['m-rekruitasi','s-rekruitasi-daftar'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -130,8 +138,16 @@ class MasterRecruitmentController extends Controller
             ->orWhereRaw("position LIKE '%" . $request->get('query') . "%'")
             ->orWhereRaw("last_education LIKE '%" . $request->get('query') . "%'")
             ->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.recruitment.resultRecruitment',[
                 'menu'=>['m-rekruitasi','s-rekruitasi-daftar'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

@@ -45,6 +45,11 @@ class CreateSettingsTable extends Migration
                 'name' => 'Longitude Kantor',
                 'value' => '107.56162952882028'
             ],
+            [
+                'id' => 6,
+                'name' => 'Jarak Presensi',
+                'value' => '10'
+            ],
         ]);
     }
 

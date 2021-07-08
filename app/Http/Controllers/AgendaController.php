@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
 {
@@ -21,8 +22,16 @@ class AgendaController extends Controller
             }
             $user = Auth::user();
             $agenda = MasterAgenda::paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.agenda.list',[
                 'menu'=>['m-master','s-master-agenda'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'agenda'=>$agenda,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -44,8 +53,16 @@ class AgendaController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.agenda.create',[
                 'menu'=>['m-master','s-master-agenda'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -94,8 +111,16 @@ class AgendaController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.agenda.edit',[
                 'menu'=>['m-master','s-master-agenda'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'agenda' => $agenda,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -167,8 +192,16 @@ class AgendaController extends Controller
                     ->orWhereRaw("end_event LIKE '" . $request->get('query') . "%'");
             })
             ->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.agenda.result',[
                 'menu'=>['m-master','s-master-agenda'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'agenda' => $result,
                 'search' => $request->get('query'),
                 'name'=>$user->name,
@@ -195,8 +228,16 @@ class AgendaController extends Controller
                 $query->whereRaw("start_event LIKE '" . current_period() . "%'")
                     ->orWhereRaw("end_event LIKE '" . current_period() . "%'");
             })->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.agenda.searchCalendar',[
                 'menu'=>['m-agenda',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data_calendar' => $data_calendar_cm,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -238,8 +279,16 @@ class AgendaController extends Controller
                     ->orWhereRaw("end_event LIKE '" . date('Y-m') . "%'");
             })
             ->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.agenda.calendar',[
                 'menu'=>['m-agenda',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'month'=>date('m'),
                 'year'=>date('Y'),
                 'data' => $data,

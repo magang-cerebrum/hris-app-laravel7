@@ -35,7 +35,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-drivers-license-o" title="NIP"></i>
                             </span>
-                            <input required type="text" name="nip" class="form-control" placeholder="NIP" autofocus>
+                            <input required autocomplete="off" type="text" name="nip" class="form-control" placeholder="NIP" autofocus>
                         </div>
                     </div>
                     <div class="form-group">
@@ -44,7 +44,7 @@
                                 <i class="fa fa-lock" title="Password"></i>
                             </span>
                             <input name="password" type="password" class="form-control" placeholder="Password"
-                                id="pass-form" required>
+                                id="pass-form" autocomplete="off" required>
                             <span onmousedown="mousedownPass();" onmouseup="mouseoutPass();" class="input-group-addon">
                                 <i class="fa fa-eye" title="Lihat Password"></i>
                             </span>

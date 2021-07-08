@@ -44,7 +44,7 @@
                     <div class="form-group">
                         Password Lama : 
                         <div class="input-group">
-                        <input id="pass-form2" type="password" name="oldpassword" class="form-control" placeholder="Password Lama" autofocus>
+                        <input id="pass-form2" autocomplete="off" type="password" name="oldpassword" class="form-control" placeholder="Password Lama" autofocus>
                         <span class="input-group-addon" onmousedown="mousedownolPass();" onmouseup="mouseoutolPass();">
                             <i class="fa fa-lock" title="Password"></i>
                          </span>
@@ -58,7 +58,7 @@
                     <div class="form-group"> 
                         Password Baru : 
                         <div class="input-group">
-                        <input id="pass-form" name="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" placeholder="Password Baru">
+                        <input id="pass-form" autocomplete="off" name="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" placeholder="Password Baru">
                         <span class="input-group-addon" onmousedown="mousedownnewPass();" onmouseup="mouseoutnewPass();">
                          <i class="fa fa-lock" title="Password"></i>
                          </span>
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         Password Lama : 
                         <div class="input-group">
-                        <input id="pass-form2" type="password" name="oldpassword" class="form-control" placeholder="Password Lama" autofocus>
+                        <input id="pass-form2" autocomplete="off" type="password" name="oldpassword" class="form-control" placeholder="Password Lama" autofocus>
                         <span class="input-group-addon">
                             <i class="fa fa-lock" title="Password"></i>
                          </span>
@@ -92,7 +92,7 @@
                     <div class="form-group"> 
                        Password Baru : 
                        <div class="input-group">
-                       <input id="pass-form" name="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" placeholder="Password Baru">
+                       <input id="pass-form" autocomplete="off" name="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" placeholder="Password Baru">
                        <span class="input-group-addon">
                         <i class="fa fa-lock" title="Password"></i>
                         </span>

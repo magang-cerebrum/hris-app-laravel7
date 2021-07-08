@@ -96,11 +96,11 @@
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
-                                <label for="office_distance" class="col-sm-3 control-label">Jarak Presensi : </label>
+                                <label for="office_distance" class="col-sm-3 control-label">Jarak Presensi (m) : </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control setting-form" name='office_distance'
-                                    id="distance Kantor" placeholder="Jarak presensi" autocomplete="off"
-                                    value="{{array_key_exists('Latitude Kantor', $data) ? $data['Jarak Presensi'] : ''}}">
+                                    id="Distance Kantor" placeholder="Jarak presensi dalam satuan meter" autocomplete="off"
+                                    value="{{array_key_exists('Jarak Presensi', $data) ? $data['Jarak Presensi'] : ''}}">
                                 </div>
                             </div>
                         </div>

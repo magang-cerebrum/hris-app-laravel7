@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('title', 'Master Data / Hari Libur')
 @section('content-title', 'Master Data / Daftar Hari Libur')
-@section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{ asset('css/sweetalert2.min.css')}}" rel="stylesheet">

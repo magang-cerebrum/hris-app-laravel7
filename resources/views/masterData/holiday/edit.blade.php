@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('title', 'Edit Hari Libur')
 @section('content-title', 'Master Data / Tanggal Merah / Edit Hari Libur')
-@section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">

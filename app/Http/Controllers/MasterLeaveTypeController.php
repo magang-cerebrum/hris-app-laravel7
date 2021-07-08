@@ -19,9 +19,16 @@ class MasterLeaveTypeController extends Controller
             }elseif(Gate::allows('is_admin')){
                 $user = Auth::user();
                 $leavetype = MasterLeaveType::paginate(5);
-    
+
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
+                
                 return view('masterData.leavetype.list',[
                     'menu'=>['m-master','s-master-cuti'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'leavetype'=>$leavetype,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
@@ -44,8 +51,16 @@ class MasterLeaveTypeController extends Controller
                 return back();
             }elseif(Gate::allows('is_admin')){
                 $user = Auth::user();
+
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
+                
                 return view('masterData.leavetype.create',[
                     'menu'=>['m-master','s-master-cuti'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
                     'email'=>$user->email,
@@ -86,8 +101,16 @@ class MasterLeaveTypeController extends Controller
                 return back();
             }elseif(Gate::allows('is_admin')){
                 $user = Auth::user();
+
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
+                
                 return view('masterData.leavetype.edit',[
                     'menu'=>['m-master','s-master-cuti'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'cuti' => $leavetype,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,

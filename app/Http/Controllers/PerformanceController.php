@@ -16,8 +16,16 @@ class PerformanceController extends Controller
         if(Auth::check()){
             $user = Auth::user();
             $dataCurrent_Month = DB::table('master_performances')->where('month',date('m'))->where('month',date('m'))->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.performance-chief.chiefLeaderboard',[
                 'menu'=>['m-d-performa','s-d-performa-leaderboard'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -106,8 +114,16 @@ class PerformanceController extends Controller
             ->where('position_id','=',11)
             // ->select('id')
             ->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.performance-chief.Chiefscoring',[
                 'menu'=>['m-d-performa','s-d-performa-penilaian'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -254,8 +270,16 @@ class PerformanceController extends Controller
             ->where('division_id',$user->division_id)
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.performance-chief.Chieflistchart',[
                 'menu'=>['m-d-performa','s-d-performa-grafik'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -351,8 +375,16 @@ class PerformanceController extends Controller
             ->whereIn('id',$ids)
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.performance-chief.ChiefResultList',[
                 'menu'=>['m-d-performa','s-d-performa-grafik'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

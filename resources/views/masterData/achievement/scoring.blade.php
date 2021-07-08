@@ -121,26 +121,27 @@
                     </div>
                 </div>
             </div>
-            <table id="scoring" class="table table-striped table-bordered no-footer dtr-inline collapsed"
-                role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
-                <thead id="headerTable" hidden>
-                    <tr role="row">
-                        <th class="sorting_asc text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1"
-                            colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">
-                            No</th>
-                        <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
-                            aria-label="Position: activate to sort column ascending">Nama Karyawan</th>
-                        <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
-                            aria-label="Position: activate to sort column ascending">Divisi Karyawan</th>
-                        <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
-                            aria-label="Position: activate to sort column ascending">Penilaian Karyawan </th>
-                        <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
-                            aria-label="Position: activate to sort column ascending">Value </th>
-                    </tr>
-                </thead>
-                <tbody  id="achievements_body_table"></tbody>
-                
-            </table>
+            <div class="table-responsive">
+                <table id="scoring" class="table table-striped table-bordered no-footer dtr-inline collapsed"
+                    role="grid" aria-describedby="demo-dt-basic_info" style="width: 100%;" width="100%" cellspacing="0">
+                    <thead id="headerTable" hidden>
+                        <tr role="row">
+                            <th class="sorting_asc text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1"
+                                colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">
+                                No</th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
+                                aria-label="Position: activate to sort column ascending">Nama Karyawan</th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
+                                aria-label="Position: activate to sort column ascending">Divisi Karyawan</th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
+                                aria-label="Position: activate to sort column ascending">Penilaian Karyawan </th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="demo-dt-basic" rowspan="1" colspan="1"
+                                aria-label="Position: activate to sort column ascending">Value </th>
+                        </tr>
+                    </thead>
+                    <tbody  id="achievements_body_table"></tbody>
+                </table>
+            </div>
             @if(!$dataCM->isEmpty())
             <p class="h4 text-uppercase text-bold text-center" id="data-exist" hidden>Data Pada Periode ini Sudah Diinput</p>
             @endif

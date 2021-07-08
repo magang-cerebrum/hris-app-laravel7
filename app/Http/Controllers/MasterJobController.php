@@ -25,9 +25,16 @@ class MasterJobController extends Controller
             }
             $dataJob = MasterJobRecruitment::paginate(5);
             $user = Auth::user();
-    
+            
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.job.list', [
                 'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'dataJob' => $dataJob,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -49,8 +56,16 @@ class MasterJobController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.job.create', [
                 'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -92,8 +107,16 @@ class MasterJobController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.job.edit',[
                 'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'job' => $job,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -173,9 +196,17 @@ class MasterJobController extends Controller
             ->orWhereRaw("descript LIKE '%" . $request->get('query') . "%'")
             ->orWhereRaw("required LIKE '%" . $request->get('query') . "%'")
             ->paginate(5);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.job.result',[
                 'searched' => $request->get('query'),
                 'menu'=>['m-rekruitasi','s-rekruitasi-lowongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'dataJob' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

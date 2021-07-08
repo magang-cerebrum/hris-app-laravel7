@@ -27,8 +27,16 @@ class SalaryCutController extends Controller
                 'master_salary_cuts.*'
             ])
             ->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.salarycut.list',[
                 'menu'=>['m-data','s-data-potongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'salarycut' => $salarycut,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -52,8 +60,16 @@ class SalaryCutController extends Controller
             $user = Auth::user();
             $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
             $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.salarycut.create', [
                 'menu'=>['m-data','s-data-potongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data_type'=>$data_type,
                 'staff'=>$staff,
                 'name'=>$user->name,
@@ -124,8 +140,16 @@ class SalaryCutController extends Controller
             $user = Auth::user();
             $staff = DB::table('master_users')->where('status','=','Aktif')->select(['id','name'])->get();
             $data_type = DB::table('master_cut_allowance_types')->where('category','Potongan')->where('status','Aktif')->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.salarycut.edit',[
                 'menu'=>['m-data','s-data-potongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data_type'=>$data_type,
                 'cut' => $cut,
                 'staff' => $staff,
@@ -236,9 +260,16 @@ class SalaryCutController extends Controller
                 }
             }
             $user =  Auth::user();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.salarycut.result', [
                 'menu'=>['m-data','s-data-potongan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'search' => $request->get('query'),
                 'salarycut' => $data,
                 'name'=>$user->name,

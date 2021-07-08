@@ -159,9 +159,16 @@ class AdminAuthDashboardController extends Controller
                         array_push($data_max_achievement,$data);
                     }
                 }
+
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
     
                 return view('dashboard.admin',[
                     'menu'=>['m-dashboard',''],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_absensi'=>$data_absensi,
                     'data_poster'=>$data_poster,
                     'data_recruitment'=>$data_rect,

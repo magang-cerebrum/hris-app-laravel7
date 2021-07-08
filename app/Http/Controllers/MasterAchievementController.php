@@ -25,9 +25,16 @@ class MasterAchievementController extends Controller
             
             $user = Auth::user();
             $dataCurrent_Month = DB::table('master_achievements')->where('month',date('m'))->where('month',date('m'))->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('masterData.achievement.leaderboard',[
                 'menu'=>['m-pencapaian','s-pencapaian-leaderboard'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -85,8 +92,16 @@ class MasterAchievementController extends Controller
                 ->where('position_id','!=',[3])
                 ->get();
                 $dataCurrent_Month = DB::table('master_achievements')->where('month',date('m'))->where('month',date('m'))->get();
+
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
+                
                 return view('masterData.achievement.scoring',[
                     'menu'=>['m-pencapaian','s-pencapaian-penilaian'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
                     'email'=>$user->email,
@@ -219,8 +234,16 @@ class MasterAchievementController extends Controller
             $staff = DB::table('master_users')->where('status','Aktif')
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.achievement.listchart',[
                 'menu'=>['m-pencapaian','s-pencapaian-grafik'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -320,8 +343,16 @@ class MasterAchievementController extends Controller
             ->whereIn('id',$ids)
             ->whereNotIn('position_id',[1,2,3])
             ->select(['id','name'])->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.achievement.resultlist',[
                 'menu'=>['m-pencapaian','s-pencapaian-grafik'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -344,23 +375,31 @@ class MasterAchievementController extends Controller
             if(Gate::denies('is_admin')){
                 return abort(403,'Access Denied, Only Admin Can Access');
             }
-                // $dataDate = date('m/Y');
-                $user = Auth::user();
-                $divisions = DB::table('master_divisions')
-                ->whereNotIn('id',[7])
-                ->get();
-                $data = DB::table('master_users')
-                ->whereNotIn('master_users.division_id',[7])
-                ->leftjoin('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
-                ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
-                ->leftJoin('master_performances','master_users.id','=','master_performances.user_id')
-                ->where('master_users.status','Aktif')
-                ->where('master_divisions.status','Aktif')
-                ->where('position_id','!=',[3])
-                ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
-                ->get();
-                return view('masterData.achievement.eom',[
-                    'menu'=>['m-pencapaian','s-pencapaian-eom'],
+            // $dataDate = date('m/Y');
+            $user = Auth::user();
+            $divisions = DB::table('master_divisions')
+            ->whereNotIn('id',[7])
+            ->get();
+            $data = DB::table('master_users')
+            ->whereNotIn('master_users.division_id',[7])
+            ->leftjoin('master_achievements','master_users.id','=','master_achievements.achievement_user_id')
+            ->leftJoin('master_divisions','master_users.division_id','=','master_divisions.id')
+            ->leftJoin('master_performances','master_users.id','=','master_performances.user_id')
+            ->where('master_users.status','Aktif')
+            ->where('master_divisions.status','Aktif')
+            ->where('position_id','!=',[3])
+            ->select('master_users.name as staff_name','master_users.id as staff_id','master_performances.performance_score','master_achievements.score as achievement_score','master_divisions.name as division_name','master_divisions.id as division_id')
+            ->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
+            return view('masterData.achievement.eom',[
+                'menu'=>['m-pencapaian','s-pencapaian-eom'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

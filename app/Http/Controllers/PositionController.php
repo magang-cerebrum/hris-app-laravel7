@@ -19,8 +19,16 @@ class PositionController extends Controller
             }
             $user = Auth::user();
             $position = MasterPosition::get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.position.list',[
                 'menu'=>['m-master','s-master-jabatan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'position' => $position,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -42,8 +50,16 @@ class PositionController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.position.create', [
                 'menu'=>['m-master','s-master-jabatan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -80,8 +96,16 @@ class PositionController extends Controller
                 return back();
             }
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.position.edit',[
                 'menu'=>['m-master','s-master-jabatan'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'position' => $position,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

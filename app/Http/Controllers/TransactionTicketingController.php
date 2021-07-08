@@ -28,8 +28,16 @@ class TransactionTicketingController extends Controller
             ->where('transaction_ticketings.status','=','Selesai')
             ->orderByDesc('created_at')
             ->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.transactionticketing.list',[
                 'menu'=>['m-sistem','s-sistem-tiketing'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'ticketing' => $ticketing,
                 'done' => $ticketing_done,
                 'name'=>$user->name,
@@ -57,8 +65,16 @@ class TransactionTicketingController extends Controller
                 ->select('master_users.name')
                 ->first();
             $status = ['Dikirimkan','On Progress','Selesai'];
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.transactionticketing.edit',[
                 'menu'=>['m-sistem','s-sistem-tiketing'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'ticketing' => $ticket,
                 'sender' => $namanya,
                 'status' => $status,
@@ -142,8 +158,16 @@ class TransactionTicketingController extends Controller
                 ->paginate(10);
             }
             $user =  Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.transactionticketing.result', [
                 'menu'=>['m-sistem','s-sistem-tiketing'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'ticketing' => $ticketing,
                 'done' => $ticketing_done,
                 'name'=>$user->name,
@@ -170,8 +194,16 @@ class TransactionTicketingController extends Controller
                 ->select(['transaction_ticketings.*','master_users.name'])
                 ->orderByDesc('created_at')
                 ->paginate(10);
+            
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.transactionticketing.history',[
                 'menu'=>['m-tiketing',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'ticketing' => $ticketing,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

@@ -282,8 +282,15 @@ class StaffAuthDashboardController extends Controller
                     $temp_schedule = $schedule->$temp_day;
                 }
 
+                $company = DB::table('settings')->get();
+                foreach ($company as $item) {
+                    $company_data[$item->name] = $item->value;
+                }
+                
                 return view('dashboard.staff',[
                     'menu'=>['m-dashboard',''],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_poster'=>$data_poster,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,

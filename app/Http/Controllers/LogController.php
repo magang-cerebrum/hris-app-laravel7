@@ -20,8 +20,16 @@ class LogController extends Controller
     
             $log = DB::table('activity_log')->orderByDesc('created_at')->paginate(10);
             $user = Auth::user();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('system.logs.list',[
                 'menu'=>['m-sistem','s-sistem-log'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data'=>$log,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
@@ -70,9 +78,16 @@ class LogController extends Controller
                 ->paginate(10);
             }
             $user =  Auth::user();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('system.logs.result', [
                 'menu'=>['m-sistem','s-sistem-log'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'data' => $data,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

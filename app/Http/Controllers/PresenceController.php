@@ -36,9 +36,16 @@ class PresenceController extends Controller
             if($bool_schedule) {
                 $bool_schedule = $bool_schedule->$shift;
             }
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('staff.presence.history',[
                 'menu'=>['m-presensi',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -65,9 +72,16 @@ class PresenceController extends Controller
                 'master_users.name as name'
             ])
             ->get();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('staff.presence.division',[
                 'menu'=>['m-d-presensi',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,
@@ -273,8 +287,16 @@ class PresenceController extends Controller
             }
             $user = Auth::user();
             $data_divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.presence.list',[
                 'menu'=>['m-data','s-data-presensi'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'divisions'=> $data_divisions,
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,

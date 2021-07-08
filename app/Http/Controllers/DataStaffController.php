@@ -72,9 +72,16 @@ class DataStaffController extends Controller
                 return $query;
             })->count();
 
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             if (!$role) {
                 return view('masterData.datastaff.list',[
                     'menu'=>['m-data','s-data-info'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'count_aktif' => $count_aktif,
@@ -87,6 +94,8 @@ class DataStaffController extends Controller
             } else {
                 return view('staff.datastaff.list',[
                     'menu'=>['m-d-data',''],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'count_aktif' => $count_aktif,
@@ -116,9 +125,16 @@ class DataStaffController extends Controller
             $divisions = DB::table('master_divisions')->select('name as division_name','id as division_id')->where('status','Aktif')->get();
             $positions = DB::table('master_positions')->select('name as position_name','id as position_id')->where('status','Aktif')->get();
             $roles = DB::table('master_roles')->select('name as role_name','id as role_id')->get();
-    
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.datastaff.create',[
                 'menu'=>['m-data','s-data-info'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'divisions'=>$divisions,
                 'positions'=>$positions,
                 'roles'=>$roles,
@@ -214,8 +230,15 @@ class DataStaffController extends Controller
             $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->where('status','Aktif')->get();
             $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
             
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.datastaff.edit',[
                 'menu'=>['m-data','s-data-info'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'staff' => $staff,
                 'divisions'=>$divisions,
                 'positions'=>$positions,
@@ -378,9 +401,17 @@ class DataStaffController extends Controller
             },function ($query){
                 return $query;
             })->paginate(10);
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             if (!$role) {
                 return view('masterData.datastaff.result',[
                     'menu'=>['m-data','s-data-info'],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'search' => $request->get('query'),
@@ -392,6 +423,8 @@ class DataStaffController extends Controller
             } else {
                 return view('staff.datastaff.result',[
                     'menu'=>['m-d-data',''],
+                    'company_name'=>$company_data['Nama Perusahaan'],
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'aktif' => $aktif,
                     'naktif' => $naktif,
                     'search' => $request->get('query'),
@@ -470,8 +503,16 @@ class DataStaffController extends Controller
                 $total_score = null;
                 $average_score = null;
             }
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             return view('masterData.datastaff.promote',[
                 'menu'=>['m-data','s-data-info'],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'staff' => $staff,
                 'periode' => $periode,
                 'performance' => $data_performance,

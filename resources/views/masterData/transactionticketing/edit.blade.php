@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Sistem / Ticketing / Kirim Respon Ticket')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Sistem')
 
 @section('head')

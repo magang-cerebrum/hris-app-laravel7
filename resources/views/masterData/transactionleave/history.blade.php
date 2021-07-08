@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('title','Data Staff')
 @section('content-title','Data Staff / Riwayat Pengajuan Cuti')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('content')
     <div class="panel panel-danger panel-bordered">

@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Agenda Kerja / Edit Agenda Kerja')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Agenda Kerja')
 
 @section('head')

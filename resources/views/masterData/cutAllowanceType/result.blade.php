@@ -1,6 +1,6 @@
 @extends('layouts/templateAdmin')
 @section('content-title','Master Data / Cari Tipe Potongan dan Tunjangan Gaji')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Tipe Potongan dan Tunjangan Gaji')
 
 @section('head')

@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('title','Jadwal Kerja')
 @section('content-title','Jadwal Kerja / Daftar Jadwal Kerja')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-datepicker/bootstrap-datepicker.min.css")}}" rel="stylesheet">

@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('title','Lembur')
 @section('content-title','Data Staff / Lembur / Tambah Data Lembur')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">

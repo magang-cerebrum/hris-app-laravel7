@@ -1,7 +1,7 @@
 @extends('layouts/templateStaff')
 @section('title','Jadwal Kerja')
 @section('content-title','Jadwal Kerja / Edit Jadwal Kerja')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('head')
     <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">

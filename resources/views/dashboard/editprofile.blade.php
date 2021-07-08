@@ -1,6 +1,6 @@
 @extends($data->role_id == 1 ? 'layouts/templateAdmin' : 'layouts/templateStaff')
 @section('content-title','Profile User')
-@section('content-subtitle','HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 @section('title','Edit Profile')
 @section('content')
 @section('head')

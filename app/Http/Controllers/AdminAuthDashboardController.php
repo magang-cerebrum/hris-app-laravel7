@@ -204,8 +204,16 @@ class AdminAuthDashboardController extends Controller
             $divisions = DB::table('master_divisions')->where('id', $data->division_id)->get();
             $positions = DB::table('master_positions')->where('id', $data->position_id)->get();
             $roles = DB::table('master_roles')->where('id', $data->role_id)->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('dashboard.profile',[
+                'menu'=>['',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$data->name,
                 'email'=>$data->email,
                 'id'=>$data->id,
@@ -231,8 +239,16 @@ class AdminAuthDashboardController extends Controller
             $divisions = DB::table('master_divisions')->select('name as divisions_name','id as divisions_id')->get();
             $positions = DB::table('master_positions')->select('name as positions_name','id as positions_id')->get();
             $roles = DB::table('master_roles')->select('name as roles_name','id as roles_id')->get();
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
             
             return view('dashboard.editprofile',[
+                'menu'=>['',''],
+                'company_name'=>$company_data['Nama Perusahaan'],
+                'company_logo'=>$company_data['Logo Perusahaan'],
                 'name'=>$data->name,
                 'email'=>$data->email,
                 'id'=>$data->id,

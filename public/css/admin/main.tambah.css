@@ -176,3 +176,16 @@
     -webkit-animation-duration: 1.5s;
             animation-duration: 1.5s;
 }
+
+@media (min-width: 768px) {
+    #container.mainnav-sm .brand-icon {
+        margin: 10px 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
+.brand-icon {
+    margin: 10px 10px;
+    width: 40px;
+    height: 40px;
+}

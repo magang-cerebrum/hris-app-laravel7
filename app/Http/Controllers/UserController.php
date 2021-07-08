@@ -17,8 +17,15 @@ class UserController extends Controller
         if(Auth::check()){
             $id = Auth::user()->id;
             $pass = Auth::user()->password;
+
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+
             if(Route::current()->uri == "admin/password" && Gate::allows('is_admin')){
                 return view('auth.editpass',[
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'pass' => $pass,
                     'id'=>$id,
                 ]);
@@ -28,6 +35,7 @@ class UserController extends Controller
             }
             elseif(Route::current()->uri == "staff/password" && Gate::allows('is_staff')){
                 return view('auth.editpass',[
+                    'company_logo'=>$company_data['Logo Perusahaan'],
                     'pass' => $pass,
                     'id'=>$id,
                 ]);

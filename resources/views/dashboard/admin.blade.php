@@ -141,7 +141,7 @@
                         <img class="img-md img-circle img-responsive" src="{{asset('img/profile-photos/'.$eom->photo)}}"
                             alt="Profile Picture">
                         @else
-                        <img class="img-md img-circle img-responsive" src="{{asset('img/title-cerebrum.png')}}"
+                        <img class="img-md img-circle img-responsive" src="{{asset('img/'.$company_logo)}}"
                             alt="Profile Picture">
                         @endif
                     </div>
@@ -170,7 +170,7 @@
                         <img class="img-md img-circle img-responsive"
                             src="{{asset('img/profile-photos/'.$staff_min_late->photo)}}" alt="Profile Picture">
                         @else
-                        <img class="img-md img-circle img-responsive" src="{{asset('img/title-cerebrum.png')}}"
+                        <img class="img-md img-circle img-responsive" src="{{asset('img/'.$company_logo)}}"
                             alt="Profile Picture">
                         @endif
                     </div>
@@ -200,7 +200,7 @@
                         <img class="img-md img-circle img-responsive"
                             src="{{asset('img/profile-photos/'.$staff_late->photo)}}" alt="Profile Picture">
                         @else
-                        <img class="img-md img-circle img-responsive" src="{{asset('img/title-cerebrum.png')}}"
+                        <img class="img-md img-circle img-responsive" src="{{asset('img/'.$company_logo)}}"
                             alt="Profile Picture">
                         @endif
                     </div>
@@ -229,7 +229,7 @@
                 @if (count($data_max_achievement) == 0 && count($data_max_performance) == 0)
                     <div class="text-center">
                         <h1 class="h3">Data Tidak Tersedia</h1>
-                        <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 230px">
+                        <img src="{{ asset('img/'.$company_logo)}}" style="width: 230px">
                     </div>
                 @else
                     <div style="text-align: center !important">
@@ -313,7 +313,7 @@
                 @if (count($data_wfh) == 0)
                     <div class="text-center">
                         <h1 class="h3">Data Tidak Tersedia</h1>
-                        <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 230px">
+                        <img src="{{ asset('img/'.$company_logo)}}" style="width: 230px">
                     </div>
                 @else
                     <div class="table-responsive">
@@ -365,7 +365,7 @@
                 @if (count($data_wfh) == 0)
                 <div class="text-center">
                     <h1 class="h3">Data Tidak Tersedia</h1>
-                    <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 230px">
+                    <img src="{{ asset('img/'.$company_logo)}}" style="width: 230px">
                 </div>
                 @else
                 <div class="table-responsive">

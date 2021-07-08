@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HRIS</title>
-    <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
+    <link rel="icon" href="{{ asset('img/'.$company_logo)}}">
     <link href="{{ asset('css/fonts.css')}}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('css/nifty.min.css')}}" rel="stylesheet">

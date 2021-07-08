@@ -28,7 +28,7 @@ class CreateSettingsTable extends Migration
             [
                 'id' => 2,
                 'name' => 'Logo Perusahaan',
-                'value' => 'logo-cerebrum.png'
+                'value' => 'logo-cerebrum.PNG'
             ],
             [
                 'id' => 3,

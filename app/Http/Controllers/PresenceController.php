@@ -138,8 +138,16 @@ class PresenceController extends Controller
             ->where('month', switch_month(date('m')))
             ->where('year', date('Y'))
             ->where('user_id', $user->id)->first();
+
+            $setting = DB::table('settings')->get();
+            foreach ($setting as $item) {
+                $setting_data[$item->name] = $item->value;
+            }
     
             return view('staff.presence.take',[
+                'longitude'=>$setting_data['Longitude Kantor'],
+                'latitude'=>$setting_data['Latitude Kantor'],
+                'distance'=>$setting_data['Jarak Presensi'],
                 'name'=>$user->name,
                 'profile_photo'=>$user->profile_photo,
                 'email'=>$user->email,

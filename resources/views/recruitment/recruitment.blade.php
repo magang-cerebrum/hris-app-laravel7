@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
+    <link rel="icon" href="{{ asset('img/'.$company_logo)}}">
     <title>HRIS Cerebrum | Rekruitasi</title>
 
     <link href="{{ asset('css/fonts.css')}}" rel="stylesheet">
@@ -33,7 +33,7 @@
                     </div>
                     @if (count($data) == 0)
                         <div style="text-align: center">
-                            <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 200px">
+                            <img src="{{ asset('img/'.$company_logo)}}" style="width: 200px">
                             <h1 class="h3">Rekruitasi Kerja Belum Tersedia</h1>
                         </div>
                         @else

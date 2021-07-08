@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{ asset('img/title-cerebrum.png')}}">
+    <link rel="icon" href="{{ asset('img/'.$company_logo)}}">
     <title>HRIS Cerebrum | Rekruitasi</title>
 
     <link href="{{ asset('css/fonts.css')}}" rel="stylesheet">
@@ -27,7 +27,7 @@
             <div class="cls-content-sm panel">
                 <div class="panel-body">
                     <div class="mar-ver pad-btm">
-                        <img src="{{ asset('img/title-cerebrum.png')}}" style="width: 30%">
+                        <img src="{{ asset('img/'.$company_logo)}}" style="width: 30%">
                         <h1 class="h3">Sukses</h1>
                         <p>Human Resource Information System</p>
                     </div>

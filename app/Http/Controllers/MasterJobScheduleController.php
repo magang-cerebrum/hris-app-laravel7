@@ -25,13 +25,13 @@ class MasterJobScheduleController extends Controller
     {
         if(Auth::check()){
             $user = Auth::user();
+            $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
+            
             if($user->role_id == 1){
                 $data_division = DB::table('master_divisions')->whereNotIn('id',[7])->get();
-
-                $company = DB::table('settings')->get();
-                foreach ($company as $item) {
-                    $company_data[$item->name] = $item->value;
-                }
                 
                 return view('masterData.schedule.list', [
                     'menu'=>['m-jadwal','s-jadwal-daftar'],

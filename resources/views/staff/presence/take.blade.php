@@ -120,9 +120,11 @@
                 alert("Oops! This browser does not support HTML Geolocation.");
             }
         }
+
         function getPosition(position) {
-            var position_latitude_1 = -7.055286522681598;
-            var position_longitude_1 = 107.56162952882028;
+            var position_latitude_1 = parseInt({!! json_encode($latitude) !!});
+            var position_longitude_1 = parseInt({!! json_encode($longitude) !!});
+            var distance = parseInt({!! json_encode($distance) !!})
             var position_latitude_2 = position.coords.latitude;
             var position_longitude_2 = position.coords.longitude;
             var jarak = getDistanceFromLatLonInKm(position_latitude_1,position_longitude_1,position_latitude_2,position_longitude_2);
@@ -133,7 +135,7 @@
                 $('#take_presence').submit();
             }
             else {
-                if (jarak <= 10 ) {
+                if (jarak <= distance ) {
                     take_snapshot()
                     $('#take_presence').submit();
                 }

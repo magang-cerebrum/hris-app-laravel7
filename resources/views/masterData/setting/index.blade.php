@@ -39,7 +39,7 @@
                 <div class="tab-base">
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#general"><i class="fa fa-globe"></i>&nbsp; Umum</a></li>
-                        <li><a data-toggle="tab" href="#salary"><i class="fa fa-money"></i>&nbsp; Penggajian</a></li>
+                        {{-- <li><a data-toggle="tab" href="#salary"><i class="fa fa-money"></i>&nbsp; Penggajian</a></li> --}}
                         <li><a data-toggle="tab" href="#presence"><i class="fa fa-map-marker"></i>&nbsp; Lokasi</a></li>
                     </ul>
                     <div class="tab-content">
@@ -61,12 +61,11 @@
                             @if (array_key_exists('Logo Perusahaan', $data))
                                 <div class="form-group">
                                     <label for="current_logo" class="col-sm-3 control-label">Logo Perusahaan saat ini : </label>
-                                    {{-- <input type="file" name="company_logo" class="image" style="display: none"> --}}
-                                    {{-- <img class="brand-icon" name='company_logo' id="current_logo" src="{{ asset('img/' . $data['Logo Perusahaan'])}}" alt="Logo Perusahaan"> --}}
+                                    <img class="brand-icon" name='company_logo' id="current_logo" src="{{ asset('img/' . $data['Logo Perusahaan'])}}" alt="Logo Perusahaan">
                                 </div>
                             @endif
                         </div>
-                        <div id="salary" class="tab-pane fade">
+                        {{-- <div id="salary" class="tab-pane fade">
                             <div class="form-group">
                                 <label for="payroll_date" class="col-sm-3 control-label">Tanggal Gajian : </label>
                                 <div class="col-sm-2">
@@ -78,7 +77,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div id="presence" class="tab-pane fade">
                             <div class="form-group has-feedback">
                                 <label for="office_latitude" class="col-sm-3 control-label">Latitude : </label>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -18,10 +19,17 @@ class AuthController extends Controller
     }
     public function login()
     {
+        $company = DB::table('settings')->get();
+            foreach ($company as $item) {
+                $company_data[$item->name] = $item->value;
+            }
         if (Auth::check()==false){
             Cookie::forget('XSRF-TOKEN');
             Cookie::forget('laravel_session');
-            return view('auth/login');
+            
+            return view('auth/login',[
+                'company_logo'=>$company_data['Logo Perusahaan'],
+            ]);
         }
         else if(Auth::check() == true){
             Cookie::forget('XSRF-TOKEN');

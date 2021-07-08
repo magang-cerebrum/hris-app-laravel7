@@ -1,7 +1,7 @@
 @extends('layouts/templateAdmin')
 @section('title', 'Rekruitasi')
 @section('content-title', 'Rekruitasi / Tambah Data Lowongan')
-@section('content-subtitle', 'HRIS PT. Cerebrum Edukanesia Nusantara')
+@section('content-subtitle','HRIS '.$company_name)
 
 @section('content')
 <div class="panel panel-danger panel-bordered">

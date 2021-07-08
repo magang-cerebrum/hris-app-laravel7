@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
-use stdClass;
+use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
 {
@@ -55,12 +55,13 @@ class SettingController extends Controller
             if ($request->has('company_name')) {
                 Setting::where('name','Nama Perusahaan')->update(['value' => $request->company_name]);
             }
-            dd($request);
             if ($request->has('company_logo')) {
-                $logo = $request->company_logo;
-                $logo_name = "logo-cerebrum.PNG";
-                $tujuan_upload = 'img/';
-                $logo->move($tujuan_upload, $logo_name);
+                if(!$request->company_logo == null) {
+                    $logo = $request->company_logo;
+                    $logo_name = "logo-cerebrum.PNG";
+                    $tujuan_upload = 'img/';
+                    $logo->move($tujuan_upload, $logo_name);
+                }
             }
             
             if ($request->has('payroll_date')) {
@@ -73,6 +74,10 @@ class SettingController extends Controller
 
             if ($request->has('office_longitude')) {
                 Setting::where('name','Longitude Kantor')->update(['value' => $request->office_longitude]);
+            }
+
+            if ($request->has('office_distance')) {
+                Setting::where('name','Jarak Presensi')->update(['value' => $request->office_distance]);
             }
 
             Alert::success('Berhasil','Pengaturan baru berhasil tersimpan!');

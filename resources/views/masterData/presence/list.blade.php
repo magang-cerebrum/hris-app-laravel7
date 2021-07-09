@@ -13,6 +13,17 @@
         .fc-time,.fc-left,.fc-right
         {display : none;}
         td.break{width: 10px; height: 10px;}
+        
+        @media screen and (max-width: 600px) {
+            #info_collor_full {
+                display: none;
+            }
+        }
+        @media screen and (min-width: 600px) {
+            #info_collor_half {
+                display: none;
+            }
+        }
     </style>
 @endsection
 

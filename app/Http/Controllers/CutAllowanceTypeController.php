@@ -26,7 +26,7 @@ class CutAllowanceTypeController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.cutallowancetype.list',[
+            return view('masterData.cutAllowanceType.list',[
                 'menu'=>['m-master','s-master-ptgaji'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -56,7 +56,7 @@ class CutAllowanceTypeController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.cutallowancetype.create',[
+            return view('masterData.cutAllowanceType.create',[
                 'menu'=>['m-master','s-master-ptgaji'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -103,7 +103,7 @@ class CutAllowanceTypeController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.cutallowancetype.edit',[
+            return view('masterData.cutAllowanceType.edit',[
                 'menu'=>['m-master','s-master-ptgaji'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -176,7 +176,7 @@ class CutAllowanceTypeController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.cutallowancetype.result',[
+            return view('masterData.cutAllowanceType.result',[
                 'menu'=>['m-master','s-master-ptgaji'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],

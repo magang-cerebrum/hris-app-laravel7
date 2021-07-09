@@ -286,12 +286,19 @@ class StaffAuthDashboardController extends Controller
                 foreach ($company as $item) {
                     $company_data[$item->name] = $item->value;
                 }
+
+                $data_agenda = DB::table('master_agendas')
+                    ->where(function ($query) {
+                    $query->whereRaw("start_event LIKE '" . current_period() . "%'")
+                        ->orWhereRaw("end_event LIKE '" . current_period() . "%'");
+                })->get();
                 
                 return view('dashboard.staff',[
                     'menu'=>['m-dashboard',''],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
                     'data_poster'=>$data_poster,
+                    'data_agenda'=>$data_agenda,
                     'name'=>$user->name,
                     'profile_photo'=>$user->profile_photo,
                     'email'=>$user->email,

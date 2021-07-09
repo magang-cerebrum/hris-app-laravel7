@@ -78,7 +78,7 @@ class DataStaffController extends Controller
             }
             
             if (!$role) {
-                return view('masterData.datastaff.list',[
+                return view('masterData.dataStaff.list',[
                     'menu'=>['m-data','s-data-info'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -92,7 +92,7 @@ class DataStaffController extends Controller
                     'id'=>$user->id
                 ]);
             } else {
-                return view('staff.datastaff.list',[
+                return view('staff.dataStaff.list',[
                     'menu'=>['m-d-data',''],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -131,7 +131,7 @@ class DataStaffController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.datastaff.create',[
+            return view('masterData.dataStaff.create',[
                 'menu'=>['m-data','s-data-info'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -235,7 +235,7 @@ class DataStaffController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.datastaff.edit',[
+            return view('masterData.dataStaff.edit',[
                 'menu'=>['m-data','s-data-info'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -408,7 +408,7 @@ class DataStaffController extends Controller
             }
             
             if (!$role) {
-                return view('masterData.datastaff.result',[
+                return view('masterData.dataStaff.result',[
                     'menu'=>['m-data','s-data-info'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -421,7 +421,7 @@ class DataStaffController extends Controller
                     'id'=>$user->id
                 ]);
             } else {
-                return view('staff.datastaff.result',[
+                return view('staff.dataStaff.result',[
                     'menu'=>['m-d-data',''],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -509,7 +509,7 @@ class DataStaffController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.datastaff.promote',[
+            return view('masterData.dataStaff.promote',[
                 'menu'=>['m-data','s-data-info'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],

@@ -26,7 +26,7 @@ class MasterLeaveTypeController extends Controller
                     $company_data[$item->name] = $item->value;
                 }
                 
-                return view('masterData.leavetype.list',[
+                return view('masterData.leaveType.list',[
                     'menu'=>['m-master','s-master-cuti'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -58,7 +58,7 @@ class MasterLeaveTypeController extends Controller
                     $company_data[$item->name] = $item->value;
                 }
                 
-                return view('masterData.leavetype.create',[
+                return view('masterData.leaveType.create',[
                     'menu'=>['m-master','s-master-cuti'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -108,7 +108,7 @@ class MasterLeaveTypeController extends Controller
                     $company_data[$item->name] = $item->value;
                 }
                 
-                return view('masterData.leavetype.edit',[
+                return view('masterData.leaveType.edit',[
                     'menu'=>['m-master','s-master-cuti'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],

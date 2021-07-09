@@ -52,7 +52,7 @@ class PerformanceController extends Controller
     
             $is_champ = MasterPerformance::where(['month'=>$splitter[0],'year'=>$splitter[1]])->max('performance_score');
             $count = count($data);;
-            return view('staff.performance-chief.ChiefSearchResult',[
+            return view('staff.performance-chief.chiefSearchResult',[
                 'data'=>$data,
                 'count'=>$count,
                 'employee_of_the_month' =>$is_champ
@@ -120,7 +120,7 @@ class PerformanceController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('staff.performance-chief.Chiefscoring',[
+            return view('staff.performance-chief.chiefScoring',[
                 'menu'=>['m-d-performa','s-d-performa-penilaian'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -276,7 +276,7 @@ class PerformanceController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('staff.performance-chief.Chieflistchart',[
+            return view('staff.performance-chief.chiefListChart',[
                 'menu'=>['m-d-performa','s-d-performa-grafik'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -381,7 +381,7 @@ class PerformanceController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('staff.performance-chief.ChiefResultList',[
+            return view('staff.performance-chief.chiefResultList',[
                 'menu'=>['m-d-performa','s-d-performa-grafik'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],

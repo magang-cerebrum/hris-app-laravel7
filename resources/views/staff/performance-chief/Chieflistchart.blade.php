@@ -77,5 +77,5 @@
             </div>
         </div>
     </div>
-    @include('staff/performance-chief/ChiefChartmodal')
+    @include('staff/performance-chief/chiefChartModal')
 @endsection

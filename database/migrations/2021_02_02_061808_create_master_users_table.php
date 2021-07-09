@@ -34,7 +34,12 @@ class CreateMasterUsersTable extends Migration
             $table->date('end_work_date')->nullable();
             $table->integer('yearly_leave_remaining')->nullable();
             $table->bigInteger('salary')->nullable();
-            $table->string('credit_card_number')->nullable();
+            $table->string('credit_card_number',30)->nullable();
+            $table->string('identity_card_number',16);
+            $table->string('family_card_number',16)->nullable();
+            $table->string('npwp_number',40)->nullable();
+            $table->string('bpjs_healthcare_number',40)->nullable();
+            $table->string('bpjs_employment_number',40)->nullable();
             $table->unsignedBigInteger('division_id')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
             $table->unsignedBigInteger('role_id');

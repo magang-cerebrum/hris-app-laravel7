@@ -136,7 +136,12 @@
                                                         data-position_name="{{$row->position_name}}"
                                                         data-role_name="{{$row->role_name}}"
                                                         data-cc_number="{{$row->credit_card_number}}"
-                                                        data-salary="{{$row->salary}}">
+                                                        data-salary="{{$row->salary}}"
+                                                        data-ktp_number="{{$row->identity_card_number}}"
+                                                        data-kk_number="{{$row->family_card_number}}"
+                                                        data-npwp_number="{{$row->npwp_number}}"
+                                                        data-bpjskes_number="{{$row->bpjs_healthcare_number}}"
+                                                        data-bpjsket_number="{{$row->bpjs_employment_number}}">
                                                         <i class="fa fa-info icon-dropdown"></i> Detail Staff
                                                     </a>
                                                 </li>
@@ -223,7 +228,12 @@
                                                         data-position_name="{{$row->position_name}}"
                                                         data-role_name="{{$row->role_name}}"
                                                         data-cc_number="{{$row->credit_card_number}}"
-                                                        data-salary="{{$row->salary}}">
+                                                        data-salary="{{$row->salary}}"
+                                                        data-ktp_number="{{$row->identity_card_number}}"
+                                                        data-kk_number="{{$row->family_card_number}}"
+                                                        data-npwp_number="{{$row->npwp_number}}"
+                                                        data-bpjskes_number="{{$row->bpjs_healthcare_number}}"
+                                                        data-bpjsket_number="{{$row->bpjs_employment_number}}">
                                                         <i class="fa fa-info icon-dropdown"></i> Detail Staff
                                                     </a>
                                                 </li>

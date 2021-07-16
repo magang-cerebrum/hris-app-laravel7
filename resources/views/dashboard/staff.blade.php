@@ -3,6 +3,8 @@
 @section('content-title', 'Selamat Datang Di Aplikasi HRIS')
 @section('content-subtitle', '(Human Resource Information System)')
 @section('head')
+<link href="{{asset("plugins/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet">
+<link href="{{asset("plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css")}}" rel="stylesheet">
 <link href="{{asset("plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet">
 <link href="{{asset("css/slider/slide.css")}}" rel="stylesheet">
 <link href="{{asset("plugins/themify-icons/themify-icons.css")}}" rel="stylesheet">
@@ -33,6 +35,16 @@
         width: 80px;
     }
 
+    .fc-left,
+    .fc-right{
+        display: none;
+    }
+    #container .fc-event{
+        cursor: pointer;
+    }
+    a.fc-more{
+        font-weight: bold;
+    }
 
     
 </style>
@@ -155,7 +167,28 @@
         </div>
     </div>
 @endif
-
+@if (!$data_agenda->isEmpty())
+    <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+            <div class="panel-control">
+                <button class="btn btn-default" data-panel="minmax"><i class="psi-chevron-up"></i></button>
+            </div>
+            <h3 class="panel-title">Agenda Kerja Bulan Ini {{current_period('view')}}</h3>
+        </div>
+        <div class="collapse in">
+            <div class="panel-body">
+                @if ($data_agenda->isEmpty())
+                    <div class="text-center text-bold text-danger">
+                        Tidak ada data agenda ditemukan untuk bulan ini. <br>
+                        <a href="{{url('/admin/agenda/add')}}" class="btn btn-warning mar-top">Klik disini untuk menambahkan agenda!</a>
+                    </div>
+                @else
+                    <div id="current_agenda"></div>
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
 <div class="row mt-5 mh-byrow">
     {{-- Charts Performa --}}
     <div class="col-md-6" id="grafikPerforma">
@@ -468,9 +501,54 @@
 </div>
 
 @section('script')
+<script src="{{asset("plugins/fullcalendar/lib/moment.min.js")}}"></script>
+<script src="{{asset("plugins/fullcalendar/lib/jquery-ui.custom.min.js")}}"></script>
+<script src="{{asset("plugins/fullcalendar/fullcalendar.min.js")}}"></script>
+<script src="{{asset("plugins/fullcalendar/lang/id.js")}}"></script>
 <script src="{{asset("plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
 <script src="{{asset('plugins/jquery-match-height/jquery-match-height.min.js')}}"></script>
 <script>
+    setTimeout(function () {
+        $('#current_agenda').fullCalendar({
+            height: 525,
+            fixedWeekCount: false,
+            header:{
+                center: 'title',
+            },
+            defaultDate: '<?= current_period() ?>01',
+            eventLimit: true,
+            timeFormat: 'H:mm',
+            eventRender: function(eventObj, $el) {
+                $el.popover({
+                    title: eventObj.title,
+                    content:  new Date(eventObj.start).getUTCHours() + ':' + new Date(eventObj.start).getUTCMinutes() + ' - ' +  new Date(eventObj.end).getUTCHours() + ':' + new Date(eventObj.end).getUTCMinutes()  + ' | ' + eventObj.description,
+                    trigger: 'hover',
+                    placement: 'top',
+                    container: 'body'
+                });
+            },
+            events: [
+                <?php foreach ($data_agenda as $item) { 
+                    $start_date = intval(explode('-',explode(' ',$item->start_event)[0])[2]);                    
+                    $interval = date_diff(date_create($item->start_event), date_create($item->end_event))->format('%d');
+                    for ($i=$start_date; $i <= ($start_date + $interval); $i++) { ?>
+                        <?php
+                            $i < 10 ? $pos = 9 : $pos = 8;
+                            $start = substr_replace(explode(" ", $item->start_event)[0],$i,$pos,2) . 'T' . explode(" ", $item->start_event)[1];
+                            $end = substr_replace(explode(" ", $item->start_event)[0],$i,$pos,2) . 'T' . explode(" ", $item->end_event)[1];
+                        ?>
+                        {
+                            title: '<?= $item->title ?>',
+                            description: '<?= $item->description ?>',
+                            start: "<?= $start ?>",
+                            end: "<?= $end ?>",
+                            color: '<?= $item->calendar_color ?>'
+                        },
+                    <?php } ?>
+                <?php } ?>
+            ]
+        });
+    },1000);
     $(document).on('nifty.ready', function () {
         $('.mh-byrow').each(function() {
             $(this).find('.panel').matchHeight({

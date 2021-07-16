@@ -145,6 +145,7 @@ class PresenceController extends Controller
             }
     
             return view('staff.presence.take',[
+                'company_logo'=>$setting_data['Logo Perusahaan'],
                 'longitude'=>$setting_data['Longitude Kantor'],
                 'latitude'=>$setting_data['Latitude Kantor'],
                 'distance'=>$setting_data['Jarak Presensi'],

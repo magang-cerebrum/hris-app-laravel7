@@ -18,20 +18,26 @@
                         <tr>
                             <td><label for="dob">Tanggal Lahir: </label></td>
                             <td><span id="dob"></span></td>
-                            <td rowspan="11"></td>        
+                            <td rowspan="13"></td>        
                             <td rowspan="4" colspan="2" class="text-center">
                                 <img id="img-modal" src="" alt="Tidak ada foto profil." style="width:128px;">
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="phone_number">No Handphone: </label></td>
+                            <td><label for="phone_number">Nomor Handphone: </label></td>
                             <td><span id="phone_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="ktp_number">No. KTP: </label></td>
+                            <td><span id="ktp_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="kk_number">No. KK: </label></td>
+                            <td><span id="kk_number"></span></td>
                         </tr>
                         <tr>
                             <td><label for="gender">Jenis Kelamin: </label></td>
                             <td><span id="gender"></span></td>
-                        </tr>
-                        <tr>
                             <td><label for="email">Email: </label></td>
                             <td><span id="email"></span></td>
                         </tr>
@@ -70,6 +76,16 @@
                             <td><span id="cc_number"></span></td>
                             <td><label for="salary">Gaji Pokok: </label></td>
                             <td><span id="salary"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="bpjskes_number">No. BPJS Kesehatan: </label></td>
+                            <td><span id="bpjskes_number"></span></td>
+                            <td><label for="bpjsket_number">No. BPJS Ketenagakerjaan: </label></td>
+                            <td><span id="bpjsket_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="npwp_number">No. NPWP </label></td>
+                            <td><span id="npwp_number"></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,6 +128,11 @@
                 var role_name = $(this).data('role_name');
                 var cc_number = $(this).data('cc_number');
                 var salary = $(this).data('salary');
+                var ktp_number = $(this).data('ktp_number');
+                var kk_number = $(this).data('kk_number');
+                var npwp_number = $(this).data('npwp_number');
+                var bpjskes_number = $(this).data('bpjskes_number');
+                var bpjsket_number = $(this).data('bpjsket_number');
 
                 var join = `{{ asset('img/profile-photos/`+ profile_photo + `')}}`;
 
@@ -145,6 +166,11 @@
                 $('#role_name').text(role_name);
                 $('#cc_number').text(cc_number);
                 $('#salary').text(format_rupiah(salary));
+                $('#ktp_number').text(ktp_number);
+                $('#kk_number').text(kk_number);
+                $('#npwp_number').text(npwp_number);
+                $('#bpjskes_number').text(bpjskes_number);
+                $('#bpjsket_number').text(bpjsket_number);
             });
             
             $("#check-all").click(function () {

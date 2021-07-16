@@ -220,14 +220,6 @@
                                         </li>
 
                                         <!--Menu list item-->
-                                        <li {{$menu[0] == 'm-agenda' ? 'class=active-sub' : ''}}>
-                                            <a href="{{ url('staff/agenda')}}">
-                                                <i class="fa fa-calendar"></i>
-                                                <span class="menu-title">Agenda Kerja</span>
-                                            </a>
-                                        </li>
-
-                                        <!--Menu list item-->
                                         <li {{$menu[0] == 'm-jadwal' ? 'class=active-sub' : ''}}>
                                             <a href="{{ url('staff/schedule')}}">
                                                 <i class="fa fa-calendar-check-o"></i>

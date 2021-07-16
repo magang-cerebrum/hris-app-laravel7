@@ -223,6 +223,57 @@
                             Mohon isi sisa cuti hanya dengan angka.
                         </div> @enderror
                     </div>
+                    <label class="col-sm-2 control-label">No KTP:</label>
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="No KTP (Wajib diisi)" name="identity_card_number" form="edit" autocomplete="off"
+                                class="form-control @error('identity_card_number') is-invalid @enderror"
+                                value="{{$staff->identity_card_number}}" maxlength="16">
+                            @error('identity_card_number') <div class="text-danger invalid-feedback mt-3">
+                                Mohon isi nomor KTP.
+                            </div> @enderror
+                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">No KK:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No KK (Dapat dikosongkan)" name="family_card_number" form="edit" autocomplete="off"
+                                class="form-control @error('family_card_number') is-invalid @enderror" maxlength="16" 
+                                value="{{$staff->family_card_number}}">
+                                @error('family_card_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor KK hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                        <label class="col-sm-2 control-label">No NPWP:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No NPWP (Dapat dikosongkan)" name="npwp_number" form="edit" autocomplete="off"
+                                class="form-control @error('npwp_number') is-invalid @enderror" maxlength="40" 
+                                value="{{$staff->npwp_number}}">
+                                @error('npwp_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor NPWP hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">No BPJS Kesehatan:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No BPJS Kesehatan (Dapat dikosongkan)" name="bpjs_healthcare_number" form="edit" autocomplete="off"
+                                class="form-control" maxlength="40" value="{{$staff->bpjs_healthcare_number}}">
+                                @error('bpjs_healthcare_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor BPJS Kesehatan hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                        <label class="col-sm-2 control-label">No BPJS Ketenagakerjaan:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No BPJS Ketenagakerjaan (Dapat dikosongkan)" name="bpjs_employment_number" form="edit" autocomplete="off"
+                                class="form-control" maxlength="40" value="{{$staff->bpjs_employment_number}}">
+                                @error('bpjs_employment_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor BPJS Ketenagakerjaan hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="row">

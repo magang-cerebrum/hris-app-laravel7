@@ -78,7 +78,7 @@ class DataStaffController extends Controller
             }
             
             if (!$role) {
-                return view('masterData.datastaff.list',[
+                return view('masterData.dataStaff.list',[
                     'menu'=>['m-data','s-data-info'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -92,7 +92,7 @@ class DataStaffController extends Controller
                     'id'=>$user->id
                 ]);
             } else {
-                return view('staff.datastaff.list',[
+                return view('staff.dataStaff.list',[
                     'menu'=>['m-d-data',''],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -131,7 +131,7 @@ class DataStaffController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.datastaff.create',[
+            return view('masterData.dataStaff.create',[
                 'menu'=>['m-data','s-data-info'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -161,7 +161,6 @@ class DataStaffController extends Controller
                 'gender' => 'required',
                 'address' => 'required|max:200',
                 'email' => 'email',
-                'password' => 'required',
                 'employee_status' => 'required',
                 'employee_type' => 'required',
                 'status' => 'required',
@@ -170,6 +169,11 @@ class DataStaffController extends Controller
                 'division_id' => 'numeric',
                 'position_id' => 'numeric',
                 'role_id' => 'numeric',
+                'identity_card_number' => 'required|numeric',
+                'family_card_number' => 'numeric|nullable',
+                'npwp_number' => 'numeric|nullable',
+                'bpjs_healthcare_number' => 'numeric|nullable',
+                'bpjs_employment_number' => 'numeric|nullable',
                 'credit_card_number' => 'required|numeric',
                 'salary' => 'required'
             ]);
@@ -205,6 +209,11 @@ class DataStaffController extends Controller
                 'yearly_leave_remaining' => $request->yearly_leave_remaining,
                 'salary' => $salary,
                 'credit_card_number' => $request->credit_card_number,
+                'identity_card_number' => $request->identity_card_number,
+                'family_card_number' => $request->family_card_number,
+                'npwp_number' => $request->npwp_number,
+                'bpjs_healthcare_number' => $request->bpjs_healthcare_number,
+                'bpjs_employment_number' => $request->bpjs_employment_number,
                 'division_id' => $request->division_id,
                 'position_id' => $request->position_id,
                 'role_id' => $request->role_id,
@@ -235,7 +244,7 @@ class DataStaffController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.datastaff.edit',[
+            return view('masterData.dataStaff.edit',[
                 'menu'=>['m-data','s-data-info'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],
@@ -274,6 +283,11 @@ class DataStaffController extends Controller
                 'division_id' => 'numeric',
                 'position_id' => 'numeric',
                 'role_id' => 'numeric',
+                'identity_card_number' => 'required|numeric',
+                'family_card_number' => 'numeric|nullable',
+                'npwp_number' => 'numeric|nullable',
+                'bpjs_healthcare_number' => 'numeric|nullable',
+                'bpjs_employment_number' => 'numeric|nullable',
                 'credit_card_number' => 'required|numeric',
                 'salary' => 'required'
             ]);
@@ -306,6 +320,11 @@ class DataStaffController extends Controller
                     'yearly_leave_remaining' => $request->yearly_leave_remaining,
                     'salary' => $salary,
                     'credit_card_number' => $request->credit_card_number,
+                    'identity_card_number' => $request->identity_card_number,
+                    'family_card_number' => $request->family_card_number,
+                    'npwp_number' => $request->npwp_number,
+                    'bpjs_healthcare_number' => $request->bpjs_healthcare_number,
+                    'bpjs_employment_number' => $request->bpjs_employment_number,
                     'division_id' => $request->division_id,
                     'position_id' => $request->position_id,
                     'role_id' => $request->role_id,
@@ -408,7 +427,7 @@ class DataStaffController extends Controller
             }
             
             if (!$role) {
-                return view('masterData.datastaff.result',[
+                return view('masterData.dataStaff.result',[
                     'menu'=>['m-data','s-data-info'],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -421,7 +440,7 @@ class DataStaffController extends Controller
                     'id'=>$user->id
                 ]);
             } else {
-                return view('staff.datastaff.result',[
+                return view('staff.dataStaff.result',[
                     'menu'=>['m-d-data',''],
                     'company_name'=>$company_data['Nama Perusahaan'],
                     'company_logo'=>$company_data['Logo Perusahaan'],
@@ -509,7 +528,7 @@ class DataStaffController extends Controller
                 $company_data[$item->name] = $item->value;
             }
             
-            return view('masterData.datastaff.promote',[
+            return view('masterData.dataStaff.promote',[
                 'menu'=>['m-data','s-data-info'],
                 'company_name'=>$company_data['Nama Perusahaan'],
                 'company_logo'=>$company_data['Logo Perusahaan'],

@@ -35,7 +35,7 @@
                         <label class="col-sm-2 control-label">NIP:</label>
                         <div class="col-sm-4">
                             <input type="number" placeholder="NIP" name="nip" form="form_create" autocomplete="off"
-                                class="form-control @error('nip') is-invalid @enderror" value="{{old('nip')}}">
+                                class="form-control @error('nip') is-invalid @enderror" maxlength="12" value="{{old('nip')}}">
                             @error('nip') <div class="text-danger invalid-feedback mt-3">
                                 Mohon isi NIP.
                             </div> @enderror
@@ -43,7 +43,7 @@
                         <label class="col-sm-2 control-label">Nama Staff:</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Nama Lengkap" name="name" form="form_create" autocomplete="off"
-                                class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}">
+                                class="form-control @error('name') is-invalid @enderror" maxlength="100" value="{{old('name')}}">
                             @error('name') <div class="text-danger invalid-feedback mt-3">
                                 Mohon isi nama lengkap.
                             </div> @enderror
@@ -84,7 +84,7 @@
                         <label class="col-sm-2 control-label" for="textarea-input-address">Alamat:</label>
                         <div class="col-sm-10">
                             <textarea id="textarea-input-address" rows="2" class="form-control @error('address') is-invalid @enderror" form="form_create"
-                                placeholder="Alamat Lengkap" name="address" value="{{old('address')}}" style="resize: none"></textarea>
+                                placeholder="Alamat Lengkap" maxlength="200" name="address" value="{{old('address')}}" style="resize: none"></textarea>
                                 @error('address') <div class="text-danger invalid-feedback mt-3">{{$message}}</div> @enderror
                         </div>
                     </div>
@@ -95,14 +95,14 @@
                         <div class="col-sm-4">
                             <input type="number" placeholder="Nomor Handphone" name="phone_number" form="form_create"
                                 class="form-control @error('phone_number') is-invalid @enderror" autocomplete="off"
-                                value="{{old('phone_number')}}">
+                                value="{{old('phone_number')}}" maxlength="13">
                             @error('phone_number') <div class="text-danger invalid-feedback mt-3">
                                 {{$message}}
                             </div> @enderror
                         </div>
                         <label class="col-sm-2 control-label">Email:</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="Alamat Email" name="email" form="form_create" autocomplete="off"
+                            <input type="text" placeholder="Alamat Email" maxlength="60" name="email" form="form_create" autocomplete="off"
                                 class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}">
                             @error('email') <div class="text-danger invalid-feedback mt-3">
                                 {{$message}}
@@ -214,13 +214,61 @@
                                 Mohon isi sisa cuti hanya dengan angka.
                             </div> @enderror
                         </div>
+                        <label class="col-sm-2 control-label">No KTP:</label>
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="No KTP (Wajib diisi)" name="identity_card_number" form="form_create" autocomplete="off"
+                                class="form-control @error('identity_card_number') is-invalid @enderror" value="{{old('identity_card_number')}}" maxlength="16">
+                            @error('identity_card_number') <div class="text-danger invalid-feedback mt-3">
+                                Mohon isi nomor KTP.
+                            </div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">No KK:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No KK (Dapat dikosongkan)" name="family_card_number" form="form_create" autocomplete="off"
+                                class="form-control @error('family_card_number') is-invalid @enderror" maxlength="16" value="{{old('family_card_number')}}">
+                                @error('family_card_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor KK hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                        <label class="col-sm-2 control-label">No NPWP:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No NPWP (Dapat dikosongkan)" name="npwp_number" form="form_create" autocomplete="off"
+                                class="form-control @error('npwp_number') is-invalid @enderror" maxlength="40" value="{{old('npwp_number')}}">
+                                @error('npwp_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor NPWP hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">No BPJS Kesehatan:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No BPJS Kesehatan (Dapat dikosongkan)" name="bpjs_healthcare_number" form="form_create" autocomplete="off"
+                                class="form-control" maxlength="40" value="{{old('bpjs_healthcare_number')}}">
+                                @error('bpjs_healthcare_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor BPJS Kesehatan hanya dengan angka.
+                                </div> @enderror
+                        </div>
+                        <label class="col-sm-2 control-label">No BPJS Ketenagakerjaan:</label>
+                        <div class="col-sm-4">
+                            <input type="number" placeholder="No BPJS Ketenagakerjaan (Dapat dikosongkan)" name="bpjs_employment_number" form="form_create" autocomplete="off"
+                                class="form-control" maxlength="40" value="{{old('bpjs_employment_number')}}">
+                                @error('bpjs_employment_number') <div class="text-danger invalid-feedback mt-3">
+                                    Mohon isi nomor BPJS Ketenagakerjaan hanya dengan angka.
+                                </div> @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <label class="col-sm-2 control-label" for="credit_card_number">No. Rekening:</label>
                         <div class="col-sm-4">
-                            <input type="number" placeholder="Nomor Rekening tanpa Kode Bank"
+                            <input type="number" placeholder="Nomor Rekening tanpa Kode Bank" maxlength="30"
                             name="credit_card_number" form="form_create" autocomplete="off"
                             class="form-control @error('credit_card_number') is-invalid @enderror"
                             value="{{old('credit_card_number')}}">

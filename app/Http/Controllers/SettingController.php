@@ -61,6 +61,9 @@ class SettingController extends Controller
                 $logo_name = "logo-cerebrum.PNG";
                 $tujuan_upload = 'img/';
                 $logo->move($tujuan_upload, $logo_name);
+
+                $logo_name_slip = "logo-cerebrum.jpg";
+                $logo->move($tujuan_upload, $logo_name_slip);
             }
             
             if ($request->has('payroll_date')) {

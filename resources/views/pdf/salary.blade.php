@@ -11,7 +11,7 @@
         <table>
             <tr>
                 <td class="head-image">
-                    <img src="../public/img/title-cerebrum.jpg">
+                    <img src="../public/img/logo-cerebrum.jpg">
                 </td>
                 <td>
                     <h3>PT. Cerebrum Edukanesia Nusantara</h3>

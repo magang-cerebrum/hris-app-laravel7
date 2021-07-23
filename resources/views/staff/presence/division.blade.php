@@ -64,7 +64,7 @@
                                 <td class="text-center">{{$item->out_time}}</td>
                                 <td class="text-center">
                                     @if ($item->file_out != null)   
-                                        <img class="img-presence" src="{{asset ('img-presensi/masuk/'.$item->file_out)}}">
+                                        <img class="img-presence" src="{{asset ('img-presensi/pulang/'.$item->file_out)}}">
                                     @endif
                                 </td>
                             </tr>

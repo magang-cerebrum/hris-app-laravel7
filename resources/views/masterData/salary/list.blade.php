@@ -20,7 +20,7 @@
             <div id="btn_paid_leave">
                 <button class="btn btn-primary btn-labeled add-tooltip"
                     data-toggle="tooltip" data-container="body" data-placement="top" form="get_salary"
-                    data-original-title="Ambil Data Gaji Baru" type="submit" {{$bool_check_day == false ? 'disabled' : ''}}>
+                    data-original-title="Ambil Data Gaji Baru" type="submit" >
                     <i class="btn-label fa fa-plus"></i>
                     Ambil Data Gaji Baru
                 </button>

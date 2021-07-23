@@ -39,7 +39,7 @@
                 center: 'title',
                 right: 'month,basicWeek'
             },
-            defaultDate: '<?= current_period() ?>01',
+            defaultDate: '<?= $year ?>-<?= $month ?>-01',
             eventLimit: true, // allow "more" link when too many events
             events: [
                 <?php foreach ($data as $item) { 

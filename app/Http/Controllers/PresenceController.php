@@ -104,8 +104,12 @@ class PresenceController extends Controller
                 $path_file = 'img-presensi/masuk/'.$data->file_in;
                 $file_path_file = public_path($path_file);
                 unlink($file_path_file);
+
+                $path_file_out = 'img-presensi/pulang/'.$data->file_in;
+                $file_path_file_out = public_path($path_file_out);
+                unlink($file_path_file_out);
     
-                DB::table('master_presences')->where('id',$item)->update(['file_in'=>null,  'check_chief'=>1]);
+                DB::table('master_presences')->where('id',$item)->update(['file_in'=>null, 'file_out'=>null, 'check_chief'=>1]);
             }
     
             return redirect('/staff/presence/division');
